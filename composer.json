@@ -1,0 +1,30 @@
+{
+    "name": "dawen/elastic",
+    "type": "library",
+    "description": "Elasticsearch Component",
+    "keywords": [],
+    "homepage": "http://code.dawen.de/component",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Daniel Wendlandt",
+            "email": "dan.wendlandt@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.3",
+        "symfony/event-dispatcher": "~2.1",
+        "psr/log": "~1.0",
+        "guzzlehttp/guzzle": "~4.0"
+    },
+    "autoload": {
+        "psr-4": { "Dawen\\Component\\Elastic\\": "src/" }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Dawen\\Component\\Elastic\\Tests\\": "tests/"
+        }
+    },
+    "target-dir": "Dawen/Component/Elastic",
+    "minimum-stability": "dev"
+}
