@@ -14,7 +14,7 @@
     <testsuites>
         <testsuite name="Dawen Elastic Testsuite">
             <!--enable unit test-->
-            <directory>./Tests/Unit</directory>
+            <directory>./tests/Unit</directory>
         </testsuite>
     </testsuites>
 
@@ -23,7 +23,7 @@
             <directory>./</directory>
             <exclude>
                 <directory>./Resources</directory>
-                <directory>./Tests</directory>
+                <directory>./tests</directory>
                 <directory>./vendor</directory>
             </exclude>
         </whitelist>
