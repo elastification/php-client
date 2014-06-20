@@ -7,6 +7,10 @@ use Dawen\Component\Elastic\Response\ResponseInterface;
 
 interface ClientInterface
 {
+    const VERSION = '0.1.0';
+
+    const PATH_DIVIDER = '/';
+
     //todo throw exception in send
     /**
      * performs sending the request

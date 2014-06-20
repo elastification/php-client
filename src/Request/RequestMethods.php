@@ -16,10 +16,21 @@ final class RequestMethods
     /**
      * @var array
      */
-    public static $allowed = array(
+    private static $allowed = array(
         self::GET,
         self::POST,
         self::PUT,
         self::DELETE
     );
+
+    /**
+     * Checks if the given method is allowed
+     *
+     * @param string $method
+     * @return bool
+     */
+    public static function isAllowed($method)
+    {
+        return in_array($method, static::$allowed);
+    }
 }
