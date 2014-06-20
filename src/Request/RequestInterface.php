@@ -9,14 +9,14 @@ interface RequestInterface
     /**
      * Gets the elasticsearch index
      *
-     * @return string
+     * @return null|string
      */
     public function getIndex();
 
     /**
      * Gets the elasticsearch type
      *
-     * @return string
+     * @return null|string
      */
     public function getType();
 
@@ -31,7 +31,7 @@ interface RequestInterface
      * Gets the elasticsearch action/endpoint like
      * (_search, _mapping)
      *
-     * @return string
+     * @return null|string
      */
     public function getAction();
 
@@ -39,4 +39,5 @@ interface RequestInterface
      * @return SerializerInterface
      */
     public function getSerializer();
+
 }
