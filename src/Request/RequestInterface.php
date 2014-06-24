@@ -40,4 +40,32 @@ interface RequestInterface
      */
     public function getSerializer();
 
+    /**
+     * get the body
+     *
+     * @return mixed
+     */
+    public function getBody();
+
+    /**
+     * before setting data it should be serialized
+     *
+     * @param mixed $body
+     * @throws \Dawen\Component\Elastic\Exception\RequestException
+     */
+    public function setBody($body);
+
+    /**
+     * @param $version
+     * @param string $rawData
+     * @param \Dawen\Component\Elastic\Serializer\SerializerInterface $serializer
+     * @param array $serializerParams
+     * @return mixed
+     */
+    public function createResponse(
+        $version,
+        $rawData,
+        SerializerInterface $serializer,
+        array $serializerParams = array());
+
 }

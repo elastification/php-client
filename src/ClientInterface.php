@@ -11,6 +11,8 @@ interface ClientInterface
 
     const PATH_DIVIDER = '/';
 
+    const ELASTICSEARCH_VERSION_0_90_x = '0.90.x';
+
     //todo throw exception in send
     /**
      * performs sending the request
