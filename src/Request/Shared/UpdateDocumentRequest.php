@@ -8,11 +8,12 @@
 
 namespace Dawen\Component\Elastic\Request\Shared;
 
+use Dawen\Component\Elastic\Exception\RequestException;
 use Dawen\Component\Elastic\Request\RequestInterface;
 use Dawen\Component\Elastic\Request\RequestMethods;
 use Dawen\Component\Elastic\Serializer\SerializerInterface;
 
-class CreateDocumentRequest implements RequestInterface
+class UpdateDocumentRequest implements RequestInterface
 {
     /**
      * @var \Dawen\Component\Elastic\Serializer\SerializerInterface
@@ -34,7 +35,15 @@ class CreateDocumentRequest implements RequestInterface
      */
     private $type = null;
 
+    /**
+     * @var null|string
+     */
     private $body = null;
+
+    /**
+     * @var null|string
+     */
+    private $id = null;
 
     /**
      * @param string $index
@@ -85,7 +94,7 @@ class CreateDocumentRequest implements RequestInterface
      */
     public function getAction()
     {
-        return null;
+        return $this->id;
     }
 
     /**
@@ -109,7 +118,26 @@ class CreateDocumentRequest implements RequestInterface
      */
     public function setBody($body)
     {
+        if(empty($body)) {
+            throw new RequestException('Body can not be empty');
+        }
+
         $this->body = $this->serializer->serialize($body, $this->serializerParams);
+    }
+
+    /**
+     * Sets the document id
+     *
+     * @param null|string $id
+     * @throws \Dawen\Component\Elastic\Exception\RequestException
+     */
+    public function setId($id)
+    {
+        if(empty($id)) {
+            throw new RequestException('Id can not be empty');
+        }
+
+        $this->id = $id;
     }
 
 

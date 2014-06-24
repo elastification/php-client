@@ -8,12 +8,14 @@
 
 namespace Dawen\Component\Elastic;
 
+use Dawen\Component\Elastic\Exception\ClientException;
 use Dawen\Component\Elastic\Exception\RequestException;
 use Dawen\Component\Elastic\Request\RequestInterface;
 use Dawen\Component\Elastic\Request\RequestManagerInterface;
 use Dawen\Component\Elastic\Request\RequestMethods;
 use Dawen\Component\Elastic\Response\ResponseInterface;
 use GuzzleHttp\ClientInterface as GuzzleClientInterface;
+use GuzzleHttp\Stream\Stream;
 
 class Client implements ClientInterface
 {
@@ -29,20 +31,47 @@ class Client implements ClientInterface
     private $requestManager;
 
     /**
+     * @var null|string
+     */
+    private $elasticsearchVersion;
+
+    /**
+     * @var null|string
+     */
+    private $defaultResponseClass;
+
+//todo think about an array of clients or a decision manager for get the right client (maybe voter patern)
+    /**
      * @param GuzzleClientInterface $guzzleClient
      * @param RequestManagerInterface $requestManager
-     * @internal param \GuzzleHttp\ClientInterface $guzzle
+     * @param null|string $elasticsearchVersion
+     * @param null|string $defaultResponseClass
      */
-    public function __construct(GuzzleClientInterface $guzzleClient, RequestManagerInterface $requestManager)
+    public function __construct(
+        GuzzleClientInterface $guzzleClient,
+        RequestManagerInterface $requestManager,
+        $elasticsearchVersion = null,
+        $defaultResponseClass = null)
     {
         $this->guzzleClient = $guzzleClient;
         $this->requestManager = $requestManager;
+
+        if(null === $elasticsearchVersion) {
+            $this->elasticsearchVersion = self::ELASTICSEARCH_VERSION_0_90_x;
+        } else {
+            $this->elasticsearchVersion = $elasticsearchVersion;
+        }
+
+        if(null !== $defaultResponseClass) {
+            $this->defaultResponseClass = $defaultResponseClass;
+        }
     }
 
     /**
      * performs sending the request
      *
      * @param RequestInterface $request
+     * @throws Exception\ClientException
      * @throws Exception\RequestException
      * @return ResponseInterface
      */
@@ -54,11 +83,22 @@ class Client implements ClientInterface
         $guzzleRequest = $this->guzzleClient->createRequest($request->getMethod());
         $guzzleRequest->setPath($this->generatePath($request));
 
-        //todo set body. RequestINterface needs body
+        $body = $request->getBody();
+        if(null !== $body) {
+            var_dump($body);
+            $guzzleRequest->setBody(Stream::factory($body));
+        }
 
-        $response = $this->guzzleClient->send($guzzleRequest);
+        try {
+            $response = $this->guzzleClient->send($guzzleRequest);
+        } catch(\Exception $exception) {
+            $clientException = new ClientException($exception->getMessage(), $exception->getCode(), $exception);
+            throw $clientException;
+        }
+
 
         var_dump($response);
+        die();
     }
 
     /**
@@ -92,5 +132,13 @@ class Client implements ClientInterface
         }
 
         return implode(self::PATH_DIVIDER, $path);
+    }
+
+    private function createResponse(RequestInterface $request, \GuzzleHttp\Message\ResponseInterface $guzzleResponse)
+    {
+        $raw = '';
+        if(null !== $this->defaultResponseClass) {
+            
+        }
     }
 }

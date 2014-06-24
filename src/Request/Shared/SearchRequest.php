@@ -3,17 +3,19 @@
  * Created by PhpStorm.
  * User: dwendlandt
  * Date: 20/06/14
- * Time: 08:08
+ * Time: 08:09
  */
 
 namespace Dawen\Component\Elastic\Request\Shared;
 
+use Dawen\Component\Elastic\Exception\RequestException;
 use Dawen\Component\Elastic\Request\RequestInterface;
 use Dawen\Component\Elastic\Request\RequestMethods;
 use Dawen\Component\Elastic\Serializer\SerializerInterface;
 
-class CreateDocumentRequest implements RequestInterface
+class SearchRequest implements RequestInterface
 {
+    const REQUEST_ACTION = '_search';
     /**
      * @var \Dawen\Component\Elastic\Serializer\SerializerInterface
      */
@@ -34,7 +36,10 @@ class CreateDocumentRequest implements RequestInterface
      */
     private $type = null;
 
-    private $body = null;
+    /**
+     * @var null|string
+     */
+    private $id = null;
 
     /**
      * @param string $index
@@ -85,7 +90,7 @@ class CreateDocumentRequest implements RequestInterface
      */
     public function getAction()
     {
-        return null;
+        return self::REQUEST_ACTION;
     }
 
     /**
@@ -101,7 +106,7 @@ class CreateDocumentRequest implements RequestInterface
      */
     public function getBody()
     {
-        return $this->body;
+        return null;
     }
 
     /**
@@ -109,8 +114,7 @@ class CreateDocumentRequest implements RequestInterface
      */
     public function setBody($body)
     {
-        $this->body = $this->serializer->serialize($body, $this->serializerParams);
+        //do nothing
     }
-
 
 }
