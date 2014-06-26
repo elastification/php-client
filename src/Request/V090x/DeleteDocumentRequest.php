@@ -11,6 +11,7 @@ namespace Dawen\Component\Elastic\Request\V090x;
 use Dawen\Component\Elastic\Request\Shared\AbstractDeleteDocumentRequest;
 use Dawen\Component\Elastic\Response\Response;
 use Dawen\Component\Elastic\Response\ResponseInterface;
+use Dawen\Component\Elastic\Response\V090x\DeleteDocumentResponse;
 use Dawen\Component\Elastic\Serializer\SerializerInterface;
 
 class DeleteDocumentRequest extends AbstractDeleteDocumentRequest
@@ -26,7 +27,7 @@ class DeleteDocumentRequest extends AbstractDeleteDocumentRequest
         SerializerInterface $serializer,
         array $serializerParams = array())
     {
-        return new Response($rawData, $serializer, $serializerParams);
+        return new DeleteDocumentResponse($rawData, $serializer, $serializerParams);
     }
 
     /**
@@ -36,6 +37,6 @@ class DeleteDocumentRequest extends AbstractDeleteDocumentRequest
      */
     public function getSupportedClass()
     {
-        return 'Dawen\Component\Elastic\Response\Response';
+        return 'Dawen\Component\Elastic\Response\V090x\DeleteDocumentResponse';
     }
 }
