@@ -7,6 +7,13 @@ use Dawen\Component\Elastic\Serializer\SerializerInterface;
 interface ResponseInterface
 {
     /**
+     * @param string $rawData
+     * @param SerializerInterface $serializer
+     * @param array $serializerParams
+     */
+    public function __construct($rawData, SerializerInterface $serializer, array $serializerParams = array());
+
+    /**
      * Gets the converted data of the response
      *
      * @return mixed

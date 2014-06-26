@@ -35,23 +35,16 @@ class Client implements ClientInterface
      */
     private $elasticsearchVersion;
 
-    /**
-     * @var null|string
-     */
-    private $defaultResponseClass;
-
 //todo think about an array of clients or a decision manager for get the right client (maybe voter patern)
     /**
      * @param GuzzleClientInterface $guzzleClient
      * @param RequestManagerInterface $requestManager
      * @param null|string $elasticsearchVersion
-     * @param null|string $defaultResponseClass
      */
     public function __construct(
         GuzzleClientInterface $guzzleClient,
         RequestManagerInterface $requestManager,
-        $elasticsearchVersion = null,
-        $defaultResponseClass = null)
+        $elasticsearchVersion = null)
     {
         $this->guzzleClient = $guzzleClient;
         $this->requestManager = $requestManager;
@@ -62,9 +55,6 @@ class Client implements ClientInterface
             $this->elasticsearchVersion = $elasticsearchVersion;
         }
 
-        if(null !== $defaultResponseClass) {
-            $this->defaultResponseClass = $defaultResponseClass;
-        }
     }
 
     /**
@@ -85,20 +75,20 @@ class Client implements ClientInterface
 
         $body = $request->getBody();
         if(null !== $body) {
-            var_dump($body);
             $guzzleRequest->setBody(Stream::factory($body));
         }
 
         try {
-            $response = $this->guzzleClient->send($guzzleRequest);
+            $guzzleResponse = $this->guzzleClient->send($guzzleRequest);
         } catch(\Exception $exception) {
             $clientException = new ClientException($exception->getMessage(), $exception->getCode(), $exception);
             throw $clientException;
         }
 
+        $rawData = (string) $guzzleResponse->getBody();
+        $response = $request->createResponse($rawData, $request->getSerializer(), $request->getSerializerParams());
 
-        var_dump($response);
-        die();
+        return $response;
     }
 
     /**
@@ -134,11 +124,4 @@ class Client implements ClientInterface
         return implode(self::PATH_DIVIDER, $path);
     }
 
-    private function createResponse(RequestInterface $request, \GuzzleHttp\Message\ResponseInterface $guzzleResponse)
-    {
-        $raw = '';
-        if(null !== $this->defaultResponseClass) {
-            
-        }
-    }
 }

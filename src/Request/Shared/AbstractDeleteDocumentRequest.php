@@ -8,11 +8,13 @@
 
 namespace Dawen\Component\Elastic\Request\Shared;
 
+use Dawen\Component\Elastic\Exception\RequestException;
 use Dawen\Component\Elastic\Request\RequestInterface;
 use Dawen\Component\Elastic\Request\RequestMethods;
+use Dawen\Component\Elastic\Response\ResponseInterface;
 use Dawen\Component\Elastic\Serializer\SerializerInterface;
 
-class CreateDocumentRequest implements RequestInterface
+abstract class AbstractDeleteDocumentRequest implements RequestInterface
 {
     /**
      * @var \Dawen\Component\Elastic\Serializer\SerializerInterface
@@ -34,7 +36,10 @@ class CreateDocumentRequest implements RequestInterface
      */
     private $type = null;
 
-    private $body = null;
+    /**
+     * @var null|string
+     */
+    private $action = null;
 
     /**
      * @param string $index
@@ -77,7 +82,7 @@ class CreateDocumentRequest implements RequestInterface
      */
     public function getMethod()
     {
-        return RequestMethods::POST;
+        return RequestMethods::DELETE;
     }
 
     /**
@@ -85,7 +90,11 @@ class CreateDocumentRequest implements RequestInterface
      */
     public function getAction()
     {
-        return null;
+        if(null === $this->action) {
+            throw new RequestException('id can not be empty for this request');
+        }
+
+        return $this->action;
     }
 
     /**
@@ -99,9 +108,17 @@ class CreateDocumentRequest implements RequestInterface
     /**
      * @inheritdoc
      */
+    public function getSerializerParams()
+    {
+        return $this->serializerParams;
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function getBody()
     {
-        return $this->body;
+        return null;
     }
 
     /**
@@ -109,8 +126,18 @@ class CreateDocumentRequest implements RequestInterface
      */
     public function setBody($body)
     {
-        $this->body = $this->serializer->serialize($body, $this->serializerParams);
+        //do nothing
     }
+    /**
+     * @inheritdoc
+     */
+    public function setId($id)
+    {
+        if(empty($id)) {
+            throw new RequestException('Id can not be empty');
+        }
 
+        $this->action = $id;
+    }
 
 }

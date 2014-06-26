@@ -3,21 +3,18 @@
  * Created by PhpStorm.
  * User: dwendlandt
  * Date: 20/06/14
- * Time: 08:09
+ * Time: 08:08
  */
 
 namespace Dawen\Component\Elastic\Request\Shared;
 
-use Dawen\Component\Elastic\Exception\RequestException;
 use Dawen\Component\Elastic\Request\RequestInterface;
 use Dawen\Component\Elastic\Request\RequestMethods;
 use Dawen\Component\Elastic\Response\ResponseInterface;
 use Dawen\Component\Elastic\Serializer\SerializerInterface;
 
-class SearchRequest implements RequestInterface
+abstract class AbstractCreateDocumentRequest implements RequestInterface
 {
-    const REQUEST_ACTION = '_search';
-
     /**
      * @var \Dawen\Component\Elastic\Serializer\SerializerInterface
      */
@@ -38,9 +35,6 @@ class SearchRequest implements RequestInterface
      */
     private $type = null;
 
-    /**
-     * @var null|string
-     */
     private $body = null;
 
     /**
@@ -92,7 +86,7 @@ class SearchRequest implements RequestInterface
      */
     public function getAction()
     {
-        return self::REQUEST_ACTION;
+        return null;
     }
 
     /**
@@ -101,6 +95,14 @@ class SearchRequest implements RequestInterface
     public function getSerializer()
     {
         return $this->serializer;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getSerializerParams()
+    {
+        return $this->serializerParams;
     }
 
     /**
@@ -116,25 +118,7 @@ class SearchRequest implements RequestInterface
      */
     public function setBody($body)
     {
-        $this->body = $this->getSerializer()->serialize($body, $this->serializerParams);
+        $this->body = $this->serializer->serialize($body, $this->serializerParams);
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function getSerializerParams()
-    {
-        return $this->serializerParams;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function createResponse(
-        $rawData,
-        SerializerInterface $serializer,
-        array $serializerParams = array())
-    {
-        return null;
-    }
 }
