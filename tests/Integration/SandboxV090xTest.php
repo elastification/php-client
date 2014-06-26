@@ -204,8 +204,7 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
         echo 'deleteDocument: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
 
         $getDocumentRequest = new GetDocumentRequest(self::INDEX, self::TYPE, $this->serializer);
-        $getDocumentRequest->setId('notExisting');
-
+        $getDocumentRequest->setId($response->getId());
 
         try {
             $getDocumentResponse = $this->client->send($getDocumentRequest);
