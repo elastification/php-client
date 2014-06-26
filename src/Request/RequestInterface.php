@@ -2,6 +2,7 @@
 
 namespace Dawen\Component\Elastic\Request;
 
+use Dawen\Component\Elastic\Response\ResponseInterface;
 use Dawen\Component\Elastic\Serializer\SerializerInterface;
 
 interface RequestInterface
@@ -41,6 +42,11 @@ interface RequestInterface
     public function getSerializer();
 
     /**
+     * @return array
+     */
+    public function getSerializerParams();
+
+    /**
      * get the body
      *
      * @return mixed
@@ -56,16 +62,21 @@ interface RequestInterface
     public function setBody($body);
 
     /**
-     * @param $version
      * @param string $rawData
      * @param \Dawen\Component\Elastic\Serializer\SerializerInterface $serializer
      * @param array $serializerParams
-     * @return mixed
+     * @return null|ResponseInterface
      */
     public function createResponse(
-        $version,
         $rawData,
         SerializerInterface $serializer,
         array $serializerParams = array());
+
+    /**
+     * gets a response class name that is supported by this class
+     *
+     * @return string
+     */
+    public function getSupportedClass();
 
 }

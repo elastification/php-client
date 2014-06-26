@@ -13,7 +13,7 @@ use Dawen\Component\Elastic\Request\RequestInterface;
 use Dawen\Component\Elastic\Request\RequestMethods;
 use Dawen\Component\Elastic\Serializer\SerializerInterface;
 
-class UpdateDocumentRequest implements RequestInterface
+abstract class AbstractUpdateDocumentRequest implements RequestInterface
 {
     /**
      * @var \Dawen\Component\Elastic\Serializer\SerializerInterface
@@ -86,7 +86,7 @@ class UpdateDocumentRequest implements RequestInterface
      */
     public function getMethod()
     {
-        return RequestMethods::POST;
+        return RequestMethods::PUT;
     }
 
     /**
@@ -94,6 +94,10 @@ class UpdateDocumentRequest implements RequestInterface
      */
     public function getAction()
     {
+        if(null === $this->id) {
+            throw new RequestException('id can not be empty for this request');
+        }
+
         return $this->id;
     }
 
@@ -103,6 +107,14 @@ class UpdateDocumentRequest implements RequestInterface
     public function getSerializer()
     {
         return $this->serializer;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getSerializerParams()
+    {
+        return $this->serializerParams;
     }
 
     /**

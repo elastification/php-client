@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: dwendlandt
  * Date: 20/06/14
- * Time: 08:09
+ * Time: 08:08
  */
 
 namespace Dawen\Component\Elastic\Request\Shared;
@@ -11,9 +11,10 @@ namespace Dawen\Component\Elastic\Request\Shared;
 use Dawen\Component\Elastic\Exception\RequestException;
 use Dawen\Component\Elastic\Request\RequestInterface;
 use Dawen\Component\Elastic\Request\RequestMethods;
+use Dawen\Component\Elastic\Response\ResponseInterface;
 use Dawen\Component\Elastic\Serializer\SerializerInterface;
 
-class GetDocumentRequest implements RequestInterface
+abstract class AbstractGetDocumentRequest implements RequestInterface
 {
     /**
      * @var \Dawen\Component\Elastic\Serializer\SerializerInterface
@@ -38,7 +39,7 @@ class GetDocumentRequest implements RequestInterface
     /**
      * @var null|string
      */
-    private $id = null;
+    private $action = null;
 
     /**
      * @param string $index
@@ -89,7 +90,11 @@ class GetDocumentRequest implements RequestInterface
      */
     public function getAction()
     {
-        return $this->id;
+        if(null === $this->action) {
+            throw new RequestException('id can not be empty for this request');
+        }
+
+        return $this->action;
     }
 
     /**
@@ -98,6 +103,14 @@ class GetDocumentRequest implements RequestInterface
     public function getSerializer()
     {
         return $this->serializer;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getSerializerParams()
+    {
+        return $this->serializerParams;
     }
 
     /**
@@ -115,12 +128,8 @@ class GetDocumentRequest implements RequestInterface
     {
         //do nothing
     }
-
     /**
-     * Sets the document id
-     *
-     * @param null|string $id
-     * @throws \Dawen\Component\Elastic\Exception\RequestException
+     * @inheritdoc
      */
     public function setId($id)
     {
@@ -128,6 +137,7 @@ class GetDocumentRequest implements RequestInterface
             throw new RequestException('Id can not be empty');
         }
 
-        $this->id = $id;
+        $this->action = $id;
     }
+
 }
