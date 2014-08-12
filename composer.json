@@ -30,7 +30,8 @@
         "sebastian/phpcpd": "~2.0",
         "theseer/phpdox": "~0.6",
         "mayflower/php-codebrowser": "~1.1",
-        "munkie/elasticsearch-thrift-php": "~1.4"
+        "munkie/elasticsearch-thrift-php": "~1.4",
+        "phpspec/prophecy-phpunit": "~1.0"
     },
     "autoload": {
         "psr-4": { "Dawen\\Component\\Elastic\\": "src/" }
