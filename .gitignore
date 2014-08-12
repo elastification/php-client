@@ -6,5 +6,5 @@ build/
 artifacts/
 .idea
 .DS_STORE
-bin/
-!bin/.gitkeep
+/bin/
+!/bin/.gitkeep
