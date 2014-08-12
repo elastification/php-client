@@ -14,6 +14,7 @@ use Dawen\Component\Elastic\Request\RequestInterface;
 use Dawen\Component\Elastic\Request\RequestManagerInterface;
 use Dawen\Component\Elastic\Request\RequestMethods;
 use Dawen\Component\Elastic\Response\ResponseInterface;
+use Dawen\Component\Elastic\Transport\TransportInterface;
 use GuzzleHttp\ClientInterface as GuzzleClientInterface;
 use GuzzleHttp\Stream\Stream;
 
@@ -21,9 +22,9 @@ class Client implements ClientInterface
 {
 
     /**
-     * @var \GuzzleHttp\ClientInterface
+     * @var TransportInterface
      */
-    private $guzzleClient;
+    private $transport;
 
     /**
      * @var Request\RequestManagerInterface
@@ -37,16 +38,16 @@ class Client implements ClientInterface
 
 //todo think about an array of clients or a decision manager for get the right client (maybe voter patern)
     /**
-     * @param GuzzleClientInterface $guzzleClient
+     * @param TransportInterface $transport
      * @param RequestManagerInterface $requestManager
      * @param null|string $elasticsearchVersion
      */
     public function __construct(
-        GuzzleClientInterface $guzzleClient,
+        TransportInterface $transport,
         RequestManagerInterface $requestManager,
         $elasticsearchVersion = null)
     {
-        $this->guzzleClient = $guzzleClient;
+        $this->transport = $transport;
         $this->requestManager = $requestManager;
 
         if(null === $elasticsearchVersion) {
@@ -70,7 +71,7 @@ class Client implements ClientInterface
         if(!RequestMethods::isAllowed($request->getMethod())) {
             throw new RequestException('request method is not allowed');
         }
-        $guzzleRequest = $this->guzzleClient->createRequest($request->getMethod());
+        $guzzleRequest = $this->transport->createRequest($request->getMethod());
         $guzzleRequest->setPath($this->generatePath($request));
 
         $body = $request->getBody();
@@ -79,7 +80,7 @@ class Client implements ClientInterface
         }
 
         try {
-            $guzzleResponse = $this->guzzleClient->send($guzzleRequest);
+            $guzzleResponse = $this->transport->send($guzzleRequest);
         } catch(\Exception $exception) {
             $clientException = new ClientException($exception->getMessage(), $exception->getCode(), $exception);
             throw $clientException;
