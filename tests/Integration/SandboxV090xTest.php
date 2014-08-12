@@ -18,6 +18,8 @@ use Dawen\Component\Elastic\Request\V090x\UpdateDocumentRequest;
 use Dawen\Component\Elastic\Response\V090x\DocumentResponse;
 use Dawen\Component\Elastic\Serializer\NativeJsonSerializer;
 use Dawen\Component\Elastic\Serializer\SerializerInterface;
+use Dawen\Component\Elastic\Transport\HttpGuzzle\GuzzleTransport;
+use Dawen\Component\Elastic\Transport\TransportInterface;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\ClientInterface as GuzzleClientInterface;
 use Dawen\Component\Elastic\Client;
@@ -51,14 +53,20 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
      */
     private $serializer;
 
+    /**
+     * @var TransportInterface
+     */
+    private $transportClient;
+
 
     protected function setUp()
     {
         parent::setUp();
 
         $this->guzzleClient = new GuzzleClient(array('base_url' => $this->url));
+        $this->transportClient = new GuzzleTransport($this->guzzleClient);
         $this->requestManager = new RequestManager();
-        $this->client = new Client($this->guzzleClient, $this->requestManager);
+        $this->client = new Client($this->transportClient, $this->requestManager);
         $this->serializer = new NativeJsonSerializer();
 
     }
