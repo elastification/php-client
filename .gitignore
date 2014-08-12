@@ -3,6 +3,7 @@ composer.phar
 composer.lock
 vendor/
 build/
+bin/
 artifacts/
 .idea
 .DS_STORE
