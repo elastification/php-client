@@ -20,6 +20,8 @@ Dawen:
 - GetMappingRequest
 - CreateMappingRequest
 - CountRequest only term is possible here
+- Helper for Version response compare
+- Vagrant boxes for different elasticsearch versions
 
 
 Xenji:
