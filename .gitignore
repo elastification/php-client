@@ -7,3 +7,5 @@ bin/
 artifacts/
 .idea
 .DS_STORE
+/bin/
+!/bin/.gitkeep
