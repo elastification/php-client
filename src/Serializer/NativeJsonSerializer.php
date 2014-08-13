@@ -32,16 +32,29 @@ class NativeJsonSerializer implements SerializerInterface
         if(isset($params['assoc']) && is_bool($params['assoc'])) {
             $assoc = $params['assoc'];
         }
-        $decodedJson = json_decode($data, $assoc);
-        if (json_last_error() == JSON_ERROR_NONE) {
-            if ($assoc) {
-                return new NativeArrayGateway($decodedJson);
-            } else {
-                return new NativeObjectGateway($decodedJson);
-            }
 
-        } else {
-            throw new DeserializationFailureException(json_last_error_msg(), json_last_error());
+        $decodedJson = json_decode($data, $assoc);
+
+        if (json_last_error() == JSON_ERROR_NONE) {
+            return $this->createGateway($assoc, $decodedJson);
         }
+        throw new DeserializationFailureException(json_last_error_msg(), json_last_error());
+    }
+
+    /**
+     * @author Mario Mueller
+     * @param $assoc
+     * @param $decodedJson
+     * @return \Dawen\Component\Elastic\Serializer\Gateway\GatewayInterface
+     */
+    private function createGateway($assoc, $decodedJson)
+    {
+        $instance = null;
+        if ($assoc === true) {
+            $instance = new NativeArrayGateway($decodedJson);
+        } else {
+            $instance = new NativeObjectGateway($decodedJson);
+        }
+        return $instance;
     }
 }
