@@ -54,4 +54,16 @@ class GuzzleTransportRequest implements TransportRequestInterface
     {
         return $this->guzzleRequest;
     }
+
+    /**
+     * @param array $params
+     * @return void
+     * @author Mario Mueller
+     */
+    public function setQueryParams(array $params)
+    {
+        $this->guzzleRequest->setQuery($params);
+    }
+
+
 }
