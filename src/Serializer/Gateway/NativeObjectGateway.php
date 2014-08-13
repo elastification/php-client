@@ -36,7 +36,7 @@ class NativeObjectGateway implements GatewayInterface, \Iterator, \Countable
     {
         $this->jsonData = $jsonData;
         // FIXME: Ugly, but need to test if reflection is really faster
-        $this->properties = array_values(array_flip(get_object_vars($jsonData)));
+        $this->properties = array_keys(get_object_vars($jsonData));
         $this->propertyCount = sizeof($this->properties);
     }
 
