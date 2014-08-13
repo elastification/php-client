@@ -6,10 +6,10 @@
  * Time: 10:03
  */
 
-namespace Dawen\Component\Elastic\Response\V090x;
+namespace Elastification\Client\Response\V090x;
 
-use Dawen\Component\Elastic\Exception\ResponseException;
-use Dawen\Component\Elastic\Response\Response;
+use Elastification\Client\Exception\ResponseException;
+use Elastification\Client\Response\Response;
 
 class DeleteDocumentResponse extends Response
 {

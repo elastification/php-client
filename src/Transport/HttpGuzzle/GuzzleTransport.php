@@ -1,14 +1,14 @@
 <?php
-namespace Dawen\Component\Elastic\Transport\HttpGuzzle;
+namespace Elastification\Client\Transport\HttpGuzzle;
 
-use Dawen\Component\Elastic\Exception\ClientException;
-use Dawen\Component\Elastic\Transport\Exception\TransportLayerException;
-use Dawen\Component\Elastic\Transport\TransportInterface;
-use Dawen\Component\Elastic\Transport\TransportRequestInterface;
+use Elastification\Client\Exception\ClientException;
+use Elastification\Client\Transport\Exception\TransportLayerException;
+use Elastification\Client\Transport\TransportInterface;
+use Elastification\Client\Transport\TransportRequestInterface;
 use GuzzleHttp\ClientInterface;
 
 /**
- * @package Dawen\Component\Elastic\Transport\HttpGuzzle
+ * @package Elastification\Client\Transport\HttpGuzzle
  * @author Mario Mueller
  * @since 2014-08-12
  * @version 1.0.0
@@ -40,8 +40,8 @@ class GuzzleTransport implements TransportInterface
 
     /**
      * @param TransportRequestInterface $request The configured request to send.
-     * @throws \Dawen\Component\Elastic\Exception\ClientException
-     * @return \Dawen\Component\Elastic\Transport\TransportResponseInterface
+     * @throws \Elastification\Client\Exception\ClientException
+     * @return \Elastification\Client\Transport\TransportResponseInterface
      * @author Mario Mueller
      */
     public function send(TransportRequestInterface $request)

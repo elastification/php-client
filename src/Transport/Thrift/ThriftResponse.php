@@ -1,11 +1,11 @@
 <?php
-namespace Dawen\Component\Elastic\Transport\Thrift;
+namespace Elastification\Client\Transport\Thrift;
 
-use Dawen\Component\Elastic\Transport\TransportResponseInterface;
+use Elastification\Client\Transport\TransportResponseInterface;
 use Elasticsearch\RestResponse;
 
 /**
- * @package Dawen\Component\Elastic\Transport\Thrift
+ * @package Elastification\Client\Transport\Thrift
  * @author Mario Mueller
  * @since 2014-08-12
  * @version 1.0.0

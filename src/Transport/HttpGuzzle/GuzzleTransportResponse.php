@@ -1,11 +1,11 @@
 <?php
-namespace Dawen\Component\Elastic\Transport\HttpGuzzle;
+namespace Elastification\Client\Transport\HttpGuzzle;
 
-use Dawen\Component\Elastic\Transport\TransportResponseInterface;
+use Elastification\Client\Transport\TransportResponseInterface;
 use GuzzleHttp\Message\ResponseInterface;
 
 /**
- * @package Dawen\Component\Elastic\Transport\HttpGuzzle
+ * @package Elastification\Client\Transport\HttpGuzzle
  * @author Mario Mueller
  * @since 2014-08-12
  * @version 1.0.0

@@ -1,5 +1,5 @@
 <?php
-namespace Dawen\Component\Elastic\Serializer\Gateway;
+namespace Elastification\Client\Serializer\Gateway;
 
 class NativeArrayGatewayTest extends \PHPUnit_Framework_TestCase
 {
@@ -15,7 +15,7 @@ class NativeArrayGatewayTest extends \PHPUnit_Framework_TestCase
         $fixture = ['test' => ['sub' => 'value']];
         $subject = new NativeArrayGateway($fixture);
         $nested = $subject['test'];
-        $this->assertInstanceOf('Dawen\Component\Elastic\Serializer\Gateway\NativeArrayGateway', $nested);
+        $this->assertInstanceOf('Elastification\Client\Serializer\Gateway\NativeArrayGateway', $nested);
         $this->assertEquals('value', $nested['sub']);
     }
 }

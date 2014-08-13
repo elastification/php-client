@@ -6,18 +6,18 @@
  * Time: 08:08
  */
 
-namespace Dawen\Component\Elastic\Request\Shared;
+namespace Elastification\Client\Request\Shared;
 
-use Dawen\Component\Elastic\Exception\RequestException;
-use Dawen\Component\Elastic\Request\RequestInterface;
-use Dawen\Component\Elastic\Request\RequestMethods;
-use Dawen\Component\Elastic\Response\ResponseInterface;
-use Dawen\Component\Elastic\Serializer\SerializerInterface;
+use Elastification\Client\Exception\RequestException;
+use Elastification\Client\Request\RequestInterface;
+use Elastification\Client\Request\RequestMethods;
+use Elastification\Client\Response\ResponseInterface;
+use Elastification\Client\Serializer\SerializerInterface;
 
 abstract class AbstractGetDocumentRequest implements RequestInterface
 {
     /**
-     * @var \Dawen\Component\Elastic\Serializer\SerializerInterface
+     * @var \Elastification\Client\Serializer\SerializerInterface
      */
     private $serializer;
 
@@ -44,7 +44,7 @@ abstract class AbstractGetDocumentRequest implements RequestInterface
     /**
      * @param string $index
      * @param string $type
-     * @param \Dawen\Component\Elastic\Serializer\SerializerInterface $serializer
+     * @param \Elastification\Client\Serializer\SerializerInterface $serializer
      * @param array $serializerParams
      */
     public function __construct($index, $type, SerializerInterface $serializer, array $serializerParams = array())

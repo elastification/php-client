@@ -5,10 +5,10 @@
  * Date: 17/06/14
  * Time: 19:02
  */
-namespace Dawen\Component\Elastic\Tests\Unit\Serializer;
+namespace Elastification\Client\Tests\Unit\Serializer;
 
-use Dawen\Component\Elastic\Serializer\DoNothingSerializer;
-use Dawen\Component\Elastic\Serializer\SerializerInterface;
+use Elastification\Client\Serializer\DoNothingSerializer;
+use Elastification\Client\Serializer\SerializerInterface;
 
 class DoNothingSerializerTest extends \PHPUnit_Framework_TestCase
 {
@@ -27,8 +27,8 @@ class DoNothingSerializerTest extends \PHPUnit_Framework_TestCase
 
     public function testInstance()
     {
-        $this->assertInstanceOf('Dawen\Component\Elastic\Serializer\SerializerInterface', $this->serializer);
-        $this->assertInstanceOf('Dawen\Component\Elastic\Serializer\DoNothingSerializer', $this->serializer);
+        $this->assertInstanceOf('Elastification\Client\Serializer\SerializerInterface', $this->serializer);
+        $this->assertInstanceOf('Elastification\Client\Serializer\DoNothingSerializer', $this->serializer);
     }
 
     public function testSerialize()

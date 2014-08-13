@@ -6,7 +6,7 @@
  * Time: 08:14
  */
 
-namespace Dawen\Component\Elastic\Exception;
+namespace Elastification\Client\Exception;
 
 class ResponseException extends \Exception
 {
