@@ -2,6 +2,7 @@
 namespace Dawen\Component\Elastic\Transport\HttpGuzzle;
 
 use Dawen\Component\Elastic\Exception\ClientException;
+use Dawen\Component\Elastic\Transport\Exception\TransportLayerException;
 use Dawen\Component\Elastic\Transport\TransportInterface;
 use Dawen\Component\Elastic\Transport\TransportRequestInterface;
 use GuzzleHttp\ClientInterface;
@@ -54,7 +55,7 @@ class GuzzleTransport implements TransportInterface
             $transportResponse = new GuzzleTransportResponse($response);
             return $transportResponse;
         } catch (\Exception $exception) {
-            throw new ClientException($exception->getMessage(), $exception->getCode(), $exception);
+            throw new TransportLayerException($exception->getMessage(), $exception->getCode(), $exception);
         }
     }
 }
