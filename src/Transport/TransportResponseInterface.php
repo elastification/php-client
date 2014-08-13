@@ -1,9 +1,9 @@
 <?php
-namespace Dawen\Component\Elastic\Transport;
+namespace Elastification\Client\Transport;
 
 /**
  * Interface TransportResponseInterface
- * @package Dawen\Component\Elastic\Transport
+ * @package Elastification\Client\Transport
  * @author Mario Mueller
  */
 interface TransportResponseInterface

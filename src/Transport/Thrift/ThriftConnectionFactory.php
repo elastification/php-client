@@ -1,5 +1,5 @@
 <?php
-namespace Dawen\Component\Elastic\Transport\Thrift;
+namespace Elastification\Client\Transport\Thrift;
 
 use Elasticsearch\RestClient;
 use Thrift\Protocol\TBinaryProtocolAccelerated;
@@ -8,7 +8,7 @@ use Thrift\Transport\TFramedTransport;
 use Thrift\Transport\TSocket;
 
 /**
- * @package Dawen\Component\Elastic\Transport\Thrift
+ * @package Elastification\Client\Transport\Thrift
  * @author Mario Mueller
  * @since 2014-08-12
  * @version 1.0.0

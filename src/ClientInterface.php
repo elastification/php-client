@@ -1,9 +1,9 @@
 <?php
 
-namespace Dawen\Component\Elastic;
+namespace Elastification\Client;
 
-use Dawen\Component\Elastic\Request\RequestInterface;
-use Dawen\Component\Elastic\Response\ResponseInterface;
+use Elastification\Client\Request\RequestInterface;
+use Elastification\Client\Response\ResponseInterface;
 
 interface ClientInterface
 {

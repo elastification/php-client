@@ -1,5 +1,5 @@
 <?php
-namespace Dawen\Component\Elastic\Transport;
+namespace Elastification\Client\Transport;
 
 interface TransportRequestInterface
 {

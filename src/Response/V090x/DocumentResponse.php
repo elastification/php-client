@@ -1,8 +1,8 @@
 <?php
-namespace Dawen\Component\Elastic\Response\V090x;
+namespace Elastification\Client\Response\V090x;
 
-use Dawen\Component\Elastic\Exception\ResponseException;
-use Dawen\Component\Elastic\Response\Response;
+use Elastification\Client\Exception\ResponseException;
+use Elastification\Client\Response\Response;
 
 class DocumentResponse extends Response
 {
@@ -27,7 +27,7 @@ class DocumentResponse extends Response
      * gets the source of the response
      *
      * @return array
-     * @throws \Dawen\Component\Elastic\Exception\ResponseException
+     * @throws \Elastification\Client\Exception\ResponseException
      */
     public function getSource()
     {

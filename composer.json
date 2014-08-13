@@ -1,9 +1,9 @@
 {
-    "name": "dawen/elastic",
+    "name": "elastification/php-client",
     "type": "library",
-    "description": "Elasticsearch Component",
+    "description": "Elastification Php Client",
     "keywords": [],
-    "homepage": "http://code.dawen.de/component",
+    "homepage": "http://www.elastification.de",
     "license": "MIT",
     "authors": [
         {
@@ -27,14 +27,14 @@
         "guzzlehttp/guzzle": "~4.0"
     },
     "autoload": {
-        "psr-4": { "Dawen\\Component\\Elastic\\": "src/" }
+        "psr-4": { "Elastification\\Client\\": "src/" }
     },
     "autoload-dev": {
         "psr-4": {
-            "Dawen\\Component\\Elastic\\Tests\\": "tests/"
+            "Elastification\\Client\\Tests\\": "tests/"
         }
     },
-    "target-dir": "Dawen/Component/Elastic",
+    "target-dir": "Elastification/Client",
     "config": {
         "bin-dir": "bin"
     },

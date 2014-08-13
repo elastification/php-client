@@ -6,19 +6,19 @@
  * Time: 08:09
  */
 
-namespace Dawen\Component\Elastic\Request\V090x;
+namespace Elastification\Client\Request\V090x;
 
-use Dawen\Component\Elastic\Request\Shared\AbstractGetDocumentRequest;
-use Dawen\Component\Elastic\Request\Shared\AbstractUpdateDocumentRequest;
-use Dawen\Component\Elastic\Response\ResponseInterface;
-use Dawen\Component\Elastic\Response\V090x\CreateUpdateDocumentResponse;
-use Dawen\Component\Elastic\Serializer\SerializerInterface;
+use Elastification\Client\Request\Shared\AbstractGetDocumentRequest;
+use Elastification\Client\Request\Shared\AbstractUpdateDocumentRequest;
+use Elastification\Client\Response\ResponseInterface;
+use Elastification\Client\Response\V090x\CreateUpdateDocumentResponse;
+use Elastification\Client\Serializer\SerializerInterface;
 
 class UpdateDocumentRequest extends AbstractUpdateDocumentRequest
 {
     /**
      * @param string $rawData
-     * @param \Dawen\Component\Elastic\Serializer\SerializerInterface $serializer
+     * @param \Elastification\Client\Serializer\SerializerInterface $serializer
      * @param array $serializerParams
      * @return CreateUpdateDocumentResponse
      */
@@ -37,6 +37,6 @@ class UpdateDocumentRequest extends AbstractUpdateDocumentRequest
      */
     public function getSupportedClass()
     {
-        return 'Dawen\Component\Elastic\Response\V090x\CreateUpdateDocumentResponse';
+        return 'Elastification\Client\Response\V090x\CreateUpdateDocumentResponse';
     }
 }

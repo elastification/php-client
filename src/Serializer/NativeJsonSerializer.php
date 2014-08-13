@@ -6,11 +6,11 @@
  * Time: 18:38
  */
 
-namespace Dawen\Component\Elastic\Serializer;
+namespace Elastification\Client\Serializer;
 
-use Dawen\Component\Elastic\Serializer\Exception\DeserializationFailureException;
-use Dawen\Component\Elastic\Serializer\Gateway\NativeArrayGateway;
-use Dawen\Component\Elastic\Serializer\Gateway\NativeObjectGateway;
+use Elastification\Client\Serializer\Exception\DeserializationFailureException;
+use Elastification\Client\Serializer\Gateway\NativeArrayGateway;
+use Elastification\Client\Serializer\Gateway\NativeObjectGateway;
 
 class NativeJsonSerializer implements SerializerInterface
 {
@@ -45,7 +45,7 @@ class NativeJsonSerializer implements SerializerInterface
      * @author Mario Mueller
      * @param $assoc
      * @param $decodedJson
-     * @return \Dawen\Component\Elastic\Serializer\Gateway\GatewayInterface
+     * @return \Elastification\Client\Serializer\Gateway\GatewayInterface
      */
     private function createGateway($assoc, $decodedJson)
     {

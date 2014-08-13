@@ -1,15 +1,15 @@
 <?php
-namespace Dawen\Component\Elastic\Transport\Thrift;
+namespace Elastification\Client\Transport\Thrift;
 
-use Dawen\Component\Elastic\Transport\Exception\TransportLayerException;
-use Dawen\Component\Elastic\Transport\TransportInterface;
-use Dawen\Component\Elastic\Transport\TransportRequestInterface;
+use Elastification\Client\Transport\Exception\TransportLayerException;
+use Elastification\Client\Transport\TransportInterface;
+use Elastification\Client\Transport\TransportRequestInterface;
 use Elasticsearch\RestClient;
 use Elasticsearch\RestResponse;
 
 /**
  * ${CARET}
- * @package Dawen\Component\Elastic\Transport\Thrift
+ * @package Elastification\Client\Transport\Thrift
  * @author Mario Mueller <mueller@freshcells.de>
  * @since 2014-08-12
  * @version 1.0.0
@@ -31,7 +31,7 @@ class ThriftTransport implements TransportInterface
 
     /**
      * @param string $httpMethod The http method to use.
-     * @return \Dawen\Component\Elastic\Transport\TransportRequestInterface
+     * @return \Elastification\Client\Transport\TransportRequestInterface
      * @author Mario Mueller
      */
     public function createRequest($httpMethod)
@@ -41,7 +41,7 @@ class ThriftTransport implements TransportInterface
 
     /**
      * @param TransportRequestInterface $request The configured request to send.
-     * @return \Dawen\Component\Elastic\Transport\TransportResponseInterface
+     * @return \Elastification\Client\Transport\TransportResponseInterface
      * @author Mario Mueller
      */
     public function send(TransportRequestInterface $request)

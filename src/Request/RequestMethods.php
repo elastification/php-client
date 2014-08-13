@@ -1,10 +1,10 @@
 <?php
 
-namespace Dawen\Component\Elastic\Request;
+namespace Elastification\Client\Request;
 
 /**
  * Class RequestMethods
- * @package Dawen\Component\Elastic\Reuqest
+ * @package Elastification\Client\Reuqest
  */
 final class RequestMethods
 {

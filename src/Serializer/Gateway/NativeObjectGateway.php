@@ -1,8 +1,8 @@
 <?php
-namespace Dawen\Component\Elastic\Serializer\Gateway;
+namespace Elastification\Client\Serializer\Gateway;
 
 /**
- * @package Dawen\Component\Elastic\Serializer\Gateway
+ * @package Elastification\Client\Serializer\Gateway
  * @author Mario Mueller <mueller@freshcells.de>
  * @since 2014-08-13
  * @version 1.0.0

@@ -1,9 +1,9 @@
 <?php
-namespace Dawen\Component\Elastic\Serializer\Exception;
+namespace Elastification\Client\Serializer\Exception;
 
 /**
  * ${CARET}
- * @package Dawen\Component\Elastic\Serializer\Exception
+ * @package Elastification\Client\Serializer\Exception
  * @author Mario Mueller <mueller@freshcells.de>
  * @since 2014-08-13
  * @version 1.0.0
