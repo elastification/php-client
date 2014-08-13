@@ -9,13 +9,13 @@ namespace Elastification\Client\Tests\Unit\Serializer;
 
 use Elastification\Client\Exception\RequestException;
 use Elastification\Client\Request\RequestMethods;
-use Elastification\Client\Request\V090x\DeleteDocumentRequest;
+use Elastification\Client\Request\V090x\SearchRequest;
 
-class DeleteDocumentRequestTest extends \PHPUnit_Framework_TestCase
+class SearchRequestTest extends \PHPUnit_Framework_TestCase
 {
     const INDEX = 'test-index';
     const TYPE = 'test-type';
-    const RESPONSE_CLASS = 'Elastification\Client\Response\V090x\DeleteDocumentResponse';
+    const RESPONSE_CLASS = 'Elastification\Client\Response\V090x\SearchResponse';
 
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
@@ -23,7 +23,7 @@ class DeleteDocumentRequestTest extends \PHPUnit_Framework_TestCase
     private $serializer;
 
     /**
-     * @var DeleteDocumentRequest
+     * @var SearchRequest
      */
     private $request;
 
@@ -35,7 +35,7 @@ class DeleteDocumentRequestTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->request = new DeleteDocumentRequest(self::INDEX, self::TYPE, $this->serializer);
+        $this->request = new SearchRequest(self::INDEX, self::TYPE, $this->serializer);
     }
 
     protected function tearDown()
@@ -53,11 +53,11 @@ class DeleteDocumentRequestTest extends \PHPUnit_Framework_TestCase
             $this->request);
 
         $this->assertInstanceOf(
-            'Elastification\Client\Request\Shared\AbstractDeleteDocumentRequest',
+            'Elastification\Client\Request\Shared\AbstractSearchRequest',
             $this->request);
 
         $this->assertInstanceOf(
-            'Elastification\Client\Request\V090x\DeleteDocumentRequest',
+            'Elastification\Client\Request\V090x\SearchRequest',
             $this->request);
     }
 
@@ -73,41 +73,12 @@ class DeleteDocumentRequestTest extends \PHPUnit_Framework_TestCase
 
     public function testGetMethod()
     {
-        $this->assertSame(RequestMethods::DELETE, $this->request->getMethod());
+        $this->assertSame(RequestMethods::POST, $this->request->getMethod());
     }
 
-    public function testSetIdGetAction()
+    public function testGetAction()
     {
-        $id = 'my document id';
-        $this->request->setId($id);
-
-        $this->assertSame($id, $this->request->getAction());
-    }
-
-    public function testGetActionException()
-    {
-        try {
-            $this->request->getAction();
-        } catch(RequestException $exception) {
-            $this->assertSame('id can not be empty for this request', $exception->getMessage());
-            return;
-        }
-
-        $this->fail();
-    }
-
-    public function testSetIdException()
-    {
-        $id = '';
-
-        try {
-            $this->request->setId($id);
-        } catch(RequestException $exception) {
-            $this->assertSame('Id can not be empty', $exception->getMessage());
-            return;
-        }
-
-        $this->fail();
+        $this->assertSame(SearchRequest::REQUEST_ACTION, $this->request->getAction());
     }
 
     public function testGetSerializer()
@@ -125,9 +96,15 @@ class DeleteDocumentRequestTest extends \PHPUnit_Framework_TestCase
     {
         $body = 'my test body';
 
+        $this->serializer->expects($this->once())
+            ->method('serialize')
+            ->with($this->equalTo($body),
+                $this->equalTo(array()))
+            ->will($this->returnValue($body));
+
         $this->request->setBody($body);
 
-        $this->assertNull($this->request->getBody());
+        $this->assertSame($body, $this->request->getBody());
     }
 
     public function testGetSupportedClass()

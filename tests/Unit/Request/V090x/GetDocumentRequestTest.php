@@ -84,6 +84,18 @@ class GetDocumentRequestTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($id, $this->request->getAction());
     }
 
+    public function testGetActionException()
+    {
+        try {
+            $this->request->getAction();
+        } catch(RequestException $exception) {
+            $this->assertSame('id can not be empty for this request', $exception->getMessage());
+            return;
+        }
+
+        $this->fail();
+    }
+
     public function testSetIdException()
     {
         $id = '';
