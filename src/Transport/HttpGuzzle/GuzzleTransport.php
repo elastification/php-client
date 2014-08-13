@@ -35,9 +35,7 @@ class GuzzleTransport implements TransportInterface
      */
     public function createRequest($httpMethod)
     {
-        $guzzleRequest = $this->guzzleClient->createRequest($httpMethod);
-        $transportRequest = new GuzzleTransportRequest($guzzleRequest);
-        return $transportRequest;
+        return new GuzzleTransportRequest($this->guzzleClient->createRequest($httpMethod));
     }
 
     /**
@@ -49,11 +47,7 @@ class GuzzleTransport implements TransportInterface
     public function send(TransportRequestInterface $request)
     {
         try {
-            // XXX: Not nice, but otherwise we break the interface. Any better idea?
-            $wrappedRequest = $request->getWrappedRequest();
-            $response = $this->guzzleClient->send($wrappedRequest);
-            $transportResponse = new GuzzleTransportResponse($response);
-            return $transportResponse;
+            return new GuzzleTransportResponse($this->guzzleClient->send($request->getWrappedRequest()));
         } catch (\Exception $exception) {
             throw new TransportLayerException($exception->getMessage(), $exception->getCode(), $exception);
         }
