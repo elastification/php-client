@@ -23,7 +23,8 @@ class ThriftRequest implements TransportRequestInterface
      */
     function __construct($method, $vals = null)
     {
-        $this->request = new RestRequest();
+        $this->request = new RestRequest($vals);
+        $this->request->method = $method;
     }
 
     /**
