@@ -6,9 +6,9 @@
  * Time: 07:59
  */
 
-namespace Dawen\Component\Elastic;
+namespace Elastification\Client;
 
-use Dawen\Component\Elastic\Exception\ClientException;
+use Elastification\Client\Exception\ClientException;
 
 final class ClientVersionMap
 {

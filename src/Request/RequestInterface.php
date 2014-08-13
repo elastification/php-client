@@ -1,9 +1,9 @@
 <?php
 
-namespace Dawen\Component\Elastic\Request;
+namespace Elastification\Client\Request;
 
-use Dawen\Component\Elastic\Response\ResponseInterface;
-use Dawen\Component\Elastic\Serializer\SerializerInterface;
+use Elastification\Client\Response\ResponseInterface;
+use Elastification\Client\Serializer\SerializerInterface;
 
 interface RequestInterface
 {
@@ -57,13 +57,13 @@ interface RequestInterface
      * before setting data it should be serialized
      *
      * @param mixed $body
-     * @throws \Dawen\Component\Elastic\Exception\RequestException
+     * @throws \Elastification\Client\Exception\RequestException
      */
     public function setBody($body);
 
     /**
      * @param string $rawData
-     * @param \Dawen\Component\Elastic\Serializer\SerializerInterface $serializer
+     * @param \Elastification\Client\Serializer\SerializerInterface $serializer
      * @param array $serializerParams
      * @return null|ResponseInterface
      */

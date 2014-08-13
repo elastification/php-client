@@ -1,8 +1,8 @@
 <?php
 
-namespace Dawen\Component\Elastic\Request;
+namespace Elastification\Client\Request;
 
-use Dawen\Component\Elastic\Exception\RequestManagerException;
+use Elastification\Client\Exception\RequestManagerException;
 
 interface RequestManagerInterface
 {

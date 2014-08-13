@@ -1,10 +1,10 @@
 <?php
-namespace Dawen\Component\Elastic\Tests\Unit\Serializer;
+namespace Elastification\Client\Tests\Unit\Serializer;
 
-use Dawen\Component\Elastic\Serializer\NativeJsonSerializer;
+use Elastification\Client\Serializer\NativeJsonSerializer;
 
 /**
- * @package Dawen\Component\Elastic\Tests\Unit\Serializer
+ * @package Elastification\Client\Tests\Unit\Serializer
  * @author Mario Mueller <mueller@freshcells.de>
  * @since 2014-08-13
  * @version 1.0.0

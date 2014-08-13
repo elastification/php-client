@@ -6,16 +6,16 @@
  * Time: 07:42
  */
 
-namespace Dawen\Component\Elastic;
+namespace Elastification\Client;
 
-use Dawen\Component\Elastic\Exception\ClientException;
-use Dawen\Component\Elastic\Exception\RequestException;
-use Dawen\Component\Elastic\Request\RequestInterface;
-use Dawen\Component\Elastic\Request\RequestManagerInterface;
-use Dawen\Component\Elastic\Request\RequestMethods;
-use Dawen\Component\Elastic\Response\ResponseInterface;
-use Dawen\Component\Elastic\Transport\Exception\TransportLayerException;
-use Dawen\Component\Elastic\Transport\TransportInterface;
+use Elastification\Client\Exception\ClientException;
+use Elastification\Client\Exception\RequestException;
+use Elastification\Client\Request\RequestInterface;
+use Elastification\Client\Request\RequestManagerInterface;
+use Elastification\Client\Request\RequestMethods;
+use Elastification\Client\Response\ResponseInterface;
+use Elastification\Client\Transport\Exception\TransportLayerException;
+use Elastification\Client\Transport\TransportInterface;
 use GuzzleHttp\ClientInterface as GuzzleClientInterface;
 use GuzzleHttp\Stream\Stream;
 
