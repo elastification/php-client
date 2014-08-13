@@ -29,5 +29,21 @@ class NativeObjectGatewayTest extends \PHPUnit_Framework_TestCase
         $value = $subject['non_existent'];
         $this->assertNull($value);
     }
+
+    public function testMutabilitySetFails()
+    {
+        $this->setExpectedException('\BadMethodCallException');
+        $fixture = new \stdClass();
+        $subject = new NativeObjectGateway($fixture);
+        $subject['test'] = "asdf";
+    }
+
+    public function testMutabilityUnsetFails()
+    {
+        $this->setExpectedException('\BadMethodCallException');
+        $fixture = new \stdClass();
+        $subject = new NativeObjectGateway($fixture);
+        unset($subject['test']);
+    }
 }
 

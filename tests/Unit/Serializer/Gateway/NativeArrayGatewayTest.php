@@ -26,5 +26,21 @@ class NativeArrayGatewayTest extends \PHPUnit_Framework_TestCase
         $value = $subject['non_existent'];
         $this->assertNull($value);
     }
+
+    public function testMutabilitySetFails()
+    {
+        $this->setExpectedException('\BadMethodCallException');
+        $fixture = ['test' => ['sub' => 'value']];
+        $subject = new NativeArrayGateway($fixture);
+        $subject['non_existent'] = "fail";
+    }
+
+    public function testMutabilityUnsetFails()
+    {
+        $this->setExpectedException('\BadMethodCallException');
+        $fixture = ['test' => ['sub' => 'value']];
+        $subject = new NativeArrayGateway($fixture);
+        unset($subject['test']);
+    }
 }
 
