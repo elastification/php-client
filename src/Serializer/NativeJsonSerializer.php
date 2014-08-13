@@ -8,6 +8,9 @@
 
 namespace Dawen\Component\Elastic\Serializer;
 
+use Dawen\Component\Elastic\Serializer\Exception\DeserializationFailureException;
+use Dawen\Component\Elastic\Serializer\Gateway\NativeJsonGateway;
+
 class NativeJsonSerializer implements SerializerInterface
 {
 
@@ -28,6 +31,11 @@ class NativeJsonSerializer implements SerializerInterface
         if(isset($params['assoc']) && is_bool($params['assoc'])) {
             $assoc = $params['assoc'];
         }
-        return json_decode($data, $assoc);
+        $decodedJson = json_decode($data, $assoc);
+        if (json_last_error() == JSON_ERROR_NONE) {
+            return new NativeJsonGateway($decodedJson);
+        } else {
+            throw new DeserializationFailureException(json_last_error_msg(), json_last_error());
+        }
     }
 }

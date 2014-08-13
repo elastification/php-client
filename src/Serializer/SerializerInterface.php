@@ -2,6 +2,8 @@
 
 namespace Dawen\Component\Elastic\Serializer;
 
+use Dawen\Component\Elastic\Serializer\Gateway\GatewayInterface;
+
 interface SerializerInterface
 {
     /**
@@ -18,7 +20,7 @@ interface SerializerInterface
      *
      * @param string $data
      * @param array $params
-     * @return mixed
+     * @return GatewayInterface
      */
     public function deserialize($data, array $params = array());
 }

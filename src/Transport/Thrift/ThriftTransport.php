@@ -1,6 +1,7 @@
 <?php
 namespace Dawen\Component\Elastic\Transport\Thrift;
 
+use Dawen\Component\Elastic\Transport\Exception\TransportLayerException;
 use Dawen\Component\Elastic\Transport\TransportInterface;
 use Dawen\Component\Elastic\Transport\TransportRequestInterface;
 use Elasticsearch\RestClient;
@@ -45,8 +46,13 @@ class ThriftTransport implements TransportInterface
      */
     public function send(TransportRequestInterface $request)
     {
-        $response = $this->thriftClient->execute($request->getWrappedRequest());
-        /* @var $response RestResponse */
-
+        try {
+            $response = $this->thriftClient->execute($request->getWrappedRequest());
+            /* @var $response RestResponse */
+            $transportResponse = new ThriftResponse($response);
+            return $transportResponse;
+        } catch (\Exception $exception) {
+            throw new TransportLayerException($exception->getMessage(), $exception->getCode(), $exception);
+        }
     }
 }

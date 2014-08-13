@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: dwendlandt
- * Date: 24/06/14
- * Time: 10:03
- */
-
 namespace Dawen\Component\Elastic\Response\V090x;
 
 use Dawen\Component\Elastic\Exception\ResponseException;
@@ -20,6 +13,11 @@ class DocumentResponse extends Response
      */
     public function hasSource()
     {
+        /*
+         * FIXME: This code assumes, that the result of the serializer happening in processData is an array.
+         * Maybe we can fix this through a container interface and generic getter/setter
+         * e.g. $container->get('_source')?
+         */
         $this->processData();
 
         return isset($this->data['_source']);
