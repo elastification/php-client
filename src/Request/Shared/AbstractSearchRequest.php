@@ -14,7 +14,7 @@ use Dawen\Component\Elastic\Request\RequestMethods;
 use Dawen\Component\Elastic\Response\ResponseInterface;
 use Dawen\Component\Elastic\Serializer\SerializerInterface;
 
-class SearchRequest implements RequestInterface
+abstract class AbstractSearchRequest implements RequestInterface
 {
     const REQUEST_ACTION = '_search';
 
@@ -125,16 +125,5 @@ class SearchRequest implements RequestInterface
     public function getSerializerParams()
     {
         return $this->serializerParams;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function createResponse(
-        $rawData,
-        SerializerInterface $serializer,
-        array $serializerParams = array())
-    {
-        return null;
     }
 }
