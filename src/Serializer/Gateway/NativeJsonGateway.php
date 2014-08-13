@@ -50,7 +50,12 @@ class NativeJsonGateway implements GatewayInterface
      */
     public function offsetGet($offset)
     {
-        return new NativeJsonGateway($this->jsonData[$offset]);
+        $value = $this->jsonData[$offset];
+        if (is_scalar($value)) {
+            return $value;
+        } else {
+            return new NativeJsonGateway($this->jsonData[$offset]);
+        }
     }
 
     /**
