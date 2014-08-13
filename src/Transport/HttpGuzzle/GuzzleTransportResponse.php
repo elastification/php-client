@@ -31,7 +31,15 @@ class GuzzleTransportResponse implements TransportResponseInterface
      */
     public function getBody()
     {
-        //TODO: Is it a good idea to read the whole response at once? Do we loose anything?
-        return $this->guzzleResponse->getBody()->getContents();
+        return (string) $this->guzzleResponse->getBody();
+    }
+
+    /**
+     * @return ResponseInterface The response object
+     * @author Daniel Wendlandt
+     */
+    public function getResponse()
+    {
+        return $this->guzzleResponse;
     }
 }
