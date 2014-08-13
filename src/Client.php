@@ -89,6 +89,7 @@ class Client implements ClientInterface
         $rawData = (string) $guzzleResponse->getBody();
         $response = $request->createResponse($rawData, $request->getSerializer(), $request->getSerializerParams());
 
+        //todo check instance response and supprtedClass
         return $response;
     }
 

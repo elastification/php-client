@@ -14,6 +14,7 @@ use Dawen\Component\Elastic\Request\RequestManagerInterface;
 use Dawen\Component\Elastic\Request\V090x\CreateDocumentRequest;
 use Dawen\Component\Elastic\Request\V090x\DeleteDocumentRequest;
 use Dawen\Component\Elastic\Request\V090x\GetDocumentRequest;
+use Dawen\Component\Elastic\Request\V090x\SearchRequest;
 use Dawen\Component\Elastic\Request\V090x\UpdateDocumentRequest;
 use Dawen\Component\Elastic\Response\V090x\DocumentResponse;
 use Dawen\Component\Elastic\Serializer\NativeJsonSerializer;
@@ -225,24 +226,38 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
         $this->fail();
     }
 
-//    public function testMatchAllSearch()
-//    {
-//        $timeStart = microtime(true);
-////        $createDocumentRequest = new SearchRequest('dawen-elastic', 'sandbox', $this->serializer);
-//        $searchRequest = new SearchRequest('dawen-elastic', 'sandbox', $this->serializer);
-////        $this->assertInstanceOf('Dawen\Component\Elastic\ClientInterface', $this->client);
-//
-//        $query = [
-//            "query" => [
-//                "match_all" => []
-//             ]
-//        ];
-//
-//        $searchRequest->setBody($query);
-//        $response = $this->client->send($searchRequest);
-//
-//        var_dump(microtime(true) - $timeStart);
-//
-//        var_dump($response->getData());
-//    }
+    public function testMatchAllSearch()
+    {
+        $timeStart = microtime(true);
+        $searchRequest = new SearchRequest('dawen-elastic', 'sandbox', $this->serializer);
+
+        $query = [
+            "query" => [
+                "match_all" => []
+             ]
+        ];
+
+        $searchRequest->setBody($query);
+        $response = $this->client->send($searchRequest);
+
+        echo 'search: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        $this->assertGreaterThan(0, $response->took());
+        $this->assertFalse($response->timedOut());
+        $shards = $response->getShards();
+        $this->assertTrue(is_array($shards));
+        $this->assertArrayHasKey('total', $shards);
+        $this->assertArrayHasKey('successful', $shards);
+        $this->assertArrayHasKey('failed', $shards);
+        $this->assertEquals($shards['total'], $shards['successful']);
+        $this->assertSame(0, $shards['failed']);
+        $this->assertGreaterThan(2, $response->totalHits());
+        $this->assertGreaterThan(0, $response->maxScoreHits());
+        $this->assertGreaterThan(2, $response->getHitsHits());
+        $hits = $response->getHits();
+        $this->assertTrue(is_array($hits));
+        $this->assertArrayHasKey('total', $hits);
+        $this->assertArrayHasKey('max_score', $hits);
+        $this->assertArrayHasKey('hits', $hits);
+    }
 }

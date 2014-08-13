@@ -1,29 +1,27 @@
-# README #
+Elastic
+=======
 
-This README would normally document whatever steps are necessary to get your application up and running.
 
-### What is this repository for? ###
+---
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
 
-### How do I get set up? ###
+ToDo
+====
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+Dawen:
 
-### Contribution guidelines ###
+- Unit tests for Requests
+- Unit Test for client
+- Integration tests for RequestManager
+- More optional integration tests for v090x
+- IndexExistsRequest
+- CreateIndexRequest
+- DeleteIndexRequest
+- GetMappingRequest
+- CreateMappingRequest
+- CountRequest only term is possible here
+- Helper for Version response compare
+- Vagrant boxes for different elasticsearch versions
 
-* Writing tests
-* Code review
-* Other guidelines
 
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact
+Xenji:
