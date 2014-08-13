@@ -98,6 +98,18 @@ class UpdateDocumentRequestTest extends \PHPUnit_Framework_TestCase
         $this->fail();
     }
 
+    public function testGetActionException()
+    {
+        try {
+            $this->request->getAction();
+        } catch(RequestException $exception) {
+            $this->assertSame('id can not be empty for this request', $exception->getMessage());
+            return;
+        }
+
+        $this->fail();
+    }
+
     public function testGetSerializer()
     {
         $this->assertSame($this->serializer, $this->request->getSerializer());
@@ -113,9 +125,29 @@ class UpdateDocumentRequestTest extends \PHPUnit_Framework_TestCase
     {
         $body = 'my test body';
 
+        $this->serializer->expects($this->once())
+            ->method('serialize')
+            ->with($this->equalTo($body),
+                $this->equalTo(array()))
+            ->will($this->returnValue($body));
+
         $this->request->setBody($body);
 
-        $this->assertNull($this->request->getBody());
+        $this->assertSame($body, $this->request->getBody());
+    }
+
+    public function testSetBodyException()
+    {
+        $body = '';
+
+        try {
+            $this->request->setBody($body);
+        } catch(RequestException $exception) {
+            $this->assertSame('Body can not be empty', $exception->getMessage());
+            return;
+        }
+
+        $this->fail();
     }
 
     public function testGetSupportedClass()
