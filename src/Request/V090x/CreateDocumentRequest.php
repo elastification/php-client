@@ -9,7 +9,6 @@
 namespace Dawen\Component\Elastic\Request\V090x;
 
 use Dawen\Component\Elastic\Request\Shared\AbstractCreateDocumentRequest;
-use Dawen\Component\Elastic\Response\ResponseInterface;
 use Dawen\Component\Elastic\Response\V090x\CreateUpdateDocumentResponse;
 use Dawen\Component\Elastic\Serializer\SerializerInterface;
 
