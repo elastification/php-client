@@ -7,7 +7,7 @@ namespace Dawen\Component\Elastic\Serializer\Gateway;
  * @since 2014-08-13
  * @version 1.0.0
  */
-class NativeJsonGateway implements GatewayInterface
+class NativeArrayGateway implements GatewayInterface
 {
     /**
      * @var array
@@ -54,7 +54,7 @@ class NativeJsonGateway implements GatewayInterface
         if (is_scalar($value)) {
             return $value;
         } else {
-            return new NativeJsonGateway($this->jsonData[$offset]);
+            return new NativeArrayGateway($this->jsonData[$offset]);
         }
     }
 
