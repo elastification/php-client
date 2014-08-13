@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: dwendlandt
- * Date: 23/06/14
- * Time: 16:08
- */
-
 namespace Dawen\Component\Elastic\Tests\Integration;
 
 use Dawen\Component\Elastic\Exception\ClientException;
@@ -26,6 +19,9 @@ use GuzzleHttp\ClientInterface as GuzzleClientInterface;
 use Dawen\Component\Elastic\Client;
 use Dawen\Component\Elastic\ClientInterface;
 
+/**
+ * @group es_090
+ */
 class SandboxV090xTest extends \PHPUnit_Framework_TestCase
 {
 
