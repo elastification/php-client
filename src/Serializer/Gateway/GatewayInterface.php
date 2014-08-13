@@ -1,5 +1,5 @@
 <?php
-namespace Dawen\Component\Elastic\Serializer\Gateway;
+namespace Elastification\Client\Serializer\Gateway;
 /**
  * Interface for accessing properties of the serialized data.
  *

@@ -1,5 +1,5 @@
 <?php
-namespace Dawen\Component\Elastic\Transport;
+namespace Elastification\Client\Transport;
 
 /**
  * Interface TransportInterface
@@ -9,14 +9,14 @@ interface TransportInterface
 {
     /**
      * @param string $httpMethod The http method to use.
-     * @return \Dawen\Component\Elastic\Transport\TransportRequestInterface
+     * @return \Elastification\Client\Transport\TransportRequestInterface
      * @author Mario Mueller
      */
     public function createRequest($httpMethod);
 
     /**
      * @param TransportRequestInterface $request The configured request to send.
-     * @return \Dawen\Component\Elastic\Transport\TransportResponseInterface
+     * @return \Elastification\Client\Transport\TransportResponseInterface
      * @author Mario Mueller
      */
     public function send(TransportRequestInterface $request);

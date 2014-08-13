@@ -6,19 +6,19 @@
  * Time: 08:09
  */
 
-namespace Dawen\Component\Elastic\Request\V090x;
+namespace Elastification\Client\Request\V090x;
 
-use Dawen\Component\Elastic\Request\Shared\AbstractDeleteDocumentRequest;
-use Dawen\Component\Elastic\Response\Response;
-use Dawen\Component\Elastic\Response\ResponseInterface;
-use Dawen\Component\Elastic\Response\V090x\DeleteDocumentResponse;
-use Dawen\Component\Elastic\Serializer\SerializerInterface;
+use Elastification\Client\Request\Shared\AbstractDeleteDocumentRequest;
+use Elastification\Client\Response\Response;
+use Elastification\Client\Response\ResponseInterface;
+use Elastification\Client\Response\V090x\DeleteDocumentResponse;
+use Elastification\Client\Serializer\SerializerInterface;
 
 class DeleteDocumentRequest extends AbstractDeleteDocumentRequest
 {
     /**
      * @param string $rawData
-     * @param \Dawen\Component\Elastic\Serializer\SerializerInterface $serializer
+     * @param \Elastification\Client\Serializer\SerializerInterface $serializer
      * @param array $serializerParams
      * @return null|ResponseInterface
      */
@@ -37,6 +37,6 @@ class DeleteDocumentRequest extends AbstractDeleteDocumentRequest
      */
     public function getSupportedClass()
     {
-        return 'Dawen\Component\Elastic\Response\V090x\DeleteDocumentResponse';
+        return 'Elastification\Client\Response\V090x\DeleteDocumentResponse';
     }
 }

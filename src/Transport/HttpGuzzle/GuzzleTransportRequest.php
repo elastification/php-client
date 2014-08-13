@@ -1,12 +1,12 @@
 <?php
-namespace Dawen\Component\Elastic\Transport\HttpGuzzle;
+namespace Elastification\Client\Transport\HttpGuzzle;
 
-use Dawen\Component\Elastic\Transport\TransportRequestInterface;
+use Elastification\Client\Transport\TransportRequestInterface;
 use GuzzleHttp\Message\RequestInterface;
 use GuzzleHttp\Stream\Stream;
 
 /**
- * @package Dawen\Component\Elastic\Transport\HttpGuzzle
+ * @package Elastification\Client\Transport\HttpGuzzle
  * @author Mario Mueller
  * @since 2014-08-12
  * @version 1.0.0

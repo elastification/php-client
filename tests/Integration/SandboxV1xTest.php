@@ -1,9 +1,9 @@
 <?php
-namespace Dawen\Component\Elastic\Tests\Integration;
+namespace Elastification\Client\Tests\Integration;
 
 /**
  * ${CARET}
- * @package Dawen\Component\Elastic\Tests\Integration
+ * @package Elastification\Client\Tests\Integration
  * @author Mario Mueller <mueller@freshcells.de>
  * @since 2014-08-13
  * @version 1.0.0

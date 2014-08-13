@@ -6,9 +6,9 @@
  * Time: 10:03
  */
 
-namespace Dawen\Component\Elastic\Response;
+namespace Elastification\Client\Response;
 
-use Dawen\Component\Elastic\Serializer\SerializerInterface;
+use Elastification\Client\Serializer\SerializerInterface;
 
 class Response implements ResponseInterface
 {

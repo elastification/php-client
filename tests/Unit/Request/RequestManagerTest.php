@@ -5,11 +5,11 @@
  * Date: 17/06/14
  * Time: 19:02
  */
-namespace Dawen\Component\Elastic\Tests\Unit\Serializer;
+namespace Elastification\Client\Tests\Unit\Serializer;
 
-use Dawen\Component\Elastic\Exception\RequestManagerException;
-use Dawen\Component\Elastic\Request\RequestManager;
-use Dawen\Component\Elastic\Request\RequestManagerInterface;
+use Elastification\Client\Exception\RequestManagerException;
+use Elastification\Client\Request\RequestManager;
+use Elastification\Client\Request\RequestManagerInterface;
 
 class RequestManagerTest extends \PHPUnit_Framework_TestCase
 {
@@ -30,8 +30,8 @@ class RequestManagerTest extends \PHPUnit_Framework_TestCase
 
     public function testInstance()
     {
-        $this->assertInstanceOf('Dawen\Component\Elastic\Request\RequestManagerInterface', $this->requestManager);
-        $this->assertInstanceOf('Dawen\Component\Elastic\Request\RequestManager', $this->requestManager);
+        $this->assertInstanceOf('Elastification\Client\Request\RequestManagerInterface', $this->requestManager);
+        $this->assertInstanceOf('Elastification\Client\Request\RequestManager', $this->requestManager);
     }
 
     public function testHasRequest()
@@ -42,7 +42,7 @@ class RequestManagerTest extends \PHPUnit_Framework_TestCase
     public function testSetHasRequest()
     {
         $name = 'test.request';
-        $request = $this->getMockBuilder('Dawen\Component\Elastic\Request\RequestInterface')->getMock();
+        $request = $this->getMockBuilder('Elastification\Client\Request\RequestInterface')->getMock();
 
         $this->requestManager->setRequest($name, $request);
         $this->assertTrue($this->requestManager->hasRequest($name));
@@ -54,7 +54,7 @@ class RequestManagerTest extends \PHPUnit_Framework_TestCase
         $name1 = 'test.request1';
         $name2 = 'test.request2';
         $name3 = 'test.request3';
-        $request = $this->getMockBuilder('Dawen\Component\Elastic\Request\RequestInterface')->getMock();
+        $request = $this->getMockBuilder('Elastification\Client\Request\RequestInterface')->getMock();
 
         $this->requestManager->setRequest($name1, $request);
         $this->requestManager->setRequest($name2, $request);
@@ -68,7 +68,7 @@ class RequestManagerTest extends \PHPUnit_Framework_TestCase
     public function testSetRequestException()
     {
         $name = 'test.request';
-        $request = $this->getMockBuilder('Dawen\Component\Elastic\Request\RequestInterface')->getMock();
+        $request = $this->getMockBuilder('Elastification\Client\Request\RequestInterface')->getMock();
 
         try {
             $this->requestManager->setRequest($name, $request);
@@ -91,7 +91,7 @@ class RequestManagerTest extends \PHPUnit_Framework_TestCase
     public function testGetRequest()
     {
         $name = 'test.request';
-        $request = $this->getMockBuilder('Dawen\Component\Elastic\Request\RequestInterface')->getMock();
+        $request = $this->getMockBuilder('Elastification\Client\Request\RequestInterface')->getMock();
 
         $this->requestManager->setRequest($name, $request);
         $this->assertSame($request, $this->requestManager->getRequest($name));
@@ -106,7 +106,7 @@ class RequestManagerTest extends \PHPUnit_Framework_TestCase
     public function testRemoveRequest()
     {
         $name = 'test.request';
-        $request = $this->getMockBuilder('Dawen\Component\Elastic\Request\RequestInterface')->getMock();
+        $request = $this->getMockBuilder('Elastification\Client\Request\RequestInterface')->getMock();
 
         $this->requestManager->setRequest($name, $request);
 
@@ -118,7 +118,7 @@ class RequestManagerTest extends \PHPUnit_Framework_TestCase
     public function testReset()
     {
         $name = 'test.request';
-        $request = $this->getMockBuilder('Dawen\Component\Elastic\Request\RequestInterface')->getMock();
+        $request = $this->getMockBuilder('Elastification\Client\Request\RequestInterface')->getMock();
 
         $this->requestManager->setRequest($name, $request);
 

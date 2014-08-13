@@ -1,23 +1,23 @@
 <?php
-namespace Dawen\Component\Elastic\Tests\Integration;
+namespace Elastification\Client\Tests\Integration;
 
-use Dawen\Component\Elastic\Exception\ClientException;
-use Dawen\Component\Elastic\Request\RequestManager;
-use Dawen\Component\Elastic\Request\RequestManagerInterface;
-use Dawen\Component\Elastic\Request\V090x\CreateDocumentRequest;
-use Dawen\Component\Elastic\Request\V090x\DeleteDocumentRequest;
-use Dawen\Component\Elastic\Request\V090x\GetDocumentRequest;
-use Dawen\Component\Elastic\Request\V090x\SearchRequest;
-use Dawen\Component\Elastic\Request\V090x\UpdateDocumentRequest;
-use Dawen\Component\Elastic\Response\V090x\DocumentResponse;
-use Dawen\Component\Elastic\Serializer\NativeJsonSerializer;
-use Dawen\Component\Elastic\Serializer\SerializerInterface;
-use Dawen\Component\Elastic\Transport\HttpGuzzle\GuzzleTransport;
-use Dawen\Component\Elastic\Transport\TransportInterface;
+use Elastification\Client\Exception\ClientException;
+use Elastification\Client\Request\RequestManager;
+use Elastification\Client\Request\RequestManagerInterface;
+use Elastification\Client\Request\V090x\CreateDocumentRequest;
+use Elastification\Client\Request\V090x\DeleteDocumentRequest;
+use Elastification\Client\Request\V090x\GetDocumentRequest;
+use Elastification\Client\Request\V090x\SearchRequest;
+use Elastification\Client\Request\V090x\UpdateDocumentRequest;
+use Elastification\Client\Response\V090x\DocumentResponse;
+use Elastification\Client\Serializer\NativeJsonSerializer;
+use Elastification\Client\Serializer\SerializerInterface;
+use Elastification\Client\Transport\HttpGuzzle\GuzzleTransport;
+use Elastification\Client\Transport\TransportInterface;
 use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\ClientInterface as GuzzleClientInterface;
-use Dawen\Component\Elastic\Client;
-use Dawen\Component\Elastic\ClientInterface;
+use Elastification\Client\Client;
+use Elastification\Client\ClientInterface;
 
 /**
  * @group es_090
@@ -97,7 +97,6 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
 
     public function testGetDocument()
     {
-
         $createDocumentRequest = new CreateDocumentRequest(self::INDEX, self::TYPE, $this->serializer);
 
         $data = array('name' => 'test'.rand(100,10000), 'value' => 'myTestVal'.rand(100,10000));

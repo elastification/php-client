@@ -6,7 +6,7 @@
  * Time: 18:38
  */
 
-namespace Dawen\Component\Elastic\Serializer;
+namespace Elastification\Client\Serializer;
 
 class DoNothingSerializer implements SerializerInterface
 {

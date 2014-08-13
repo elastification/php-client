@@ -5,17 +5,17 @@
  * Date: 17/06/14
  * Time: 19:02
  */
-namespace Dawen\Component\Elastic\Tests\Unit\Serializer;
+namespace Elastification\Client\Tests\Unit\Serializer;
 
-use Dawen\Component\Elastic\Exception\RequestException;
-use Dawen\Component\Elastic\Request\RequestMethods;
-use Dawen\Component\Elastic\Request\V090x\DeleteDocumentRequest;
+use Elastification\Client\Exception\RequestException;
+use Elastification\Client\Request\RequestMethods;
+use Elastification\Client\Request\V090x\DeleteDocumentRequest;
 
 class DeleteDocumentRequestTest extends \PHPUnit_Framework_TestCase
 {
     const INDEX = 'test-index';
     const TYPE = 'test-type';
-    const RESPONSE_CLASS = 'Dawen\Component\Elastic\Response\V090x\DeleteDocumentResponse';
+    const RESPONSE_CLASS = 'Elastification\Client\Response\V090x\DeleteDocumentResponse';
 
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
@@ -31,7 +31,7 @@ class DeleteDocumentRequestTest extends \PHPUnit_Framework_TestCase
     {
         parent::setUp();
 
-        $this->serializer = $this->getMockBuilder('Dawen\Component\Elastic\Serializer\SerializerInterface')
+        $this->serializer = $this->getMockBuilder('Elastification\Client\Serializer\SerializerInterface')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -49,15 +49,15 @@ class DeleteDocumentRequestTest extends \PHPUnit_Framework_TestCase
     public function testInstance()
     {
         $this->assertInstanceOf(
-            'Dawen\Component\Elastic\Request\RequestInterface',
+            'Elastification\Client\Request\RequestInterface',
             $this->request);
 
         $this->assertInstanceOf(
-            'Dawen\Component\Elastic\Request\Shared\AbstractDeleteDocumentRequest',
+            'Elastification\Client\Request\Shared\AbstractDeleteDocumentRequest',
             $this->request);
 
         $this->assertInstanceOf(
-            'Dawen\Component\Elastic\Request\V090x\DeleteDocumentRequest',
+            'Elastification\Client\Request\V090x\DeleteDocumentRequest',
             $this->request);
     }
 

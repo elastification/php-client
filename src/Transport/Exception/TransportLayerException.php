@@ -1,5 +1,5 @@
 <?php
-namespace Dawen\Component\Elastic\Transport\Exception;
+namespace Elastification\Client\Transport\Exception;
 
 class TransportLayerException extends \RuntimeException
 {

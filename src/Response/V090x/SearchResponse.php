@@ -6,9 +6,9 @@
  * Time: 10:03
  */
 
-namespace Dawen\Component\Elastic\Response\V090x;
+namespace Elastification\Client\Response\V090x;
 
-use Dawen\Component\Elastic\Response\Response;
+use Elastification\Client\Response\Response;
 
 class SearchResponse extends Response
 {

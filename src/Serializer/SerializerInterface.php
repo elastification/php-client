@@ -1,8 +1,8 @@
 <?php
 
-namespace Dawen\Component\Elastic\Serializer;
+namespace Elastification\Client\Serializer;
 
-use Dawen\Component\Elastic\Serializer\Gateway\GatewayInterface;
+use Elastification\Client\Serializer\Gateway\GatewayInterface;
 
 interface SerializerInterface
 {
