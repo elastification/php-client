@@ -25,7 +25,7 @@ class NativeObjectGateway implements GatewayInterface, \Iterator, \Countable
     private $properties;
 
     /**
-     * @var string
+     * @var integer
      */
     private $currentPointer = 0;
 
@@ -35,7 +35,8 @@ class NativeObjectGateway implements GatewayInterface, \Iterator, \Countable
     function __construct($jsonData)
     {
         $this->jsonData = $jsonData;
-        $this->properties = get_object_vars($jsonData);
+        // FIXME: Ugly, but need to test if reflection is really faster
+        $this->properties = array_values(array_flip(get_object_vars($jsonData)));
         $this->propertyCount = sizeof($this->properties);
     }
 
@@ -129,7 +130,7 @@ class NativeObjectGateway implements GatewayInterface, \Iterator, \Countable
      */
     public function next()
     {
-        ++$this->currentPointer;
+        $this->currentPointer = $this->currentPointer + 1;
     }
 
     /**

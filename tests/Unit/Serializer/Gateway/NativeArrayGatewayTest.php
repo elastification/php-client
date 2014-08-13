@@ -42,5 +42,27 @@ class NativeArrayGatewayTest extends \PHPUnit_Framework_TestCase
         $subject = new NativeArrayGateway($fixture);
         unset($subject['test']);
     }
-}
 
+    public function testIterator()
+    {
+        $fixture = ['test' => '1', 'test2' => '2'];
+        $subject = new NativeArrayGateway($fixture);
+
+        $this->assertEquals('test', $subject->key());
+
+        $subject->next();
+        $this->assertEquals('test2', $subject->key());
+        $this->assertEquals('2', $subject->current());
+
+        $this->assertTrue($subject->valid());
+        $subject->next();
+        $this->assertFalse($subject->valid());
+    }
+
+    public function testCount()
+    {
+        $fixture = ['test' => '1', 'test2' => '2'];
+        $subject = new NativeArrayGateway($fixture);
+        $this->assertCount(2, $subject);
+    }
+}
