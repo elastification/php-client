@@ -13,7 +13,11 @@ use Elastification\Client\Exception\ClientException;
 final class ClientVersionMap
 {
     private static $versions = array(
-        '0.90.x' => 'V090x'
+        '0.90.x' => 'V090x',
+        '1.0.x' => 'V1X',
+        '1.1.x' => 'V1X',
+        '1.2.x' => 'V1X',
+        '1.3.x' => 'V1X',
     );
 
     /**

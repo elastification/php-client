@@ -5,7 +5,7 @@
  * Date: 17/06/14
  * Time: 19:02
  */
-namespace Elastification\Client\Tests\Unit\Serializer;
+namespace Elastification\Client\Tests\Unit\Request\V090x;
 
 use Elastification\Client\Exception\RequestException;
 use Elastification\Client\Request\RequestMethods;
