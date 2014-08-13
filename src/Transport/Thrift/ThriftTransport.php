@@ -47,10 +47,7 @@ class ThriftTransport implements TransportInterface
     public function send(TransportRequestInterface $request)
     {
         try {
-            $response = $this->thriftClient->execute($request->getWrappedRequest());
-            /* @var $response RestResponse */
-            $transportResponse = new ThriftResponse($response);
-            return $transportResponse;
+            return new ThriftResponse($this->thriftClient->execute($request->getWrappedRequest()));
         } catch (\Exception $exception) {
             throw new TransportLayerException($exception->getMessage(), $exception->getCode(), $exception);
         }
