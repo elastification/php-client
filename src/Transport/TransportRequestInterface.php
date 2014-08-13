@@ -16,4 +16,11 @@ interface TransportRequestInterface
      * @author Mario Mueller
      */
     public function setPath($path);
+
+    /**
+     * @param array $params
+     * @return void
+     * @author Mario Mueller
+     */
+    public function setQueryParams(array $params);
 }
