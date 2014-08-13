@@ -45,5 +45,31 @@ class NativeObjectGatewayTest extends \PHPUnit_Framework_TestCase
         $subject = new NativeObjectGateway($fixture);
         unset($subject['test']);
     }
-}
 
+    public function testIterator()
+    {
+        $fixture = new \stdClass();
+        $fixture->test = 1;
+        $fixture->test2 = 2;
+        $subject = new NativeObjectGateway($fixture);
+
+        $this->assertEquals('test', $subject->key());
+
+        $subject->next();
+        $this->assertEquals('test2', $subject->key());
+        $this->assertEquals('2', $subject->current());
+
+        $this->assertTrue($subject->valid());
+        $subject->next();
+        $this->assertFalse($subject->valid());
+    }
+
+    public function testCount()
+    {
+        $fixture = new \stdClass();
+        $fixture->test = 1;
+        $fixture->test2 = 2;
+        $subject = new NativeObjectGateway($fixture);
+        $this->assertCount(2, $subject);
+    }
+}
