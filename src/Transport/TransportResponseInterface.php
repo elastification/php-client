@@ -13,10 +13,4 @@ interface TransportResponseInterface
      * @author Mario Mueller
      */
     public function getBody();
-
-    /**
-     * @return mixed The response object
-     * @author Daniel Wendlandt
-     */
-    public function getResponse();
 }

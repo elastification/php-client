@@ -33,13 +33,4 @@ class GuzzleTransportResponse implements TransportResponseInterface
     {
         return (string) $this->guzzleResponse->getBody();
     }
-
-    /**
-     * @return ResponseInterface The response object
-     * @author Daniel Wendlandt
-     */
-    public function getResponse()
-    {
-        return $this->guzzleResponse;
-    }
 }
