@@ -21,5 +21,13 @@ class NativeObjectGatewayTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Elastification\Client\Serializer\Gateway\NativeObjectGateway', $nested);
         $this->assertEquals('value', $nested['sub']);
     }
+
+    public function testReturnsNullOnNonExistentProperty()
+    {
+        $fixture = new \stdClass();
+        $subject = new NativeObjectGateway($fixture);
+        $value = $subject['non_existent'];
+        $this->assertNull($value);
+    }
 }
 
