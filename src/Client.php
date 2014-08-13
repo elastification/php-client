@@ -14,6 +14,7 @@ use Dawen\Component\Elastic\Request\RequestInterface;
 use Dawen\Component\Elastic\Request\RequestManagerInterface;
 use Dawen\Component\Elastic\Request\RequestMethods;
 use Dawen\Component\Elastic\Response\ResponseInterface;
+use Dawen\Component\Elastic\Transport\Exception\TransportLayerException;
 use Dawen\Component\Elastic\Transport\TransportInterface;
 use GuzzleHttp\ClientInterface as GuzzleClientInterface;
 use GuzzleHttp\Stream\Stream;
@@ -71,22 +72,22 @@ class Client implements ClientInterface
         if(!RequestMethods::isAllowed($request->getMethod())) {
             throw new RequestException('request method is not allowed');
         }
-        $guzzleRequest = $this->transport->createRequest($request->getMethod());
-        $guzzleRequest->setPath($this->generatePath($request));
+        $transportRequest = $this->transport->createRequest($request->getMethod());
+        $transportRequest->setPath($this->generatePath($request));
 
         $body = $request->getBody();
         if(null !== $body) {
-            $guzzleRequest->setBody(Stream::factory($body));
+            $transportRequest->setBody(Stream::factory($body));
         }
 
         try {
-            $guzzleResponse = $this->transport->send($guzzleRequest);
-        } catch(\Exception $exception) {
+            $transportResponse = $this->transport->send($transportRequest);
+        } catch(TransportLayerException $exception) {
             $clientException = new ClientException($exception->getMessage(), $exception->getCode(), $exception);
             throw $clientException;
         }
 
-        $rawData = (string) $guzzleResponse->getBody();
+        $rawData = (string) $transportResponse->getBody();
         $response = $request->createResponse($rawData, $request->getSerializer(), $request->getSerializerParams());
 
         //todo check instance response and supprtedClass
