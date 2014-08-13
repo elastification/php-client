@@ -9,7 +9,6 @@
 namespace Elastification\Client\Request\V090x;
 
 use Elastification\Client\Request\Shared\AbstractGetDocumentRequest;
-use Elastification\Client\Response\ResponseInterface;
 use Elastification\Client\Response\V090x\DocumentResponse;
 use Elastification\Client\Serializer\SerializerInterface;
 

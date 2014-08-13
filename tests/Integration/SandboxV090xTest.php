@@ -126,7 +126,10 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(1, $getDocumentResponse->getVersion());
         $this->assertSame(self::INDEX, $getDocumentResponse->getIndex());
         $this->assertSame(self::TYPE, $getDocumentResponse->getType());
-        $this->assertSame($data, $getDocumentResponse->getSource());
+//        $this->assertSame($data, $getDocumentResponse->getSource());
+        var_dump($getDocumentResponse->getSource());
+        var_dump($data, $getDocumentResponse->getSource());
+        die();
     }
 
     public function testGetDocumentMissingDoc()
