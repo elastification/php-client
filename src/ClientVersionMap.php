@@ -10,7 +10,7 @@ namespace Dawen\Component\Elastic;
 
 use Dawen\Component\Elastic\Exception\ClientException;
 
-class ClientVersionMap
+final class ClientVersionMap
 {
     private static $versions = array(
         '0.90.x' => 'V090x'
@@ -25,10 +25,10 @@ class ClientVersionMap
      */
     public static function getVersion($version)
     {
-        if(!isset(static::$versions[$version])) {
+        if(!isset(self::$versions[$version])) {
             throw new ClientException('version ' . $version . ' is not defined');
         }
 
-        return static::$versions[$version];
+        return self::$versions[$version];
     }
 }
