@@ -1,6 +1,7 @@
 <?php
 namespace Elastification\Client\Transport\Thrift;
 
+use Elasticsearch\Method;
 use Elastification\Client\Transport\TransportRequestInterface;
 use Elasticsearch\RestRequest;
 
@@ -24,7 +25,7 @@ class ThriftRequest implements TransportRequestInterface
     function __construct($method, $vals = null)
     {
         $this->request = new RestRequest($vals);
-        $this->request->method = $method;
+        $this->request->method = array_flip(Method::$__names)[$method];
     }
 
     /**
