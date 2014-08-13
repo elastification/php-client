@@ -31,6 +31,6 @@ final class RequestMethods
      */
     public static function isAllowed($method)
     {
-        return in_array($method, static::$allowed);
+        return in_array($method, self::$allowed);
     }
 }
