@@ -49,7 +49,6 @@ class NativeJsonSerializer implements SerializerInterface
      */
     private function createGateway($assoc, $decodedJson)
     {
-        $instance = null;
         if ($assoc === true) {
             $instance = new NativeArrayGateway($decodedJson);
         } else {
