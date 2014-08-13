@@ -18,5 +18,13 @@ class NativeArrayGatewayTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Elastification\Client\Serializer\Gateway\NativeArrayGateway', $nested);
         $this->assertEquals('value', $nested['sub']);
     }
+
+    public function testUnsetIndexReturnsNull()
+    {
+        $fixture = ['test' => ['sub' => 'value']];
+        $subject = new NativeArrayGateway($fixture);
+        $value = $subject['non_existent'];
+        $this->assertNull($value);
+    }
 }
 
