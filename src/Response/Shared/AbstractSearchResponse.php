@@ -9,6 +9,7 @@
 namespace Elastification\Client\Response\Shared;
 
 use Elastification\Client\Response\Response;
+use Elastification\Client\Serializer\Gateway\NativeArrayGateway;
 
 abstract class AbstractSearchResponse extends Response
 {
@@ -67,37 +68,29 @@ abstract class AbstractSearchResponse extends Response
 
     public function totalHits()
     {
-        $this->processData();
-
-        $hits = $this->get(self::PROP_HITS);
-        if(is_object($hits)) {
-            return $hits->{self::PROP_HITS_TOTAL};
-        }
-
-        return $hits[self::PROP_HITS_TOTAL];
+        return $this->getHitsProperty(self::PROP_HITS_TOTAL);
     }
 
     public function maxScoreHits()
     {
-        $this->processData();
-
-        $hits = $this->get(self::PROP_HITS);
-        if(is_object($hits)) {
-            return $hits->{self::PROP_HITS_MAX_SCORE};
-        }
-
-        return $hits[self::PROP_HITS_MAX_SCORE];
+        return $this->getHitsProperty(self::PROP_HITS_MAX_SCORE);
     }
 
     public function getHitsHits()
     {
+        return $this->getHitsProperty(self::PROP_HITS_HITS);
+    }
+
+    protected function getHitsProperty($property)
+    {
         $this->processData();
 
         $hits = $this->get(self::PROP_HITS);
-        if(is_object($hits)) {
-            return $hits->{self::PROP_HITS_HITS};
+
+        if($hits instanceof NativeArrayGateway || is_array($hits)) {
+            return $hits[$property];
         }
 
-        return $hits[self::PROP_HITS_HITS];
+        return $hits->{$property};
     }
 }
