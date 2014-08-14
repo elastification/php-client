@@ -14,38 +14,44 @@ use Elastification\Client\Response\Response;
 class CreateUpdateDocumentResponse extends Response
 {
 
-    public function isOk()
+    const PROP_CREATED = 'created';
+    const PROP_ID = '_id';
+    const PROP_VERSION = '_version';
+    const PROP_INDEX = '_index';
+    const PROP_TYPE = '_type';
+
+    public function created()
     {
         $this->processData();
 
-        return $this->data['created'];
+        return $this->get(self::PROP_CREATED);
     }
 
     public function getId()
     {
         $this->processData();
 
-        return $this->data['_id'];
+        return $this->get(self::PROP_ID);
     }
 
     public function getVersion()
     {
         $this->processData();
 
-        return $this->data['_version'];
+        return $this->get(self::PROP_VERSION);
     }
 
     public function getIndex()
     {
         $this->processData();
 
-        return $this->data['_index'];
+        return $this->get(self::PROP_INDEX);
     }
 
     public function getType()
     {
         $this->processData();
 
-        return $this->data['_type'];
+        return $this->get(self::PROP_TYPE);
     }
 }
