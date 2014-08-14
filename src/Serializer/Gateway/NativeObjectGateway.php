@@ -7,7 +7,7 @@ namespace Elastification\Client\Serializer\Gateway;
  * @since 2014-08-13
  * @version 1.0.0
  */
-class NativeObjectGateway implements GatewayInterface
+class NativeObjectGateway implements GatewayInterface, \Iterator, \Countable
 {
     /**
      * @var object
@@ -15,11 +15,29 @@ class NativeObjectGateway implements GatewayInterface
     private $jsonData;
 
     /**
+     * @var integer
+     */
+    private $propertyCount;
+
+    /**
+     * @var string[]
+     */
+    private $properties;
+
+    /**
+     * @var integer
+     */
+    private $currentPointer = 0;
+
+    /**
      * @param object $jsonData
      */
     function __construct($jsonData)
     {
         $this->jsonData = $jsonData;
+        // FIXME: Ugly, but need to test if reflection is really faster
+        $this->properties = array_keys(get_object_vars($jsonData));
+        $this->propertyCount = sizeof($this->properties);
     }
 
     /**
@@ -90,5 +108,76 @@ class NativeObjectGateway implements GatewayInterface
     public function offsetUnset($offset)
     {
         throw new \BadMethodCallException('The result set is immutable');
+    }
+
+    /**
+     * (PHP 5 &gt;= 5.0.0)<br/>
+     * Return the current element
+     * @link http://php.net/manual/en/iterator.current.php
+     * @return mixed Can return any type.
+     */
+    public function current()
+    {
+        $property = $this->properties[$this->currentPointer];
+        return $this->jsonData->$property;
+    }
+
+    /**
+     * (PHP 5 &gt;= 5.0.0)<br/>
+     * Move forward to next element
+     * @link http://php.net/manual/en/iterator.next.php
+     * @return void Any returned value is ignored.
+     */
+    public function next()
+    {
+        $this->currentPointer = $this->currentPointer + 1;
+    }
+
+    /**
+     * (PHP 5 &gt;= 5.0.0)<br/>
+     * Return the key of the current element
+     * @link http://php.net/manual/en/iterator.key.php
+     * @return mixed scalar on success, or null on failure.
+     */
+    public function key()
+    {
+        return $this->properties[$this->currentPointer];
+    }
+
+    /**
+     * (PHP 5 &gt;= 5.0.0)<br/>
+     * Checks if current position is valid
+     * @link http://php.net/manual/en/iterator.valid.php
+     * @return boolean The return value will be casted to boolean and then evaluated.
+     * Returns true on success or false on failure.
+     */
+    public function valid()
+    {
+        return isset($this->properties[$this->currentPointer]);
+    }
+
+    /**
+     * (PHP 5 &gt;= 5.0.0)<br/>
+     * Rewind the Iterator to the first element
+     * @link http://php.net/manual/en/iterator.rewind.php
+     * @return void Any returned value is ignored.
+     */
+    public function rewind()
+    {
+        $this->currentPointer = 0;
+    }
+
+    /**
+     * (PHP 5 &gt;= 5.1.0)<br/>
+     * Count elements of an object
+     * @link http://php.net/manual/en/countable.count.php
+     * @return int The custom count as an integer.
+     * </p>
+     * <p>
+     * The return value is cast to an integer.
+     */
+    public function count()
+    {
+        return sizeof($this->properties);
     }
 }
