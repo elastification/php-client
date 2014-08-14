@@ -8,6 +8,11 @@
 
 namespace Elastification\Client\Exception;
 
+/**
+ * Class RequestException
+ * @package Elastification\Client\Exception
+ * @author Daniel Wendlandt
+ */
 class RequestException extends \Exception
 {
 

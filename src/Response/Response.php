@@ -10,6 +10,11 @@ namespace Elastification\Client\Response;
 
 use Elastification\Client\Serializer\SerializerInterface;
 
+/**
+ * Class Response
+ * @package Elastification\Client\Response
+ * @author Daniel Wendlandt
+ */
 class Response implements ResponseInterface
 {
 
@@ -73,11 +78,44 @@ class Response implements ResponseInterface
 
     /**
      * checks if data is already deserialized.
+     * @author Daniel Wendlandt
      */
     protected function processData()
     {
         if(null === $this->data) {
-            $this->data = $this->serializer->deserialize($this->rawData, $this->serializerParams);
+            if(null !== $this->rawData) {
+                $this->data = $this->serializer->deserialize($this->rawData, $this->serializerParams);
+            }
         }
+    }
+
+    /**
+     * gets a property of the data object/array
+     *
+     * @param string $property
+     * @return mixed
+     * @author Daniel Wendlandt
+     */
+    protected function get($property) {
+        if(is_object($this->data)) {
+            return $this->data->{$property};
+        }
+
+        return $this->data[$property];
+    }
+
+    /**
+     * checks if a property of data array/object exists
+     *
+     * @param string $property
+     * @return bool
+     * @author Daniel Wendlandt
+     */
+    protected function has($property) {
+        if(is_object($this->data)) {
+            return property_exists($this->data, $property);
+        }
+
+        return isset($this->data[$property]);
     }
 }

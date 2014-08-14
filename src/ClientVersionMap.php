@@ -10,6 +10,11 @@ namespace Elastification\Client;
 
 use Elastification\Client\Exception\ClientException;
 
+/**
+ * Class ClientVersionMap
+ * @package Elastification\Client
+ * @author Daniel Wendlandt
+ */
 final class ClientVersionMap
 {
     private static $versions = array(
@@ -26,6 +31,7 @@ final class ClientVersionMap
      * @param string $version
      * @return string
      * @throws Exception\ClientException
+     * @author Daniel Wendlandt
      */
     public static function getVersion($version)
     {

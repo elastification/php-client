@@ -5,7 +5,7 @@
  * Date: 17/06/14
  * Time: 19:02
  */
-namespace Elastification\Client\Tests\Unit\Serializer;
+namespace Elastification\Client\Tests\Unit\Response;
 
 use Elastification\Client\Exception\RequestManagerException;
 use Elastification\Client\Request\RequestManager;
@@ -44,6 +44,7 @@ class RequestManagerTest extends \PHPUnit_Framework_TestCase
         $name = 'test.request';
         $request = $this->getMockBuilder('Elastification\Client\Request\RequestInterface')->getMock();
 
+        /** @noinspection PhpParamsInspection */
         $this->requestManager->setRequest($name, $request);
         $this->assertTrue($this->requestManager->hasRequest($name));
 
@@ -56,8 +57,11 @@ class RequestManagerTest extends \PHPUnit_Framework_TestCase
         $name3 = 'test.request3';
         $request = $this->getMockBuilder('Elastification\Client\Request\RequestInterface')->getMock();
 
+        /** @noinspection PhpParamsInspection */
         $this->requestManager->setRequest($name1, $request);
+        /** @noinspection PhpParamsInspection */
         $this->requestManager->setRequest($name2, $request);
+        /** @noinspection PhpParamsInspection */
         $this->requestManager->setRequest($name3, $request);
         $this->assertTrue($this->requestManager->hasRequest($name1));
         $this->assertTrue($this->requestManager->hasRequest($name2));
@@ -71,7 +75,9 @@ class RequestManagerTest extends \PHPUnit_Framework_TestCase
         $request = $this->getMockBuilder('Elastification\Client\Request\RequestInterface')->getMock();
 
         try {
+            /** @noinspection PhpParamsInspection */
             $this->requestManager->setRequest($name, $request);
+            /** @noinspection PhpParamsInspection */
             $this->requestManager->setRequest($name, $request);
         } catch(RequestManagerException $exception) {
             $this->assertSame('a request for "' . $name . '" is already registered', $exception->getMessage());
@@ -93,6 +99,7 @@ class RequestManagerTest extends \PHPUnit_Framework_TestCase
         $name = 'test.request';
         $request = $this->getMockBuilder('Elastification\Client\Request\RequestInterface')->getMock();
 
+        /** @noinspection PhpParamsInspection */
         $this->requestManager->setRequest($name, $request);
         $this->assertSame($request, $this->requestManager->getRequest($name));
     }
@@ -108,6 +115,7 @@ class RequestManagerTest extends \PHPUnit_Framework_TestCase
         $name = 'test.request';
         $request = $this->getMockBuilder('Elastification\Client\Request\RequestInterface')->getMock();
 
+        /** @noinspection PhpParamsInspection */
         $this->requestManager->setRequest($name, $request);
 
         $this->assertTrue($this->requestManager->hasRequest($name));
@@ -120,6 +128,7 @@ class RequestManagerTest extends \PHPUnit_Framework_TestCase
         $name = 'test.request';
         $request = $this->getMockBuilder('Elastification\Client\Request\RequestInterface')->getMock();
 
+        /** @noinspection PhpParamsInspection */
         $this->requestManager->setRequest($name, $request);
 
         $this->assertTrue($this->requestManager->hasRequest($name));

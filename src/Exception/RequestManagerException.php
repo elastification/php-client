@@ -8,6 +8,11 @@
 
 namespace Elastification\Client\Exception;
 
+/**
+ * Class RequestManagerException
+ * @package Elastification\Client\Exception
+ * @author Daniel Wendlandt
+ */
 class RequestManagerException extends \Exception
 {
 

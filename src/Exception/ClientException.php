@@ -8,6 +8,11 @@
 
 namespace Elastification\Client\Exception;
 
+/**
+ * Class ClientException
+ * @package Elastification\Client\Exception
+ * @author Daniel Wendlandt
+ */
 class ClientException extends \Exception
 {
 
