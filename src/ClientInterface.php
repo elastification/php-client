@@ -27,6 +27,7 @@ interface ClientInterface
      *
      * @param RequestInterface $request
      * @return ResponseInterface
+     * @author Daniel Wendlandt
      */
     public function send(RequestInterface $request);
 
@@ -35,6 +36,7 @@ interface ClientInterface
      *
      * @param string $name
      * @return RequestInterface
+     * @author Daniel Wendlandt
      */
     public function getRequest($name);
 }

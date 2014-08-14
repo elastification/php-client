@@ -19,6 +19,11 @@ use Elastification\Client\Transport\TransportInterface;
 use GuzzleHttp\ClientInterface as GuzzleClientInterface;
 use GuzzleHttp\Stream\Stream;
 
+/**
+ * Class Client
+ * @package Elastification\Client
+ * @author Daniel Wendlandt
+ */
 class Client implements ClientInterface
 {
 
@@ -66,6 +71,7 @@ class Client implements ClientInterface
      * @throws Exception\ClientException
      * @throws Exception\RequestException
      * @return ResponseInterface
+     * @author Daniel Wendlandt
      */
     public function send(RequestInterface $request)
     {
@@ -107,6 +113,7 @@ class Client implements ClientInterface
      *
      * @param RequestInterface $request
      * @return string
+     * @author Daniel Wendlandt
      */
     private function generatePath(RequestInterface $request)
     {

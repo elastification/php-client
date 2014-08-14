@@ -8,6 +8,11 @@
 
 namespace Elastification\Client\Exception;
 
+/**
+ * Class ResponseException
+ * @package Elastification\Client\Exception
+ * @author Daniel Wendlandt
+ */
 class ResponseException extends \Exception
 {
 
