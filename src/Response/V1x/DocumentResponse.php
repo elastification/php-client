@@ -6,6 +6,13 @@ use Elastification\Client\Response\Response;
 
 class DocumentResponse extends Response
 {
+    const PROP_ID = '_id';
+    const PROP_SOURCE = '_source';
+    const PROP_FOUND = 'found';
+    const PROP_VERSION = '_version';
+    const PROP_INDEX = '_index';
+    const PROP_TYPE = '_type';
+
     /**
      * checks if source exists
      *
@@ -13,14 +20,9 @@ class DocumentResponse extends Response
      */
     public function hasSource()
     {
-        /*
-         * FIXME: This code assumes, that the result of the serializer happening in processData is an array.
-         * Maybe we can fix this through a container interface and generic getter/setter
-         * e.g. $container->get('_source')?
-         */
         $this->processData();
 
-        return isset($this->data['_source']);
+        return $this->has(self::PROP_SOURCE);
     }
 
     /**
@@ -32,44 +34,44 @@ class DocumentResponse extends Response
     public function getSource()
     {
         if(!$this->hasSource()) {
-            throw new ResponseException('_source is not set.');
+            throw new ResponseException(self::PROP_SOURCE . ' is not set.');
         }
 
-        return $this->data['_source'];
+        return $this->get(self::PROP_SOURCE);
     }
 
-    public function exists()
+    public function found()
     {
         $this->processData();
 
-        return $this->data['found'];
+        return $this->get(self::PROP_FOUND);
     }
 
     public function getId()
     {
         $this->processData();
 
-        return $this->data['_id'];
+        return $this->get(self::PROP_ID);
     }
 
     public function getVersion()
     {
         $this->processData();
 
-        return $this->data['_version'];
+        return $this->get(self::PROP_VERSION);
     }
 
     public function getIndex()
     {
         $this->processData();
 
-        return $this->data['_index'];
+        return $this->get(self::PROP_INDEX);
     }
 
     public function getType()
     {
         $this->processData();
 
-        return $this->data['_type'];
+        return $this->get(self::PROP_TYPE);
     }
 }
