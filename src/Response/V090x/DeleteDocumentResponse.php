@@ -14,45 +14,52 @@ use Elastification\Client\Response\Response;
 class DeleteDocumentResponse extends Response
 {
 
+    const PROP_OK = 'ok';
+    const PROP_FOUND = 'found';
+    const PROP_ID = '_id';
+    const PROP_VERSION = '_version';
+    const PROP_INDEX = '_index';
+    const PROP_TYPE = '_type';
+
     public function isOk()
     {
         $this->processData();
 
-        return $this->data['ok'];
+        return $this->get(self::PROP_OK);
     }
 
     public function found()
     {
         $this->processData();
 
-        return $this->data['found'];
+        return $this->get(self::PROP_FOUND);
     }
 
     public function getId()
     {
         $this->processData();
 
-        return $this->data['_id'];
+        return $this->get(self::PROP_ID);
     }
 
     public function getVersion()
     {
         $this->processData();
 
-        return $this->data['_version'];
+        return $this->get(self::PROP_VERSION);
     }
 
     public function getIndex()
     {
         $this->processData();
 
-        return $this->data['_index'];
+        return $this->get(self::PROP_INDEX);
     }
 
     public function getType()
     {
         $this->processData();
 
-        return $this->data['_type'];
+        return $this->get(self::PROP_TYPE);
     }
 }

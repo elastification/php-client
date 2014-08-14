@@ -44,6 +44,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
 
     public function testGetSerializer()
     {
+        /** @noinspection PhpParamsInspection */
         $response = new Response('data', $this->serializer);
         $this->assertSame($this->serializer, $response->getSerializer());
     }
@@ -51,6 +52,8 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
     public function testGetRawData()
     {
         $data = 'raw data';
+
+        /** @noinspection PhpParamsInspection */
         $response = new Response($data, $this->serializer);
         $this->assertSame($data, $response->getRawData());
     }
@@ -65,6 +68,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
                 $this->equalTo(array()))
             ->will($this->returnValue($data));
 
+        /** @noinspection PhpParamsInspection */
         $response = new Response($data, $this->serializer);
         $this->assertSame($data, $response->getData());
     }
@@ -79,6 +83,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
                 $this->equalTo(array()))
             ->will($this->returnValue($data));
 
+        /** @noinspection PhpParamsInspection */
         $response = new Response($data, $this->serializer);
         $this->assertSame($data, $response->getData());
         $this->assertSame($data, $response->getData());
@@ -91,6 +96,7 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
         $this->serializer->expects($this->never())
             ->method('deserialize');
 
+        /** @noinspection PhpParamsInspection */
         $response = new Response($data, $this->serializer);
         $this->assertNull($response->getData());
     }

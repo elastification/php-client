@@ -8,10 +8,9 @@
 
 namespace Elastification\Client\Tests\Unit\Response\V090x;
 
-use Elastification\Client\Exception\ResponseException;
-use Elastification\Client\Response\V090x\DocumentResponse;
+use Elastification\Client\Response\V090x\DeleteDocumentResponse;
 
-class DocumentResponseTest extends \PHPUnit_Framework_TestCase
+class DeleteDocumentResponseTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
@@ -36,124 +35,10 @@ class DocumentResponseTest extends \PHPUnit_Framework_TestCase
     public function testInstance()
     {
         /** @noinspection PhpParamsInspection */
-        $response = new DocumentResponse('data', $this->serializer);
+        $response = new DeleteDocumentResponse('data', $this->serializer);
         $this->assertInstanceOf('Elastification\Client\Response\ResponseInterface', $response);
         $this->assertInstanceOf('Elastification\Client\Response\Response', $response);
-        $this->assertInstanceOf('Elastification\Client\Response\V090x\DocumentResponse', $response);
-    }
-
-    public function testHasSourceArray()
-    {
-        $data = $this->getData();
-
-        $this->serializer->expects($this->once())
-            ->method('deserialize')
-            ->with($this->equalTo($data),
-                $this->equalTo(array()))
-            ->will($this->returnValue($data));
-
-        /** @noinspection PhpParamsInspection */
-        $response = new DocumentResponse($data, $this->serializer);
-        $this->assertTrue($response->hasSource());
-    }
-
-    public function testHasSourceObject()
-    {
-        $data = $this->getData(true);
-
-        $this->serializer->expects($this->once())
-            ->method('deserialize')
-            ->with($this->equalTo($data),
-                $this->equalTo(array()))
-            ->will($this->returnValue($data));
-
-        /** @noinspection PhpParamsInspection */
-        $response = new DocumentResponse($data, $this->serializer);
-        $this->assertTrue($response->hasSource());
-    }
-
-    public function testExistsArray()
-    {
-        $data = $this->getData();
-
-        $this->serializer->expects($this->once())
-            ->method('deserialize')
-            ->with($this->equalTo($data),
-                $this->equalTo(array()))
-            ->will($this->returnValue($data));
-
-        /** @noinspection PhpParamsInspection */
-        $response = new DocumentResponse($data, $this->serializer);
-        $this->assertTrue($response->exists());
-    }
-
-    public function testExistsObject()
-    {
-        $data = $this->getData(true);
-
-        $this->serializer->expects($this->once())
-            ->method('deserialize')
-            ->with($this->equalTo($data),
-                $this->equalTo(array()))
-            ->will($this->returnValue($data));
-
-        /** @noinspection PhpParamsInspection */
-        $response = new DocumentResponse($data, $this->serializer);
-        $this->assertTrue($response->exists());
-    }
-
-    public function testGetSourceArray()
-    {
-        $data = $this->getData();
-
-        $this->serializer->expects($this->once())
-            ->method('deserialize')
-            ->with($this->equalTo($data),
-                $this->equalTo(array()))
-            ->will($this->returnValue($data));
-
-        /** @noinspection PhpParamsInspection */
-        $response = new DocumentResponse($data, $this->serializer);
-        $this->assertEquals($data[DocumentResponse::PROP_SOURCE], $response->getSource());
-    }
-
-    public function testGetSourceObject()
-    {
-        $data = $this->getData(true);
-
-        $this->serializer->expects($this->once())
-            ->method('deserialize')
-            ->with($this->equalTo($data),
-                $this->equalTo(array()))
-            ->will($this->returnValue($data));
-
-        /** @noinspection PhpParamsInspection */
-        $response = new DocumentResponse($data, $this->serializer);
-        $this->assertEquals($data->{DocumentResponse::PROP_SOURCE}, $response->getSource());
-    }
-
-    public function testGetSourceException()
-    {
-        $data = $this->getData();
-        unset($data[DocumentResponse::PROP_SOURCE]);
-
-        $this->serializer->expects($this->once())
-            ->method('deserialize')
-            ->with($this->equalTo($data),
-                $this->equalTo(array()))
-            ->will($this->returnValue($data));
-
-        /** @noinspection PhpParamsInspection */
-        $response = new DocumentResponse($data, $this->serializer);
-
-        try {
-            $response->getSource();
-        } catch(ResponseException $exception) {
-            $this->assertSame('_source is not set.', $exception->getMessage());
-            return;
-        }
-
-        $this->fail();
+        $this->assertInstanceOf('Elastification\Client\Response\V090x\DeleteDocumentResponse', $response);
     }
 
     public function testGetIdArray()
@@ -167,8 +52,8 @@ class DocumentResponseTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($data));
 
         /** @noinspection PhpParamsInspection */
-        $response = new DocumentResponse($data, $this->serializer);
-        $this->assertSame($data[DocumentResponse::PROP_ID], $response->getId());
+        $response = new DeleteDocumentResponse($data, $this->serializer);
+        $this->assertSame($data[DeleteDocumentResponse::PROP_ID], $response->getId());
     }
 
     public function testGetIdObject()
@@ -182,8 +67,8 @@ class DocumentResponseTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($data));
 
         /** @noinspection PhpParamsInspection */
-        $response = new DocumentResponse($data, $this->serializer);
-        $this->assertSame($data->{DocumentResponse::PROP_ID}, $response->getId());
+        $response = new DeleteDocumentResponse($data, $this->serializer);
+        $this->assertSame($data->{DeleteDocumentResponse::PROP_ID}, $response->getId());
     }
 
     public function testGetVersionArray()
@@ -197,8 +82,8 @@ class DocumentResponseTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($data));
 
         /** @noinspection PhpParamsInspection */
-        $response = new DocumentResponse($data, $this->serializer);
-        $this->assertSame($data[DocumentResponse::PROP_VERSION], $response->getVersion());
+        $response = new DeleteDocumentResponse($data, $this->serializer);
+        $this->assertSame($data[DeleteDocumentResponse::PROP_VERSION], $response->getVersion());
     }
 
     public function testGetVersionObject()
@@ -212,8 +97,8 @@ class DocumentResponseTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($data));
 
         /** @noinspection PhpParamsInspection */
-        $response = new DocumentResponse($data, $this->serializer);
-        $this->assertSame($data->{DocumentResponse::PROP_VERSION}, $response->getVersion());
+        $response = new DeleteDocumentResponse($data, $this->serializer);
+        $this->assertSame($data->{DeleteDocumentResponse::PROP_VERSION}, $response->getVersion());
     }
 
     public function testGetIndexArray()
@@ -227,8 +112,8 @@ class DocumentResponseTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($data));
 
         /** @noinspection PhpParamsInspection */
-        $response = new DocumentResponse($data, $this->serializer);
-        $this->assertSame($data[DocumentResponse::PROP_INDEX], $response->getIndex());
+        $response = new DeleteDocumentResponse($data, $this->serializer);
+        $this->assertSame($data[DeleteDocumentResponse::PROP_INDEX], $response->getIndex());
     }
 
     public function testGetIndexObject()
@@ -242,8 +127,8 @@ class DocumentResponseTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($data));
 
         /** @noinspection PhpParamsInspection */
-        $response = new DocumentResponse($data, $this->serializer);
-        $this->assertSame($data->{DocumentResponse::PROP_INDEX}, $response->getIndex());
+        $response = new DeleteDocumentResponse($data, $this->serializer);
+        $this->assertSame($data->{DeleteDocumentResponse::PROP_INDEX}, $response->getIndex());
     }
 
     public function testGetTypeArray()
@@ -257,8 +142,8 @@ class DocumentResponseTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($data));
 
         /** @noinspection PhpParamsInspection */
-        $response = new DocumentResponse($data, $this->serializer);
-        $this->assertSame($data[DocumentResponse::PROP_TYPE], $response->getType());
+        $response = new DeleteDocumentResponse($data, $this->serializer);
+        $this->assertSame($data[DeleteDocumentResponse::PROP_TYPE], $response->getType());
     }
 
     public function testGetTypeObject()
@@ -272,21 +157,79 @@ class DocumentResponseTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($data));
 
         /** @noinspection PhpParamsInspection */
-        $response = new DocumentResponse($data, $this->serializer);
-        $this->assertSame($data->{DocumentResponse::PROP_TYPE}, $response->getType());
+        $response = new DeleteDocumentResponse($data, $this->serializer);
+        $this->assertSame($data->{DeleteDocumentResponse::PROP_TYPE}, $response->getType());
+    }
+
+    public function testIsOkArray()
+    {
+        $data = $this->getData();
+
+        $this->serializer->expects($this->once())
+            ->method('deserialize')
+            ->with($this->equalTo($data),
+                $this->equalTo(array()))
+            ->will($this->returnValue($data));
+
+        /** @noinspection PhpParamsInspection */
+        $response = new DeleteDocumentResponse($data, $this->serializer);
+        $this->assertSame($data[DeleteDocumentResponse::PROP_OK], $response->isOk());
+    }
+
+    public function testIsOkObject()
+    {
+        $data = $this->getData(true);
+
+        $this->serializer->expects($this->once())
+            ->method('deserialize')
+            ->with($this->equalTo($data),
+                $this->equalTo(array()))
+            ->will($this->returnValue($data));
+
+        /** @noinspection PhpParamsInspection */
+        $response = new DeleteDocumentResponse($data, $this->serializer);
+        $this->assertSame($data->{DeleteDocumentResponse::PROP_OK}, $response->isOk());
+    }
+
+    public function testFoundArray()
+    {
+        $data = $this->getData();
+
+        $this->serializer->expects($this->once())
+            ->method('deserialize')
+            ->with($this->equalTo($data),
+                $this->equalTo(array()))
+            ->will($this->returnValue($data));
+
+        /** @noinspection PhpParamsInspection */
+        $response = new DeleteDocumentResponse($data, $this->serializer);
+        $this->assertSame($data[DeleteDocumentResponse::PROP_FOUND], $response->found());
+    }
+
+    public function testFoundObject()
+    {
+        $data = $this->getData(true);
+
+        $this->serializer->expects($this->once())
+            ->method('deserialize')
+            ->with($this->equalTo($data),
+                $this->equalTo(array()))
+            ->will($this->returnValue($data));
+
+        /** @noinspection PhpParamsInspection */
+        $response = new DeleteDocumentResponse($data, $this->serializer);
+        $this->assertSame($data->{DeleteDocumentResponse::PROP_FOUND}, $response->found());
     }
 
     private function getData($asObject = false)
     {
         $data = [
-            DocumentResponse::PROP_EXISTS => true,
-            DocumentResponse::PROP_ID => '123asd',
-            DocumentResponse::PROP_VERSION => 2,
-            DocumentResponse::PROP_INDEX => 'test-index',
-            DocumentResponse::PROP_TYPE => 'test-type',
-            DocumentResponse::PROP_SOURCE => [
-                'data' => 'source'
-            ]
+            DeleteDocumentResponse::PROP_OK => true,
+            DeleteDocumentResponse::PROP_FOUND => true,
+            DeleteDocumentResponse::PROP_ID => '123asd',
+            DeleteDocumentResponse::PROP_VERSION => 2,
+            DeleteDocumentResponse::PROP_INDEX => 'test-index',
+            DeleteDocumentResponse::PROP_TYPE => 'test-type',
         ];
 
         if($asObject) {
