@@ -126,8 +126,6 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(1, $getDocumentResponse->getVersion());
         $this->assertSame(self::INDEX, $getDocumentResponse->getIndex());
         $this->assertSame(self::TYPE, $getDocumentResponse->getType());
-        //todo think about iteratable
-        $this->assertSame(1, count($getDocumentResponse->getSource()));
         $this->assertSame($data['name'], $getDocumentResponse->getSource()['name']);
         $this->assertSame($data['value'], $getDocumentResponse->getSource()['value']);
     }
