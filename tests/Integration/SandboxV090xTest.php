@@ -7,9 +7,11 @@ use Elastification\Client\Request\RequestManagerInterface;
 use Elastification\Client\Request\V090x\CreateDocumentRequest;
 use Elastification\Client\Request\V090x\DeleteDocumentRequest;
 use Elastification\Client\Request\V090x\GetDocumentRequest;
+use Elastification\Client\Request\V090x\SearchRequest;
 use Elastification\Client\Request\V090x\UpdateDocumentRequest;
 use Elastification\Client\Response\V090x\CreateUpdateDocumentResponse;
 use Elastification\Client\Response\V090x\DocumentResponse;
+use Elastification\Client\Response\V090x\SearchResponse;
 use Elastification\Client\Serializer\NativeJsonSerializer;
 use Elastification\Client\Serializer\SerializerInterface;
 use Elastification\Client\Transport\HttpGuzzle\GuzzleTransport;
@@ -223,50 +225,42 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
         $this->fail();
     }
 
-//    public function testMatchAllSearch()
-//    {
-//        $timeStart = microtime(true);
-//        $searchRequest = new SearchRequest(self::INDEX, self::TYPE, $this->serializer);
-//
-//        $query = [
-//            "query" => [
-//                "match_all" => []
-//             ]
-//        ];
-//
-//        $searchRequest->setBody($query);
-//        $response = $this->client->send($searchRequest);
-//
-//        echo 'search: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-//
-//        $this->assertGreaterThan(0, $response->took());
-//        $this->assertFalse($response->timedOut());
-//        $shards = $response->getShards();
-//        $this->assertInstanceOf('Elastification\Client\Serializer\Gateway\NativeArrayGateway', $shards);
-//        $this->assertSame(1, count($shards));
-//        $this->assertArrayHasKey('total', $shards);
-//        $this->assertArrayHasKey('successful', $shards);
-//        $this->assertArrayHasKey('failed', $shards);
-//        $this->assertEquals($shards['total'], $shards['successful']);
-//        $this->assertSame(0, $shards['failed']);
-//        $this->assertGreaterThan(2, $response->totalHits());
-//        $this->assertGreaterThan(0, $response->maxScoreHits());
-//        $hitsHits = $response->getHitsHits();
-//
-//todo think about iteratable
-//        var_dump($hitsHits[0]);
-////        foreach($hitsHits as $keyHit => $hit) {
-////            var_dump($keyHit);
-////        }
-//        die();
-////        $this->assertTrue(count() >= 2);
-//
-//        $hits = $response->getHits();
-//
-//        var_dump($hits);die();
-//        $this->assertTrue(is_array($hits));
-//        $this->assertArrayHasKey('total', $hits);
-//        $this->assertArrayHasKey('max_score', $hits);
-//        $this->assertArrayHasKey('hits', $hits);
-//    }
+    public function testMatchAllSearch()
+    {
+        $timeStart = microtime(true);
+        $searchRequest = new SearchRequest(self::INDEX, self::TYPE, $this->serializer);
+
+        $query = [
+            "query" => [
+                "match_all" => []
+             ]
+        ];
+
+        $searchRequest->setBody($query);
+        /** @var SearchResponse $response */
+        $response = $this->client->send($searchRequest);
+
+        echo 'search: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        $this->assertGreaterThan(0, $response->took());
+        $this->assertFalse($response->timedOut());
+        $shards = $response->getShards();
+        $this->assertInstanceOf('Elastification\Client\Serializer\Gateway\NativeArrayGateway', $shards);
+        $this->assertTrue(isset($shards['total']));
+        $this->assertTrue(isset($shards['successful']));
+        $this->assertTrue(isset($shards['failed']));
+        $this->assertGreaterThan(2, $response->totalHits());
+        $this->assertGreaterThan(0, $response->maxScoreHits());
+
+        $hits = $response->getHits();
+        $this->assertArrayHasKey('total', $hits);
+        $this->assertArrayHasKey('max_score', $hits);
+        $this->assertArrayHasKey('hits', $hits);
+
+        $hitsHits = $response->getHitsHits();
+        foreach($hitsHits as $hit) {
+            $this->assertSame(self::INDEX, $hit['_index']);
+            $this->assertSame(self::TYPE, $hit['_type']);
+        }
+    }
 }
