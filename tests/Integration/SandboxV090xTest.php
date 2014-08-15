@@ -7,8 +7,10 @@ use Elastification\Client\Request\RequestManagerInterface;
 use Elastification\Client\Request\V090x\CreateDocumentRequest;
 use Elastification\Client\Request\V090x\DeleteDocumentRequest;
 use Elastification\Client\Request\V090x\GetDocumentRequest;
+use Elastification\Client\Request\V090x\GetMappingRequest;
 use Elastification\Client\Request\V090x\SearchRequest;
 use Elastification\Client\Request\V090x\UpdateDocumentRequest;
+use Elastification\Client\Response\ResponseInterface;
 use Elastification\Client\Response\V090x\CreateUpdateDocumentResponse;
 use Elastification\Client\Response\V090x\DocumentResponse;
 use Elastification\Client\Response\V090x\SearchResponse;
@@ -262,5 +264,36 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
             $this->assertSame(self::INDEX, $hit['_index']);
             $this->assertSame(self::TYPE, $hit['_type']);
         }
+    }
+
+    public function testGetMappingWithType()
+    {
+        $createDocumentRequest = new GetMappingRequest(self::INDEX, self::TYPE, $this->serializer);
+
+        $timeStart = microtime(true);
+
+        /** @var ResponseInterface $response */
+        $response = $this->client->send($createDocumentRequest);
+
+        echo 'getMapping: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        $this->assertContains(self::TYPE, $response->getRawData());
+        $this->assertContains('properties', $response->getRawData());
+    }
+
+    public function testGetMappingWithoutType()
+    {
+        $createDocumentRequest = new GetMappingRequest(self::INDEX, null, $this->serializer);
+
+        $timeStart = microtime(true);
+
+        /** @var ResponseInterface $response */
+        $response = $this->client->send($createDocumentRequest);
+
+        echo 'getMapping: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        $this->assertContains(self::INDEX, $response->getRawData());
+        $this->assertContains(self::TYPE, $response->getRawData());
+        $this->assertContains('properties', $response->getRawData());
     }
 }

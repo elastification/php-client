@@ -8,25 +8,25 @@
 
 namespace Elastification\Client\Request\V090x;
 
-use Elastification\Client\Request\Shared\AbstractSearchRequest;
-use Elastification\Client\Response\V090x\DocumentResponse;
-use Elastification\Client\Response\V090x\SearchResponse;
+use Elastification\Client\Request\Shared\AbstractGetMappingRequest;
+use Elastification\Client\Response\Response;
+use Elastification\Client\Response\ResponseInterface;
 use Elastification\Client\Serializer\SerializerInterface;
 
-class SearchRequest extends AbstractSearchRequest
+class GetMappingRequest extends AbstractGetMappingRequest
 {
     /**
      * @param string $rawData
      * @param \Elastification\Client\Serializer\SerializerInterface $serializer
      * @param array $serializerParams
-     * @return SearchResponse
+     * @return ResponseInterface
      */
     public function createResponse(
         $rawData,
         SerializerInterface $serializer,
         array $serializerParams = array())
     {
-        return new SearchResponse($rawData, $serializer, $serializerParams);
+        return new Response($rawData, $serializer, $serializerParams);
     }
 
     /**
@@ -36,6 +36,7 @@ class SearchRequest extends AbstractSearchRequest
      */
     public function getSupportedClass()
     {
-        return 'Elastification\Client\Response\V090x\SearchResponse';
+        return 'Elastification\Client\Response\Response';
     }
+
 }
