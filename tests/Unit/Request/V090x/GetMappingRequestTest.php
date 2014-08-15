@@ -9,6 +9,7 @@ namespace Elastification\Client\Tests\Unit\Request\V090x;
 
 use Elastification\Client\Request\RequestMethods;
 use Elastification\Client\Request\V090x\GetMappingRequest;
+use GuzzleHttp\Exception\RequestException;
 
 class GetMappingRequestTest extends \PHPUnit_Framework_TestCase
 {
@@ -34,6 +35,7 @@ class GetMappingRequestTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
+        /** @noinspection PhpParamsInspection */
         $this->request = new GetMappingRequest(self::INDEX, self::TYPE, $this->serializer);
     }
 
@@ -75,6 +77,31 @@ class GetMappingRequestTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(RequestMethods::GET, $this->request->getMethod());
     }
 
+    public function testGetAction()
+    {
+        $this->assertSame(GetMappingRequest::REQUEST_ACTION, $this->request->getAction());
+    }
+
+    public function testGetSerializer()
+    {
+        $this->assertSame($this->serializer, $this->request->getSerializer());
+    }
+
+    public function testGetSerializerParams()
+    {
+        $this->assertTrue(is_array($this->request->getSerializerParams()));
+        $this->assertEmpty($this->request->getSerializerParams());
+    }
+
+    public function testSetGetBody()
+    {
+        $body = 'my test body';
+
+        $this->request->setBody($body);
+
+        $this->assertNull($this->request->getBody());
+    }
+    
     public function testGetSupportedClass()
     {
         $this->assertSame(self::RESPONSE_CLASS, $this->request->getSupportedClass());
@@ -83,6 +110,7 @@ class GetMappingRequestTest extends \PHPUnit_Framework_TestCase
     public function testCreateResponse()
     {
         $rawData = 'raw data for testing';
+        /** @noinspection PhpParamsInspection */
         $response = $this->request->createResponse($rawData, $this->serializer);
 
         $this->assertInstanceOf(self::RESPONSE_CLASS, $response);
