@@ -9,7 +9,6 @@ namespace Elastification\Client\Tests\Unit\Request\V090x;
 
 use Elastification\Client\Request\RequestMethods;
 use Elastification\Client\Request\V090x\GetMappingRequest;
-use GuzzleHttp\Exception\RequestException;
 
 class GetMappingRequestTest extends \PHPUnit_Framework_TestCase
 {
