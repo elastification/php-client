@@ -161,4 +161,15 @@ class NativeArrayGateway implements GatewayInterface, \Iterator, \Countable
     {
         return sizeof($this->jsonData);
     }
+
+    /**
+     * Returns the original value.
+     *
+     * @return mixed
+     * @author Mario Mueller
+     */
+    public function getGatewayValue()
+    {
+        return $this->jsonData;
+    }
 }

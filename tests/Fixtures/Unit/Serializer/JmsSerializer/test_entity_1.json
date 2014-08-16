@@ -1,0 +1,24 @@
+{
+    "took": 1,
+    "timed_out": false,
+    "_shards": {
+        "total": 1,
+        "successful": 1,
+        "failed": 0
+    },
+    "hits": {
+        "total": 1,
+        "max_score": 0,
+        "hits": [
+            {
+                "_index": "elastification",
+                "_type": "test",
+                "_id": "4372-4412104-928-DL",
+                "_score": 1.993935,
+                "_source": {
+                    "a": 123
+                }
+            }
+        ]
+    }
+}

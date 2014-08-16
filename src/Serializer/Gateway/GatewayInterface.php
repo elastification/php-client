@@ -9,4 +9,11 @@ namespace Elastification\Client\Serializer\Gateway;
  */
 interface GatewayInterface extends \ArrayAccess
 {
+    /**
+     * Returns the original value.
+     *
+     * @return mixed
+     * @author Mario Mueller
+     */
+    public function getGatewayValue();
 }

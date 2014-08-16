@@ -20,7 +20,7 @@ class NativeObjectGateway implements GatewayInterface, \Iterator, \Countable
     private $propertyCount;
 
     /**
-     * @var string[]
+     * @var array<integer,integer|string>
      */
     private $properties;
 
@@ -180,4 +180,17 @@ class NativeObjectGateway implements GatewayInterface, \Iterator, \Countable
     {
         return sizeof($this->properties);
     }
+
+    /**
+     * Returns the original value.
+     *
+     * @return mixed
+     * @author Mario Mueller
+     */
+    public function getGatewayValue()
+    {
+        return $this->jsonData;
+    }
+
+
 }

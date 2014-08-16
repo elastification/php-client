@@ -65,4 +65,11 @@ class NativeArrayGatewayTest extends \PHPUnit_Framework_TestCase
         $subject = new NativeArrayGateway($fixture);
         $this->assertCount(2, $subject);
     }
+
+    public function testGatewayValue()
+    {
+        $fixture = ['test' => '1', 'test2' => '2'];
+        $subject = new NativeArrayGateway($fixture);
+        $this->assertSame($fixture, $subject->getGatewayValue());
+    }
 }
