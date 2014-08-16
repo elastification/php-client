@@ -9,10 +9,10 @@
          processIsolation="false"
          stopOnFailure="false"
          syntaxCheck="false"
-         bootstrap="vendor/autoload.php"
+         bootstrap="tests/bootstrap.php"
         >
     <testsuites>
-        <testsuite name="Dawen Elastic Testsuite">
+        <testsuite name="Elastification PHP-Client Testsuite">
             <!--enable unit test-->
             <directory>./tests/Unit</directory>
         </testsuite>
