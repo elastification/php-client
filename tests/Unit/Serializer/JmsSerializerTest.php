@@ -1,13 +1,12 @@
 <?php
 namespace Elastification\Client\Tests\Unit\Serializer;
 
-use Doctrine\Common\Annotations\AnnotationReader;
-use Doctrine\Common\Annotations\AnnotationRegistry;
+use Elastification\Client\Serializer\JmsSerializer;
 use Elastification\Client\Serializer\JmsSerializer\SourceSubscribingHandler;
-use Elastification\Client\Serializer\JmsSerializer\TestEntity;
 use JMS\Serializer\Handler\HandlerRegistry;
 use JMS\Serializer\Serializer;
 use JMS\Serializer\SerializerBuilder;
+use JMS\Serializer\SerializerInterface;
 use Prophecy\PhpUnit\ProphecyTestCase;
 
 /**
@@ -24,11 +23,6 @@ class JmsSerializerTest extends ProphecyTestCase
     private $realJms;
 
     /**
-     * @var Serializer
-     */
-    private $mockJms;
-
-    /**
      * @var SourceSubscribingHandler
      */
     private $customHandler;
@@ -43,6 +37,7 @@ class JmsSerializerTest extends ProphecyTestCase
         $this->customHandler = new SourceSubscribingHandler(
             'Elastification\Client\Tests\Fixtures\Unit\Serializer\JmsSerializer\TestEntity'
         );
+
         $this->realJms = SerializerBuilder::create()
             ->addDefaultHandlers()
             ->configureHandlers(
@@ -50,12 +45,11 @@ class JmsSerializerTest extends ProphecyTestCase
                     $registry->registerSubscribingHandler($this->customHandler);
                 }
             )
-//                ->setCacheDir(sys_get_temp_dir().'/serializer')
             ->build();
     }
 
 
-    public function testDeSerMessage()
+    public function testCustomSubscribingHandler()
     {
         $fixture = file_get_contents(FIXTURE_ROOT . '/Unit/Serializer/JmsSerializer/test_entity_1.json');
         $resultEntity = $this->realJms->deserialize(
@@ -93,5 +87,60 @@ class JmsSerializerTest extends ProphecyTestCase
             $entity
         );
         $this->assertEquals(123, $entity->a);
+    }
+
+    public function testSerializer()
+    {
+        $fixture = new \stdClass();
+        $fixture->a = 123;
+
+        $jmsMock = $this->prophesize('JMS\Serializer\Serializer');
+        $jmsMock->serialize($fixture, 'json', null)->shouldBeCalled();
+
+        $subject = new JmsSerializer($jmsMock->reveal());
+        $subject->serialize($fixture);
+    }
+
+    public function testSerializerWithContextSetInInstance()
+    {
+        $fixture = new \stdClass();
+        $fixture->a = 123;
+
+        $jmsCtx = $this->prophesize('JMS\Serializer\SerializationContext');
+        $jmsMock = $this->prophesize('JMS\Serializer\Serializer');
+        $jmsMock->serialize($fixture, 'json', $jmsCtx)->shouldBeCalled();
+
+        $subject = new JmsSerializer($jmsMock->reveal());
+        $subject->setJmsSerializeContext($jmsCtx->reveal());
+
+        $subject->serialize($fixture);
+    }
+
+    public function testSerializerWithContextSetInParams()
+    {
+        $fixture = new \stdClass();
+        $fixture->a = 123;
+
+        $jmsCtx = $this->prophesize('JMS\Serializer\SerializationContext');
+        $jmsMock = $this->prophesize('JMS\Serializer\Serializer');
+        $jmsMock->serialize($fixture, 'json', $jmsCtx)->shouldBeCalled();
+
+        $subject = new JmsSerializer($jmsMock->reveal());
+
+        $subject->serialize($fixture, ['ctx' => $jmsCtx->reveal()]);
+    }
+
+    public function testSerializerWithContextSetInInstanceAndParams()
+    {
+        $fixture = new \stdClass();
+        $fixture->a = 123;
+
+        $jmsCtx = $this->prophesize('JMS\Serializer\SerializationContext');
+        $jmsCtx_MustWin = $this->prophesize('JMS\Serializer\SerializationContext');
+        $jmsMock = $this->prophesize('JMS\Serializer\Serializer');
+        $jmsMock->serialize($fixture, 'json', $jmsCtx_MustWin)->shouldBeCalled();
+        $subject = new JmsSerializer($jmsMock->reveal());
+        $subject->setJmsSerializeContext($jmsCtx->reveal());
+        $subject->serialize($fixture, ['ctx' => $jmsCtx_MustWin->reveal()]);
     }
 }

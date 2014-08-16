@@ -43,8 +43,8 @@ class NativeJsonSerializer implements SerializerInterface
 
     /**
      * @author Mario Mueller
-     * @param $assoc
-     * @param $decodedJson
+     * @param boolean $assoc
+     * @param mixed $decodedJson
      * @return \Elastification\Client\Serializer\Gateway\GatewayInterface
      */
     private function createGateway($assoc, $decodedJson)
