@@ -9,10 +9,13 @@
 namespace Elastification\Client\Request\Shared;
 
 use Elastification\Client\Request\RequestInterface;
-use Elastification\Client\Request\RequestMethods;
-use Elastification\Client\Response\ResponseInterface;
 use Elastification\Client\Serializer\SerializerInterface;
 
+/**
+ * Class AbstractBaseRequest
+ * @package Elastification\Client\Request\Shared
+ * @author Daniel Wendlandt
+ */
 abstract class AbstractBaseRequest implements RequestInterface
 {
     /**
@@ -40,6 +43,7 @@ abstract class AbstractBaseRequest implements RequestInterface
      * @param string $type
      * @param \Elastification\Client\Serializer\SerializerInterface $serializer
      * @param array $serializerParams
+     * @author Daniel Wendlandt
      */
     public function __construct($index, $type, SerializerInterface $serializer, array $serializerParams = array())
     {

@@ -9,10 +9,13 @@
 namespace Elastification\Client\Request\Shared;
 
 use Elastification\Client\Exception\RequestException;
-use Elastification\Client\Request\RequestInterface;
 use Elastification\Client\Request\RequestMethods;
-use Elastification\Client\Serializer\SerializerInterface;
 
+/**
+ * Class AbstractUpdateDocumentRequest
+ * @package Elastification\Client\Request\Shared
+ * @author Daniel Wendlandt
+ */
 abstract class AbstractUpdateDocumentRequest extends AbstractBaseRequest
 {
     /**
@@ -70,6 +73,7 @@ abstract class AbstractUpdateDocumentRequest extends AbstractBaseRequest
      *
      * @param null|string $id
      * @throws \Elastification\Client\Exception\RequestException
+     * @author Daniel Wendlandt
      */
     public function setId($id)
     {

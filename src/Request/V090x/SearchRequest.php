@@ -9,10 +9,14 @@
 namespace Elastification\Client\Request\V090x;
 
 use Elastification\Client\Request\Shared\AbstractSearchRequest;
-use Elastification\Client\Response\V090x\DocumentResponse;
 use Elastification\Client\Response\V090x\SearchResponse;
 use Elastification\Client\Serializer\SerializerInterface;
 
+/**
+ * Class SearchRequest
+ * @package Elastification\Client\Request\V090x
+ * @author Daniel Wendlandt
+ */
 class SearchRequest extends AbstractSearchRequest
 {
     /**
@@ -20,6 +24,7 @@ class SearchRequest extends AbstractSearchRequest
      * @param \Elastification\Client\Serializer\SerializerInterface $serializer
      * @param array $serializerParams
      * @return SearchResponse
+     * @author Daniel Wendlandt
      */
     public function createResponse(
         $rawData,
@@ -33,6 +38,7 @@ class SearchRequest extends AbstractSearchRequest
      * gets a response class name that is supported by this class
      *
      * @return string
+     * @author Daniel Wendlandt
      */
     public function getSupportedClass()
     {

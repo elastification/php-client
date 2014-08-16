@@ -8,11 +8,13 @@
 
 namespace Elastification\Client\Request\Shared;
 
-use Elastification\Client\Request\RequestInterface;
 use Elastification\Client\Request\RequestMethods;
-use Elastification\Client\Response\ResponseInterface;
-use Elastification\Client\Serializer\SerializerInterface;
 
+/**
+ * Class AbstractCreateDocumentRequest
+ * @package Elastification\Client\Request\Shared
+ * @author Daniel Wendlandt
+ */
 abstract class AbstractCreateDocumentRequest extends AbstractBaseRequest
 {
     private $body = null;

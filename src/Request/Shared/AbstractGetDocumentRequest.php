@@ -9,11 +9,13 @@
 namespace Elastification\Client\Request\Shared;
 
 use Elastification\Client\Exception\RequestException;
-use Elastification\Client\Request\RequestInterface;
 use Elastification\Client\Request\RequestMethods;
-use Elastification\Client\Response\ResponseInterface;
-use Elastification\Client\Serializer\SerializerInterface;
 
+/**
+ * Class AbstractGetDocumentRequest
+ * @package Elastification\Client\Request\Shared
+ * @author Daniel Wendlandt
+ */
 abstract class AbstractGetDocumentRequest extends AbstractBaseRequest
 {
     /**
