@@ -12,6 +12,11 @@ use Elastification\Client\Request\Shared\AbstractUpdateDocumentRequest;
 use Elastification\Client\Response\V090x\CreateUpdateDocumentResponse;
 use Elastification\Client\Serializer\SerializerInterface;
 
+/**
+ * Class UpdateDocumentRequest
+ * @package Elastification\Client\Request\V090x
+ * @author Daniel Wendlandt
+ */
 class UpdateDocumentRequest extends AbstractUpdateDocumentRequest
 {
     /**
@@ -19,6 +24,7 @@ class UpdateDocumentRequest extends AbstractUpdateDocumentRequest
      * @param \Elastification\Client\Serializer\SerializerInterface $serializer
      * @param array $serializerParams
      * @return CreateUpdateDocumentResponse
+     * @author Daniel Wendlandt
      */
     public function createResponse(
         $rawData,
@@ -32,6 +38,7 @@ class UpdateDocumentRequest extends AbstractUpdateDocumentRequest
      * gets a response class name that is supported by this class
      *
      * @return string
+     * @author Daniel Wendlandt
      */
     public function getSupportedClass()
     {

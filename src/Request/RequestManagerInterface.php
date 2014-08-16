@@ -4,6 +4,11 @@ namespace Elastification\Client\Request;
 
 use Elastification\Client\Exception\RequestManagerException;
 
+/**
+ * Interface RequestManagerInterface
+ * @package Elastification\Client\Request
+ * @author Daniel Wendlandt
+ */
 interface RequestManagerInterface
 {
     /**
@@ -11,6 +16,7 @@ interface RequestManagerInterface
      *
      * @param string $name
      * @return null | RequestInterface
+     * @author Daniel Wendlandt
      */
     public function getRequest($name);
 
@@ -19,6 +25,7 @@ interface RequestManagerInterface
      *
      * @param $name
      * @return boolean
+     * @author Daniel Wendlandt
      */
     public function hasRequest($name);
 
@@ -28,6 +35,7 @@ interface RequestManagerInterface
      *
      * @param string $name
      * @return boolean
+     * @author Daniel Wendlandt
      */
     public function removeRequest($name);
 
@@ -35,6 +43,7 @@ interface RequestManagerInterface
      * deletes all requests.
      *
      * @return void
+     * @author Daniel Wendlandt
      */
     public function reset();
 
@@ -45,6 +54,7 @@ interface RequestManagerInterface
      * @param RequestInterface $request
      * @return void
      * @throws RequestManagerException
+     * @author Daniel Wendlandt
      */
     public function setRequest($name, RequestInterface $request);
 

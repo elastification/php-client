@@ -8,6 +8,11 @@
 
 namespace Elastification\Client\Serializer;
 
+/**
+ * Class DoNothingSerializer
+ * @package Elastification\Client\Serializer
+ * @author Daniel Wendlandt
+ */
 class DoNothingSerializer implements SerializerInterface
 {
 

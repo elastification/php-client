@@ -8,9 +8,13 @@
 
 namespace Elastification\Client\Response\V090x;
 
-use Elastification\Client\Exception\ResponseException;
 use Elastification\Client\Response\Response;
 
+/**
+ * Class DeleteDocumentResponse
+ * @package Elastification\Client\Response\V090x
+ * @author Daniel Wendlandt
+ */
 class DeleteDocumentResponse extends Response
 {
 
@@ -21,6 +25,12 @@ class DeleteDocumentResponse extends Response
     const PROP_INDEX = '_index';
     const PROP_TYPE = '_type';
 
+    /**
+     * Getter Method
+     *
+     * @return mixed
+     * @author Daniel Wendlandt
+     */
     public function isOk()
     {
         $this->processData();
@@ -28,6 +38,12 @@ class DeleteDocumentResponse extends Response
         return $this->get(self::PROP_OK);
     }
 
+    /**
+     * Getter Method
+     *
+     * @return mixed
+     * @author Daniel Wendlandt
+     */
     public function found()
     {
         $this->processData();
@@ -35,6 +51,12 @@ class DeleteDocumentResponse extends Response
         return $this->get(self::PROP_FOUND);
     }
 
+    /**
+     * Getter Method
+     *
+     * @return mixed
+     * @author Daniel Wendlandt
+     */
     public function getId()
     {
         $this->processData();
@@ -42,6 +64,12 @@ class DeleteDocumentResponse extends Response
         return $this->get(self::PROP_ID);
     }
 
+    /**
+     * Getter Method
+     *
+     * @return mixed
+     * @author Daniel Wendlandt
+     */
     public function getVersion()
     {
         $this->processData();
@@ -49,6 +77,12 @@ class DeleteDocumentResponse extends Response
         return $this->get(self::PROP_VERSION);
     }
 
+    /**
+     * Getter Method
+     *
+     * @return mixed
+     * @author Daniel Wendlandt
+     */
     public function getIndex()
     {
         $this->processData();
@@ -56,6 +90,12 @@ class DeleteDocumentResponse extends Response
         return $this->get(self::PROP_INDEX);
     }
 
+    /**
+     * Getter Method
+     *
+     * @return mixed
+     * @author Daniel Wendlandt
+     */
     public function getType()
     {
         $this->processData();

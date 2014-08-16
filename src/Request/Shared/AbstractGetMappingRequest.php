@@ -8,9 +8,7 @@
 
 namespace Elastification\Client\Request\Shared;
 
-use Elastification\Client\Request\RequestInterface;
 use Elastification\Client\Request\RequestMethods;
-use Elastification\Client\Serializer\SerializerInterface;
 
 abstract class AbstractGetMappingRequest extends AbstractBaseRequest
 {
@@ -37,6 +35,7 @@ abstract class AbstractGetMappingRequest extends AbstractBaseRequest
      * get the body
      *
      * @return mixed
+     * @author Daniel Wendlandt
      */
     public function getBody()
     {
@@ -48,6 +47,7 @@ abstract class AbstractGetMappingRequest extends AbstractBaseRequest
      *
      * @param mixed $body
      * @throws \Elastification\Client\Exception\RequestException
+     * @author Daniel Wendlandt
      */
     public function setBody($body)
     {

@@ -10,6 +10,11 @@ namespace Elastification\Client\Request;
 
 use Elastification\Client\Exception\RequestManagerException;
 
+/**
+ * Class RequestManager
+ * @package Elastification\Client\Request
+ * @author Daniel Wendlandt
+ */
 class RequestManager implements RequestManagerInterface
 {
 
@@ -77,6 +82,7 @@ class RequestManager implements RequestManagerInterface
      *
      * @param string $name
      * @return bool
+     * @author Daniel Wendlandt
      */
     private function requestExists($name)
     {

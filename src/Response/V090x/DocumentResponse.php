@@ -4,6 +4,11 @@ namespace Elastification\Client\Response\V090x;
 use Elastification\Client\Exception\ResponseException;
 use Elastification\Client\Response\Response;
 
+/**
+ * Class DocumentResponse
+ * @package Elastification\Client\Response\V090x
+ * @author Daniel Wendlandt
+ */
 class DocumentResponse extends Response
 {
 
@@ -18,6 +23,7 @@ class DocumentResponse extends Response
      * checks if source exists
      *
      * @return bool
+     * @author Daniel Wendlandt
      */
     public function hasSource()
     {
@@ -31,6 +37,7 @@ class DocumentResponse extends Response
      *
      * @return array
      * @throws \Elastification\Client\Exception\ResponseException
+     * @author Daniel Wendlandt
      */
     public function getSource()
     {
@@ -41,6 +48,12 @@ class DocumentResponse extends Response
         return $this->get(self::PROP_SOURCE);
     }
 
+    /**
+     * Getter Method
+     *
+     * @return mixed
+     * @author Daniel Wendlandt
+     */
     public function exists()
     {
         $this->processData();
@@ -48,6 +61,12 @@ class DocumentResponse extends Response
         return $this->get(self::PROP_EXISTS);
     }
 
+    /**
+     * Getter Method
+     *
+     * @return mixed
+     * @author Daniel Wendlandt
+     */
     public function getId()
     {
         $this->processData();
@@ -55,6 +74,12 @@ class DocumentResponse extends Response
         return $this->get(self::PROP_ID);
     }
 
+    /**
+     * Getter Method
+     *
+     * @return mixed
+     * @author Daniel Wendlandt
+     */
     public function getVersion()
     {
         $this->processData();
@@ -62,6 +87,12 @@ class DocumentResponse extends Response
         return $this->get(self::PROP_VERSION);
     }
 
+    /**
+     * Getter Method
+     *
+     * @return mixed
+     * @author Daniel Wendlandt
+     */
     public function getIndex()
     {
         $this->processData();
@@ -69,6 +100,12 @@ class DocumentResponse extends Response
         return $this->get(self::PROP_INDEX);
     }
 
+    /**
+     * Getter Method
+     *
+     * @return mixed
+     * @author Daniel Wendlandt
+     */
     public function getType()
     {
         $this->processData();
