@@ -14,68 +14,12 @@ use Elastification\Client\Request\RequestMethods;
 use Elastification\Client\Response\ResponseInterface;
 use Elastification\Client\Serializer\SerializerInterface;
 
-abstract class AbstractDeleteDocumentRequest implements RequestInterface
+abstract class AbstractDeleteDocumentRequest extends AbstractBaseRequest
 {
-    /**
-     * @var \Elastification\Client\Serializer\SerializerInterface
-     */
-    private $serializer;
-
-    /**
-     * @var array
-     */
-    private $serializerParams = array();
-
-    /**
-     * @var null|string
-     */
-    private $index = null;
-
-    /**
-     * @var null|string
-     */
-    private $type = null;
-
     /**
      * @var null|string
      */
     private $action = null;
-
-    /**
-     * @param string $index
-     * @param string $type
-     * @param \Elastification\Client\Serializer\SerializerInterface $serializer
-     * @param array $serializerParams
-     */
-    public function __construct($index, $type, SerializerInterface $serializer, array $serializerParams = array())
-    {
-        $this->serializer = $serializer;
-        $this->serializerParams = $serializerParams;
-
-        if(!empty($index)) {
-            $this->index = $index;
-        }
-
-        if(!empty($type)) {
-            $this->type = $type;
-        }
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getIndex()
-    {
-        return $this->index;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
 
     /**
      * @inheritdoc
@@ -95,22 +39,6 @@ abstract class AbstractDeleteDocumentRequest implements RequestInterface
         }
 
         return $this->action;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getSerializer()
-    {
-        return $this->serializer;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getSerializerParams()
-    {
-        return $this->serializerParams;
     }
 
     /**
