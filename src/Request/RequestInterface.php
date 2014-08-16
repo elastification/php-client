@@ -57,6 +57,7 @@ interface RequestInterface
      * before setting data it should be serialized
      *
      * @param mixed $body
+     * @return void
      * @throws \Elastification\Client\Exception\RequestException
      */
     public function setBody($body);
