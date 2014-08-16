@@ -89,16 +89,44 @@ class JmsSerializerTest extends ProphecyTestCase
         $this->assertEquals(123, $entity->a);
     }
 
+    /**
+     * Make the damn line coverage happy.
+     * @author Mario Mueller
+     */
+    public function testDefaultValues()
+    {
+        $defaultDeSerClass = 'Elastification\Client\Serializer\JmsSerializer\SearchResponseEntity';
+        $jmsMock = $this->prophesize('JMS\Serializer\Serializer');
+        $subject = new JmsSerializer($jmsMock->reveal());
+
+        $this->assertEquals($defaultDeSerClass, $subject->getDeserializerClass());
+
+        $subject->setDeserializerClass('something');
+        $this->assertEquals('something', $subject->getDeserializerClass());
+        $subject->setDeserializerClass($defaultDeSerClass);
+
+        $serCtx = $this->prophesize('JMS\Serializer\SerializationContext');
+        $subject->setJmsSerializeContext($serCtx->reveal());
+        $this->assertEquals($serCtx->reveal(), $subject->getJmsSerializeContext());
+
+        $deSerCtx = $this->prophesize('JMS\Serializer\DeserializationContext');
+        $subject->setJmsDeserializeContext($deSerCtx->reveal());
+        $this->assertEquals($deSerCtx->reveal(), $subject->getJmsDeserializeContext());
+    }
+
     public function testSerializer()
     {
         $fixture = new \stdClass();
         $fixture->a = 123;
 
         $jmsMock = $this->prophesize('JMS\Serializer\Serializer');
-        $jmsMock->serialize($fixture, 'json', null)->shouldBeCalled();
+        $jmsMock->serialize($fixture, 'json', null)
+            ->shouldBeCalled()
+            ->willReturn('test_ok');
 
         $subject = new JmsSerializer($jmsMock->reveal());
-        $subject->serialize($fixture);
+        $ret = $subject->serialize($fixture);
+        $this->assertEquals('test_ok', $ret);
     }
 
     public function testSerializerWithContextSetInInstance()
@@ -108,12 +136,15 @@ class JmsSerializerTest extends ProphecyTestCase
 
         $jmsCtx = $this->prophesize('JMS\Serializer\SerializationContext');
         $jmsMock = $this->prophesize('JMS\Serializer\Serializer');
-        $jmsMock->serialize($fixture, 'json', $jmsCtx)->shouldBeCalled();
+        $jmsMock->serialize($fixture, 'json', $jmsCtx)
+            ->shouldBeCalled()
+            ->willReturn('test_ok');
 
         $subject = new JmsSerializer($jmsMock->reveal());
         $subject->setJmsSerializeContext($jmsCtx->reveal());
 
-        $subject->serialize($fixture);
+        $ret = $subject->serialize($fixture);
+        $this->assertEquals('test_ok', $ret);
     }
 
     public function testSerializerWithContextSetInParams()
@@ -123,11 +154,12 @@ class JmsSerializerTest extends ProphecyTestCase
 
         $jmsCtx = $this->prophesize('JMS\Serializer\SerializationContext');
         $jmsMock = $this->prophesize('JMS\Serializer\Serializer');
-        $jmsMock->serialize($fixture, 'json', $jmsCtx)->shouldBeCalled();
-
+        $jmsMock->serialize($fixture, 'json', $jmsCtx)
+            ->shouldBeCalled()
+            ->willReturn('test_ok');
         $subject = new JmsSerializer($jmsMock->reveal());
-
-        $subject->serialize($fixture, ['ctx' => $jmsCtx->reveal()]);
+        $ret = $subject->serialize($fixture, ['ctx' => $jmsCtx->reveal()]);
+        $this->assertEquals('test_ok', $ret);
     }
 
     public function testSerializerWithContextSetInInstanceAndParams()
@@ -138,9 +170,77 @@ class JmsSerializerTest extends ProphecyTestCase
         $jmsCtx = $this->prophesize('JMS\Serializer\SerializationContext');
         $jmsCtx_MustWin = $this->prophesize('JMS\Serializer\SerializationContext');
         $jmsMock = $this->prophesize('JMS\Serializer\Serializer');
-        $jmsMock->serialize($fixture, 'json', $jmsCtx_MustWin)->shouldBeCalled();
+        $jmsMock->serialize($fixture, 'json', $jmsCtx_MustWin)
+            ->shouldBeCalled()
+            ->willReturn('test_ok');
         $subject = new JmsSerializer($jmsMock->reveal());
         $subject->setJmsSerializeContext($jmsCtx->reveal());
-        $subject->serialize($fixture, ['ctx' => $jmsCtx_MustWin->reveal()]);
+        $ret = $subject->serialize($fixture, ['ctx' => $jmsCtx_MustWin->reveal()]);
+        $this->assertEquals('test_ok', $ret);
+    }
+
+
+    public function testDeserializer()
+    {
+        $fixture = '{"a": 123}';
+        $defaultDeSerClass = 'Elastification\Client\Serializer\JmsSerializer\SearchResponseEntity';
+        $jmsMock = $this->prophesize('JMS\Serializer\Serializer');
+        $jmsMock->deserialize($fixture, $defaultDeSerClass, 'json', null)
+            ->shouldBeCalled()
+            ->willReturn('test_ok');
+
+        $subject = new JmsSerializer($jmsMock->reveal());
+        $ret = $subject->deserialize($fixture);
+        $this->assertEquals('test_ok', $ret);
+    }
+
+    public function testDeserializerWithContextSetInInstance()
+    {
+        $fixture = '{"a": 123}';
+        $defaultDeSerClass = 'Elastification\Client\Serializer\JmsSerializer\SearchResponseEntity';
+        $jmsMock = $this->prophesize('JMS\Serializer\Serializer');
+        $deSerCtx = $this->prophesize('JMS\Serializer\DeserializationContext');
+
+        $jmsMock->deserialize($fixture, $defaultDeSerClass, 'json', $deSerCtx)
+            ->shouldBeCalled()
+            ->willReturn('test_ok');
+
+        $subject = new JmsSerializer($jmsMock->reveal());
+        $subject->setJmsDeserializeContext($deSerCtx->reveal());
+        $ret = $subject->deserialize($fixture);
+        $this->assertEquals('test_ok', $ret);
+    }
+
+    public function testDeserializerWithContextSetInParams()
+    {
+        $fixture = '{"a": 123}';
+        $defaultDeSerClass = 'Elastification\Client\Serializer\JmsSerializer\SearchResponseEntity';
+        $jmsMock = $this->prophesize('JMS\Serializer\Serializer');
+        $deSerCtx = $this->prophesize('JMS\Serializer\DeserializationContext');
+
+        $jmsMock->deserialize($fixture, $defaultDeSerClass, 'json', $deSerCtx)
+            ->shouldBeCalled()
+            ->willReturn('test_ok');
+
+        $subject = new JmsSerializer($jmsMock->reveal());
+        $ret = $subject->deserialize($fixture, ['ctx' => $deSerCtx->reveal()]);
+        $this->assertEquals('test_ok', $ret);
+    }
+
+    public function testDeserializerWithContextSetInInstanceAndParams()
+    {
+        $fixture = '{"a": 123}';
+        $defaultDeSerClass = 'Elastification\Client\Serializer\JmsSerializer\SearchResponseEntity';
+        $jmsMock = $this->prophesize('JMS\Serializer\Serializer');
+        $deSerCtx = $this->prophesize('JMS\Serializer\DeserializationContext');
+        $deSerCtx_MustWin = $this->prophesize('JMS\Serializer\DeserializationContext');
+
+        $jmsMock->deserialize($fixture, $defaultDeSerClass, 'json', $deSerCtx_MustWin)
+            ->shouldBeCalled()
+            ->willReturn('test_ok');
+        $subject = new JmsSerializer($jmsMock->reveal());
+        $subject->setJmsDeserializeContext($deSerCtx->reveal());
+        $ret = $subject->deserialize($fixture, ['ctx' => $deSerCtx_MustWin->reveal()]);
+        $this->assertEquals('test_ok', $ret);
     }
 }
