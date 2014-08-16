@@ -37,8 +37,16 @@ class NativeJsonSerializerTest extends \PHPUnit_Framework_TestCase
         $subject = new NativeJsonSerializer();
         $expected = '{"test":"value"}';
         $fixture = ['test' => 'value'];
-        $result = $subject->deserialize($expected);
+        $result = $subject->deserialize($expected, ['assoc' => true]);
         $this->assertEquals($fixture['test'], $result['test']);
+    }
+
+    public function testNativeJsonDeserializationThrowsExceptionOnInvalidJson()
+    {
+        $this->setExpectedException('Elastification\Client\Serializer\Exception\DeserializationFailureException');
+        $subject = new NativeJsonSerializer();
+        $expected = '{"test: ["value"}';
+        $subject->deserialize($expected, ['assoc' => true]);
     }
 
     public function testNativeJsonDeserializationWorksWithStdClass()

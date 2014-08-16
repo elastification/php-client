@@ -46,6 +46,15 @@ class NativeObjectGatewayTest extends \PHPUnit_Framework_TestCase
         unset($subject['test']);
     }
 
+    public function testIssetAndOffsetExists()
+    {
+        $fixture = new \stdClass();
+        $fixture->test = 1;
+        $subject = new NativeObjectGateway($fixture);
+        $this->assertTrue(isset($subject['test']));
+        $this->assertTrue($subject->offsetExists('test'));
+    }
+
     public function testIterator()
     {
         $fixture = new \stdClass();
@@ -54,14 +63,19 @@ class NativeObjectGatewayTest extends \PHPUnit_Framework_TestCase
         $subject = new NativeObjectGateway($fixture);
 
         $this->assertEquals('test', $subject->key());
+        $this->assertEquals(1, $subject->current());
 
         $subject->next();
         $this->assertEquals('test2', $subject->key());
-        $this->assertEquals('2', $subject->current());
+        $this->assertEquals(2, $subject->current());
 
         $this->assertTrue($subject->valid());
         $subject->next();
         $this->assertFalse($subject->valid());
+
+        $subject->rewind();
+        $this->assertEquals('test', $subject->key());
+        $this->assertEquals(1, $subject->current());
     }
 
     public function testCount()
