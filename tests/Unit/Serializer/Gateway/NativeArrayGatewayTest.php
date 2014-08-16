@@ -43,12 +43,21 @@ class NativeArrayGatewayTest extends \PHPUnit_Framework_TestCase
         unset($subject['test']);
     }
 
+    public function testIssetAndOffsetExists()
+    {
+        $fixture = ['test' => ['sub' => 'value']];
+        $subject = new NativeArrayGateway($fixture);
+        $this->assertTrue(isset($subject['test']));
+        $this->assertTrue($subject->offsetExists('test'));
+    }
+
     public function testIterator()
     {
         $fixture = ['test' => '1', 'test2' => '2'];
         $subject = new NativeArrayGateway($fixture);
 
         $this->assertEquals('test', $subject->key());
+        $this->assertEquals('1', $subject->current());
 
         $subject->next();
         $this->assertEquals('test2', $subject->key());
@@ -57,6 +66,11 @@ class NativeArrayGatewayTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($subject->valid());
         $subject->next();
         $this->assertFalse($subject->valid());
+
+        $subject->rewind();
+        $this->assertEquals('test', $subject->key());
+        $this->assertEquals('1', $subject->current());
+
     }
 
     public function testCount()
