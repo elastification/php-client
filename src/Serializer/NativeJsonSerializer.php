@@ -28,14 +28,10 @@ class NativeJsonSerializer implements SerializerInterface
      */
     public function deserialize($data, array $params = array())
     {
-        $assoc = true;
-        if(isset($params['assoc']) && is_bool($params['assoc'])) {
-            $assoc = $params['assoc'];
-        }
-
+        $assoc = $this->useAssoc($params);
         $decodedJson = json_decode($data, $assoc);
 
-        if (json_last_error() == JSON_ERROR_NONE) {
+        if ($decodedJson != null) {
             return $this->createGateway($assoc, $decodedJson);
         }
 
@@ -43,9 +39,23 @@ class NativeJsonSerializer implements SerializerInterface
         if (version_compare(PHP_VERSION, '5.5.0', '>=')) {
             throw new DeserializationFailureException(json_last_error_msg(), json_last_error());
         }
-        else {
-            throw new DeserializationFailureException('JSON syntax error in: ' . $data);
+
+        // Fall through for versions below 5.5
+        throw new DeserializationFailureException('JSON syntax error in: ' . $data);
+    }
+
+    /**
+     * @param array $params
+     * @return boolean
+     * @author Mario Mueller
+     */
+    private function useAssoc($params)
+    {
+        $assoc = true;
+        if(isset($params['assoc']) && is_bool($params['assoc'])) {
+            $assoc = $params['assoc'];
         }
+        return $assoc;
     }
 
     /**
