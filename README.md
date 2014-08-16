@@ -14,18 +14,18 @@ ToDo
 
 Dawen:
 
-- Unit tests for Requests
-- Unit Test for client
-- Integration tests for RequestManager
-- More optional integration tests for v090x
-- IndexExistsRequest
 - CreateIndexRequest
 - DeleteIndexRequest
-- GetMappingRequest
+- IndexExistsRequest
 - CreateMappingRequest
 - CountRequest only term is possible here
-- Helper for Version response compare
+- Unit Test for client
+- Integration tests for RequestManager
+- Helper for Version response compare. (Symfony/Console)
+- After helper for response compare refactor requests. I think version base requests are not needed.
 - Vagrant boxes for different elasticsearch versions
+- documentation of using it
+- Symfony2 Bundle
 
 
 Xenji:

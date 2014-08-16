@@ -16,7 +16,6 @@ use Elastification\Client\Request\RequestMethods;
 use Elastification\Client\Response\ResponseInterface;
 use Elastification\Client\Transport\Exception\TransportLayerException;
 use Elastification\Client\Transport\TransportInterface;
-use GuzzleHttp\ClientInterface as GuzzleClientInterface;
 use GuzzleHttp\Stream\Stream;
 
 /**
