@@ -186,7 +186,8 @@ class JmsSerializerTest extends ProphecyTestCase
         $defaultDeSerClass = 'Elastification\Client\Serializer\JmsSerializer\SearchResponseEntity';
         $jmsMock = $this->prophesize('JMS\Serializer\Serializer');
         $jmsMock->deserialize($fixture, $defaultDeSerClass, 'json', null)
-            ->shouldBeCalled();
+            ->shouldBeCalled()
+            ->willReturn(new $defaultDeSerClass);
 
         $subject = new JmsSerializer($jmsMock->reveal());
         $ret = $subject->deserialize($fixture);
@@ -201,7 +202,8 @@ class JmsSerializerTest extends ProphecyTestCase
         $deSerCtx = $this->prophesize('JMS\Serializer\DeserializationContext');
 
         $jmsMock->deserialize($fixture, $defaultDeSerClass, 'json', $deSerCtx)
-            ->shouldBeCalled();
+            ->shouldBeCalled()
+            ->willReturn(new $defaultDeSerClass);
 
         $subject = new JmsSerializer($jmsMock->reveal());
         $subject->setJmsDeserializeContext($deSerCtx->reveal());
@@ -217,7 +219,8 @@ class JmsSerializerTest extends ProphecyTestCase
         $deSerCtx = $this->prophesize('JMS\Serializer\DeserializationContext');
 
         $jmsMock->deserialize($fixture, $defaultDeSerClass, 'json', $deSerCtx)
-            ->shouldBeCalled();
+            ->shouldBeCalled()
+            ->willReturn(new $defaultDeSerClass);
 
         $subject = new JmsSerializer($jmsMock->reveal());
         $ret = $subject->deserialize($fixture, ['ctx' => $deSerCtx->reveal()]);
@@ -233,7 +236,8 @@ class JmsSerializerTest extends ProphecyTestCase
         $deSerCtx_MustWin = $this->prophesize('JMS\Serializer\DeserializationContext');
 
         $jmsMock->deserialize($fixture, $defaultDeSerClass, 'json', $deSerCtx_MustWin)
-            ->shouldBeCalled();
+            ->shouldBeCalled()
+            ->willReturn(new $defaultDeSerClass);
         $subject = new JmsSerializer($jmsMock->reveal());
         $subject->setJmsDeserializeContext($deSerCtx->reveal());
         $ret = $subject->deserialize($fixture, ['ctx' => $deSerCtx_MustWin->reveal()]);
