@@ -94,7 +94,7 @@ class Client implements ClientInterface
         if (!RequestMethods::isAllowed($request->getMethod())) {
             throw new RequestException('request method is not allowed');
         }
-        
+
         $transportRequest = $this->transport->createRequest($request->getMethod());
         $transportRequest->setPath($this->generatePath($request));
         $transportRequest = $this->setBody($transportRequest, $request->getBody());
@@ -118,13 +118,13 @@ class Client implements ClientInterface
     }
 
     /**
-     * @param Response $response
-     * @param          $supportedClass
+     * @param ResponseInterface   $response
+     * @param                     $supportedClass
      *
      * @throws Exception\ClientException
      * @author Mario Mueller
      */
-    private function mangleSupportedClass(Response $response, $supportedClass)
+    private function mangleSupportedClass(ResponseInterface $response, $supportedClass)
     {
         if (!$response instanceof $supportedClass) {
             throw new ClientException('response is not an instance of ' . $supportedClass);
