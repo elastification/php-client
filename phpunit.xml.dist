@@ -15,6 +15,7 @@
         <testsuite name="Elastification PHP-Client Testsuite">
             <!--enable unit test-->
             <directory>./tests/Unit</directory>
+            <directory>./tests/Integration/Transport/Thrift</directory>
         </testsuite>
     </testsuites>
 
