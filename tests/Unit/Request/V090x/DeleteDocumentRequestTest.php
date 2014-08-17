@@ -50,15 +50,18 @@ class DeleteDocumentRequestTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertInstanceOf(
             'Elastification\Client\Request\RequestInterface',
-            $this->request);
+            $this->request
+        );
 
         $this->assertInstanceOf(
             'Elastification\Client\Request\Shared\AbstractDeleteDocumentRequest',
-            $this->request);
+            $this->request
+        );
 
         $this->assertInstanceOf(
             'Elastification\Client\Request\V090x\DeleteDocumentRequest',
-            $this->request);
+            $this->request
+        );
     }
 
     public function testGetIndex()
@@ -88,7 +91,7 @@ class DeleteDocumentRequestTest extends \PHPUnit_Framework_TestCase
     {
         try {
             $this->request->getAction();
-        } catch(RequestException $exception) {
+        } catch (RequestException $exception) {
             $this->assertSame('id can not be empty for this request', $exception->getMessage());
             return;
         }
@@ -102,7 +105,7 @@ class DeleteDocumentRequestTest extends \PHPUnit_Framework_TestCase
 
         try {
             $this->request->setId($id);
-        } catch(RequestException $exception) {
+        } catch (RequestException $exception) {
             $this->assertSame('Id can not be empty', $exception->getMessage());
             return;
         }

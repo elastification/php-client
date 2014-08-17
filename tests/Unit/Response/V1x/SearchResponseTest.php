@@ -47,8 +47,10 @@ class SearchResponseTest extends \PHPUnit_Framework_TestCase
 
         $this->serializer->expects($this->once())
             ->method('deserialize')
-            ->with($this->equalTo($data),
-                $this->equalTo(array()))
+            ->with(
+                $this->equalTo($data),
+                $this->equalTo(array())
+            )
             ->will($this->returnValue($data));
 
         /** @noinspection PhpParamsInspection */
@@ -62,8 +64,10 @@ class SearchResponseTest extends \PHPUnit_Framework_TestCase
 
         $this->serializer->expects($this->once())
             ->method('deserialize')
-            ->with($this->equalTo($data),
-                $this->equalTo(array()))
+            ->with(
+                $this->equalTo($data),
+                $this->equalTo(array())
+            )
             ->will($this->returnValue($data));
 
         /** @noinspection PhpParamsInspection */
@@ -77,8 +81,10 @@ class SearchResponseTest extends \PHPUnit_Framework_TestCase
 
         $this->serializer->expects($this->once())
             ->method('deserialize')
-            ->with($this->equalTo($data),
-                $this->equalTo(array()))
+            ->with(
+                $this->equalTo($data),
+                $this->equalTo(array())
+            )
             ->will($this->returnValue($data));
 
         /** @noinspection PhpParamsInspection */
@@ -92,8 +98,10 @@ class SearchResponseTest extends \PHPUnit_Framework_TestCase
 
         $this->serializer->expects($this->once())
             ->method('deserialize')
-            ->with($this->equalTo($data),
-                $this->equalTo(array()))
+            ->with(
+                $this->equalTo($data),
+                $this->equalTo(array())
+            )
             ->will($this->returnValue($data));
 
         /** @noinspection PhpParamsInspection */
@@ -107,8 +115,10 @@ class SearchResponseTest extends \PHPUnit_Framework_TestCase
 
         $this->serializer->expects($this->once())
             ->method('deserialize')
-            ->with($this->equalTo($data),
-                $this->equalTo(array()))
+            ->with(
+                $this->equalTo($data),
+                $this->equalTo(array())
+            )
             ->will($this->returnValue($data));
 
         /** @noinspection PhpParamsInspection */
@@ -122,8 +132,10 @@ class SearchResponseTest extends \PHPUnit_Framework_TestCase
 
         $this->serializer->expects($this->once())
             ->method('deserialize')
-            ->with($this->equalTo($data),
-                $this->equalTo(array()))
+            ->with(
+                $this->equalTo($data),
+                $this->equalTo(array())
+            )
             ->will($this->returnValue($data));
 
         /** @noinspection PhpParamsInspection */
@@ -137,8 +149,10 @@ class SearchResponseTest extends \PHPUnit_Framework_TestCase
 
         $this->serializer->expects($this->once())
             ->method('deserialize')
-            ->with($this->equalTo($data),
-                $this->equalTo(array()))
+            ->with(
+                $this->equalTo($data),
+                $this->equalTo(array())
+            )
             ->will($this->returnValue($data));
 
         /** @noinspection PhpParamsInspection */
@@ -152,8 +166,10 @@ class SearchResponseTest extends \PHPUnit_Framework_TestCase
 
         $this->serializer->expects($this->once())
             ->method('deserialize')
-            ->with($this->equalTo($data),
-                $this->equalTo(array()))
+            ->with(
+                $this->equalTo($data),
+                $this->equalTo(array())
+            )
             ->will($this->returnValue($data));
 
         /** @noinspection PhpParamsInspection */
@@ -167,8 +183,10 @@ class SearchResponseTest extends \PHPUnit_Framework_TestCase
 
         $this->serializer->expects($this->once())
             ->method('deserialize')
-            ->with($this->equalTo($data),
-                $this->equalTo(array()))
+            ->with(
+                $this->equalTo($data),
+                $this->equalTo(array())
+            )
             ->will($this->returnValue($data));
 
         /** @noinspection PhpParamsInspection */
@@ -182,8 +200,10 @@ class SearchResponseTest extends \PHPUnit_Framework_TestCase
 
         $this->serializer->expects($this->once())
             ->method('deserialize')
-            ->with($this->equalTo($data),
-                $this->equalTo(array()))
+            ->with(
+                $this->equalTo($data),
+                $this->equalTo(array())
+            )
             ->will($this->returnValue($data));
 
         /** @noinspection PhpParamsInspection */
@@ -197,8 +217,10 @@ class SearchResponseTest extends \PHPUnit_Framework_TestCase
 
         $this->serializer->expects($this->once())
             ->method('deserialize')
-            ->with($this->equalTo($data),
-                $this->equalTo(array()))
+            ->with(
+                $this->equalTo($data),
+                $this->equalTo(array())
+            )
             ->will($this->returnValue($data));
 
         /** @noinspection PhpParamsInspection */
@@ -212,8 +234,10 @@ class SearchResponseTest extends \PHPUnit_Framework_TestCase
 
         $this->serializer->expects($this->once())
             ->method('deserialize')
-            ->with($this->equalTo($data),
-                $this->equalTo(array()))
+            ->with(
+                $this->equalTo($data),
+                $this->equalTo(array())
+            )
             ->will($this->returnValue($data));
 
         /** @noinspection PhpParamsInspection */
@@ -227,8 +251,10 @@ class SearchResponseTest extends \PHPUnit_Framework_TestCase
 
         $this->serializer->expects($this->once())
             ->method('deserialize')
-            ->with($this->equalTo($data),
-                $this->equalTo(array()))
+            ->with(
+                $this->equalTo($data),
+                $this->equalTo(array())
+            )
             ->will($this->returnValue($data));
 
         /** @noinspection PhpParamsInspection */
@@ -242,8 +268,10 @@ class SearchResponseTest extends \PHPUnit_Framework_TestCase
 
         $this->serializer->expects($this->once())
             ->method('deserialize')
-            ->with($this->equalTo($data),
-                $this->equalTo(array()))
+            ->with(
+                $this->equalTo($data),
+                $this->equalTo(array())
+            )
             ->will($this->returnValue($data));
 
         /** @noinspection PhpParamsInspection */
@@ -259,8 +287,10 @@ class SearchResponseTest extends \PHPUnit_Framework_TestCase
 
         $this->serializer->expects($this->once())
             ->method('deserialize')
-            ->with($this->equalTo($data),
-                $this->equalTo(array()))
+            ->with(
+                $this->equalTo($data),
+                $this->equalTo(array())
+            )
             ->will($this->returnValue($data));
 
         /** @noinspection PhpParamsInspection */
@@ -275,13 +305,18 @@ class SearchResponseTest extends \PHPUnit_Framework_TestCase
 
         $this->serializer->expects($this->once())
             ->method('deserialize')
-            ->with($this->equalTo($data),
-                $this->equalTo(array()))
+            ->with(
+                $this->equalTo($data),
+                $this->equalTo(array())
+            )
             ->will($this->returnValue($data));
 
         /** @noinspection PhpParamsInspection */
         $response = new SearchResponse($data, $this->serializer);
-        $this->assertSame($data[SearchResponse::PROP_HITS][SearchResponse::PROP_HITS_MAX_SCORE], $response->maxScoreHits());
+        $this->assertSame(
+            $data[SearchResponse::PROP_HITS][SearchResponse::PROP_HITS_MAX_SCORE],
+            $response->maxScoreHits()
+        );
     }
 
     public function testMaxScoreHitsObject()
@@ -290,8 +325,10 @@ class SearchResponseTest extends \PHPUnit_Framework_TestCase
 
         $this->serializer->expects($this->once())
             ->method('deserialize')
-            ->with($this->equalTo($data),
-                $this->equalTo(array()))
+            ->with(
+                $this->equalTo($data),
+                $this->equalTo(array())
+            )
             ->will($this->returnValue($data));
 
         /** @noinspection PhpParamsInspection */
@@ -307,8 +344,10 @@ class SearchResponseTest extends \PHPUnit_Framework_TestCase
 
         $this->serializer->expects($this->once())
             ->method('deserialize')
-            ->with($this->equalTo($data),
-                $this->equalTo(array()))
+            ->with(
+                $this->equalTo($data),
+                $this->equalTo(array())
+            )
             ->will($this->returnValue($data));
 
         /** @noinspection PhpParamsInspection */
@@ -323,8 +362,10 @@ class SearchResponseTest extends \PHPUnit_Framework_TestCase
 
         $this->serializer->expects($this->once())
             ->method('deserialize')
-            ->with($this->equalTo($data),
-                $this->equalTo(array()))
+            ->with(
+                $this->equalTo($data),
+                $this->equalTo(array())
+            )
             ->will($this->returnValue($data));
 
         /** @noinspection PhpParamsInspection */
@@ -338,8 +379,10 @@ class SearchResponseTest extends \PHPUnit_Framework_TestCase
 
         $this->serializer->expects($this->once())
             ->method('deserialize')
-            ->with($this->equalTo($data),
-                $this->equalTo(array()))
+            ->with(
+                $this->equalTo($data),
+                $this->equalTo(array())
+            )
             ->will($this->returnValue($data));
 
         /** @noinspection PhpParamsInspection */
@@ -355,8 +398,10 @@ class SearchResponseTest extends \PHPUnit_Framework_TestCase
 
         $this->serializer->expects($this->once())
             ->method('deserialize')
-            ->with($this->equalTo($data),
-                $this->equalTo(array()))
+            ->with(
+                $this->equalTo($data),
+                $this->equalTo(array())
+            )
             ->will($this->returnValue($data));
 
         /** @noinspection PhpParamsInspection */
@@ -376,8 +421,8 @@ class SearchResponseTest extends \PHPUnit_Framework_TestCase
             SearchResponse::PROP_HITS => $this->getHitsData()
         ];
 
-        if($asObject) {
-            return (object) $data;
+        if ($asObject) {
+            return (object)$data;
         }
 
         return $data;
@@ -393,8 +438,8 @@ class SearchResponseTest extends \PHPUnit_Framework_TestCase
             )
         );
 
-        if($asObject) {
-            return (object) $hits;
+        if ($asObject) {
+            return (object)$hits;
         }
 
         return $hits;

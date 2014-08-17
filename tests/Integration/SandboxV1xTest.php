@@ -12,9 +12,10 @@ use Elastification\Client\Transport\Thrift\ThriftTransport;
 
 /**
  * ${CARET}
+ *
  * @package Elastification\Client\Tests\Integration
- * @author Mario Mueller <mueller@freshcells.de>
- * @since 2014-08-13
+ * @author  Mario Mueller <mueller@freshcells.de>
+ * @since   2014-08-13
  * @version 1.0.0
  */
 class SandboxV1xTest extends \PHPUnit_Framework_TestCase
@@ -38,7 +39,9 @@ class SandboxV1xTest extends \PHPUnit_Framework_TestCase
         $client = new Client($thriftTransport, $requestManager, ClientInterface::ELASTICSEARCH_VERSION_1_3_x);
         $serializer = new NativeJsonSerializer();
         $createDocumentRequest = new CreateDocumentRequest(self::INDEX, self::TYPE, $serializer, ['assoc' => true]);
-        $createDocumentRequest->setBody(array('name' => 'test'.rand(100,10000), 'value' => 'myTestVal'.rand(100,10000)));
+        $createDocumentRequest->setBody(
+            array('name' => 'test' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000))
+        );
         /** @var CreateUpdateDocumentResponse $response */
         $timeStart = microtime(true);
         $response = $client->send($createDocumentRequest);

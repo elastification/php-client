@@ -11,8 +11,8 @@ use Prophecy\PhpUnit\ProphecyTestCase;
 
 /**
  * @package Elastification\Client\Tests\Unit\Serializer
- * @author Mario Mueller
- * @since 2014-08-15
+ * @author  Mario Mueller
+ * @since   2014-08-15
  * @version 1.0.0
  */
 class JmsSerializerTest extends ProphecyTestCase
@@ -91,6 +91,7 @@ class JmsSerializerTest extends ProphecyTestCase
 
     /**
      * Make the damn line coverage happy.
+     *
      * @author Mario Mueller
      */
     public function testDefaultValues()

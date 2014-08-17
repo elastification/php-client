@@ -86,7 +86,9 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
         $timeStart = microtime(true);
         $createDocumentRequest = new CreateDocumentRequest(self::INDEX, self::TYPE, $this->serializer);
 
-        $createDocumentRequest->setBody(array('name' => 'test'.rand(100,10000), 'value' => 'myTestVal'.rand(100,10000)));
+        $createDocumentRequest->setBody(
+            array('name' => 'test' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000))
+        );
         /** @var CreateUpdateDocumentResponse $response */
         $response = $this->client->send($createDocumentRequest);
 
@@ -103,7 +105,7 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
     {
         $createDocumentRequest = new CreateDocumentRequest(self::INDEX, self::TYPE, $this->serializer);
 
-        $data = array('name' => 'test'.rand(100,10000), 'value' => 'myTestVal'.rand(100,10000));
+        $data = array('name' => 'test' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000));
 
         $createDocumentRequest->setBody($data);
         /** @var CreateUpdateDocumentResponse $response */
@@ -143,7 +145,7 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
 
         try {
             $this->client->send($getDocumentRequest);
-        } catch(ClientException $exception) {
+        } catch (ClientException $exception) {
             $this->assertContains('Not Found', $exception->getMessage());
             echo 'getDocumentMissingDoc: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
             return;
@@ -157,7 +159,7 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
 
         $createDocumentRequest = new CreateDocumentRequest(self::INDEX, self::TYPE, $this->serializer);
 
-        $data = array('name' => 'test'.rand(100,10000), 'value' => 'myTestVal'.rand(100,10000));
+        $data = array('name' => 'test' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000));
 
         $createDocumentRequest->setBody($data);
         /** @var CreateUpdateDocumentResponse $response */
@@ -194,7 +196,9 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
         $timeStart = microtime(true);
         $createDocumentRequest = new CreateDocumentRequest(self::INDEX, self::TYPE, $this->serializer);
 
-        $createDocumentRequest->setBody(array('name' => 'test'.rand(100,10000), 'value' => 'myTestVal'.rand(100,10000)));
+        $createDocumentRequest->setBody(
+            array('name' => 'test' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000))
+        );
         /** @var CreateUpdateDocumentResponse $response */
         $response = $this->client->send($createDocumentRequest);
 
@@ -218,7 +222,7 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
 
         try {
             $this->client->send($getDocumentRequest);
-        } catch(ClientException $exception) {
+        } catch (ClientException $exception) {
             $this->assertContains('Not Found', $exception->getMessage());
 
             return;
@@ -235,7 +239,7 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
         $query = [
             "query" => [
                 "match_all" => []
-             ]
+            ]
         ];
 
         $searchRequest->setBody($query);
@@ -260,7 +264,7 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('hits', $hits);
 
         $hitsHits = $response->getHitsHits();
-        foreach($hitsHits as $hit) {
+        foreach ($hitsHits as $hit) {
             $this->assertSame(self::INDEX, $hit['_index']);
             $this->assertSame(self::TYPE, $hit['_type']);
         }

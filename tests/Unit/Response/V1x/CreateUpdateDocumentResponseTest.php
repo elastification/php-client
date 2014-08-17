@@ -47,8 +47,10 @@ class CreateUpdateDocumentResponseTest extends \PHPUnit_Framework_TestCase
 
         $this->serializer->expects($this->once())
             ->method('deserialize')
-            ->with($this->equalTo($data),
-                $this->equalTo(array()))
+            ->with(
+                $this->equalTo($data),
+                $this->equalTo(array())
+            )
             ->will($this->returnValue($data));
 
         /** @noinspection PhpParamsInspection */
@@ -62,8 +64,10 @@ class CreateUpdateDocumentResponseTest extends \PHPUnit_Framework_TestCase
 
         $this->serializer->expects($this->once())
             ->method('deserialize')
-            ->with($this->equalTo($data),
-                $this->equalTo([]))
+            ->with(
+                $this->equalTo($data),
+                $this->equalTo([])
+            )
             ->will($this->returnValue($data));
 
         /** @noinspection PhpParamsInspection */
@@ -77,8 +81,10 @@ class CreateUpdateDocumentResponseTest extends \PHPUnit_Framework_TestCase
 
         $this->serializer->expects($this->once())
             ->method('deserialize')
-            ->with($this->equalTo($data),
-                $this->equalTo(array()))
+            ->with(
+                $this->equalTo($data),
+                $this->equalTo(array())
+            )
             ->will($this->returnValue($data));
 
         /** @noinspection PhpParamsInspection */
@@ -92,8 +98,10 @@ class CreateUpdateDocumentResponseTest extends \PHPUnit_Framework_TestCase
 
         $this->serializer->expects($this->once())
             ->method('deserialize')
-            ->with($this->equalTo($data),
-                $this->equalTo(array()))
+            ->with(
+                $this->equalTo($data),
+                $this->equalTo(array())
+            )
             ->will($this->returnValue($data));
 
         /** @noinspection PhpParamsInspection */
@@ -107,8 +115,10 @@ class CreateUpdateDocumentResponseTest extends \PHPUnit_Framework_TestCase
 
         $this->serializer->expects($this->once())
             ->method('deserialize')
-            ->with($this->equalTo($data),
-                $this->equalTo(array()))
+            ->with(
+                $this->equalTo($data),
+                $this->equalTo(array())
+            )
             ->will($this->returnValue($data));
 
         /** @noinspection PhpParamsInspection */
@@ -122,8 +132,10 @@ class CreateUpdateDocumentResponseTest extends \PHPUnit_Framework_TestCase
 
         $this->serializer->expects($this->once())
             ->method('deserialize')
-            ->with($this->equalTo($data),
-                $this->equalTo(array()))
+            ->with(
+                $this->equalTo($data),
+                $this->equalTo(array())
+            )
             ->will($this->returnValue($data));
 
         /** @noinspection PhpParamsInspection */
@@ -137,8 +149,10 @@ class CreateUpdateDocumentResponseTest extends \PHPUnit_Framework_TestCase
 
         $this->serializer->expects($this->once())
             ->method('deserialize')
-            ->with($this->equalTo($data),
-                $this->equalTo(array()))
+            ->with(
+                $this->equalTo($data),
+                $this->equalTo(array())
+            )
             ->will($this->returnValue($data));
 
         /** @noinspection PhpParamsInspection */
@@ -152,8 +166,10 @@ class CreateUpdateDocumentResponseTest extends \PHPUnit_Framework_TestCase
 
         $this->serializer->expects($this->once())
             ->method('deserialize')
-            ->with($this->equalTo($data),
-                $this->equalTo(array()))
+            ->with(
+                $this->equalTo($data),
+                $this->equalTo(array())
+            )
             ->will($this->returnValue($data));
 
         /** @noinspection PhpParamsInspection */
@@ -167,8 +183,10 @@ class CreateUpdateDocumentResponseTest extends \PHPUnit_Framework_TestCase
 
         $this->serializer->expects($this->once())
             ->method('deserialize')
-            ->with($this->equalTo($data),
-                $this->equalTo(array()))
+            ->with(
+                $this->equalTo($data),
+                $this->equalTo(array())
+            )
             ->will($this->returnValue($data));
 
         /** @noinspection PhpParamsInspection */
@@ -182,8 +200,10 @@ class CreateUpdateDocumentResponseTest extends \PHPUnit_Framework_TestCase
 
         $this->serializer->expects($this->once())
             ->method('deserialize')
-            ->with($this->equalTo($data),
-                $this->equalTo(array()))
+            ->with(
+                $this->equalTo($data),
+                $this->equalTo(array())
+            )
             ->will($this->returnValue($data));
 
         /** @noinspection PhpParamsInspection */
@@ -201,8 +221,8 @@ class CreateUpdateDocumentResponseTest extends \PHPUnit_Framework_TestCase
             CreateUpdateDocumentResponse::PROP_TYPE => 'test-type',
         ];
 
-        if($asObject) {
-            return (object) $data;
+        if ($asObject) {
+            return (object)$data;
         }
 
         return $data;

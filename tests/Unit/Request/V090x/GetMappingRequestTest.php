@@ -50,15 +50,18 @@ class GetMappingRequestTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertInstanceOf(
             'Elastification\Client\Request\RequestInterface',
-            $this->request);
+            $this->request
+        );
 
         $this->assertInstanceOf(
             'Elastification\Client\Request\Shared\AbstractGetMappingRequest',
-            $this->request);
+            $this->request
+        );
 
         $this->assertInstanceOf(
             'Elastification\Client\Request\V090x\GetMappingRequest',
-            $this->request);
+            $this->request
+        );
     }
 
     public function testGetIndex()
@@ -100,7 +103,7 @@ class GetMappingRequestTest extends \PHPUnit_Framework_TestCase
 
         $this->assertNull($this->request->getBody());
     }
-    
+
     public function testGetSupportedClass()
     {
         $this->assertSame(self::RESPONSE_CLASS, $this->request->getSupportedClass());

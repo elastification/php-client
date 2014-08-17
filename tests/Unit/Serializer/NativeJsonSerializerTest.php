@@ -5,8 +5,8 @@ use Elastification\Client\Serializer\NativeJsonSerializer;
 
 /**
  * @package Elastification\Client\Tests\Unit\Serializer
- * @author Mario Mueller <mueller@freshcells.de>
- * @since 2014-08-13
+ * @author  Mario Mueller <mueller@freshcells.de>
+ * @since   2014-08-13
  * @version 1.0.0
  */
 class NativeJsonSerializerTest extends \PHPUnit_Framework_TestCase

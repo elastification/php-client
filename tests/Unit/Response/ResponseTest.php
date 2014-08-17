@@ -64,8 +64,10 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
 
         $this->serializer->expects($this->once())
             ->method('deserialize')
-            ->with($this->equalTo($data),
-                $this->equalTo(array()))
+            ->with(
+                $this->equalTo($data),
+                $this->equalTo(array())
+            )
             ->will($this->returnValue($data));
 
         /** @noinspection PhpParamsInspection */
@@ -79,8 +81,10 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
 
         $this->serializer->expects($this->once())
             ->method('deserialize')
-            ->with($this->equalTo($data),
-                $this->equalTo(array()))
+            ->with(
+                $this->equalTo($data),
+                $this->equalTo(array())
+            )
             ->will($this->returnValue($data));
 
         /** @noinspection PhpParamsInspection */

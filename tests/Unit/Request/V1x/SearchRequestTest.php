@@ -50,15 +50,18 @@ class SearchRequestTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertInstanceOf(
             'Elastification\Client\Request\RequestInterface',
-            $this->request);
+            $this->request
+        );
 
         $this->assertInstanceOf(
             'Elastification\Client\Request\Shared\AbstractSearchRequest',
-            $this->request);
+            $this->request
+        );
 
         $this->assertInstanceOf(
             'Elastification\Client\Request\V1x\SearchRequest',
-            $this->request);
+            $this->request
+        );
     }
 
     public function testGetIndex()
@@ -98,8 +101,10 @@ class SearchRequestTest extends \PHPUnit_Framework_TestCase
 
         $this->serializer->expects($this->once())
             ->method('serialize')
-            ->with($this->equalTo($body),
-                $this->equalTo(array()))
+            ->with(
+                $this->equalTo($body),
+                $this->equalTo(array())
+            )
             ->will($this->returnValue($body));
 
         $this->request->setBody($body);

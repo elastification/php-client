@@ -49,15 +49,18 @@ class CreateDocumentRequestTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertInstanceOf(
             'Elastification\Client\Request\RequestInterface',
-            $this->request);
+            $this->request
+        );
 
         $this->assertInstanceOf(
             'Elastification\Client\Request\Shared\AbstractCreateDocumentRequest',
-            $this->request);
+            $this->request
+        );
 
         $this->assertInstanceOf(
             'Elastification\Client\Request\V090x\CreateDocumentRequest',
-            $this->request);
+            $this->request
+        );
     }
 
     public function testGetIndex()
@@ -96,10 +99,12 @@ class CreateDocumentRequestTest extends \PHPUnit_Framework_TestCase
         $body = 'my test body';
 
         $this->serializer->expects($this->once())
-                         ->method('serialize')
-                         ->with($this->equalTo($body),
-                                $this->equalTo(array()))
-                         ->will($this->returnValue($body));
+            ->method('serialize')
+            ->with(
+                $this->equalTo($body),
+                $this->equalTo(array())
+            )
+            ->will($this->returnValue($body));
 
         $this->request->setBody($body);
 

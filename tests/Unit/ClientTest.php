@@ -102,7 +102,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         try {
             /** @noinspection PhpParamsInspection */
             $this->client->send($request);
-        } catch(RequestException $exception) {
+        } catch (RequestException $exception) {
             $this->assertSame('request method is not allowed', $exception->getMessage());
             return;
         }
@@ -164,9 +164,11 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
         $request->expects($this->once())
             ->method('createResponse')
-            ->with($this->equalTo($responseBody),
-                   $this->identicalTo($serializer),
-                   $this->identicalTo($serializerParams))
+            ->with(
+                $this->equalTo($responseBody),
+                $this->identicalTo($serializer),
+                $this->identicalTo($serializerParams)
+            )
             ->willReturn($response);
 
         $request->expects($this->once())
@@ -259,9 +261,11 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
         $request->expects($this->once())
             ->method('createResponse')
-            ->with($this->equalTo($responseBody),
+            ->with(
+                $this->equalTo($responseBody),
                 $this->identicalTo($serializer),
-                $this->identicalTo($serializerParams))
+                $this->identicalTo($serializerParams)
+            )
             ->willReturn($response);
 
         $request->expects($this->once())
@@ -297,7 +301,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         try {
             /** @noinspection PhpParamsInspection */
             $this->client->send($request);
-        } catch(ClientException $exception) {
+        } catch (ClientException $exception) {
             $this->assertSame('response is not an instance of ' . $supportedClass, $exception->getMessage());
             return;
         }
@@ -360,9 +364,11 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
         $request->expects($this->once())
             ->method('createResponse')
-            ->with($this->equalTo($responseBody),
+            ->with(
+                $this->equalTo($responseBody),
                 $this->identicalTo($serializer),
-                $this->identicalTo($serializerParams))
+                $this->identicalTo($serializerParams)
+            )
             ->willReturn($response);
 
         $request->expects($this->once())
@@ -461,7 +467,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         try {
             /** @noinspection PhpParamsInspection */
             $this->client->send($request);
-        } catch(ClientException $exception) {
+        } catch (ClientException $exception) {
             $this->assertSame($transportLayerExceptionMsg, $exception->getMessage());
             return;
         }

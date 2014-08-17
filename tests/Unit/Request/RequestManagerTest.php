@@ -79,7 +79,7 @@ class RequestManagerTest extends \PHPUnit_Framework_TestCase
             $this->requestManager->setRequest($name, $request);
             /** @noinspection PhpParamsInspection */
             $this->requestManager->setRequest($name, $request);
-        } catch(RequestManagerException $exception) {
+        } catch (RequestManagerException $exception) {
             $this->assertSame('a request for "' . $name . '" is already registered', $exception->getMessage());
             return;
         }

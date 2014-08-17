@@ -50,15 +50,18 @@ class UpdateDocumentRequestTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertInstanceOf(
             'Elastification\Client\Request\RequestInterface',
-            $this->request);
+            $this->request
+        );
 
         $this->assertInstanceOf(
             'Elastification\Client\Request\Shared\AbstractUpdateDocumentRequest',
-            $this->request);
+            $this->request
+        );
 
         $this->assertInstanceOf(
             'Elastification\Client\Request\V090x\UpdateDocumentRequest',
-            $this->request);
+            $this->request
+        );
     }
 
     public function testGetIndex()
@@ -90,7 +93,7 @@ class UpdateDocumentRequestTest extends \PHPUnit_Framework_TestCase
 
         try {
             $this->request->setId($id);
-        } catch(RequestException $exception) {
+        } catch (RequestException $exception) {
             $this->assertSame('Id can not be empty', $exception->getMessage());
             return;
         }
@@ -102,7 +105,7 @@ class UpdateDocumentRequestTest extends \PHPUnit_Framework_TestCase
     {
         try {
             $this->request->getAction();
-        } catch(RequestException $exception) {
+        } catch (RequestException $exception) {
             $this->assertSame('id can not be empty for this request', $exception->getMessage());
             return;
         }
@@ -127,8 +130,10 @@ class UpdateDocumentRequestTest extends \PHPUnit_Framework_TestCase
 
         $this->serializer->expects($this->once())
             ->method('serialize')
-            ->with($this->equalTo($body),
-                $this->equalTo(array()))
+            ->with(
+                $this->equalTo($body),
+                $this->equalTo(array())
+            )
             ->will($this->returnValue($body));
 
         $this->request->setBody($body);
@@ -142,7 +147,7 @@ class UpdateDocumentRequestTest extends \PHPUnit_Framework_TestCase
 
         try {
             $this->request->setBody($body);
-        } catch(RequestException $exception) {
+        } catch (RequestException $exception) {
             $this->assertSame('Body can not be empty', $exception->getMessage());
             return;
         }
