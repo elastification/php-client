@@ -22,9 +22,12 @@ use Elastification\Client\Exception\RequestException;
 use Elastification\Client\Request\RequestInterface;
 use Elastification\Client\Request\RequestManagerInterface;
 use Elastification\Client\Request\RequestMethods;
+use Elastification\Client\Response\Response;
 use Elastification\Client\Response\ResponseInterface;
 use Elastification\Client\Transport\Exception\TransportLayerException;
 use Elastification\Client\Transport\TransportInterface;
+use Elastification\Client\Transport\TransportRequestInterface;
+use Elastification\Client\Transport\TransportResponseInterface;
 use GuzzleHttp\Stream\Stream;
 
 /**
@@ -91,13 +94,10 @@ class Client implements ClientInterface
         if (!RequestMethods::isAllowed($request->getMethod())) {
             throw new RequestException('request method is not allowed');
         }
+        
         $transportRequest = $this->transport->createRequest($request->getMethod());
         $transportRequest->setPath($this->generatePath($request));
-
-        $body = $request->getBody();
-        if (null !== $body) {
-            $transportRequest->setBody(Stream::factory($body));
-        }
+        $transportRequest = $this->setBody($transportRequest, $request->getBody());
 
         try {
             $transportResponse = $this->transport->send($transportRequest);
@@ -107,15 +107,43 @@ class Client implements ClientInterface
         }
 
         $rawData = (string)$transportResponse->getBody();
-        /** @var ResponseInterface $response */
-        $response = $request->createResponse($rawData, $request->getSerializer(), $request->getSerializerParams());
 
+        /** @var Response $response */
+        $response = $request->createResponse($rawData, $request->getSerializer(), $request->getSerializerParams());
         $supportedClass = $request->getSupportedClass();
+
+        $this->mangleSupportedClass($response, $supportedClass);
+
+        return $response;
+    }
+
+    /**
+     * @param Response $response
+     * @param          $supportedClass
+     *
+     * @throws Exception\ClientException
+     * @author Mario Mueller
+     */
+    private function mangleSupportedClass(Response $response, $supportedClass)
+    {
         if (!$response instanceof $supportedClass) {
             throw new ClientException('response is not an instance of ' . $supportedClass);
         }
+    }
 
-        return $response;
+    /**
+     * @param TransportRequestInterface $transportRequest
+     * @param                           $body
+     *
+     * @return TransportRequestInterface
+     * @author Mario Mueller
+     */
+    private function setBody(TransportRequestInterface $transportRequest, $body)
+    {
+        if (null !== $body) {
+            $transportRequest->setBody($body);
+        }
+        return $transportRequest;
     }
 
     /**
