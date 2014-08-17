@@ -2,13 +2,20 @@ tools:
     php_sim: true
     php_pdepend: true
     php_analyzer: true
+    external_code_coverage: true
+    sensiolabs_security_checker: true
+    php_code_coverage: true
+    php_loc:
+        enabled: true
+        excluded_dirs: [vendor, tests]
+
 filter:
     excluded_paths:
         - 'tests/*'
-build:
-    dependencies:
-        before:
-            - 'sudo /usr/share/elasticsearch/bin/plugin -install elasticsearch/elasticsearch-transport-thrift/2.3.0'
-    environment:
-        php: '5.4.28'
-        elasticsearch: true
+#build:
+#    dependencies:
+#        before:
+#            - 'sudo /usr/share/elasticsearch/bin/plugin -install elasticsearch/elasticsearch-transport-thrift/2.3.0'
+#    environment:
+#        php: '5.4.28'
+#        elasticsearch: true
