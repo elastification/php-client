@@ -46,6 +46,26 @@ class ThriftTransportConnectionFactory
      */
     public static function factory($host, $port, $sendTimeout = null, $receiveTimeout = null, $framedTransport = false)
     {
+        $socket = self::createSocket($host, $port, $sendTimeout, $receiveTimeout);
+        $transport = self::createTransport($socket, $framedTransport);
+        $protocol = new TBinaryProtocolAccelerated($transport);
+        $client = new RestClient($protocol);
+        $transport->open();
+
+        return $client;
+    }
+
+    /**
+     * @param string $host
+     * @param int $port
+     * @param int $sendTimeout
+     * @param int $receiveTimeout
+     *
+     * @return TSocket
+     * @author Mario Mueller
+     */
+    private static function createSocket($host, $port, $sendTimeout, $receiveTimeout)
+    {
         $socket = new TSocket($host, $port, true);
         if (null !== $sendTimeout) {
             $socket->setSendTimeout($sendTimeout);
@@ -55,16 +75,23 @@ class ThriftTransportConnectionFactory
             $socket->setRecvTimeout($receiveTimeout);
         }
 
+        return $socket;
+    }
+
+    /**
+     * @param TSocket $socket
+     * @param bool    $framedTransport
+     *
+     * @return TBufferedTransport|TFramedTransport
+     * @author Mario Mueller
+     */
+    private static function createTransport(TSocket $socket, $framedTransport = false)
+    {
         if ($framedTransport) {
             $transport = new TFramedTransport($socket);
         } else {
             $transport = new TBufferedTransport($socket);
         }
-
-        $protocol = new TBinaryProtocolAccelerated($transport);
-        $client = new RestClient($protocol);
-        $transport->open();
-
-        return $client;
+        return $transport;
     }
 }
