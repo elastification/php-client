@@ -22,25 +22,20 @@ use Elastification\Client\Request\RequestMethods;
 use Elastification\Client\Request\Shared\AbstractBaseRequest;
 
 /**
- * Class AbstractCreateIndexRequest
+ * Class AbstractDeleteIndexRequest
  *
  * @package Elastification\Client\Request\Shared\Index
  * @author Daniel Wendlandt
  */
-abstract class AbstractCreateIndexRequest extends AbstractBaseRequest
+abstract class AbstractDeleteIndexRequest extends AbstractBaseRequest
 {
-
-    /**
-     * @var null|mixed
-     */
-    private $body = null;
 
     /**
      * @inheritdoc
      */
     public function getMethod()
     {
-        return RequestMethods::PUT;
+        return RequestMethods::DELETE;
     }
 
     /**
@@ -64,7 +59,7 @@ abstract class AbstractCreateIndexRequest extends AbstractBaseRequest
      */
     public function getBody()
     {
-        return $this->body;
+        return null;
     }
 
     /**
@@ -72,6 +67,6 @@ abstract class AbstractCreateIndexRequest extends AbstractBaseRequest
      */
     public function setBody($body)
     {
-        $this->body = $this->serializer->serialize($body, $this->serializerParams);
+        //do nothing
     }
 }

@@ -18,11 +18,13 @@ Global:
 - [ ] Symfony2 Bundle
 - [ ] Vagrant boxes for different elasticsearch versions
 - [ ] Helper for Version response compare. (Symfony/Console)
+- [ ] Export/Import/Copy indecies Elasticsearch tool (php) based on php-client and console application with simple config json/yml
 
 Dawen:
 
-- [ ] CreateIndexRequest
-- [ ] DeleteIndexRequest
+- [ ] RefreshIndexRequest
+- [x] CreateIndexRequest
+- [x] DeleteIndexRequest
 - [ ] open/close index
 - [x] IndexExistsRequest
 - [ ] use setup and teardown for integration tests sandbox v090x. Delete Index at the end
