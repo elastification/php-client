@@ -11,12 +11,14 @@ use Elastification\Client\Request\V090x\GetMappingRequest;
 use Elastification\Client\Request\V090x\Index\CreateIndexRequest;
 use Elastification\Client\Request\V090x\Index\DeleteIndexRequest;
 use Elastification\Client\Request\V090x\Index\IndexExistsRequest;
+use Elastification\Client\Request\V090x\Index\RefreshIndexRequest;
 use Elastification\Client\Request\V090x\SearchRequest;
 use Elastification\Client\Request\V090x\UpdateDocumentRequest;
 use Elastification\Client\Response\ResponseInterface;
 use Elastification\Client\Response\V090x\CreateUpdateDocumentResponse;
 use Elastification\Client\Response\V090x\DocumentResponse;
 use Elastification\Client\Response\V090x\Index\IndexResponse;
+use Elastification\Client\Response\V090x\Index\RefreshIndexResponse;
 use Elastification\Client\Response\V090x\SearchResponse;
 use Elastification\Client\Serializer\NativeJsonSerializer;
 use Elastification\Client\Serializer\SerializerInterface;
@@ -144,6 +146,26 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($response->acknowledged());
     }
 
+    public function testRefreshIndex()
+    {
+        $this->createIndex();
+        $this->createDocument();
+        $timeStart = microtime(true);
+
+        $refreshIndexRequest = new RefreshIndexRequest(self::INDEX, null, $this->serializer);
+
+        /** @var RefreshIndexResponse $response */
+        $response = $this->client->send($refreshIndexRequest);
+
+        echo 'refreshIndex: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        $this->assertTrue($response->isOk());
+        $shards = $response->getShards();
+        $this->assertTrue(isset($shards['total']));
+        $this->assertTrue(isset($shards['successful']));
+        $this->assertTrue(isset($shards['failed']));
+    }
+
     public function testCreateDocument()
     {
         $this->createIndex();
@@ -170,6 +192,7 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
         $this->createIndex();
         $data = array('name' => 'test' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000));
         $id = $this->createDocument($data);
+        $this->refreshIndex();
 
         $timeStart = microtime(true);
 
@@ -192,7 +215,10 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
 
     public function testGetDocumentMissingDoc()
     {
-        $this->createIndex();sleep(5);
+        $this->createIndex();
+        $data = array('name' => 'test' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000));
+        $this->createDocument($data);
+        $this->refreshIndex();
 
         $timeStart = microtime(true);
 
@@ -210,183 +236,189 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
         $this->fail();
     }
 
-//    public function testUpdateDocument()
-//    {
-//
-//        $createDocumentRequest = new CreateDocumentRequest(self::INDEX, self::TYPE, $this->serializer);
-//
-//        $data = array('name' => 'test' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000));
-//
-//        $createDocumentRequest->setBody($data);
-//        /** @var CreateUpdateDocumentResponse $response */
-//        $response = $this->client->send($createDocumentRequest);
-//
-//
-//        $this->assertSame(self::INDEX, $response->getIndex());
-//        $this->assertSame(self::TYPE, $response->getType());
-//        $this->assertSame(1, $response->getVersion());
-//        $this->assertTrue($response->isOk());
-//        $this->assertTrue(strlen($response->getId()) > 5);
-//
-//        $timeStart = microtime(true);
-//
-//        $updateDocumentRequest = new UpdateDocumentRequest(self::INDEX, self::TYPE, $this->serializer);
-//        $updateDocumentRequest->setId($response->getId());
-//        $data['name'] = 'testName';
-//        $updateDocumentRequest->setBody($data);
-//
-//        /** @var CreateUpdateDocumentResponse $updateDocumentResponse */
-//        $updateDocumentResponse = $this->client->send($updateDocumentRequest);
-//
-//        echo 'updateDocument: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-//
-//        $this->assertSame(self::INDEX, $updateDocumentResponse->getIndex());
-//        $this->assertSame(self::TYPE, $updateDocumentResponse->getType());
-//        $this->assertSame(2, $updateDocumentResponse->getVersion());
-//        $this->assertTrue($updateDocumentResponse->isOk());
-//        $this->assertSame($response->getId(), $updateDocumentResponse->getId());
-//    }
-//
-//    public function testDeleteDocument()
-//    {
-//        $timeStart = microtime(true);
-//        $createDocumentRequest = new CreateDocumentRequest(self::INDEX, self::TYPE, $this->serializer);
-//
-//        $createDocumentRequest->setBody(
-//            array('name' => 'test' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000))
-//        );
-//        /** @var CreateUpdateDocumentResponse $response */
-//        $response = $this->client->send($createDocumentRequest);
-//
-//        echo 'createDocument: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-//
-//        $this->assertSame(self::INDEX, $response->getIndex());
-//        $this->assertSame(self::TYPE, $response->getType());
-//        $this->assertSame(1, $response->getVersion());
-//        $this->assertTrue($response->isOk());
-//        $this->assertTrue(strlen($response->getId()) > 5);
-//
-//        $deleteDocumentRequest = new DeleteDocumentRequest(self::INDEX, self::TYPE, $this->serializer);;
-//        $deleteDocumentRequest->setId($response->getId());
-//
-//        $this->client->send($deleteDocumentRequest);
-//
-//        echo 'deleteDocument: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-//
-//        $getDocumentRequest = new GetDocumentRequest(self::INDEX, self::TYPE, $this->serializer);
-//        $getDocumentRequest->setId($response->getId());
-//
-//        try {
-//            $this->client->send($getDocumentRequest);
-//        } catch (ClientException $exception) {
-//            $this->assertContains('Not Found', $exception->getMessage());
-//
-//            return;
-//        }
-//
-//        $this->fail();
-//    }
-//
-//    public function testMatchAllSearch()
-//    {
-//        $timeStart = microtime(true);
-//        $searchRequest = new SearchRequest(self::INDEX, self::TYPE, $this->serializer);
-//
-//        $query = [
-//            "query" => [
-//                "match_all" => []
-//            ]
-//        ];
-//
-//        $searchRequest->setBody($query);
-//        /** @var SearchResponse $response */
-//        $response = $this->client->send($searchRequest);
-//
-//        echo 'search: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-//
-//        $this->assertGreaterThan(0, $response->took());
-//        $this->assertFalse($response->timedOut());
-//        $shards = $response->getShards();
-//        $this->assertInstanceOf('Elastification\Client\Serializer\Gateway\NativeArrayGateway', $shards);
-//        $this->assertTrue(isset($shards['total']));
-//        $this->assertTrue(isset($shards['successful']));
-//        $this->assertTrue(isset($shards['failed']));
-//        $this->assertGreaterThan(2, $response->totalHits());
-//        $this->assertGreaterThan(0, $response->maxScoreHits());
-//
-//        $hits = $response->getHits();
-//        $this->assertArrayHasKey('total', $hits);
-//        $this->assertArrayHasKey('max_score', $hits);
-//        $this->assertArrayHasKey('hits', $hits);
-//
-//        $hitsHits = $response->getHitsHits();
-//        foreach ($hitsHits as $hit) {
-//            $this->assertSame(self::INDEX, $hit['_index']);
-//            $this->assertSame(self::TYPE, $hit['_type']);
-//        }
-//    }
-//
-//    public function testGetMappingWithType()
-//    {
-//        $createDocumentRequest = new GetMappingRequest(self::INDEX, self::TYPE, $this->serializer);
-//
-//        $timeStart = microtime(true);
-//
-//        /** @var ResponseInterface $response */
-//        $response = $this->client->send($createDocumentRequest);
-//
-//        echo 'getMapping: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-//
-//        $this->assertContains(self::TYPE, $response->getRawData());
-//        $this->assertContains('properties', $response->getRawData());
-//    }
-//
-//    public function testGetMappingWithoutType()
-//    {
-//        $createDocumentRequest = new GetMappingRequest(self::INDEX, null, $this->serializer);
-//
-//        $timeStart = microtime(true);
-//
-//        /** @var ResponseInterface $response */
-//        $response = $this->client->send($createDocumentRequest);
-//
-//        echo 'getMapping: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-//
-//        $this->assertContains(self::INDEX, $response->getRawData());
-//        $this->assertContains(self::TYPE, $response->getRawData());
-//        $this->assertContains('properties', $response->getRawData());
-//    }
-//
-//    public function testIndexExists()
-//    {
-//        $indexExistsRequest = new IndexExistsRequest(self::INDEX, null, $this->serializer);
-//
-//        $timeStart = microtime(true);
-//
-//        /** @var ResponseInterface $response */
-//        $response = $this->client->send($indexExistsRequest);
-//
-//        echo 'indexExists: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-//
-//        $this->assertInstanceOf('Elastification\Client\Response\Response', $response);
-//    }
-//
-//    public function testIndexExistsNotExisting()
-//    {
-//        $indexExistsRequest = new IndexExistsRequest('not-existing-index', null, $this->serializer);
-//
-//        $timeStart = microtime(true);
-//
-//        try {
-//            $this->client->send($indexExistsRequest);
-//        } catch(ClientException $exception) {
-//            echo 'indexExists(not existing): ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-//            $this->assertContains('Not Found', $exception->getMessage());
-//            return;
-//        }
-//
-//        $this->fail();
-//    }
+    public function testUpdateDocument()
+    {
+        $this->createIndex();
+        $data = array('name' => 'test' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000));
+        $id = $this->createDocument($data);
+        $this->refreshIndex();
+
+        $timeStart = microtime(true);
+
+        $updateDocumentRequest = new UpdateDocumentRequest(self::INDEX, self::TYPE, $this->serializer);
+        $updateDocumentRequest->setId($id);
+        $data['name'] = 'testName';
+        $updateDocumentRequest->setBody($data);
+
+        /** @var CreateUpdateDocumentResponse $updateDocumentResponse */
+        $updateDocumentResponse = $this->client->send($updateDocumentRequest);
+
+        echo 'updateDocument: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        $this->assertSame(self::INDEX, $updateDocumentResponse->getIndex());
+        $this->assertSame(self::TYPE, $updateDocumentResponse->getType());
+        $this->assertSame(2, $updateDocumentResponse->getVersion());
+        $this->assertTrue($updateDocumentResponse->isOk());
+        $this->assertSame($id, $updateDocumentResponse->getId());
+    }
+
+    public function testDeleteDocument()
+    {
+        $this->createIndex();
+        $data = array('name' => 'test' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000));
+        $id = $this->createDocument($data);
+        $this->refreshIndex();
+
+        $timeStart = microtime(true);
+
+        $deleteDocumentRequest = new DeleteDocumentRequest(self::INDEX, self::TYPE, $this->serializer);;
+        $deleteDocumentRequest->setId($id);
+
+        $this->client->send($deleteDocumentRequest);
+
+        echo 'deleteDocument: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        $getDocumentRequest = new GetDocumentRequest(self::INDEX, self::TYPE, $this->serializer);
+        $getDocumentRequest->setId($id);
+
+        try {
+            $this->client->send($getDocumentRequest);
+        } catch (ClientException $exception) {
+            $this->assertContains('Not Found', $exception->getMessage());
+
+            return;
+        }
+
+        $this->fail();
+    }
+
+    public function testMatchAllSearch()
+    {
+        $this->createIndex();
+        $data = array('name' => 'test' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000));
+        $this->createDocument($data);
+        $data = array('name' => 'test' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000));
+        $this->createDocument($data);
+        $data = array('name' => 'test' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000));
+        $this->createDocument($data);
+        $data = array('name' => 'test' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000));
+        $this->createDocument($data);
+        $this->refreshIndex();
+
+        $timeStart = microtime(true);
+        $searchRequest = new SearchRequest(self::INDEX, self::TYPE, $this->serializer);
+
+        $query = [
+            "query" => [
+                "match_all" => []
+            ]
+        ];
+
+        $searchRequest->setBody($query);
+        /** @var SearchResponse $response */
+        $response = $this->client->send($searchRequest);
+
+        echo 'search: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        $this->assertGreaterThan(0, $response->took());
+        $this->assertFalse($response->timedOut());
+        $shards = $response->getShards();
+        $this->assertInstanceOf('Elastification\Client\Serializer\Gateway\NativeArrayGateway', $shards);
+        $this->assertTrue(isset($shards['total']));
+        $this->assertTrue(isset($shards['successful']));
+        $this->assertTrue(isset($shards['failed']));
+        $this->assertGreaterThan(2, $response->totalHits());
+        $this->assertGreaterThan(0, $response->maxScoreHits());
+
+        $hits = $response->getHits();
+        $this->assertArrayHasKey('total', $hits);
+        $this->assertArrayHasKey('max_score', $hits);
+        $this->assertArrayHasKey('hits', $hits);
+
+        $hitsHits = $response->getHitsHits();
+        foreach ($hitsHits as $hit) {
+            $this->assertSame(self::INDEX, $hit['_index']);
+            $this->assertSame(self::TYPE, $hit['_type']);
+        }
+    }
+
+    public function testGetMappingWithType()
+    {
+        $this->createIndex();
+        $data = array('name' => 'test' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000));
+        $this->createDocument($data);
+        $this->refreshIndex();
+
+        $timeStart = microtime(true);
+
+        $getMappingRequest = new GetMappingRequest(self::INDEX, self::TYPE, $this->serializer);
+
+        /** @var ResponseInterface $response */
+        $response = $this->client->send($getMappingRequest);
+
+        echo 'getMapping: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        $this->assertContains(self::TYPE, $response->getRawData());
+        $this->assertContains('properties', $response->getRawData());
+    }
+
+    public function testGetMappingWithoutType()
+    {
+        $this->createIndex();
+        $data = array('name' => 'test' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000));
+        $this->createDocument($data);
+        $this->refreshIndex();
+
+        $timeStart = microtime(true);
+
+        $getMappingRequest = new GetMappingRequest(self::INDEX, null, $this->serializer);
+
+        /** @var ResponseInterface $response */
+        $response = $this->client->send($getMappingRequest);
+
+        echo 'getMapping(without type): ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        $this->assertContains(self::INDEX, $response->getRawData());
+        $this->assertContains(self::TYPE, $response->getRawData());
+        $this->assertContains('properties', $response->getRawData());
+    }
+
+    public function testIndexExists()
+    {
+        $this->createIndex();
+        $this->refreshIndex();
+
+        $timeStart = microtime(true);
+
+        $indexExistsRequest = new IndexExistsRequest(self::INDEX, null, $this->serializer);
+
+        /** @var ResponseInterface $response */
+        $response = $this->client->send($indexExistsRequest);
+
+        echo 'indexExists: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        $this->assertInstanceOf('Elastification\Client\Response\Response', $response);
+    }
+
+    public function testIndexExistsNotExisting()
+    {
+        $this->createIndex();
+        $this->refreshIndex();
+
+        $timeStart = microtime(true);
+
+        $indexExistsRequest = new IndexExistsRequest('not-existing-index', null, $this->serializer);
+
+        try {
+            $this->client->send($indexExistsRequest);
+        } catch(ClientException $exception) {
+            echo 'indexExists(not existing): ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+            $this->assertContains('Not Found', $exception->getMessage());
+            return;
+        }
+
+        $this->fail();
+    }
 
     private function createIndex()
     {
@@ -410,6 +442,12 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
     {
         $deleteIndexRequest = new DeleteIndexRequest(self::INDEX, null, $this->serializer);
         $this->client->send($deleteIndexRequest);
+    }
+
+    private function refreshIndex()
+    {
+        $refreshIndexRequest = new RefreshIndexRequest(self::INDEX, null, $this->serializer);
+        $this->client->send($refreshIndexRequest);
     }
 
     private function createDocument($data = null)
