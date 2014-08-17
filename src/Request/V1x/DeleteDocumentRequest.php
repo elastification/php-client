@@ -18,7 +18,6 @@
 namespace Elastification\Client\Request\V1x;
 
 use Elastification\Client\Request\Shared\AbstractDeleteDocumentRequest;
-use Elastification\Client\Response\ResponseInterface;
 use Elastification\Client\Response\V1x\DeleteDocumentResponse;
 use Elastification\Client\Serializer\SerializerInterface;
 
@@ -28,7 +27,7 @@ class DeleteDocumentRequest extends AbstractDeleteDocumentRequest
      * @param string $rawData
      * @param \Elastification\Client\Serializer\SerializerInterface $serializer
      * @param array $serializerParams
-     * @return null|ResponseInterface
+     * @return DeleteDocumentResponse
      */
     public function createResponse(
         $rawData,

@@ -21,7 +21,6 @@ use Elastification\Client\Transport\Exception\TransportLayerException;
 use Elastification\Client\Transport\TransportInterface;
 use Elastification\Client\Transport\TransportRequestInterface;
 use Elasticsearch\RestClient;
-use Elasticsearch\RestResponse;
 
 /**
  * Thrift transport implementation.

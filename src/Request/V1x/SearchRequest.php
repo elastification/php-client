@@ -18,7 +18,6 @@
 namespace Elastification\Client\Request\V1x;
 
 use Elastification\Client\Request\Shared\AbstractSearchRequest;
-use Elastification\Client\Response\V1x\DocumentResponse;
 use Elastification\Client\Response\V1x\SearchResponse;
 use Elastification\Client\Serializer\SerializerInterface;
 
@@ -29,7 +28,7 @@ class SearchRequest extends AbstractSearchRequest
      * @param \Elastification\Client\Serializer\SerializerInterface $serializer
      * @param array                                                 $serializerParams
      *
-     * @return DocumentResponse
+     * @return SearchResponse
      */
     public function createResponse(
         $rawData,
