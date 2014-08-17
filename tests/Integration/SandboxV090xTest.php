@@ -8,6 +8,7 @@ use Elastification\Client\Request\V090x\CreateDocumentRequest;
 use Elastification\Client\Request\V090x\DeleteDocumentRequest;
 use Elastification\Client\Request\V090x\GetDocumentRequest;
 use Elastification\Client\Request\V090x\GetMappingRequest;
+use Elastification\Client\Request\V090x\Index\IndexExistsRequest;
 use Elastification\Client\Request\V090x\SearchRequest;
 use Elastification\Client\Request\V090x\UpdateDocumentRequest;
 use Elastification\Client\Response\ResponseInterface;
@@ -299,5 +300,36 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
         $this->assertContains(self::INDEX, $response->getRawData());
         $this->assertContains(self::TYPE, $response->getRawData());
         $this->assertContains('properties', $response->getRawData());
+    }
+
+    public function testIndexExists()
+    {
+        $indexExistsRequest = new IndexExistsRequest(self::INDEX, null, $this->serializer);
+
+        $timeStart = microtime(true);
+
+        /** @var ResponseInterface $response */
+        $response = $this->client->send($indexExistsRequest);
+
+        echo 'indexExists: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        $this->assertInstanceOf('Elastification\Client\Response\Response', $response);
+    }
+
+    public function testIndexExistsNotExisting()
+    {
+        $indexExistsRequest = new IndexExistsRequest('not-existing-index', null, $this->serializer);
+
+        $timeStart = microtime(true);
+
+        try {
+            $this->client->send($indexExistsRequest);
+        } catch(ClientException $exception) {
+            echo 'indexExists(not existing): ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+            $this->assertContains('Not Found', $exception->getMessage());
+            return;
+        }
+
+        $this->fail();
     }
 }

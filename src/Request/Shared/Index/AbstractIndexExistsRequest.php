@@ -15,43 +15,58 @@
  * This software consists of voluntary contributions made by many individuals
  * and is licensed under the MIT license.
  */
-namespace Elastification\Client\Request;
+
+namespace Elastification\Client\Request\Shared\Index;
+
+use Elastification\Client\Request\RequestMethods;
+use Elastification\Client\Request\Shared\AbstractBaseRequest;
 
 /**
- * Class RequestMethods
+ * Class AbstractIndexExists
  *
- * @package Elastification\Client\Reuqest
- * @author  Daniel Wendlandt
+ * @package Elastification\Client\Request\Shared\Index
+ * @author Daniel Wendlandt
  */
-final class RequestMethods
+abstract class AbstractIndexExistsRequest extends AbstractBaseRequest
 {
-    const GET = 'GET';
-    const POST = 'POST';
-    const PUT = 'PUT';
-    const DELETE = 'DELETE';
-    const HEAD = 'HEAD';
 
     /**
-     * @var array
+     * @inheritdoc
      */
-    private static $allowed = array(
-        self::GET,
-        self::POST,
-        self::PUT,
-        self::DELETE,
-        self::HEAD
-    );
-
-    /**
-     * Checks if the given method is allowed
-     *
-     * @param string $method
-     *
-     * @return bool
-     * @author Daniel Wendlandt
-     */
-    public static function isAllowed($method)
+    public function getMethod()
     {
-        return in_array($method, self::$allowed);
+        return RequestMethods::HEAD;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getAction()
+    {
+        return null;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getType()
+    {
+        return null;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getBody()
+    {
+        return null;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function setBody($body)
+    {
+        //do nothing
     }
 }
