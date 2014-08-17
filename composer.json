@@ -1,8 +1,8 @@
 {
     "name": "elastification/php-client",
     "type": "library",
-    "description": "Elastification Php Client",
-    "keywords": [],
+    "description": "The elastification php client aims to be a very flexible and well performing client to elasticsearch. It supports multiple transports and serializers to maximize it's flexibility.",
+    "keywords": ["elasticsearch", "http", "thrift", "nosql"],
     "homepage": "http://www.elastification.de",
     "license": "MIT",
     "authors": [
@@ -16,9 +16,7 @@
         }
     ],
     "require": {
-        "php": ">=5.4.10",
-        "symfony/event-dispatcher": "~2.4",
-        "psr/log": "~1.0"
+        "php": ">=5.4.10"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.1",
@@ -38,11 +36,10 @@
     "config": {
         "bin-dir": "bin"
     },
-
     "minimum-stability": "stable",
-
     "suggest": {
         "munkie/elasticsearch-thrift-php": "Needed for thrift transport",
-        "guzzlehttp/guzzle": "Needed for HttpGuzzle transport"
+        "guzzlehttp/guzzle": "Needed for HttpGuzzle transport",
+        "jms/serializer": "Needed for serialization of entities"
     }
 }
