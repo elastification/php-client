@@ -15,7 +15,7 @@ use Elastification\Client\Request\V090x\UpdateDocumentRequest;
 use Elastification\Client\Response\ResponseInterface;
 use Elastification\Client\Response\V090x\CreateUpdateDocumentResponse;
 use Elastification\Client\Response\V090x\DocumentResponse;
-use Elastification\Client\Response\V090x\Index\CreateIndexResponse;
+use Elastification\Client\Response\V090x\Index\IndexResponse;
 use Elastification\Client\Response\V090x\SearchResponse;
 use Elastification\Client\Serializer\NativeJsonSerializer;
 use Elastification\Client\Serializer\SerializerInterface;
@@ -111,7 +111,7 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
         $createIndexRequest = new CreateIndexRequest('dawen-test_cerate', null, $this->serializer);
         $createIndexRequest->setBody($settings);
 
-        /** @var CreateIndexResponse $response */
+        /** @var IndexResponse $response */
         $response = $this->client->send($createIndexRequest);
 
         echo 'createIndex: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;

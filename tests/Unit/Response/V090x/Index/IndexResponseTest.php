@@ -8,8 +8,7 @@
 
 namespace Elastification\Client\Tests\Unit\Response\V090x\Index;
 
-use Elastification\Client\Response\V090x\CreateUpdateDocumentResponse;
-use Elastification\Client\Response\V090x\Index\CreateIndexResponse;
+use Elastification\Client\Response\V090x\Index\IndexResponse;
 
 class CreateIndexResponseTest extends \PHPUnit_Framework_TestCase
 {
@@ -36,10 +35,10 @@ class CreateIndexResponseTest extends \PHPUnit_Framework_TestCase
     public function testInstance()
     {
         /** @noinspection PhpParamsInspection */
-        $response = new CreateIndexResponse('data', $this->serializer);
+        $response = new IndexResponse('data', $this->serializer);
         $this->assertInstanceOf('Elastification\Client\Response\ResponseInterface', $response);
         $this->assertInstanceOf('Elastification\Client\Response\Response', $response);
-        $this->assertInstanceOf('Elastification\Client\Response\V090x\Index\CreateIndexResponse', $response);
+        $this->assertInstanceOf('Elastification\Client\Response\V090x\Index\IndexResponse', $response);
     }
 
 
@@ -56,8 +55,8 @@ class CreateIndexResponseTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($data));
 
         /** @noinspection PhpParamsInspection */
-        $response = new CreateIndexResponse($data, $this->serializer);
-        $this->assertSame($data[CreateIndexResponse::PROP_OK], $response->isOk());
+        $response = new IndexResponse($data, $this->serializer);
+        $this->assertSame($data[IndexResponse::PROP_OK], $response->isOk());
     }
 
     public function testIsOkObject()
@@ -73,8 +72,8 @@ class CreateIndexResponseTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($data));
 
         /** @noinspection PhpParamsInspection */
-        $response = new CreateIndexResponse($data, $this->serializer);
-        $this->assertSame($data->{CreateIndexResponse::PROP_OK}, $response->isOk());
+        $response = new IndexResponse($data, $this->serializer);
+        $this->assertSame($data->{IndexResponse::PROP_OK}, $response->isOk());
     }
 
     public function testAcknowlegedArray()
@@ -90,8 +89,8 @@ class CreateIndexResponseTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($data));
 
         /** @noinspection PhpParamsInspection */
-        $response = new CreateIndexResponse($data, $this->serializer);
-        $this->assertSame($data[CreateIndexResponse::PROP_ACKNOWLEDGED], $response->acknowledged());
+        $response = new IndexResponse($data, $this->serializer);
+        $this->assertSame($data[IndexResponse::PROP_ACKNOWLEDGED], $response->acknowledged());
     }
 
     public function testAcknowlegedObject()
@@ -107,15 +106,15 @@ class CreateIndexResponseTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($data));
 
         /** @noinspection PhpParamsInspection */
-        $response = new CreateIndexResponse($data, $this->serializer);
-        $this->assertSame($data->{CreateIndexResponse::PROP_ACKNOWLEDGED}, $response->acknowledged());
+        $response = new IndexResponse($data, $this->serializer);
+        $this->assertSame($data->{IndexResponse::PROP_ACKNOWLEDGED}, $response->acknowledged());
     }
 
     private function getData($asObject = false)
     {
         $data = [
-            CreateIndexResponse::PROP_OK => true,
-            CreateIndexResponse::PROP_ACKNOWLEDGED => true,
+            IndexResponse::PROP_OK => true,
+            IndexResponse::PROP_ACKNOWLEDGED => true,
         ];
 
         if ($asObject) {

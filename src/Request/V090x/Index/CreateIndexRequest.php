@@ -18,7 +18,7 @@
 namespace Elastification\Client\Request\V090x\Index;
 
 use Elastification\Client\Request\Shared\Index\AbstractCreateIndexRequest;
-use Elastification\Client\Response\V090x\Index\CreateIndexResponse;
+use Elastification\Client\Response\V090x\Index\IndexResponse;
 use Elastification\Client\Serializer\SerializerInterface;
 
 /**
@@ -37,7 +37,7 @@ class CreateIndexRequest extends AbstractCreateIndexRequest
      * @param string $rawData
      * @param \Elastification\Client\Serializer\SerializerInterface $serializer
      * @param array $serializerParams
-     * @return CreateIndexResponse
+     * @return IndexResponse
      * @author Daniel Wendlandt
      */
     public function createResponse(
@@ -46,7 +46,7 @@ class CreateIndexRequest extends AbstractCreateIndexRequest
         array $serializerParams = array())
     {
 
-        return new CreateIndexResponse($rawData, $serializer, $serializerParams);
+        return new IndexResponse($rawData, $serializer, $serializerParams);
     }
 
     /**
@@ -57,6 +57,6 @@ class CreateIndexRequest extends AbstractCreateIndexRequest
      */
     public function getSupportedClass()
     {
-        return 'Elastification\Client\Response\V090x\Index\CreateIndexResponse';
+        return 'Elastification\Client\Response\V090x\Index\IndexResponse';
     }
 }

@@ -13,7 +13,7 @@ use Elastification\Client\Request\V090x\Index\CreateIndexRequest;
 class CreateIndexRequestTest extends \PHPUnit_Framework_TestCase
 {
     const INDEX = 'test-index';
-    const RESPONSE_CLASS = 'Elastification\Client\Response\V090x\Index\CreateIndexResponse';
+    const RESPONSE_CLASS = 'Elastification\Client\Response\V090x\Index\IndexResponse';
 
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject

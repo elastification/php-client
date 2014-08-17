@@ -25,7 +25,7 @@ use Elastification\Client\Response\Response;
  * @package Elastification\Client\Response\V090x\Index
  * @author  Daniel Wendlandt
  */
-class CreateIndexResponse extends Response
+class IndexResponse extends Response
 {
 
     const PROP_OK = 'ok';
