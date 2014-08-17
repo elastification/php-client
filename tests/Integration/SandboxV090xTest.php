@@ -8,12 +8,14 @@ use Elastification\Client\Request\V090x\CreateDocumentRequest;
 use Elastification\Client\Request\V090x\DeleteDocumentRequest;
 use Elastification\Client\Request\V090x\GetDocumentRequest;
 use Elastification\Client\Request\V090x\GetMappingRequest;
+use Elastification\Client\Request\V090x\Index\CreateIndexRequest;
 use Elastification\Client\Request\V090x\Index\IndexExistsRequest;
 use Elastification\Client\Request\V090x\SearchRequest;
 use Elastification\Client\Request\V090x\UpdateDocumentRequest;
 use Elastification\Client\Response\ResponseInterface;
 use Elastification\Client\Response\V090x\CreateUpdateDocumentResponse;
 use Elastification\Client\Response\V090x\DocumentResponse;
+use Elastification\Client\Response\V090x\Index\CreateIndexResponse;
 use Elastification\Client\Response\V090x\SearchResponse;
 use Elastification\Client\Serializer\NativeJsonSerializer;
 use Elastification\Client\Serializer\SerializerInterface;
@@ -80,6 +82,42 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
         $this->guzzleClient = null;
         $this->requestManager = null;
         $this->client = null;
+    }
+
+    public function testCreateIndex()
+    {
+        $timeStart = microtime(true);
+
+        $settings = array(
+            'settings' => array(
+                'index' => array(
+                    'number_of_shards' => 3,
+                    'number_of_replicas' => 2
+                )
+            ),
+            'mappings' => array(
+                'test-type' => array(
+                    '_source' => array('enabled' => false),
+                    'properties' => array(
+                        'test-field' => array(
+                            'type' => 'string',
+                            'index' => 'not_analyzed'
+                        )
+                    )
+                )
+            )
+        );
+
+        $createIndexRequest = new CreateIndexRequest('dawen-test_cerate', null, $this->serializer);
+        $createIndexRequest->setBody($settings);
+
+        /** @var CreateIndexResponse $response */
+        $response = $this->client->send($createIndexRequest);
+
+        echo 'createIndex: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        $this->assertTrue($response->isOk());
+        $this->assertTrue($response->acknowledged());
     }
 
     public function testCreateDocument()

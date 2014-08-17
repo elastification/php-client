@@ -15,47 +15,46 @@
  * This software consists of voluntary contributions made by many individuals
  * and is licensed under the MIT license.
  */
-namespace Elastification\Client\Request\V090x\Index;
+namespace Elastification\Client\Response\V090x\Index;
 
-use Elastification\Client\Request\Shared\Index\AbstractIndexExistsRequest;
 use Elastification\Client\Response\Response;
-use Elastification\Client\Serializer\SerializerInterface;
 
 /**
- * Class CreateDocumentRequest
+ * Class CreateUpdateDocumentResponse
  *
- * This request returns successful empty response. If not existing index,
- * there will be an exception at client send.
- *
- * @package Elastification\Client\Request\V090x\Index
- * @author Daniel Wendlandt
+ * @package Elastification\Client\Response\V090x\Index
+ * @author  Daniel Wendlandt
  */
-class IndexExistsRequest extends AbstractIndexExistsRequest
+class CreateIndexResponse extends Response
 {
 
+    const PROP_OK = 'ok';
+    const PROP_ACKNOWLEDGED = 'acknowledged';
+
     /**
-     * @param string $rawData
-     * @param \Elastification\Client\Serializer\SerializerInterface $serializer
-     * @param array $serializerParams
-     * @return Response
+     * Getter Method
+     *
+     * @return mixed
      * @author Daniel Wendlandt
      */
-    public function createResponse(
-        $rawData,
-        SerializerInterface $serializer,
-        array $serializerParams = array())
+    public function isOk()
     {
-        return new Response($rawData, $serializer, $serializerParams);
+        $this->processData();
+
+        return $this->get(self::PROP_OK);
     }
 
     /**
-     * gets a response class name that is supported by this class
+     * Getter Method
      *
-     * @return string
+     * @return mixed
      * @author Daniel Wendlandt
      */
-    public function getSupportedClass()
+    public function acknowledged()
     {
-        return 'Elastification\Client\Response\Response';
+        $this->processData();
+
+        return $this->get(self::PROP_ACKNOWLEDGED);
     }
+
 }
