@@ -1,19 +1,17 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: dwendlandt
- * Date: 24/06/14
- * Time: 07:59
- */
-
 namespace Elastification\Client;
 
 use Elastification\Client\Exception\ClientException;
 
 /**
- * Class ClientVersionMap
+ * The version map.
+ *
+ * Elastification's php client support the use of multiple elasticsearch versions.
+ * This class shows all supported versions and their mapping to our version command
+ * namespaces/folders.
+ *
  * @package Elastification\Client
- * @author Daniel Wendlandt
+ * @author  Daniel Wendlandt
  */
 final class ClientVersionMap
 {
@@ -26,16 +24,18 @@ final class ClientVersionMap
     );
 
     /**
-     * Gets the defined version for folders
+     * Get the defined version for folders.
+     * We throw an exception in case of a non-matching version.
      *
-     * @param string $version
-     * @return string
+     * @param   string $version A version string in the schema of 0.90.x.
+     *
+     * @return  string The internal namespace/folder
      * @throws Exception\ClientException
      * @author Daniel Wendlandt
      */
     public static function getVersion($version)
     {
-        if(!isset(self::$versions[$version])) {
+        if (!isset(self::$versions[$version])) {
             throw new ClientException('version ' . $version . ' is not defined');
         }
 

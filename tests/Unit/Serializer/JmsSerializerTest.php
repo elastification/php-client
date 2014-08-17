@@ -186,12 +186,11 @@ class JmsSerializerTest extends ProphecyTestCase
         $defaultDeSerClass = 'Elastification\Client\Serializer\JmsSerializer\SearchResponseEntity';
         $jmsMock = $this->prophesize('JMS\Serializer\Serializer');
         $jmsMock->deserialize($fixture, $defaultDeSerClass, 'json', null)
-            ->shouldBeCalled()
-            ->willReturn('test_ok');
+            ->shouldBeCalled();
 
         $subject = new JmsSerializer($jmsMock->reveal());
         $ret = $subject->deserialize($fixture);
-        $this->assertEquals('test_ok', $ret);
+        $this->assertInstanceOf('Elastification\Client\Serializer\Gateway\NativeObjectGateway', $ret);
     }
 
     public function testDeserializerWithContextSetInInstance()
@@ -202,13 +201,12 @@ class JmsSerializerTest extends ProphecyTestCase
         $deSerCtx = $this->prophesize('JMS\Serializer\DeserializationContext');
 
         $jmsMock->deserialize($fixture, $defaultDeSerClass, 'json', $deSerCtx)
-            ->shouldBeCalled()
-            ->willReturn('test_ok');
+            ->shouldBeCalled();
 
         $subject = new JmsSerializer($jmsMock->reveal());
         $subject->setJmsDeserializeContext($deSerCtx->reveal());
         $ret = $subject->deserialize($fixture);
-        $this->assertEquals('test_ok', $ret);
+        $this->assertInstanceOf('Elastification\Client\Serializer\Gateway\NativeObjectGateway', $ret);
     }
 
     public function testDeserializerWithContextSetInParams()
@@ -219,12 +217,11 @@ class JmsSerializerTest extends ProphecyTestCase
         $deSerCtx = $this->prophesize('JMS\Serializer\DeserializationContext');
 
         $jmsMock->deserialize($fixture, $defaultDeSerClass, 'json', $deSerCtx)
-            ->shouldBeCalled()
-            ->willReturn('test_ok');
+            ->shouldBeCalled();
 
         $subject = new JmsSerializer($jmsMock->reveal());
         $ret = $subject->deserialize($fixture, ['ctx' => $deSerCtx->reveal()]);
-        $this->assertEquals('test_ok', $ret);
+        $this->assertInstanceOf('Elastification\Client\Serializer\Gateway\NativeObjectGateway', $ret);
     }
 
     public function testDeserializerWithContextSetInInstanceAndParams()
@@ -236,11 +233,10 @@ class JmsSerializerTest extends ProphecyTestCase
         $deSerCtx_MustWin = $this->prophesize('JMS\Serializer\DeserializationContext');
 
         $jmsMock->deserialize($fixture, $defaultDeSerClass, 'json', $deSerCtx_MustWin)
-            ->shouldBeCalled()
-            ->willReturn('test_ok');
+            ->shouldBeCalled();
         $subject = new JmsSerializer($jmsMock->reveal());
         $subject->setJmsDeserializeContext($deSerCtx->reveal());
         $ret = $subject->deserialize($fixture, ['ctx' => $deSerCtx_MustWin->reveal()]);
-        $this->assertEquals('test_ok', $ret);
+        $this->assertInstanceOf('Elastification\Client\Serializer\Gateway\NativeObjectGateway', $ret);
     }
 }

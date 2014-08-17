@@ -1,6 +1,12 @@
 <?php
 namespace Elastification\Client\Transport;
 
+/**
+ * Represents a transport request.
+ *
+ * @package Elastification\Client\Transport
+ * @author  Mario Mueller
+ */
 interface TransportRequestInterface
 {
     /**

@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: dwendlandt
- * Date: 17/06/14
- * Time: 18:38
- */
-
 namespace Elastification\Client\Serializer;
 
 use Elastification\Client\Serializer\Exception\DeserializationFailureException;
@@ -13,9 +6,13 @@ use Elastification\Client\Serializer\Gateway\NativeArrayGateway;
 use Elastification\Client\Serializer\Gateway\NativeObjectGateway;
 
 /**
- * Class NativeJsonSerializer
+ * Simple Native JSON Serializer.
+ *
+ * Serializes the response using the native json_encode/json_decode commands. the params allow you to control
+ * the type of result, either a stdClass or an array/hash map.
+ *
  * @package Elastification\Client\Serializer
- * @author Daniel Wendlandt
+ * @author  Daniel Wendlandt
  */
 class NativeJsonSerializer implements SerializerInterface
 {
@@ -50,23 +47,34 @@ class NativeJsonSerializer implements SerializerInterface
     }
 
     /**
-     * @param array $params
+     * Decides whether to use assoc or stdClass.
+     *
+     * @param array $params The array of params.
+     *
      * @return boolean
      * @author Mario Mueller
      */
     private function useAssoc($params)
     {
         $assoc = true;
-        if(isset($params['assoc']) && is_bool($params['assoc'])) {
+        if (isset($params['assoc']) && is_bool($params['assoc'])) {
             $assoc = $params['assoc'];
         }
         return $assoc;
     }
 
     /**
+     * Creates the correct gateway based on assoc being true or false.
+     *
+     * The information if we need assoc could also be determined by looking
+     * at the type of $decodedJson, but we thing a boolean is faster and the
+     * decision has already been made before.
+     *
      * @author Mario Mueller
-     * @param boolean $assoc
-     * @param mixed $decodedJson
+     *
+     * @param boolean         $assoc Should we use assoc?
+     * @param array|\stdClass $decodedJson
+     *
      * @return \Elastification\Client\Serializer\Gateway\GatewayInterface
      */
     private function createGateway($assoc, $decodedJson)

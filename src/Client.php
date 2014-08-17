@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: dwendlandt
- * Date: 20/06/14
- * Time: 07:42
- */
-
 namespace Elastification\Client;
 
 use Elastification\Client\Exception\ClientException;
@@ -19,13 +12,16 @@ use Elastification\Client\Transport\TransportInterface;
 use GuzzleHttp\Stream\Stream;
 
 /**
- * Class Client
+ * The primary client class.
+ *
+ * This class is aware of the transport layer and the requests/response layer.
+ * It serves as a kind of command pattern talking to a transport facade.
+ *
  * @package Elastification\Client
- * @author Daniel Wendlandt
+ * @author  Daniel Wendlandt
  */
 class Client implements ClientInterface
 {
-
     /**
      * @var TransportInterface
      */
@@ -41,21 +37,22 @@ class Client implements ClientInterface
      */
     private $elasticsearchVersion;
 
-//todo think about an array of clients or a decision manager for get the right client (maybe voter patern)
     /**
-     * @param TransportInterface $transport
+     * TODO: think about an array of clients or a decision manager for get the right client (maybe voter patern)
+     *
+     * @param TransportInterface      $transport
      * @param RequestManagerInterface $requestManager
-     * @param null|string $elasticsearchVersion
+     * @param null|string             $elasticsearchVersion
      */
     public function __construct(
         TransportInterface $transport,
         RequestManagerInterface $requestManager,
-        $elasticsearchVersion = null)
-    {
+        $elasticsearchVersion = null
+    ) {
         $this->transport = $transport;
         $this->requestManager = $requestManager;
 
-        if(null === $elasticsearchVersion) {
+        if (null === $elasticsearchVersion) {
             $this->elasticsearchVersion = self::ELASTICSEARCH_VERSION_0_90_x;
         } else {
             $this->elasticsearchVersion = $elasticsearchVersion;
@@ -67,6 +64,7 @@ class Client implements ClientInterface
      * performs sending the request
      *
      * @param RequestInterface $request
+     *
      * @throws Exception\ClientException
      * @throws Exception\RequestException
      * @return ResponseInterface
@@ -74,30 +72,30 @@ class Client implements ClientInterface
      */
     public function send(RequestInterface $request)
     {
-        if(!RequestMethods::isAllowed($request->getMethod())) {
+        if (!RequestMethods::isAllowed($request->getMethod())) {
             throw new RequestException('request method is not allowed');
         }
         $transportRequest = $this->transport->createRequest($request->getMethod());
         $transportRequest->setPath($this->generatePath($request));
 
         $body = $request->getBody();
-        if(null !== $body) {
+        if (null !== $body) {
             $transportRequest->setBody(Stream::factory($body));
         }
 
         try {
             $transportResponse = $this->transport->send($transportRequest);
-        } catch(TransportLayerException $exception) {
+        } catch (TransportLayerException $exception) {
             $clientException = new ClientException($exception->getMessage(), $exception->getCode(), $exception);
             throw $clientException;
         }
 
-        $rawData = (string) $transportResponse->getBody();
+        $rawData = (string)$transportResponse->getBody();
         /** @var ResponseInterface $response */
         $response = $request->createResponse($rawData, $request->getSerializer(), $request->getSerializerParams());
 
         $supportedClass = $request->getSupportedClass();
-        if(!$response instanceof $supportedClass) {
+        if (!$response instanceof $supportedClass) {
             throw new ClientException('response is not an instance of ' . $supportedClass);
         }
 
@@ -116,6 +114,7 @@ class Client implements ClientInterface
      * Generates the path by given request
      *
      * @param RequestInterface $request
+     *
      * @return string
      * @author Daniel Wendlandt
      */
@@ -123,19 +122,18 @@ class Client implements ClientInterface
     {
         $path = array();
 
-        if(null !== $request->getIndex()) {
+        if (null !== $request->getIndex()) {
             $path[] = $request->getIndex();
         }
 
-        if(null !== $request->getType()) {
+        if (null !== $request->getType()) {
             $path[] = $request->getType();
         }
 
-        if(null !== $request->getAction()) {
+        if (null !== $request->getAction()) {
             $path[] = $request->getAction();
         }
 
         return implode(self::PATH_DIVIDER, $path);
     }
-
 }
