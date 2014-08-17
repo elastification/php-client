@@ -8,3 +8,5 @@ artifacts/
 .DS_STORE
 /bin/
 !/bin/.gitkeep
+/docs
+/cache
