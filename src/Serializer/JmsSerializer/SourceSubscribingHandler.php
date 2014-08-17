@@ -56,13 +56,21 @@ class SourceSubscribingHandler implements SubscribingHandlerInterface
         );
     }
 
-
+    /**
+     * @param JsonDeserializationVisitor $visitor
+     * @param $data
+     * @param array $type
+     * @param Context $context
+     * @return mixed
+     * @author Mario Mueller
+     */
     public function serializeElastificationSource(
         JsonDeserializationVisitor $visitor,
         $data,
         array $type,
         Context $context
     ) {
+        $this->sourceDeSerClass = empty($this->sourceDeSerClass) ? $type['name'] : $this->sourceDeSerClass;
         return $visitor->getNavigator()->accept($data, ['name' => $this->sourceDeSerClass], $context);
     }
 }
