@@ -59,5 +59,32 @@ class GuzzleTransportTest extends \PHPUnit_Framework_TestCase
         $response = $guzzleTransport->send($request);
         $this->assertInstanceOf('Elastification\Client\Transport\HttpGuzzle\GuzzleTransportResponse', $response);
     }
+
+    public function testGuzzleTransportSendRequestWithException()
+    {
+        $this->setExpectedException('Elastification\Client\Transport\Exception\TransportLayerException');
+        $requestMethod = 'POST';
+        $guzzleClientMock = $this->getMockBuilder('GuzzleHttp\ClientInterface')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $guzzleRequestMock = $this->getMockBuilder('GuzzleHttp\Message\RequestInterface')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $guzzleClientMock->expects($this->once())
+            ->method('createRequest')
+            ->with($this->equalTo($requestMethod))
+            ->willReturn($guzzleRequestMock);
+
+        $guzzleClientMock->expects($this->once())
+            ->method('send')
+            ->with($this->equalTo($guzzleRequestMock))
+            ->willThrowException(new \Exception('Something went wrong'));
+
+        $guzzleTransport = new GuzzleTransport($guzzleClientMock);
+        $request = $guzzleTransport->createRequest($requestMethod);
+        $guzzleTransport->send($request);
+    }
 }
 
