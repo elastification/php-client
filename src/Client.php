@@ -27,8 +27,6 @@ use Elastification\Client\Response\ResponseInterface;
 use Elastification\Client\Transport\Exception\TransportLayerException;
 use Elastification\Client\Transport\TransportInterface;
 use Elastification\Client\Transport\TransportRequestInterface;
-use Elastification\Client\Transport\TransportResponseInterface;
-use GuzzleHttp\Stream\Stream;
 
 /**
  * The primary client class.
@@ -119,7 +117,7 @@ class Client implements ClientInterface
 
     /**
      * @param ResponseInterface   $response
-     * @param                     $supportedClass
+     * @param                     string $supportedClass
      *
      * @throws Exception\ClientException
      * @author Mario Mueller

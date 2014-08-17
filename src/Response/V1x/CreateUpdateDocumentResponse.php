@@ -17,7 +17,6 @@
  */
 namespace Elastification\Client\Response\V1x;
 
-use Elastification\Client\Exception\ResponseException;
 use Elastification\Client\Response\Response;
 
 /**
