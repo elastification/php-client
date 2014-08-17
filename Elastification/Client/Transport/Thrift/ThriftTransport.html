@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="robots" content="index, follow, all" />
+        <title>Elastification\Client\Transport\Thrift\ThriftTransport | Elastification PHP Client API</title>
+                    <link rel="stylesheet" type="text/css" href="../../../../stylesheet.css">
+                            </head>
+        <body id="class">
+            <div class="header">
+        <ul>
+            <li><a href="../../../../classes.html">Classes</a></li>
+                            <li><a href="../../../../namespaces.html">Namespaces</a></li>
+                        <li><a href="../../../../interfaces.html">Interfaces</a></li>
+            <li><a href="../../../../traits.html">Traits</a></li>
+            <li><a href="../../../../doc-index.html">Index</a></li>
+            
+        </ul>
+
+        <div id="title">Elastification PHP Client API</div>
+
+            <div class="type">Class</div>
+    <h1><a href="../../../../Elastification/Client/Transport/Thrift.html">Elastification\Client\Transport\Thrift</a>\ThriftTransport</h1>
+    </div>
+        <div class="content">
+                <p>    class
+    <strong>ThriftTransport</strong>        implements
+        <a href="../../../../Elastification/Client/Transport/TransportInterface.html"><abbr title="Elastification\Client\Transport\TransportInterface">TransportInterface</abbr></a></p>
+
+            <div class="description">
+            <p>${CARET}</p>
+            <p>
+</p>
+        </div>
+    
+    
+    
+            <h2>Methods</h2>
+
+            <table>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method___construct">__construct</a>(<abbr title="Elasticsearch\RestClient">RestClient</abbr> $thriftClient)
+                    <p>
+</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../../Elastification/Client/Transport/TransportRequestInterface.html"><abbr title="Elastification\Client\Transport\TransportRequestInterface">TransportRequestInterface</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_createRequest">createRequest</a>(string $httpMethod)
+                    <p>
+</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../../Elastification/Client/Transport/TransportResponseInterface.html"><abbr title="Elastification\Client\Transport\TransportResponseInterface">TransportResponseInterface</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_send">send</a>(<a href="../../../../Elastification/Client/Transport/TransportRequestInterface.html"><abbr title="Elastification\Client\Transport\TransportRequestInterface">TransportRequestInterface</abbr></a> $request)
+                    <p>
+</p>
+                </td>
+                <td></td>
+            </tr>
+            </table>
+
+
+        <h2>Details</h2>
+
+                        <h3 id="method___construct">
+        <div class="location">at line 27</div>
+        <code>            public            
+    <strong>__construct</strong>(<abbr title="Elasticsearch\RestClient">RestClient</abbr> $thriftClient)</code>
+    </h3>
+    <div class="details">
+        <p>
+</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><abbr title="Elasticsearch\RestClient">RestClient</abbr></td>
+                <td>$thriftClient</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_createRequest">
+        <div class="location">at line 37</div>
+        <code>            public            <a href="../../../../Elastification/Client/Transport/TransportRequestInterface.html"><abbr title="Elastification\Client\Transport\TransportRequestInterface">TransportRequestInterface</abbr></a>
+    <strong>createRequest</strong>(string $httpMethod)</code>
+    </h3>
+    <div class="details">
+        <p>
+</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$httpMethod</td>
+                <td>The http method to use.</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../../Elastification/Client/Transport/TransportRequestInterface.html"><abbr title="Elastification\Client\Transport\TransportRequestInterface">TransportRequestInterface</abbr></a></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_send">
+        <div class="location">at line 47</div>
+        <code>            public            <a href="../../../../Elastification/Client/Transport/TransportResponseInterface.html"><abbr title="Elastification\Client\Transport\TransportResponseInterface">TransportResponseInterface</abbr></a>
+    <strong>send</strong>(<a href="../../../../Elastification/Client/Transport/TransportRequestInterface.html"><abbr title="Elastification\Client\Transport\TransportRequestInterface">TransportRequestInterface</abbr></a> $request)</code>
+    </h3>
+    <div class="details">
+        <p>
+</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td><a href="../../../../Elastification/Client/Transport/TransportRequestInterface.html"><abbr title="Elastification\Client\Transport\TransportRequestInterface">TransportRequestInterface</abbr></a></td>
+                <td>$request</td>
+                <td>The configured request to send.</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../../Elastification/Client/Transport/TransportResponseInterface.html"><abbr title="Elastification\Client\Transport\TransportResponseInterface">TransportResponseInterface</abbr></a></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+    
+            </div>
+            <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/" target="_top">Sami, the API Documentation Generator</a>.
+    </div>
+    </body>
+</html>

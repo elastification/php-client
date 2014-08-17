@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="robots" content="index, follow, all" />
+        <title>Elastification\Client\Request\Shared\AbstractGetDocumentRequest | Elastification PHP Client API</title>
+                    <link rel="stylesheet" type="text/css" href="../../../../stylesheet.css">
+                            </head>
+        <body id="class">
+            <div class="header">
+        <ul>
+            <li><a href="../../../../classes.html">Classes</a></li>
+                            <li><a href="../../../../namespaces.html">Namespaces</a></li>
+                        <li><a href="../../../../interfaces.html">Interfaces</a></li>
+            <li><a href="../../../../traits.html">Traits</a></li>
+            <li><a href="../../../../doc-index.html">Index</a></li>
+            
+        </ul>
+
+        <div id="title">Elastification PHP Client API</div>
+
+            <div class="type">Class</div>
+    <h1><a href="../../../../Elastification/Client/Request/Shared.html">Elastification\Client\Request\Shared</a>\AbstractGetDocumentRequest</h1>
+    </div>
+        <div class="content">
+                <p>abstract     class
+    <strong>AbstractGetDocumentRequest</strong>        extends <a href="../../../../Elastification/Client/Request/Shared/AbstractBaseRequest.html"><abbr title="Elastification\Client\Request\Shared\AbstractBaseRequest">AbstractBaseRequest</abbr></a></p>
+
+            <div class="description">
+            <p>Class AbstractGetDocumentRequest</p>
+            <p>
+</p>
+        </div>
+    
+    
+    
+            <h2>Methods</h2>
+
+            <table>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method___construct">__construct</a>(string $index, string $type, <a href="../../../../Elastification/Client/Serializer/SerializerInterface.html"><abbr title="Elastification\Client\Serializer\SerializerInterface">SerializerInterface</abbr></a> $serializer, array $serializerParams = array())
+                    <p>
+</p>
+                </td>
+                <td><small>from&nbsp;<a href="../../../../Elastification/Client/Request/Shared/AbstractBaseRequest.html#method___construct"><abbr title="Elastification\Client\Request\Shared\AbstractBaseRequest">AbstractBaseRequest</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    null|string
+                </td>
+                <td class="last">
+                    <a href="#method_getIndex">getIndex</a>()
+                    <p>Gets the elasticsearch index</p>
+                </td>
+                <td><small>from&nbsp;<a href="../../../../Elastification/Client/Request/Shared/AbstractBaseRequest.html#method_getIndex"><abbr title="Elastification\Client\Request\Shared\AbstractBaseRequest">AbstractBaseRequest</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    null|string
+                </td>
+                <td class="last">
+                    <a href="#method_getType">getType</a>()
+                    <p>Gets the elasticsearch type</p>
+                </td>
+                <td><small>from&nbsp;<a href="../../../../Elastification/Client/Request/Shared/AbstractBaseRequest.html#method_getType"><abbr title="Elastification\Client\Request\Shared\AbstractBaseRequest">AbstractBaseRequest</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    <a href="../../../../Elastification/Client/Serializer/SerializerInterface.html"><abbr title="Elastification\Client\Serializer\SerializerInterface">SerializerInterface</abbr></a>
+                </td>
+                <td class="last">
+                    <a href="#method_getSerializer">getSerializer</a>()
+                    <p>Gets the serializer</p>
+                </td>
+                <td><small>from&nbsp;<a href="../../../../Elastification/Client/Request/Shared/AbstractBaseRequest.html#method_getSerializer"><abbr title="Elastification\Client\Request\Shared\AbstractBaseRequest">AbstractBaseRequest</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    array
+                </td>
+                <td class="last">
+                    <a href="#method_getSerializerParams">getSerializerParams</a>()
+                    <p>Gets the serializer params</p>
+                </td>
+                <td><small>from&nbsp;<a href="../../../../Elastification/Client/Request/Shared/AbstractBaseRequest.html#method_getSerializerParams"><abbr title="Elastification\Client\Request\Shared\AbstractBaseRequest">AbstractBaseRequest</abbr></a></small></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    string
+                </td>
+                <td class="last">
+                    <a href="#method_getMethod">getMethod</a>()
+                    <p>Gets the request method</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    null|string
+                </td>
+                <td class="last">
+                    <a href="#method_getAction">getAction</a>()
+                    <p>Gets the elasticsearch action/endpoint like (_search, _mapping)</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    mixed
+                </td>
+                <td class="last">
+                    <a href="#method_getBody">getBody</a>()
+                    <p>get the body</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    void
+                </td>
+                <td class="last">
+                    <a href="#method_setBody">setBody</a>(mixed $body)
+                    <p>before setting data it should be serialized</p>
+                </td>
+                <td></td>
+            </tr>
+                    <tr>
+                <td class="type">
+                    
+                </td>
+                <td class="last">
+                    <a href="#method_setId">setId</a>($id)
+                    <p>
+</p>
+                </td>
+                <td></td>
+            </tr>
+            </table>
+
+
+        <h2>Details</h2>
+
+                        <h3 id="method___construct">
+        <div class="location">in <a href="../../../../Elastification/Client/Request/Shared/AbstractBaseRequest.html#method___construct"><abbr title="Elastification\Client\Request\Shared\AbstractBaseRequest">AbstractBaseRequest</abbr></a> at line 48</div>
+        <code>            public            
+    <strong>__construct</strong>(string $index, string $type, <a href="../../../../Elastification/Client/Serializer/SerializerInterface.html"><abbr title="Elastification\Client\Serializer\SerializerInterface">SerializerInterface</abbr></a> $serializer, array $serializerParams = array())</code>
+    </h3>
+    <div class="details">
+        <p>
+</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>string</td>
+                <td>$index</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td>string</td>
+                <td>$type</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td><a href="../../../../Elastification/Client/Serializer/SerializerInterface.html"><abbr title="Elastification\Client\Serializer\SerializerInterface">SerializerInterface</abbr></a></td>
+                <td>$serializer</td>
+                <td>
+</td>
+            </tr>
+                    <tr>
+                <td>array</td>
+                <td>$serializerParams</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getIndex">
+        <div class="location">in <a href="../../../../Elastification/Client/Request/Shared/AbstractBaseRequest.html#method_getIndex"><abbr title="Elastification\Client\Request\Shared\AbstractBaseRequest">AbstractBaseRequest</abbr></a> at line 65</div>
+        <code>            public            null|string
+    <strong>getIndex</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Gets the elasticsearch index</p>
+        <p>
+</p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>null|string</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getType">
+        <div class="location">in <a href="../../../../Elastification/Client/Request/Shared/AbstractBaseRequest.html#method_getType"><abbr title="Elastification\Client\Request\Shared\AbstractBaseRequest">AbstractBaseRequest</abbr></a> at line 73</div>
+        <code>            public            null|string
+    <strong>getType</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Gets the elasticsearch type</p>
+        <p>
+</p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>null|string</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getSerializer">
+        <div class="location">in <a href="../../../../Elastification/Client/Request/Shared/AbstractBaseRequest.html#method_getSerializer"><abbr title="Elastification\Client\Request\Shared\AbstractBaseRequest">AbstractBaseRequest</abbr></a> at line 82</div>
+        <code>            public            <a href="../../../../Elastification/Client/Serializer/SerializerInterface.html"><abbr title="Elastification\Client\Serializer\SerializerInterface">SerializerInterface</abbr></a>
+    <strong>getSerializer</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Gets the serializer</p>
+        <p>
+</p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td><a href="../../../../Elastification/Client/Serializer/SerializerInterface.html"><abbr title="Elastification\Client\Serializer\SerializerInterface">SerializerInterface</abbr></a></td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getSerializerParams">
+        <div class="location">in <a href="../../../../Elastification/Client/Request/Shared/AbstractBaseRequest.html#method_getSerializerParams"><abbr title="Elastification\Client\Request\Shared\AbstractBaseRequest">AbstractBaseRequest</abbr></a> at line 90</div>
+        <code>            public            array
+    <strong>getSerializerParams</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Gets the serializer params</p>
+        <p>
+</p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>array</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getMethod">
+        <div class="location">at line 29</div>
+        <code>            public            string
+    <strong>getMethod</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Gets the request method</p>
+        <p>
+</p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>string</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getAction">
+        <div class="location">at line 37</div>
+        <code>            public            null|string
+    <strong>getAction</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>Gets the elasticsearch action/endpoint like (_search, _mapping)</p>
+        <p>
+</p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>null|string</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_getBody">
+        <div class="location">at line 49</div>
+        <code>            public            mixed
+    <strong>getBody</strong>()</code>
+    </h3>
+    <div class="details">
+        <p>get the body</p>
+        <p>
+</p>
+        <div class="tags">
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>mixed</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setBody">
+        <div class="location">at line 57</div>
+        <code>            public            void
+    <strong>setBody</strong>(mixed $body)</code>
+    </h3>
+    <div class="details">
+        <p>before setting data it should be serialized</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td>mixed</td>
+                <td>$body</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                            <h4>Return Value</h4>
+
+                    <table>
+        <tr>
+            <td>void</td>
+            <td>
+</td>
+        </tr>
+    </table>
+
+            
+                            <h4>Exceptions</h4>
+
+                    <table>
+                    <tr>
+                <td><a href="../../../../Elastification/Client/Exception/RequestException.html"><abbr title="Elastification\Client\Exception\RequestException">RequestException</abbr></a></td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+                    </div>
+    </div>
+
+                <h3 id="method_setId">
+        <div class="location">at line 64</div>
+        <code>            public            
+    <strong>setId</strong>($id)</code>
+    </h3>
+    <div class="details">
+        <p>
+</p>
+        <p>
+</p>
+        <div class="tags">
+                            <h4>Parameters</h4>
+
+                    <table>
+                    <tr>
+                <td></td>
+                <td>$id</td>
+                <td>
+</td>
+            </tr>
+            </table>
+
+            
+            
+            
+                    </div>
+    </div>
+
+    
+            </div>
+            <div id="footer">
+        Generated by <a href="http://sami.sensiolabs.org/" target="_top">Sami, the API Documentation Generator</a>.
+    </div>
+    </body>
+</html>
