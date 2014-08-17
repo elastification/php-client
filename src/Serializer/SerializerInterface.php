@@ -4,6 +4,11 @@ namespace Elastification\Client\Serializer;
 
 use Elastification\Client\Serializer\Gateway\GatewayInterface;
 
+/**
+ * Interface SerializerInterface
+ * @package Elastification\Client\Serializer
+ * @author Daniel Wendlandt
+ */
 interface SerializerInterface
 {
     /**
@@ -12,6 +17,7 @@ interface SerializerInterface
      * @param mixed $data
      * @param array $params
      * @return string
+     * @author Daniel Wendlandt
      */
     public function serialize($data, array $params = array());
 
@@ -21,6 +27,7 @@ interface SerializerInterface
      * @param string $data
      * @param array $params
      * @return GatewayInterface
+     * @author Daniel Wendlandt
      */
     public function deserialize($data, array $params = array());
 }

@@ -10,6 +10,11 @@ namespace Elastification\Client\Response\V090x;
 
 use Elastification\Client\Response\Shared\AbstractSearchResponse;
 
+/**
+ * Class SearchResponse
+ * @package Elastification\Client\Response\V090x
+ * @author Daniel Wendlandt
+ */
 class SearchResponse extends AbstractSearchResponse
 {
 

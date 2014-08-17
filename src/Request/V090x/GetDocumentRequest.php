@@ -12,6 +12,11 @@ use Elastification\Client\Request\Shared\AbstractGetDocumentRequest;
 use Elastification\Client\Response\V090x\DocumentResponse;
 use Elastification\Client\Serializer\SerializerInterface;
 
+/**
+ * Class GetDocumentRequest
+ * @package Elastification\Client\Request\V090x
+ * @author Daniel Wendlandt
+ */
 class GetDocumentRequest extends AbstractGetDocumentRequest
 {
     /**
@@ -19,6 +24,7 @@ class GetDocumentRequest extends AbstractGetDocumentRequest
      * @param \Elastification\Client\Serializer\SerializerInterface $serializer
      * @param array $serializerParams
      * @return DocumentResponse
+     * @author Daniel Wendlandt
      */
     public function createResponse(
         $rawData,
@@ -32,6 +38,7 @@ class GetDocumentRequest extends AbstractGetDocumentRequest
      * gets a response class name that is supported by this class
      *
      * @return string
+     * @author Daniel Wendlandt
      */
     public function getSupportedClass()
     {

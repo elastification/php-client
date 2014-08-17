@@ -12,6 +12,11 @@ use Elastification\Client\Serializer\Exception\DeserializationFailureException;
 use Elastification\Client\Serializer\Gateway\NativeArrayGateway;
 use Elastification\Client\Serializer\Gateway\NativeObjectGateway;
 
+/**
+ * Class NativeJsonSerializer
+ * @package Elastification\Client\Serializer
+ * @author Daniel Wendlandt
+ */
 class NativeJsonSerializer implements SerializerInterface
 {
 

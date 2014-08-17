@@ -93,9 +93,14 @@ class Client implements ClientInterface
         }
 
         $rawData = (string) $transportResponse->getBody();
+        /** @var ResponseInterface $response */
         $response = $request->createResponse($rawData, $request->getSerializer(), $request->getSerializerParams());
 
-        //todo check instance response and supprtedClass
+        $supportedClass = $request->getSupportedClass();
+        if(!$response instanceof $supportedClass) {
+            throw new ClientException('response is not an instance of ' . $supportedClass);
+        }
+
         return $response;
     }
 

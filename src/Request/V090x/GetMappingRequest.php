@@ -13,6 +13,11 @@ use Elastification\Client\Response\Response;
 use Elastification\Client\Response\ResponseInterface;
 use Elastification\Client\Serializer\SerializerInterface;
 
+/**
+ * Class GetMappingRequest
+ * @package Elastification\Client\Request\V090x
+ * @author Daniel Wendlandt
+ */
 class GetMappingRequest extends AbstractGetMappingRequest
 {
     /**
@@ -20,6 +25,7 @@ class GetMappingRequest extends AbstractGetMappingRequest
      * @param \Elastification\Client\Serializer\SerializerInterface $serializer
      * @param array $serializerParams
      * @return ResponseInterface
+     * @author Daniel Wendlandt
      */
     public function createResponse(
         $rawData,
@@ -33,6 +39,7 @@ class GetMappingRequest extends AbstractGetMappingRequest
      * gets a response class name that is supported by this class
      *
      * @return string
+     * @author Daniel Wendlandt
      */
     public function getSupportedClass()
     {
