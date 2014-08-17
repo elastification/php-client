@@ -24,7 +24,7 @@ use Elasticsearch\RestResponse;
  * @package Elastification\Client\Transport\Thrift
  * @author Mario Mueller
  */
-class ThriftResponse implements TransportResponseInterface
+class ThriftTransportResponse implements TransportResponseInterface
 {
     /**
      * @var RestResponse

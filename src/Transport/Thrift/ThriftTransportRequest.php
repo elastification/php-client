@@ -23,11 +23,9 @@ use Elasticsearch\RestRequest;
 
 /**
  * @package Elastification\Client\Transport\Thrift
- * @author Mario Mueller <mueller@freshcells.de>
- * @since 2014-08-12
- * @version 1.0.0
+ * @author Mario Mueller
  */
-class ThriftRequest implements TransportRequestInterface
+class ThriftTransportRequest implements TransportRequestInterface
 {
     /**
      * @var RestRequest

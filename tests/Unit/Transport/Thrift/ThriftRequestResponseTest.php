@@ -1,8 +1,8 @@
 <?php
 namespace Elastification\Client\Tests\Fixtures\Unit\Transport\Thrift;
 
-use Elastification\Client\Transport\Thrift\ThriftRequest;
-use Elastification\Client\Transport\Thrift\ThriftResponse;
+use Elastification\Client\Transport\Thrift\ThriftTransportRequest;
+use Elastification\Client\Transport\Thrift\ThriftTransportResponse;
 
 class ThriftRequestResponseTest extends \PHPUnit_Framework_TestCase
 {
@@ -13,7 +13,7 @@ class ThriftRequestResponseTest extends \PHPUnit_Framework_TestCase
         $fixturePath = '/some/index';
         $fixtureQuery = ['size' => 5];
 
-        $thriftRequest = new ThriftRequest('GET');
+        $thriftRequest = new ThriftTransportRequest('GET');
         $thriftRequest->setBody($fixtureBody);
         $thriftRequest->setPath($fixturePath);
         $thriftRequest->setQueryParams($fixtureQuery);
@@ -36,7 +36,7 @@ class ThriftRequestResponseTest extends \PHPUnit_Framework_TestCase
         // Seems to be the only way. Assertions on a mocked property are quite hard.
         $restResponse->body = $testResponseBody;
 
-        $thriftResponse = new ThriftResponse($restResponse);
+        $thriftResponse = new ThriftTransportResponse($restResponse);
 
         $this->assertEquals($testResponseBody, $thriftResponse->getBody());
     }

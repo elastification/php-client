@@ -7,7 +7,7 @@ use Elastification\Client\Request\RequestManager;
 use Elastification\Client\Request\V1x\CreateDocumentRequest;
 use Elastification\Client\Response\V1x\CreateUpdateDocumentResponse;
 use Elastification\Client\Serializer\NativeJsonSerializer;
-use Elastification\Client\Transport\Thrift\ThriftConnectionFactory;
+use Elastification\Client\Transport\Thrift\ThriftTransportConnectionFactory;
 use Elastification\Client\Transport\Thrift\ThriftTransport;
 
 /**
@@ -28,7 +28,7 @@ class SandboxV1xTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->thriftClient = ThriftConnectionFactory::factory('localhost', 9500);
+        $this->thriftClient = ThriftTransportConnectionFactory::factory('localhost', 9500);
     }
 
     public function testThriftConnection()

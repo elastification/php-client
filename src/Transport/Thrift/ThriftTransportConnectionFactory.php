@@ -32,7 +32,7 @@ use Thrift\Transport\TSocket;
  * @package Elastification\Client\Transport\Thrift
  * @author  Mario Mueller
  */
-class ThriftConnectionFactory
+class ThriftTransportConnectionFactory
 {
     /**
      * @param string  $host

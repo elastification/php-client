@@ -53,7 +53,7 @@ class ThriftTransport implements TransportInterface
      */
     public function createRequest($httpMethod)
     {
-        return new ThriftRequest($httpMethod);
+        return new ThriftTransportRequest($httpMethod);
     }
 
     /**
@@ -64,7 +64,7 @@ class ThriftTransport implements TransportInterface
     public function send(TransportRequestInterface $request)
     {
         try {
-            return new ThriftResponse($this->thriftClient->execute($request->getWrappedRequest()));
+            return new ThriftTransportResponse($this->thriftClient->execute($request->getWrappedRequest()));
         } catch (\Exception $exception) {
             throw new TransportLayerException($exception->getMessage(), $exception->getCode(), $exception);
         }
