@@ -5,4 +5,10 @@ tools:
 filter:
     excluded_paths:
         - 'tests/*'
-build: true
+build:
+    dependencies:
+        before:
+            - '/usr/share/elasticsearch/bin/plugin -install elasticsearch/elasticsearch-transport-thrift/2.3.0'
+    environment:
+        php: '5.4.28'
+        elasticsearch: true
