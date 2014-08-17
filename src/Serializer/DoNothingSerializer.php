@@ -1,17 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: dwendlandt
- * Date: 17/06/14
- * Time: 18:38
- */
-
 namespace Elastification\Client\Serializer;
 
 /**
- * Class DoNothingSerializer
+ * A simple pass-through "serializer".
+ *
  * @package Elastification\Client\Serializer
- * @author Daniel Wendlandt
+ * @author  Daniel Wendlandt
  */
 class DoNothingSerializer implements SerializerInterface
 {

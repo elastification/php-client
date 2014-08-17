@@ -9,9 +9,7 @@ use GuzzleHttp\ClientInterface;
 
 /**
  * @package Elastification\Client\Transport\HttpGuzzle
- * @author Mario Mueller
- * @since 2014-08-12
- * @version 1.0.0
+ * @author  Mario Mueller
  */
 class GuzzleTransport implements TransportInterface
 {
@@ -30,6 +28,7 @@ class GuzzleTransport implements TransportInterface
 
     /**
      * @param string $httpMethod The http method to use.
+     *
      * @return TransportRequestInterface
      * @author Mario Mueller
      */
@@ -40,6 +39,7 @@ class GuzzleTransport implements TransportInterface
 
     /**
      * @param TransportRequestInterface $request The configured request to send.
+     *
      * @throws \Elastification\Client\Exception\ClientException
      * @return \Elastification\Client\Transport\TransportResponseInterface
      * @author Mario Mueller

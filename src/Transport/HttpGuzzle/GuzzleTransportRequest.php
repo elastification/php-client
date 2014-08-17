@@ -7,9 +7,7 @@ use GuzzleHttp\Stream\Stream;
 
 /**
  * @package Elastification\Client\Transport\HttpGuzzle
- * @author Mario Mueller
- * @since 2014-08-12
- * @version 1.0.0
+ * @author  Mario Mueller
  */
 class GuzzleTransportRequest implements TransportRequestInterface
 {
@@ -28,6 +26,7 @@ class GuzzleTransportRequest implements TransportRequestInterface
 
     /**
      * @param string $body The raw request body.
+     *
      * @return void
      * @author Mario Mueller
      */
@@ -38,6 +37,7 @@ class GuzzleTransportRequest implements TransportRequestInterface
 
     /**
      * @param string $path The path according to the Elasticsearch http interface.
+     *
      * @return void
      * @author Mario Mueller
      */
@@ -57,6 +57,7 @@ class GuzzleTransportRequest implements TransportRequestInterface
 
     /**
      * @param array $params
+     *
      * @return void
      * @author Mario Mueller
      */
@@ -64,6 +65,4 @@ class GuzzleTransportRequest implements TransportRequestInterface
     {
         $this->guzzleRequest->setQuery($params);
     }
-
-
 }

@@ -2,9 +2,10 @@
 namespace Elastification\Client\Transport;
 
 /**
- * Interface TransportResponseInterface
+ * Represents a transport response.
+ *
  * @package Elastification\Client\Transport
- * @author Mario Mueller
+ * @author  Mario Mueller
  */
 interface TransportResponseInterface
 {

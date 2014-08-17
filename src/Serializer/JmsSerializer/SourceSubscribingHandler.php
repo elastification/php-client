@@ -5,13 +5,13 @@ use JMS\Serializer\Context;
 use JMS\Serializer\GraphNavigator;
 use JMS\Serializer\Handler\SubscribingHandlerInterface;
 use JMS\Serializer\JsonDeserializationVisitor;
-use JMS\Serializer\JsonSerializationVisitor;
 
 /**
+ * This handler enables us to dynamically inject a deserialization class for the _source element of the
+ * elasticsearch response.
+ *
  * @package Elastification\Client\Serializer\JmsSerializer
- * @author Mario Mueller
- * @since 2014-08-16
- * @version 1.0.0
+ * @author  Mario Mueller
  */
 class SourceSubscribingHandler implements SubscribingHandlerInterface
 {
@@ -58,9 +58,10 @@ class SourceSubscribingHandler implements SubscribingHandlerInterface
 
     /**
      * @param JsonDeserializationVisitor $visitor
-     * @param $data
-     * @param array $type
-     * @param Context $context
+     * @param                            $data
+     * @param array                      $type
+     * @param Context                    $context
+     *
      * @return mixed
      * @author Mario Mueller
      */

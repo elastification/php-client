@@ -2,13 +2,18 @@
 namespace Elastification\Client\Transport;
 
 /**
- * Interface TransportInterface
+ * The transport itself.
+ *
+ * It should hide the complete implementation behind the
+ * three interfaces {@see TransportRequestInterface},{@see TransportResponseInterface} and this one.
+ *
  * @author Mario Mueller
  */
 interface TransportInterface
 {
     /**
      * @param string $httpMethod The http method to use.
+     *
      * @return \Elastification\Client\Transport\TransportRequestInterface
      * @author Mario Mueller
      */
@@ -16,6 +21,7 @@ interface TransportInterface
 
     /**
      * @param TransportRequestInterface $request The configured request to send.
+     *
      * @return \Elastification\Client\Transport\TransportResponseInterface
      * @author Mario Mueller
      */

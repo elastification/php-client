@@ -6,9 +6,7 @@ use GuzzleHttp\Message\ResponseInterface;
 
 /**
  * @package Elastification\Client\Transport\HttpGuzzle
- * @author Mario Mueller
- * @since 2014-08-12
- * @version 1.0.0
+ * @author  Mario Mueller
  */
 class GuzzleTransportResponse implements TransportResponseInterface
 {
@@ -31,6 +29,6 @@ class GuzzleTransportResponse implements TransportResponseInterface
      */
     public function getBody()
     {
-        return (string) $this->guzzleResponse->getBody();
+        return (string)$this->guzzleResponse->getBody();
     }
 }
