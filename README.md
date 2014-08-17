@@ -11,7 +11,8 @@ ToDo
 ====
 
 Global:
-- [] Symfony2 Bundle
+- [ ] Symfony2 Bundle
+- [ ] Vagrant boxes for different elasticsearch versions
 
 Dawen:
 
@@ -24,7 +25,6 @@ Dawen:
 - [ ] Integration tests for RequestManager
 - [ ] Helper for Version response compare. (Symfony/Console)
 - [ ] After helper for response compare, refactor requests. I think version base requests are not needed.
-- [ ] Vagrant boxes for different elasticsearch versions
 
 xenji:
 - [x] Add thrift transport
