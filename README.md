@@ -15,19 +15,19 @@ Global:
 
 Dawen:
 
-- [] CreateIndexRequest
-- [] DeleteIndexRequest
-- [] IndexExistsRequest
-- [] CreateMappingRequest
-- [] CountRequest / only term is possible here
+- [ ] CreateIndexRequest
+- [ ] DeleteIndexRequest
+- [ ] IndexExistsRequest
+- [ ] CreateMappingRequest
+- [ ] CountRequest / only term is possible here
 - [x] Unit Test for client
-- [] Integration tests for RequestManager
-- [] Helper for Version response compare. (Symfony/Console)
-- [] After helper for response compare, refactor requests. I think version base requests are not needed.
-- [] Vagrant boxes for different elasticsearch versions
+- [ ] Integration tests for RequestManager
+- [ ] Helper for Version response compare. (Symfony/Console)
+- [ ] After helper for response compare, refactor requests. I think version base requests are not needed.
+- [ ] Vagrant boxes for different elasticsearch versions
 
 xenji:
 - [x] Add thrift transport
-- [] Add tests for the transports
+- [ ] Add tests for the transports
 - [x] API Documentation, available at [http://elastification.github.io/php-client/](http://elastification.github.io/php-client/)
-- [] Written documentation with examples
+- [ ] Written documentation with examples
