@@ -15,6 +15,11 @@
             "email": "mario@xenji.com"
         }
     ],
+    "support": {
+        "issues": "https://github.com/elastification/php-client/issues",
+        "wiki": "https://github.com/elastification/php-client/wiki",
+        "source": "https://github.com/elastification/php-client/tree/master"
+    },
     "require": {
         "php": ">=5.4.10"
     },
