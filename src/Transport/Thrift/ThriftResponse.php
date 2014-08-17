@@ -23,8 +23,6 @@ use Elasticsearch\RestResponse;
 /**
  * @package Elastification\Client\Transport\Thrift
  * @author Mario Mueller
- * @since 2014-08-12
- * @version 1.0.0
  */
 class ThriftResponse implements TransportResponseInterface
 {
