@@ -5,6 +5,11 @@ namespace Elastification\Client;
 use Elastification\Client\Request\RequestInterface;
 use Elastification\Client\Response\ResponseInterface;
 
+/**
+ * Interface ClientInterface
+ * @package Elastification\Client
+ * @author Daniel Wendlandt
+ */
 interface ClientInterface
 {
     const VERSION = '0.1.0';
@@ -21,11 +26,12 @@ interface ClientInterface
 
     const ELASTICSEARCH_VERSION_1_3_x = '1.3.x';
 
-    //todo throw exception in send
     /**
      * performs sending the request
      *
      * @param RequestInterface $request
+     * @throws Exception\ClientException
+     * @throws Exception\RequestException
      * @return ResponseInterface
      * @author Daniel Wendlandt
      */

@@ -5,6 +5,7 @@ namespace Elastification\Client\Request;
 /**
  * Class RequestMethods
  * @package Elastification\Client\Reuqest
+ * @author Daniel Wendlandt
  */
 final class RequestMethods
 {
@@ -28,6 +29,7 @@ final class RequestMethods
      *
      * @param string $method
      * @return bool
+     * @author Daniel Wendlandt
      */
     public static function isAllowed($method)
     {
