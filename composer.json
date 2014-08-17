@@ -35,7 +35,6 @@
             "Elastification\\Client\\Tests\\": "tests/"
         }
     },
-    "target-dir": "Elastification/Client",
     "config": {
         "bin-dir": "bin"
     },
