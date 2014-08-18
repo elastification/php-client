@@ -17,7 +17,6 @@
  */
 namespace Elastification\Client\Transport\HttpGuzzle;
 
-use Elastification\Client\Exception\ClientException;
 use Elastification\Client\Transport\Exception\TransportLayerException;
 use Elastification\Client\Transport\TransportInterface;
 use Elastification\Client\Transport\TransportRequestInterface;
