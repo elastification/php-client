@@ -8,12 +8,17 @@ use Elastification\Client\Request\V090x\CreateDocumentRequest;
 use Elastification\Client\Request\V090x\DeleteDocumentRequest;
 use Elastification\Client\Request\V090x\GetDocumentRequest;
 use Elastification\Client\Request\V090x\GetMappingRequest;
+use Elastification\Client\Request\V090x\Index\CreateIndexRequest;
+use Elastification\Client\Request\V090x\Index\DeleteIndexRequest;
 use Elastification\Client\Request\V090x\Index\IndexExistsRequest;
+use Elastification\Client\Request\V090x\Index\RefreshIndexRequest;
 use Elastification\Client\Request\V090x\SearchRequest;
 use Elastification\Client\Request\V090x\UpdateDocumentRequest;
 use Elastification\Client\Response\ResponseInterface;
 use Elastification\Client\Response\V090x\CreateUpdateDocumentResponse;
 use Elastification\Client\Response\V090x\DocumentResponse;
+use Elastification\Client\Response\V090x\Index\IndexResponse;
+use Elastification\Client\Response\V090x\Index\RefreshIndexResponse;
 use Elastification\Client\Response\V090x\SearchResponse;
 use Elastification\Client\Serializer\NativeJsonSerializer;
 use Elastification\Client\Serializer\SerializerInterface;
@@ -77,19 +82,99 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
     {
         parent::tearDown();
 
+        if($this->hasIndex()) {
+            $this->deleteIndex();
+        }
+
         $this->guzzleClient = null;
         $this->requestManager = null;
         $this->client = null;
+
+
+    }
+
+    public function testDeleteIndex()
+    {
+        $this->createIndex();
+
+        $timeStart = microtime(true);
+
+        $createIndexRequest = new DeleteIndexRequest(self::INDEX, null, $this->serializer);
+
+        /** @var IndexResponse $response */
+        $response = $this->client->send($createIndexRequest);
+
+        echo 'deleteIndex: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        $this->assertTrue($response->isOk());
+        $this->assertTrue($response->acknowledged());
+    }
+
+    public function testCreateIndex()
+    {
+        $timeStart = microtime(true);
+
+        $settings = array(
+            'settings' => array(
+                'index' => array(
+                    'number_of_shards' => 3,
+                    'number_of_replicas' => 2
+                )
+            ),
+            'mappings' => array(
+                'test-type' => array(
+                    '_source' => array('enabled' => false),
+                    'properties' => array(
+                        'test-field' => array(
+                            'type' => 'string',
+                            'index' => 'not_analyzed'
+                        )
+                    )
+                )
+            )
+        );
+
+        $createIndexRequest = new CreateIndexRequest(self::INDEX, null, $this->serializer);
+        $createIndexRequest->setBody($settings);
+
+        /** @var IndexResponse $response */
+        $response = $this->client->send($createIndexRequest);
+
+        echo 'createIndex: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        $this->assertTrue($response->isOk());
+        $this->assertTrue($response->acknowledged());
+    }
+
+    public function testRefreshIndex()
+    {
+        $this->createIndex();
+        $this->createDocument();
+        $timeStart = microtime(true);
+
+        $refreshIndexRequest = new RefreshIndexRequest(self::INDEX, null, $this->serializer);
+
+        /** @var RefreshIndexResponse $response */
+        $response = $this->client->send($refreshIndexRequest);
+
+        echo 'refreshIndex: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        $this->assertTrue($response->isOk());
+        $shards = $response->getShards();
+        $this->assertTrue(isset($shards['total']));
+        $this->assertTrue(isset($shards['successful']));
+        $this->assertTrue(isset($shards['failed']));
     }
 
     public function testCreateDocument()
     {
+        $this->createIndex();
         $timeStart = microtime(true);
-        $createDocumentRequest = new CreateDocumentRequest(self::INDEX, self::TYPE, $this->serializer);
 
-        $createDocumentRequest->setBody(
-            array('name' => 'test' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000))
-        );
+        $createDocumentRequest = new CreateDocumentRequest(self::INDEX, self::TYPE, $this->serializer);
+        $data = array('name' => 'test' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000));
+
+        $createDocumentRequest->setBody($data);
         /** @var CreateUpdateDocumentResponse $response */
         $response = $this->client->send($createDocumentRequest);
 
@@ -104,24 +189,15 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
 
     public function testGetDocument()
     {
-        $createDocumentRequest = new CreateDocumentRequest(self::INDEX, self::TYPE, $this->serializer);
-
+        $this->createIndex();
         $data = array('name' => 'test' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000));
-
-        $createDocumentRequest->setBody($data);
-        /** @var CreateUpdateDocumentResponse $response */
-        $response = $this->client->send($createDocumentRequest);
-
-        $this->assertSame(self::INDEX, $response->getIndex());
-        $this->assertSame(self::TYPE, $response->getType());
-        $this->assertSame(1, $response->getVersion());
-        $this->assertTrue($response->isOk());
-        $this->assertTrue(strlen($response->getId()) > 5);
+        $id = $this->createDocument($data);
+        $this->refreshIndex();
 
         $timeStart = microtime(true);
 
         $getDocumentRequest = new GetDocumentRequest(self::INDEX, self::TYPE, $this->serializer);
-        $getDocumentRequest->setId($response->getId());
+        $getDocumentRequest->setId($id);
 
         /** @var DocumentResponse $getDocumentResponse */
         $getDocumentResponse = $this->client->send($getDocumentRequest);
@@ -129,7 +205,7 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
         echo 'getDocument: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
 
         $this->assertTrue($getDocumentResponse->exists());
-        $this->assertSame($response->getId(), $getDocumentResponse->getId());
+        $this->assertSame($id, $getDocumentResponse->getId());
         $this->assertSame(1, $getDocumentResponse->getVersion());
         $this->assertSame(self::INDEX, $getDocumentResponse->getIndex());
         $this->assertSame(self::TYPE, $getDocumentResponse->getType());
@@ -139,6 +215,11 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
 
     public function testGetDocumentMissingDoc()
     {
+        $this->createIndex();
+        $data = array('name' => 'test' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000));
+        $this->createDocument($data);
+        $this->refreshIndex();
+
         $timeStart = microtime(true);
 
         $getDocumentRequest = new GetDocumentRequest(self::INDEX, self::TYPE, $this->serializer);
@@ -157,26 +238,15 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
 
     public function testUpdateDocument()
     {
-
-        $createDocumentRequest = new CreateDocumentRequest(self::INDEX, self::TYPE, $this->serializer);
-
+        $this->createIndex();
         $data = array('name' => 'test' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000));
-
-        $createDocumentRequest->setBody($data);
-        /** @var CreateUpdateDocumentResponse $response */
-        $response = $this->client->send($createDocumentRequest);
-
-
-        $this->assertSame(self::INDEX, $response->getIndex());
-        $this->assertSame(self::TYPE, $response->getType());
-        $this->assertSame(1, $response->getVersion());
-        $this->assertTrue($response->isOk());
-        $this->assertTrue(strlen($response->getId()) > 5);
+        $id = $this->createDocument($data);
+        $this->refreshIndex();
 
         $timeStart = microtime(true);
 
         $updateDocumentRequest = new UpdateDocumentRequest(self::INDEX, self::TYPE, $this->serializer);
-        $updateDocumentRequest->setId($response->getId());
+        $updateDocumentRequest->setId($id);
         $data['name'] = 'testName';
         $updateDocumentRequest->setBody($data);
 
@@ -189,37 +259,27 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(self::TYPE, $updateDocumentResponse->getType());
         $this->assertSame(2, $updateDocumentResponse->getVersion());
         $this->assertTrue($updateDocumentResponse->isOk());
-        $this->assertSame($response->getId(), $updateDocumentResponse->getId());
+        $this->assertSame($id, $updateDocumentResponse->getId());
     }
 
     public function testDeleteDocument()
     {
+        $this->createIndex();
+        $data = array('name' => 'test' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000));
+        $id = $this->createDocument($data);
+        $this->refreshIndex();
+
         $timeStart = microtime(true);
-        $createDocumentRequest = new CreateDocumentRequest(self::INDEX, self::TYPE, $this->serializer);
-
-        $createDocumentRequest->setBody(
-            array('name' => 'test' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000))
-        );
-        /** @var CreateUpdateDocumentResponse $response */
-        $response = $this->client->send($createDocumentRequest);
-
-        echo 'createDocument: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-
-        $this->assertSame(self::INDEX, $response->getIndex());
-        $this->assertSame(self::TYPE, $response->getType());
-        $this->assertSame(1, $response->getVersion());
-        $this->assertTrue($response->isOk());
-        $this->assertTrue(strlen($response->getId()) > 5);
 
         $deleteDocumentRequest = new DeleteDocumentRequest(self::INDEX, self::TYPE, $this->serializer);;
-        $deleteDocumentRequest->setId($response->getId());
+        $deleteDocumentRequest->setId($id);
 
         $this->client->send($deleteDocumentRequest);
 
         echo 'deleteDocument: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
 
         $getDocumentRequest = new GetDocumentRequest(self::INDEX, self::TYPE, $this->serializer);
-        $getDocumentRequest->setId($response->getId());
+        $getDocumentRequest->setId($id);
 
         try {
             $this->client->send($getDocumentRequest);
@@ -234,6 +294,17 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
 
     public function testMatchAllSearch()
     {
+        $this->createIndex();
+        $data = array('name' => 'test' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000));
+        $this->createDocument($data);
+        $data = array('name' => 'test' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000));
+        $this->createDocument($data);
+        $data = array('name' => 'test' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000));
+        $this->createDocument($data);
+        $data = array('name' => 'test' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000));
+        $this->createDocument($data);
+        $this->refreshIndex();
+
         $timeStart = microtime(true);
         $searchRequest = new SearchRequest(self::INDEX, self::TYPE, $this->serializer);
 
@@ -273,12 +344,17 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
 
     public function testGetMappingWithType()
     {
-        $createDocumentRequest = new GetMappingRequest(self::INDEX, self::TYPE, $this->serializer);
+        $this->createIndex();
+        $data = array('name' => 'test' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000));
+        $this->createDocument($data);
+        $this->refreshIndex();
 
         $timeStart = microtime(true);
 
+        $getMappingRequest = new GetMappingRequest(self::INDEX, self::TYPE, $this->serializer);
+
         /** @var ResponseInterface $response */
-        $response = $this->client->send($createDocumentRequest);
+        $response = $this->client->send($getMappingRequest);
 
         echo 'getMapping: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
 
@@ -288,14 +364,19 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
 
     public function testGetMappingWithoutType()
     {
-        $createDocumentRequest = new GetMappingRequest(self::INDEX, null, $this->serializer);
+        $this->createIndex();
+        $data = array('name' => 'test' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000));
+        $this->createDocument($data);
+        $this->refreshIndex();
 
         $timeStart = microtime(true);
 
-        /** @var ResponseInterface $response */
-        $response = $this->client->send($createDocumentRequest);
+        $getMappingRequest = new GetMappingRequest(self::INDEX, null, $this->serializer);
 
-        echo 'getMapping: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+        /** @var ResponseInterface $response */
+        $response = $this->client->send($getMappingRequest);
+
+        echo 'getMapping(without type): ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
 
         $this->assertContains(self::INDEX, $response->getRawData());
         $this->assertContains(self::TYPE, $response->getRawData());
@@ -304,9 +385,12 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
 
     public function testIndexExists()
     {
-        $indexExistsRequest = new IndexExistsRequest(self::INDEX, null, $this->serializer);
+        $this->createIndex();
+        $this->refreshIndex();
 
         $timeStart = microtime(true);
+
+        $indexExistsRequest = new IndexExistsRequest(self::INDEX, null, $this->serializer);
 
         /** @var ResponseInterface $response */
         $response = $this->client->send($indexExistsRequest);
@@ -318,9 +402,12 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
 
     public function testIndexExistsNotExisting()
     {
-        $indexExistsRequest = new IndexExistsRequest('not-existing-index', null, $this->serializer);
+        $this->createIndex();
+        $this->refreshIndex();
 
         $timeStart = microtime(true);
+
+        $indexExistsRequest = new IndexExistsRequest('not-existing-index', null, $this->serializer);
 
         try {
             $this->client->send($indexExistsRequest);
@@ -331,5 +418,49 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
         }
 
         $this->fail();
+    }
+
+    private function createIndex()
+    {
+        $createIndexRequest = new CreateIndexRequest(self::INDEX, null, $this->serializer);
+        $this->client->send($createIndexRequest);
+    }
+
+    private function hasIndex()
+    {
+        $indexExistsRequest = new IndexExistsRequest(self::INDEX, null, $this->serializer);
+        try {
+            $this->client->send($indexExistsRequest);
+            return true;
+        } catch(ClientException $exception) {
+            return false;
+        }
+
+    }
+
+    private function deleteIndex()
+    {
+        $deleteIndexRequest = new DeleteIndexRequest(self::INDEX, null, $this->serializer);
+        $this->client->send($deleteIndexRequest);
+    }
+
+    private function refreshIndex()
+    {
+        $refreshIndexRequest = new RefreshIndexRequest(self::INDEX, null, $this->serializer);
+        $this->client->send($refreshIndexRequest);
+    }
+
+    private function createDocument($data = null)
+    {
+        $createDocumentRequest = new CreateDocumentRequest(self::INDEX, self::TYPE, $this->serializer);
+        if(null === $data) {
+            $data = array('name' => 'test' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000));
+        }
+
+        $createDocumentRequest->setBody($data);
+        /** @var CreateUpdateDocumentResponse $response */
+        $response = $this->client->send($createDocumentRequest);
+
+        return $response->getId();
     }
 }

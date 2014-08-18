@@ -17,12 +17,12 @@
  */
 namespace Elastification\Client\Request\V090x\Index;
 
-use Elastification\Client\Request\Shared\Index\AbstractIndexExistsRequest;
-use Elastification\Client\Response\Response;
+use Elastification\Client\Request\Shared\Index\AbstractRefreshIndexRequest;
+use Elastification\Client\Response\V090x\Index\RefreshIndexResponse;
 use Elastification\Client\Serializer\SerializerInterface;
 
 /**
- * Class CreateDocumentRequest
+ * Class RefreshIndexRequest
  *
  * This request returns successful empty response. If not existing index,
  * there will be an exception at client send.
@@ -30,14 +30,14 @@ use Elastification\Client\Serializer\SerializerInterface;
  * @package Elastification\Client\Request\V090x\Index
  * @author Daniel Wendlandt
  */
-class IndexExistsRequest extends AbstractIndexExistsRequest
+class RefreshIndexRequest extends AbstractRefreshIndexRequest
 {
 
     /**
      * @param string $rawData
      * @param \Elastification\Client\Serializer\SerializerInterface $serializer
      * @param array $serializerParams
-     * @return Response
+     * @return RefreshIndexResponse
      * @author Daniel Wendlandt
      */
     public function createResponse(
@@ -45,7 +45,7 @@ class IndexExistsRequest extends AbstractIndexExistsRequest
         SerializerInterface $serializer,
         array $serializerParams = array())
     {
-        return new Response($rawData, $serializer, $serializerParams);
+        return new RefreshIndexResponse($rawData, $serializer, $serializerParams);
     }
 
     /**
@@ -56,6 +56,6 @@ class IndexExistsRequest extends AbstractIndexExistsRequest
      */
     public function getSupportedClass()
     {
-        return 'Elastification\Client\Response\Response';
+        return 'Elastification\Client\Response\V090x\Index\RefreshIndexResponse';
     }
 }

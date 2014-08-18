@@ -17,17 +17,21 @@ ToDo
 Global:
 - [ ] Symfony2 Bundle
 - [ ] Vagrant boxes for different elasticsearch versions
+- [ ] Helper for Version response compare. (Symfony/Console)
+- [ ] Export/Import/Copy indecies Elasticsearch tool (php) based on php-client and console application with simple config json/yml
 
 Dawen:
 
-- [ ] CreateIndexRequest
-- [ ] DeleteIndexRequest
-- [ ] IndexExistsRequest
+- [ ] RefreshIndexRequest
+- [x] CreateIndexRequest
+- [x] DeleteIndexRequest
+- [ ] open/close index
+- [x] IndexExistsRequest
+- [ ] use setup and teardown for integration tests sandbox v090x. Delete Index at the end
 - [ ] CreateMappingRequest
 - [ ] CountRequest / only term is possible here
 - [x] Unit Test for client
 - [ ] Integration tests for RequestManager
-- [ ] Helper for Version response compare. (Symfony/Console)
 - [ ] After helper for response compare, refactor requests. I think version base requests are not needed.
 
 xenji:
@@ -35,3 +39,21 @@ xenji:
 - [ ] Add tests for the transports
 - [x] API Documentation, available at [http://elastification.github.io/php-client/](http://elastification.github.io/php-client/)
 - [ ] Written documentation with examples
+
+
+---
+
+Requests Examples
+=================
+
+How to check if indexExists:
+```
+$indexExistsRequest = new IndexExistsRequest('index', null, $this->serializer);
+
+try {
+    $client->send($indexExistsRequest);
+    return true;
+} catch(ClientException $exception) {
+    return false;
+}
+```
