@@ -162,13 +162,6 @@ abstract class AbstractSearchResponse extends Response
         $this->processData();
 
         $hits = $this->get(self::PROP_HITS);
-
-        // FIXME @dawen: This should not be needed as the NativeObjectGateway behaves the same way as the ArrayGateway
-        // Please let us talk about it ~xenji
-        if ($hits instanceof NativeArrayGateway || is_array($hits)) {
-            return $hits[$property];
-        }
-
-        return $hits->{$property};
+        return $hits[$property];
     }
 }

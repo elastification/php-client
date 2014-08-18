@@ -10,6 +10,8 @@ namespace Elastification\Client\Tests\Unit\Response\V090x;
 
 use Elastification\Client\Exception\ResponseException;
 use Elastification\Client\Response\V090x\SearchResponse;
+use Elastification\Client\Serializer\Gateway\NativeArrayGateway;
+use Elastification\Client\Serializer\Gateway\NativeObjectGateway;
 
 class SearchResponseTest extends \PHPUnit_Framework_TestCase
 {
@@ -423,10 +425,10 @@ class SearchResponseTest extends \PHPUnit_Framework_TestCase
         ];
 
         if ($asObject) {
-            return (object)$data;
+            return new NativeObjectGateway((object)$data);
         }
 
-        return $data;
+        return new NativeArrayGateway($data);
     }
 
     private function getHitsData($asObject = false)
@@ -440,9 +442,9 @@ class SearchResponseTest extends \PHPUnit_Framework_TestCase
         );
 
         if ($asObject) {
-            return (object)$hits;
+            return new NativeObjectGateway((object)$hits);
         }
 
-        return $hits;
+        return new NativeArrayGateway($hits);
     }
 }

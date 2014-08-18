@@ -1,6 +1,7 @@
 <?php
 namespace Elastification\Client\Tests\Integration;
 
+use Elasticsearch\RestClient;
 use Elastification\Client\Client;
 use Elastification\Client\ClientInterface;
 use Elastification\Client\Request\RequestManager;
@@ -11,12 +12,8 @@ use Elastification\Client\Transport\Thrift\ThriftTransportConnectionFactory;
 use Elastification\Client\Transport\Thrift\ThriftTransport;
 
 /**
- * ${CARET}
- *
  * @package Elastification\Client\Tests\Integration
- * @author  Mario Mueller <mueller@freshcells.de>
- * @since   2014-08-13
- * @version 1.0.0
+ * @author  Mario Mueller
  */
 class SandboxV1xTest extends \PHPUnit_Framework_TestCase
 {
@@ -24,19 +21,30 @@ class SandboxV1xTest extends \PHPUnit_Framework_TestCase
     const INDEX = 'elastification';
     const TYPE = 'sandbox';
 
+    /**
+     *
+     * @var RestClient
+     */
     private $thriftClient;
 
+    /**
+     * @author Mario Mueller
+     */
     public function setUp()
     {
         $this->thriftClient = ThriftTransportConnectionFactory::factory('localhost', 9500);
     }
 
+    /**
+     * @throws \Elastification\Client\Exception\ClientException
+     * @throws \Elastification\Client\Exception\RequestException
+     * @author Mario Mueller
+     */
     public function testThriftConnection()
     {
-
         $thriftTransport = new ThriftTransport($this->thriftClient);
         $requestManager = new RequestManager();
-        $client = new Client($thriftTransport, $requestManager, ClientInterface::ELASTICSEARCH_VERSION_1_3_x);
+        $client = new Client($thriftTransport, $requestManager, ClientInterface::ELASTICSEARCH_VERSION_1_3_X);
         $serializer = new NativeJsonSerializer();
         $createDocumentRequest = new CreateDocumentRequest(self::INDEX, self::TYPE, $serializer, ['assoc' => true]);
         $createDocumentRequest->setBody(

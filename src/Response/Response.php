@@ -111,11 +111,7 @@ class Response implements ResponseInterface
      */
     protected function get($property)
     {
-        if ($this->data instanceof NativeArrayGateway || is_array($this->data)) {
-            return $this->data[$property];
-        }
-
-        return $this->data->{$property};
+        return $this->data[$property];
     }
 
     /**
@@ -128,10 +124,6 @@ class Response implements ResponseInterface
      */
     protected function has($property)
     {
-        if ($this->data instanceof NativeArrayGateway || is_array($this->data)) {
-            return isset($this->data[$property]);
-        }
-
-        return property_exists($this->data, $property);
+        return isset($this->data[$property]);
     }
 }
