@@ -222,6 +222,4 @@ class NativeObjectGateway implements GatewayInterface
     {
         return $this->jsonData;
     }
-
-
 }
