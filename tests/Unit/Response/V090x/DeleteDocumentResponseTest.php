@@ -9,6 +9,8 @@
 namespace Elastification\Client\Tests\Unit\Response\V090x;
 
 use Elastification\Client\Response\V090x\DeleteDocumentResponse;
+use Elastification\Client\Serializer\Gateway\NativeArrayGateway;
+use Elastification\Client\Serializer\Gateway\NativeObjectGateway;
 
 class DeleteDocumentResponseTest extends \PHPUnit_Framework_TestCase
 {
@@ -257,9 +259,9 @@ class DeleteDocumentResponseTest extends \PHPUnit_Framework_TestCase
         ];
 
         if ($asObject) {
-            return (object)$data;
+            return new NativeObjectGateway((object)$data);
         }
 
-        return $data;
+        return new NativeArrayGateway($data);
     }
 }

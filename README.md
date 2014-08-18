@@ -18,12 +18,12 @@ Global:
 - [ ] Symfony2 Bundle
 - [ ] Vagrant boxes for different elasticsearch versions
 - [ ] Helper for Version response compare. (Symfony/Console)
-- [ ] Export/Import/Copy indecies Elasticsearch tool (php) based on php-client and console application with simple config json/yml
+- [ ] Export/Import/Copy indeces Elasticsearch tool (php) based on php-client and console application with simple config json/yml
 
 Dawen:
 
-- [ ] Get status (gloabl and index based, multi index)
-- [ ] Get stats (gloabl and index based, multi index)
+- [ ] Get status (global and index based, multi index)
+- [x] Get stats (global and index based, multi index)
 - [ ] Get settings. (global and index based, multi index)
 - [ ] Types Exists with HEAD method
 - [ ] Create Alias Index
