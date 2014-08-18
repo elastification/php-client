@@ -22,17 +22,28 @@ Global:
 
 Dawen:
 
-- [ ] RefreshIndexRequest
+- [ ] Get status (gloabl and index based, multi index)
+- [ ] Get stats (gloabl and index based, multi index)
+- [ ] Get settings. (global and index based, multi index)
+- [ ] Types Exists with HEAD method
+- [ ] Create Alias Index
+- [ ] Create Aliases
+- [ ] Delete Aliases
+- [ ] Get Aliases (global and index based, multi index)
+- [ ] Alias exists with HEAD method
+- [ ] CreateMappingRequest
+- [ ] DeleteMappingRequest
+- [ ] CountRequest / only term is possible here
+- [ ] Clear cache (global and index based, multi index)
+- [ ] flush (global and index based, multi index)
+- [x] RefreshIndexRequest
 - [x] CreateIndexRequest
 - [x] DeleteIndexRequest
-- [ ] open/close index
 - [x] IndexExistsRequest
-- [ ] use setup and teardown for integration tests sandbox v090x. Delete Index at the end
-- [ ] CreateMappingRequest
-- [ ] CountRequest / only term is possible here
+- [x] use setup and teardown for integration tests sandbox v090x. Delete Index at the end
+- [ ] open/close index (only for version 1x
 - [x] Unit Test for client
 - [ ] Integration tests for RequestManager
-- [ ] After helper for response compare, refactor requests. I think version base requests are not needed.
 
 xenji:
 - [x] Add thrift transport
