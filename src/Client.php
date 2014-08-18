@@ -70,11 +70,10 @@ class Client implements ClientInterface
         $this->requestManager = $requestManager;
 
         if (null === $elasticsearchVersion) {
-            $this->elasticsearchVersion = self::ELASTICSEARCH_VERSION_0_90_x;
+            $this->elasticsearchVersion = self::ELASTICSEARCH_VERSION_0_90_X;
         } else {
             $this->elasticsearchVersion = $elasticsearchVersion;
         }
-
     }
 
     /**

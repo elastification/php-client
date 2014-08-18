@@ -49,7 +49,6 @@ class NativeObjectGateway implements GatewayInterface
     function __construct($jsonData)
     {
         $this->jsonData = $jsonData;
-        // FIXME: Ugly, but need to test if reflection is really faster
         $this->properties = array_keys(get_object_vars($jsonData));
         $this->propertyCount = sizeof($this->properties);
     }
@@ -210,7 +209,7 @@ class NativeObjectGateway implements GatewayInterface
      */
     public function count()
     {
-        return sizeof($this->properties);
+        return $this->propertyCount;
     }
 
     /**
@@ -223,6 +222,4 @@ class NativeObjectGateway implements GatewayInterface
     {
         return $this->jsonData;
     }
-
-
 }

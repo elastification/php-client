@@ -1,11 +1,8 @@
-phpunit.xml
-composer.phar
-vendor/
-build/
-bin/
+/phpunit.xml
+/composer.phar
+/vendor/
+/build/
 artifacts/
-.idea
-.DS_STORE
 /bin/
 !/bin/.gitkeep
 /docs
