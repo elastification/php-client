@@ -74,7 +74,6 @@ class Client implements ClientInterface
         } else {
             $this->elasticsearchVersion = $elasticsearchVersion;
         }
-
     }
 
     /**
