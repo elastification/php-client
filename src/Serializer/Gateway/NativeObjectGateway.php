@@ -209,7 +209,7 @@ class NativeObjectGateway implements GatewayInterface
      */
     public function count()
     {
-        return sizeof($this->properties);
+        return $this->propertyCount;
     }
 
     /**
