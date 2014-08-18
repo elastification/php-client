@@ -76,7 +76,7 @@ into the constructor of the handler class.</p>
                 </td>
                 <td class="last">
                     <a href="#method_serialize">serialize</a>(mixed $data, array $params = array())
-                    <p>Serializes given data to string.</p>
+                    <p>Serializes given data to string</p>
                 </td>
                 <td></td>
             </tr>
@@ -86,7 +86,7 @@ into the constructor of the handler class.</p>
                 </td>
                 <td class="last">
                     <a href="#method_deserialize">deserialize</a>(string $data, array $params = array())
-                    <p>Deserializes given data to array or object.</p>
+                    <p>Deserializes given data to array or object</p>
                 </td>
                 <td></td>
             </tr>
@@ -162,7 +162,7 @@ into the constructor of the handler class.</p>
         <h2>Details</h2>
 
                         <h3 id="method___construct">
-        <div class="location">at line 61</div>
+        <div class="location">at line 77</div>
         <code>            public            
     <strong>__construct</strong>(<abbr title="JMS\Serializer\Serializer">Serializer</abbr> $jms)</code>
     </h3>
@@ -190,12 +190,12 @@ into the constructor of the handler class.</p>
     </div>
 
                 <h3 id="method_serialize">
-        <div class="location">at line 74</div>
+        <div class="location">at line 90</div>
         <code>            public            string
     <strong>serialize</strong>(mixed $data, array $params = array())</code>
     </h3>
     <div class="details">
-        <p>Serializes given data to string.</p>
+        <p>Serializes given data to string</p>
         <p>
 </p>
         <div class="tags">
@@ -231,18 +231,14 @@ into the constructor of the handler class.</p>
     </div>
 
                 <h3 id="method_deserialize">
-        <div class="location">at line 91</div>
+        <div class="location">at line 107</div>
         <code>            public            <a href="../../../Elastification/Client/Serializer/Gateway/GatewayInterface.html"><abbr title="Elastification\Client\Serializer\Gateway\GatewayInterface">GatewayInterface</abbr></a>
     <strong>deserialize</strong>(string $data, array $params = array())</code>
     </h3>
     <div class="details">
-        <p>Deserializes given data to array or object.</p>
-        <p>The response will be a {see GatewayInterface}, which enables you to use any response
-like an array, because the gateway interface extends from {see \ArrayAccess}. It must also
-implement {see \Countable} and {see \Iteratable}.</p>
-
-<p>The gateway will provide a method to get the original value behind the gateway. This is what
-you want if you need to work with the real result.</p>
+        <p>Deserializes given data to array or object</p>
+        <p>
+</p>
         <div class="tags">
                             <h4>Parameters</h4>
 
@@ -276,7 +272,7 @@ you want if you need to work with the real result.</p>
     </div>
 
                 <h3 id="method_getJmsSerializeContext">
-        <div class="location">at line 130</div>
+        <div class="location">at line 146</div>
         <code>            public            <abbr title="JMS\Serializer\SerializationContext">SerializationContext</abbr>
     <strong>getJmsSerializeContext</strong>()</code>
     </h3>
@@ -303,7 +299,7 @@ you want if you need to work with the real result.</p>
     </div>
 
                 <h3 id="method_setJmsSerializeContext">
-        <div class="location">at line 141</div>
+        <div class="location">at line 157</div>
         <code>            public            void
     <strong>setJmsSerializeContext</strong>(<abbr title="JMS\Serializer\SerializationContext">SerializationContext</abbr> $jmsContext)</code>
     </h3>
@@ -341,7 +337,7 @@ you want if you need to work with the real result.</p>
     </div>
 
                 <h3 id="method_getJmsDeserializeContext">
-        <div class="location">at line 150</div>
+        <div class="location">at line 166</div>
         <code>            public            <abbr title="JMS\Serializer\DeserializationContext">DeserializationContext</abbr>
     <strong>getJmsDeserializeContext</strong>()</code>
     </h3>
@@ -368,7 +364,7 @@ you want if you need to work with the real result.</p>
     </div>
 
                 <h3 id="method_setJmsDeserializeContext">
-        <div class="location">at line 161</div>
+        <div class="location">at line 177</div>
         <code>            public            void
     <strong>setJmsDeserializeContext</strong>(<abbr title="JMS\Serializer\DeserializationContext">DeserializationContext</abbr> $jmsDeserializeContext)</code>
     </h3>
@@ -406,7 +402,7 @@ you want if you need to work with the real result.</p>
     </div>
 
                 <h3 id="method_getDeserializerClass">
-        <div class="location">at line 170</div>
+        <div class="location">at line 186</div>
         <code>            public            string
     <strong>getDeserializerClass</strong>()</code>
     </h3>
@@ -433,7 +429,7 @@ you want if you need to work with the real result.</p>
     </div>
 
                 <h3 id="method_setDeserializerClass">
-        <div class="location">at line 181</div>
+        <div class="location">at line 197</div>
         <code>            public            void
     <strong>setDeserializerClass</strong>(string $deserializerClass)</code>
     </h3>
