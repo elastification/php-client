@@ -17,12 +17,12 @@
  */
 namespace Elastification\Client\Request\V090x\Index;
 
-use Elastification\Client\Request\Shared\Index\AbstractIndexExistsRequest;
+use Elastification\Client\Request\Shared\Index\AbstractIndexTypeExistsRequest;
 use Elastification\Client\Response\Response;
 use Elastification\Client\Serializer\SerializerInterface;
 
 /**
- * Class IndexExistsRequest
+ * Class IndexTypeExistsRequest
  *
  * This request returns successful empty response. If not existing index,
  * there will be an exception at client send.
@@ -30,7 +30,7 @@ use Elastification\Client\Serializer\SerializerInterface;
  * @package Elastification\Client\Request\V090x\Index
  * @author Daniel Wendlandt
  */
-class IndexExistsRequest extends AbstractIndexExistsRequest
+class IndexTypeExistsRequest extends AbstractIndexTypeExistsRequest
 {
 
     /**

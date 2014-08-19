@@ -26,7 +26,7 @@ Dawen:
 - [x] Get status (global and index based, multi index)
 - [x] Get stats (global and index based, multi index)
 - [ ] Get settings. (global and index based, multi index)
-- [ ] Types Exists with HEAD method
+- [x] Types Exists with HEAD method
 - [ ] Create Alias Index
 - [ ] Create Aliases
 - [ ] Delete Aliases
