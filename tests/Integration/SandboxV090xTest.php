@@ -12,6 +12,7 @@ use Elastification\Client\Request\V090x\Index\CreateIndexRequest;
 use Elastification\Client\Request\V090x\Index\DeleteIndexRequest;
 use Elastification\Client\Request\V090x\Index\IndexExistsRequest;
 use Elastification\Client\Request\V090x\Index\IndexStatsRequest;
+use Elastification\Client\Request\V090x\Index\IndexStatusRequest;
 use Elastification\Client\Request\V090x\Index\RefreshIndexRequest;
 use Elastification\Client\Request\V090x\SearchRequest;
 use Elastification\Client\Request\V090x\UpdateDocumentRequest;
@@ -21,6 +22,7 @@ use Elastification\Client\Response\V090x\CreateUpdateDocumentResponse;
 use Elastification\Client\Response\V090x\DocumentResponse;
 use Elastification\Client\Response\V090x\Index\IndexResponse;
 use Elastification\Client\Response\V090x\Index\IndexStatsResponse;
+use Elastification\Client\Response\V090x\Index\IndexStatusResponse;
 use Elastification\Client\Response\V090x\Index\RefreshIndexResponse;
 use Elastification\Client\Response\V090x\SearchResponse;
 use Elastification\Client\Serializer\NativeJsonSerializer;
@@ -484,6 +486,61 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
         $indices = $response->getIndices();
         $this->assertTrue(isset($indices[self::INDEX]));
     }
+
+    public function testIndexStatusWithIndex()
+    {
+        $this->createIndex();
+        $this->createDocument();
+        $this->refreshIndex();
+
+
+        $timeStart = microtime(true);
+
+        $indexStatsRequest = new IndexStatusRequest(self::INDEX, null, $this->serializer);
+
+        /** @var IndexStatusResponse $response */
+        $response = $this->client->send($indexStatsRequest);
+
+        echo 'indexStatus(with index): ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        $this->assertTrue($response->isOk());
+
+        $shards = $response->getShards();
+        $this->assertTrue(isset($shards['total']));
+        $this->assertTrue(isset($shards['successful']));
+        $this->assertTrue(isset($shards['failed']));
+
+        $indices = $response->getIndices();
+        $this->assertTrue(isset($indices[self::INDEX]));
+    }
+
+    public function testIndexStatusWithoutIndex()
+    {
+        $this->createIndex();
+        $this->createDocument();
+        $this->refreshIndex();
+
+
+        $timeStart = microtime(true);
+
+        $indexStatsRequest = new IndexStatusRequest(null, null, $this->serializer);
+
+        /** @var IndexStatusResponse $response */
+        $response = $this->client->send($indexStatsRequest);
+
+        echo 'indexStatus(with index): ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        $this->assertTrue($response->isOk());
+
+        $shards = $response->getShards();
+        $this->assertTrue(isset($shards['total']));
+        $this->assertTrue(isset($shards['successful']));
+        $this->assertTrue(isset($shards['failed']));
+
+        $indices = $response->getIndices();
+        $this->assertTrue(isset($indices[self::INDEX]));
+    }
+
 
     private function createIndex()
     {
