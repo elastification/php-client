@@ -22,7 +22,7 @@ Global:
 
 Dawen:
 
-- [ ] Missing Unit tests for new requests
+- [ ] Missing Unit tests for new requests (IndexStatusResponse)
 - [x] Get status (global and index based, multi index)
 - [x] Get stats (global and index based, multi index)
 - [ ] Get settings. (global and index based, multi index)
