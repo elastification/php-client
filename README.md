@@ -32,6 +32,7 @@ Dawen:
 - [ ] Delete Aliases
 - [ ] Get Aliases (global and index based, multi index)
 - [ ] Alias exists with HEAD method
+- [ ] Move GetMappingRequest/Response into index
 - [ ] CreateMappingRequest
 - [ ] DeleteMappingRequest
 - [ ] CountRequest / only term is possible here

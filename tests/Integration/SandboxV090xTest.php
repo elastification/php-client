@@ -9,6 +9,7 @@ use Elastification\Client\Request\V090x\DeleteDocumentRequest;
 use Elastification\Client\Request\V090x\GetDocumentRequest;
 use Elastification\Client\Request\V090x\GetMappingRequest;
 use Elastification\Client\Request\V090x\Index\CreateIndexRequest;
+use Elastification\Client\Request\V090x\Index\CreateMappingRequest;
 use Elastification\Client\Request\V090x\Index\DeleteIndexRequest;
 use Elastification\Client\Request\V090x\Index\IndexExistsRequest;
 use Elastification\Client\Request\V090x\Index\IndexStatsRequest;
@@ -581,6 +582,46 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(isset($indices[self::INDEX]));
     }
 
+    public function testCreateMappingWithIndexAndType()
+    {
+        $this->createIndex();
+
+        $timeStart = microtime(true);
+
+        $mapping = [
+            self::TYPE => [
+                'properties' => [
+                    'message' => ['type' => 'string']
+                ]
+            ]
+        ];
+
+        $createMappingRequest = new CreateMappingRequest(self::INDEX , self::TYPE, $this->serializer);
+        $createMappingRequest->setBody($mapping);
+
+        /** @var IndexResponse $response */
+        $response = $this->client->send($createMappingRequest);
+
+        echo 'createMapping(with index,type): ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        $this->assertTrue($response->isOk());
+        $this->assertTrue($response->acknowledged());
+
+        //check if exists
+        $getMappingRequest = new GetMappingRequest(self::INDEX, self::TYPE, $this->serializer);
+
+        /** @var ResponseInterface $getMappingResponse */
+        $getMappingResponse = $this->client->send($getMappingRequest);
+        $data = $getMappingResponse->getData();
+
+        $this->assertTrue(isset($data[self::TYPE]));
+        $this->assertTrue(isset($data[self::TYPE]['properties']));
+        $this->assertTrue(isset($data[self::TYPE]['properties']['message']));
+        $this->assertTrue(isset($data[self::TYPE]['properties']['message']['type']));
+        $this->assertSame('string', $data[self::TYPE]['properties']['message']['type']);
+        //the not activated assertSame is for tessting it when Gateway is fixed.
+//        $this->assertSame($mapping[self::TYPE], $data[self::TYPE]);
+    }
 
     private function createIndex()
     {

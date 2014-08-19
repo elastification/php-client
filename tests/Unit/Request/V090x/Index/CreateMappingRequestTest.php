@@ -8,13 +8,12 @@
 namespace Elastification\Client\Tests\Unit\Request\V090x\Index;
 
 use Elastification\Client\Request\RequestMethods;
-use Elastification\Client\Request\V090x\Index\IndexTypeExistsRequest;
+use Elastification\Client\Request\V090x\Index\CreateMappingRequest;
 
-class IndexTypeExistsRequestTest extends \PHPUnit_Framework_TestCase
+class CreateMappingRequestTest extends \PHPUnit_Framework_TestCase
 {
     const INDEX = 'test-index';
-    const TYPE = 'test-type';
-    const RESPONSE_CLASS = 'Elastification\Client\Response\Response';
+    const RESPONSE_CLASS = 'Elastification\Client\Response\V090x\Index\IndexResponse';
 
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
@@ -22,7 +21,7 @@ class IndexTypeExistsRequestTest extends \PHPUnit_Framework_TestCase
     private $serializer;
 
     /**
-     * @var IndexTypeExistsRequest
+     * @var CreateMappingRequest
      */
     private $request;
 
@@ -35,7 +34,7 @@ class IndexTypeExistsRequestTest extends \PHPUnit_Framework_TestCase
             ->getMock();
 
         /** @noinspection PhpParamsInspection */
-        $this->request = new IndexTypeExistsRequest(self::INDEX, self::TYPE, $this->serializer);
+        $this->request = new CreateMappingRequest(self::INDEX, null, $this->serializer);
     }
 
     protected function tearDown()
@@ -54,12 +53,12 @@ class IndexTypeExistsRequestTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertInstanceOf(
-            'Elastification\Client\Request\Shared\Index\AbstractIndexTypeExistsRequest',
+            'Elastification\Client\Request\Shared\Index\AbstractCreateMappingRequest',
             $this->request
         );
 
         $this->assertInstanceOf(
-            'Elastification\Client\Request\V090x\Index\IndexTypeExistsRequest',
+            'Elastification\Client\Request\V090x\Index\CreateMappingRequest',
             $this->request
         );
     }
@@ -71,17 +70,17 @@ class IndexTypeExistsRequestTest extends \PHPUnit_Framework_TestCase
 
     public function testGetType()
     {
-        $this->assertSame(self::TYPE, $this->request->getType());
+        $this->assertNull($this->request->getType());
     }
 
     public function testGetMethod()
     {
-        $this->assertSame(RequestMethods::HEAD, $this->request->getMethod());
+        $this->assertSame(RequestMethods::PUT, $this->request->getMethod());
     }
 
     public function testGetAction()
     {
-        $this->assertNull($this->request->getAction());
+        $this->assertSame(CreateMappingRequest::REQUEST_ACTION, $this->request->getAction());
     }
 
     public function testGetSerializer()
@@ -99,12 +98,17 @@ class IndexTypeExistsRequestTest extends \PHPUnit_Framework_TestCase
     {
         $body = 'my test body';
 
-        $this->serializer->expects($this->never())
-            ->method('serialize');
+        $this->serializer->expects($this->once())
+            ->method('serialize')
+            ->with(
+                $this->equalTo($body),
+                $this->equalTo(array())
+            )
+            ->will($this->returnValue($body));
 
         $this->request->setBody($body);
 
-        $this->assertNull($this->request->getBody());
+        $this->assertSame($body, $this->request->getBody());
     }
 
     public function testGetSupportedClass()
