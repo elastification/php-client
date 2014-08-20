@@ -6,8 +6,6 @@ use Elastification\Client\Serializer\JmsSerializer\SourceSubscribingHandler;
 use JMS\Serializer\Handler\HandlerRegistry;
 use JMS\Serializer\Serializer;
 use JMS\Serializer\SerializerBuilder;
-use JMS\Serializer\SerializerInterface;
-use Prophecy\PhpUnit\ProphecyTestCase;
 
 /**
  * @package Elastification\Client\Tests\Unit\Serializer
@@ -88,6 +86,8 @@ class JmsSerializerTest extends \PHPUnit_Framework_TestCase
         );
         $this->assertEquals(123, $entity->a);
     }
+
+
 
     /**
      * Make the damn line coverage happy.
@@ -330,5 +330,14 @@ class JmsSerializerTest extends \PHPUnit_Framework_TestCase
         $subject->setJmsDeserializeContext($deSerCtx);
         $ret = $subject->deserialize($fixture, ['ctx' => $deSerCtx_MustWin]);
         $this->assertInstanceOf('Elastification\Client\Serializer\Gateway\NativeObjectGateway', $ret);
+    }
+
+    public function testGetSetDeSerClass()
+    {
+        $orgClass = $this->customHandler->getSourceDeSerClass();
+        $fixture = 'NonSenseClass';
+        $this->customHandler->setSourceDeSerClass($fixture);
+        $this->assertSame($fixture, $this->customHandler->getSourceDeSerClass());
+        $this->customHandler->setSourceDeSerClass($orgClass);
     }
 }

@@ -42,14 +42,15 @@ Dawen:
 - [x] CreateIndexRequest
 - [x] DeleteIndexRequest
 - [x] IndexExistsRequest
-- [x] use setup and teardown for integration tests sandbox v090x. Delete Index at the end
-- [ ] open/close index (only for version 1x
+- [x] use setup and teardown for integration tests sandbox v090x. Delete Index at the end.
+- [ ] open/close index (only for version 1x)
 - [x] Unit Test for client
 - [ ] Integration tests for RequestManager
+- [ ] Think about an array of clients or a decision manager for get the right client (maybe voter pattern?)
 
 xenji:
 - [x] Add thrift transport
-- [ ] Add tests for the transports
+- [x] Add tests for the transports
 - [x] API Documentation, available at [http://elastification.github.io/php-client/](http://elastification.github.io/php-client/)
 - [ ] Written documentation with examples
 
@@ -60,7 +61,7 @@ Requests Examples
 =================
 
 How to check if indexExists:
-```
+```php
 $indexExistsRequest = new IndexExistsRequest('index', null, $this->serializer);
 
 try {

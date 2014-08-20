@@ -9,6 +9,8 @@
 namespace Elastification\Client\Tests\Unit\Response\V1x;
 
 use Elastification\Client\Response\V1x\SearchResponse;
+use Elastification\Client\Serializer\Gateway\NativeArrayGateway;
+use Elastification\Client\Serializer\Gateway\NativeObjectGateway;
 
 class SearchResponseTest extends \PHPUnit_Framework_TestCase
 {
@@ -51,7 +53,7 @@ class SearchResponseTest extends \PHPUnit_Framework_TestCase
                 $this->equalTo($data),
                 $this->equalTo(array())
             )
-            ->will($this->returnValue($data));
+            ->will($this->returnValue(new NativeArrayGateway($data)));
 
         /** @noinspection PhpParamsInspection */
         $response = new SearchResponse($data, $this->serializer);
@@ -68,7 +70,7 @@ class SearchResponseTest extends \PHPUnit_Framework_TestCase
                 $this->equalTo($data),
                 $this->equalTo(array())
             )
-            ->will($this->returnValue($data));
+            ->will($this->returnValue(new NativeObjectGateway($data)));
 
         /** @noinspection PhpParamsInspection */
         $response = new SearchResponse($data, $this->serializer);
@@ -85,7 +87,7 @@ class SearchResponseTest extends \PHPUnit_Framework_TestCase
                 $this->equalTo($data),
                 $this->equalTo(array())
             )
-            ->will($this->returnValue($data));
+            ->will($this->returnValue(new NativeArrayGateway($data)));
 
         /** @noinspection PhpParamsInspection */
         $response = new SearchResponse($data, $this->serializer);
@@ -102,7 +104,7 @@ class SearchResponseTest extends \PHPUnit_Framework_TestCase
                 $this->equalTo($data),
                 $this->equalTo(array())
             )
-            ->will($this->returnValue($data));
+            ->will($this->returnValue(new NativeObjectGateway($data)));
 
         /** @noinspection PhpParamsInspection */
         $response = new SearchResponse($data, $this->serializer);
@@ -119,7 +121,7 @@ class SearchResponseTest extends \PHPUnit_Framework_TestCase
                 $this->equalTo($data),
                 $this->equalTo(array())
             )
-            ->will($this->returnValue($data));
+            ->will($this->returnValue(new NativeArrayGateway($data)));
 
         /** @noinspection PhpParamsInspection */
         $response = new SearchResponse($data, $this->serializer);
@@ -136,7 +138,7 @@ class SearchResponseTest extends \PHPUnit_Framework_TestCase
                 $this->equalTo($data),
                 $this->equalTo(array())
             )
-            ->will($this->returnValue($data));
+            ->will($this->returnValue(new NativeObjectGateway($data)));
 
         /** @noinspection PhpParamsInspection */
         $response = new SearchResponse($data, $this->serializer);
@@ -153,7 +155,7 @@ class SearchResponseTest extends \PHPUnit_Framework_TestCase
                 $this->equalTo($data),
                 $this->equalTo(array())
             )
-            ->will($this->returnValue($data));
+            ->will($this->returnValue(new NativeArrayGateway($data)));
 
         /** @noinspection PhpParamsInspection */
         $response = new SearchResponse($data, $this->serializer);
@@ -170,7 +172,7 @@ class SearchResponseTest extends \PHPUnit_Framework_TestCase
                 $this->equalTo($data),
                 $this->equalTo(array())
             )
-            ->will($this->returnValue($data));
+            ->will($this->returnValue(new NativeObjectGateway($data)));
 
         /** @noinspection PhpParamsInspection */
         $response = new SearchResponse($data, $this->serializer);
@@ -187,7 +189,7 @@ class SearchResponseTest extends \PHPUnit_Framework_TestCase
                 $this->equalTo($data),
                 $this->equalTo(array())
             )
-            ->will($this->returnValue($data));
+            ->will($this->returnValue(new NativeArrayGateway($data)));
 
         /** @noinspection PhpParamsInspection */
         $response = new SearchResponse($data, $this->serializer);
@@ -204,7 +206,7 @@ class SearchResponseTest extends \PHPUnit_Framework_TestCase
                 $this->equalTo($data),
                 $this->equalTo(array())
             )
-            ->will($this->returnValue($data));
+            ->will($this->returnValue(new NativeObjectGateway($data)));
 
         /** @noinspection PhpParamsInspection */
         $response = new SearchResponse($data, $this->serializer);
@@ -221,7 +223,7 @@ class SearchResponseTest extends \PHPUnit_Framework_TestCase
                 $this->equalTo($data),
                 $this->equalTo(array())
             )
-            ->will($this->returnValue($data));
+            ->will($this->returnValue(new NativeArrayGateway($data)));
 
         /** @noinspection PhpParamsInspection */
         $response = new SearchResponse($data, $this->serializer);
@@ -238,7 +240,7 @@ class SearchResponseTest extends \PHPUnit_Framework_TestCase
                 $this->equalTo($data),
                 $this->equalTo(array())
             )
-            ->will($this->returnValue($data));
+            ->will($this->returnValue(new NativeObjectGateway($data)));
 
         /** @noinspection PhpParamsInspection */
         $response = new SearchResponse($data, $this->serializer);
@@ -255,7 +257,7 @@ class SearchResponseTest extends \PHPUnit_Framework_TestCase
                 $this->equalTo($data),
                 $this->equalTo(array())
             )
-            ->will($this->returnValue($data));
+            ->will($this->returnValue(new NativeArrayGateway($data)));
 
         /** @noinspection PhpParamsInspection */
         $response = new SearchResponse($data, $this->serializer);
@@ -272,7 +274,7 @@ class SearchResponseTest extends \PHPUnit_Framework_TestCase
                 $this->equalTo($data),
                 $this->equalTo(array())
             )
-            ->will($this->returnValue($data));
+            ->will($this->returnValue(new NativeObjectGateway($data)));
 
         /** @noinspection PhpParamsInspection */
         $response = new SearchResponse($data, $this->serializer);
@@ -291,7 +293,7 @@ class SearchResponseTest extends \PHPUnit_Framework_TestCase
                 $this->equalTo($data),
                 $this->equalTo(array())
             )
-            ->will($this->returnValue($data));
+            ->will($this->returnValue(new NativeObjectGateway($data)));
 
         /** @noinspection PhpParamsInspection */
         $response = new SearchResponse($data, $this->serializer);
@@ -309,7 +311,7 @@ class SearchResponseTest extends \PHPUnit_Framework_TestCase
                 $this->equalTo($data),
                 $this->equalTo(array())
             )
-            ->will($this->returnValue($data));
+            ->will($this->returnValue(new NativeArrayGateway($data)));
 
         /** @noinspection PhpParamsInspection */
         $response = new SearchResponse($data, $this->serializer);
@@ -329,7 +331,7 @@ class SearchResponseTest extends \PHPUnit_Framework_TestCase
                 $this->equalTo($data),
                 $this->equalTo(array())
             )
-            ->will($this->returnValue($data));
+            ->will($this->returnValue(new NativeObjectGateway($data)));
 
         /** @noinspection PhpParamsInspection */
         $response = new SearchResponse($data, $this->serializer);
@@ -348,7 +350,7 @@ class SearchResponseTest extends \PHPUnit_Framework_TestCase
                 $this->equalTo($data),
                 $this->equalTo(array())
             )
-            ->will($this->returnValue($data));
+            ->will($this->returnValue(new NativeObjectGateway($data)));
 
         /** @noinspection PhpParamsInspection */
         $response = new SearchResponse($data, $this->serializer);
@@ -366,7 +368,7 @@ class SearchResponseTest extends \PHPUnit_Framework_TestCase
                 $this->equalTo($data),
                 $this->equalTo(array())
             )
-            ->will($this->returnValue($data));
+            ->will($this->returnValue(new NativeArrayGateway($data)));
 
         /** @noinspection PhpParamsInspection */
         $response = new SearchResponse($data, $this->serializer);
@@ -383,7 +385,7 @@ class SearchResponseTest extends \PHPUnit_Framework_TestCase
                 $this->equalTo($data),
                 $this->equalTo(array())
             )
-            ->will($this->returnValue($data));
+            ->will($this->returnValue(new NativeObjectGateway($data)));
 
         /** @noinspection PhpParamsInspection */
         $response = new SearchResponse($data, $this->serializer);
@@ -402,7 +404,7 @@ class SearchResponseTest extends \PHPUnit_Framework_TestCase
                 $this->equalTo($data),
                 $this->equalTo(array())
             )
-            ->will($this->returnValue($data));
+            ->will($this->returnValue(new NativeObjectGateway($data)));
 
         /** @noinspection PhpParamsInspection */
         $response = new SearchResponse($data, $this->serializer);

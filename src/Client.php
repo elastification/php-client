@@ -55,8 +55,6 @@ class Client implements ClientInterface
     private $elasticsearchVersion;
 
     /**
-     * TODO: think about an array of clients or a decision manager for get the right client (maybe voter patern)
-     *
      * @param TransportInterface      $transport
      * @param RequestManagerInterface $requestManager
      * @param null|string             $elasticsearchVersion
