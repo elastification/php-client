@@ -25,7 +25,7 @@ Dawen:
 - [x] Missing Unit tests for new requests (IndexStatusResponse)
 - [x] Get status (global and index based, multi index)
 - [x] Get stats (global and index based, multi index)
-- [ ] Get settings. (global and index based, multi index)
+- [x] Get settings. (global and index based, multi index)
 - [x] Types Exists with HEAD method
 - [ ] Create Alias Index
 - [ ] Create Aliases
