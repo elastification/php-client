@@ -34,7 +34,8 @@ Dawen:
 - [ ] Alias exists with HEAD method
 - [ ] Move GetMappingRequest/Response into index
 - [x] CreateMappingRequest
-- [ ] DeleteMappingRequest
+- [x] DeleteMappingRequest
+- [ ] GetFieldMappingRequest
 - [ ] CountRequest / only term is possible here
 - [ ] Clear cache (global and index based, multi index)
 - [ ] flush (global and index based, multi index)
@@ -66,6 +67,18 @@ $indexExistsRequest = new IndexExistsRequest('index', null, $this->serializer);
 
 try {
     $client->send($indexExistsRequest);
+    return true;
+} catch(ClientException $exception) {
+    return false;
+}
+```
+
+How to check if indexTypeExists:
+```php
+$indexTypeExistsRequest = new IndexTypeExistsRequest('index', 'type', $this->serializer);
+
+try {
+    $client->send($indexTypeExistsRequest);
     return true;
 } catch(ClientException $exception) {
     return false;

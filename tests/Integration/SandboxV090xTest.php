@@ -11,6 +11,7 @@ use Elastification\Client\Request\V090x\GetMappingRequest;
 use Elastification\Client\Request\V090x\Index\CreateIndexRequest;
 use Elastification\Client\Request\V090x\Index\CreateMappingRequest;
 use Elastification\Client\Request\V090x\Index\DeleteIndexRequest;
+use Elastification\Client\Request\V090x\Index\DeleteMappingRequest;
 use Elastification\Client\Request\V090x\Index\IndexExistsRequest;
 use Elastification\Client\Request\V090x\Index\IndexStatsRequest;
 use Elastification\Client\Request\V090x\Index\IndexStatusRequest;
@@ -330,7 +331,6 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
         $this->assertGreaterThan(0, $response->took());
         $this->assertFalse($response->timedOut());
         $shards = $response->getShards();
-        $this->assertInstanceOf('Elastification\Client\Serializer\Gateway\NativeArrayGateway', $shards);
         $this->assertTrue(isset($shards['total']));
         $this->assertTrue(isset($shards['successful']));
         $this->assertTrue(isset($shards['failed']));
@@ -621,6 +621,47 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('string', $data[self::TYPE]['properties']['message']['type']);
         //the not activated assertSame is for tessting it when Gateway is fixed.
 //        $this->assertSame($mapping[self::TYPE], $data[self::TYPE]);
+    }
+
+    public function testDeleteMappingWithIndexAndType()
+    {
+        $this->createIndex();
+        $mapping = [
+            self::TYPE => [
+                'properties' => [
+                    'message' => ['type' => 'string']
+                ]
+            ]
+        ];
+
+        $createMappingRequest = new CreateMappingRequest(self::INDEX , self::TYPE, $this->serializer);
+        $createMappingRequest->setBody($mapping);
+
+        $this->client->send($createMappingRequest);
+
+        $timeStart = microtime(true);
+
+        $deleteMappingRequest = new DeleteMappingRequest(self::INDEX , self::TYPE, $this->serializer);
+
+        /** @var IndexResponse $response */
+        $response = $this->client->send($deleteMappingRequest);
+
+        echo 'deleteMapping(with index,type): ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        $this->assertTrue($response->isOk());
+        $this->assertTrue($response->acknowledged());
+
+        //check if exists
+        $getMappingRequest = new GetMappingRequest(self::INDEX, self::TYPE, $this->serializer);
+
+        try {
+            $this->client->send($getMappingRequest);
+        } catch (ClientException $exception) {
+            $this->assertContains('Not Found', $exception->getMessage());
+            return;
+        }
+
+        $this->fail();
     }
 
     private function createIndex()
