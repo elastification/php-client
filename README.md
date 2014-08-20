@@ -22,7 +22,7 @@ Global:
 
 Dawen:
 
-- [ ] Missing Unit tests for new requests (IndexStatusResponse)
+- [x] Missing Unit tests for new requests (IndexStatusResponse)
 - [x] Get status (global and index based, multi index)
 - [x] Get stats (global and index based, multi index)
 - [ ] Get settings. (global and index based, multi index)
@@ -33,7 +33,7 @@ Dawen:
 - [ ] Get Aliases (global and index based, multi index)
 - [ ] Alias exists with HEAD method
 - [ ] Move GetMappingRequest/Response into index
-- [ ] CreateMappingRequest
+- [x] CreateMappingRequest
 - [ ] DeleteMappingRequest
 - [ ] CountRequest / only term is possible here
 - [ ] Clear cache (global and index based, multi index)
