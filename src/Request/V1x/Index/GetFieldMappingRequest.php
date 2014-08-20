@@ -15,7 +15,7 @@
  * This software consists of voluntary contributions made by many individuals
  * and is licensed under the MIT license.
  */
-namespace Elastification\Client\Request\V1\Index;
+namespace Elastification\Client\Request\V1x\Index;
 
 use Elastification\Client\Request\Shared\Index\AbstractGetFieldMappingRequest;
 use Elastification\Client\Response\Response;
