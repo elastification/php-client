@@ -9,6 +9,8 @@
 namespace Elastification\Client\Tests\Unit\Response\V090x\Index;
 
 use Elastification\Client\Response\V090x\Index\RefreshIndexResponse;
+use Elastification\Client\Serializer\Gateway\NativeArrayGateway;
+use Elastification\Client\Serializer\Gateway\NativeObjectGateway;
 
 class RefreshIndexResponseTest extends \PHPUnit_Framework_TestCase
 {
@@ -52,7 +54,7 @@ class RefreshIndexResponseTest extends \PHPUnit_Framework_TestCase
                 $this->equalTo($data),
                 $this->equalTo(array())
             )
-            ->will($this->returnValue($data));
+            ->will($this->returnValue(new NativeArrayGateway($data)));
 
         /** @noinspection PhpParamsInspection */
         $response = new RefreshIndexResponse($data, $this->serializer);
@@ -69,7 +71,7 @@ class RefreshIndexResponseTest extends \PHPUnit_Framework_TestCase
                 $this->equalTo($data),
                 $this->equalTo(array())
             )
-            ->will($this->returnValue($data));
+            ->will($this->returnValue(new NativeObjectGateway($data)));
 
         /** @noinspection PhpParamsInspection */
         $response = new RefreshIndexResponse($data, $this->serializer);
@@ -86,7 +88,7 @@ class RefreshIndexResponseTest extends \PHPUnit_Framework_TestCase
                 $this->equalTo($data),
                 $this->equalTo(array())
             )
-            ->will($this->returnValue($data));
+            ->will($this->returnValue(new NativeArrayGateway($data)));
 
         /** @noinspection PhpParamsInspection */
         $response = new RefreshIndexResponse($data, $this->serializer);
@@ -103,7 +105,7 @@ class RefreshIndexResponseTest extends \PHPUnit_Framework_TestCase
                 $this->equalTo($data),
                 $this->equalTo(array())
             )
-            ->will($this->returnValue($data));
+            ->will($this->returnValue(new NativeObjectGateway($data)));
 
         /** @noinspection PhpParamsInspection */
         $response = new RefreshIndexResponse($data, $this->serializer);

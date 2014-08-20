@@ -111,7 +111,12 @@ class Response implements ResponseInterface
      */
     protected function get($property)
     {
-        return $this->data[$property];
+        $val = $this->data[$property];
+        if (is_scalar($val)) {
+            return $val;
+        } else {
+            return $val->getGatewayValue();
+        }
     }
 
     /**

@@ -146,7 +146,7 @@ abstract class AbstractSearchResponse extends Response
      */
     public function getHitsHits()
     {
-        return $this->getHitsProperty(self::PROP_HITS_HITS);
+        return $this->getHitsProperty(self::PROP_HITS_HITS)->getGatewayValue();
     }
 
     /**
@@ -160,8 +160,6 @@ abstract class AbstractSearchResponse extends Response
     protected function getHitsProperty($property)
     {
         $this->processData();
-
-        $hits = $this->get(self::PROP_HITS);
-        return $hits[$property];
+        return $this->data[self::PROP_HITS][$property];
     }
 }

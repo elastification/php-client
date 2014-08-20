@@ -194,7 +194,7 @@ class SearchResponseTest extends \PHPUnit_Framework_TestCase
 
         /** @noinspection PhpParamsInspection */
         $response = new SearchResponse($data, $this->serializer);
-        $this->assertEquals($data[SearchResponse::PROP_SHARDS], $response->getShards());
+        $this->assertEquals($data[SearchResponse::PROP_SHARDS]->getGatewayValue(), $response->getShards());
     }
 
     public function testGetShardsObject()
@@ -211,7 +211,7 @@ class SearchResponseTest extends \PHPUnit_Framework_TestCase
 
         /** @noinspection PhpParamsInspection */
         $response = new SearchResponse($data, $this->serializer);
-        $this->assertEquals($data[SearchResponse::PROP_SHARDS], $response->getShards());
+        $this->assertEquals($data[SearchResponse::PROP_SHARDS]->getGatewayValue(), $response->getShards());
     }
 
 //    public function testGetHitsArray()

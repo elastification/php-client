@@ -10,6 +10,7 @@ namespace Elastification\Client\Tests\Unit\Response\V090x;
 
 use Elastification\Client\Response\V090x\CreateUpdateDocumentResponse;
 use Elastification\Client\Response\V090x\DeleteDocumentResponse;
+use Elastification\Client\Serializer\Gateway\NativeObjectGateway;
 
 class CreateUpdateDocumentResponseTest extends \PHPUnit_Framework_TestCase
 {
@@ -69,7 +70,7 @@ class CreateUpdateDocumentResponseTest extends \PHPUnit_Framework_TestCase
                 $this->equalTo($data),
                 $this->equalTo([])
             )
-            ->will($this->returnValue($data));
+            ->will($this->returnValue(new NativeObjectGateway($data)));
 
         /** @noinspection PhpParamsInspection */
         $response = new CreateUpdateDocumentResponse($data, $this->serializer);
@@ -103,7 +104,7 @@ class CreateUpdateDocumentResponseTest extends \PHPUnit_Framework_TestCase
                 $this->equalTo($data),
                 $this->equalTo(array())
             )
-            ->will($this->returnValue($data));
+            ->will($this->returnValue(new NativeObjectGateway($data)));
 
         /** @noinspection PhpParamsInspection */
         $response = new CreateUpdateDocumentResponse($data, $this->serializer);
@@ -137,7 +138,7 @@ class CreateUpdateDocumentResponseTest extends \PHPUnit_Framework_TestCase
                 $this->equalTo($data),
                 $this->equalTo(array())
             )
-            ->will($this->returnValue($data));
+            ->will($this->returnValue(new NativeObjectGateway($data)));
 
         /** @noinspection PhpParamsInspection */
         $response = new CreateUpdateDocumentResponse($data, $this->serializer);
@@ -171,7 +172,7 @@ class CreateUpdateDocumentResponseTest extends \PHPUnit_Framework_TestCase
                 $this->equalTo($data),
                 $this->equalTo(array())
             )
-            ->will($this->returnValue($data));
+            ->will($this->returnValue(new NativeObjectGateway($data)));
 
         /** @noinspection PhpParamsInspection */
         $response = new CreateUpdateDocumentResponse($data, $this->serializer);
@@ -205,7 +206,7 @@ class CreateUpdateDocumentResponseTest extends \PHPUnit_Framework_TestCase
                 $this->equalTo($data),
                 $this->equalTo(array())
             )
-            ->will($this->returnValue($data));
+            ->will($this->returnValue(new NativeObjectGateway($data)));
 
         /** @noinspection PhpParamsInspection */
         $response = new CreateUpdateDocumentResponse($data, $this->serializer);

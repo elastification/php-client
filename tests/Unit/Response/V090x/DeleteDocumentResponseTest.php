@@ -53,7 +53,7 @@ class DeleteDocumentResponseTest extends \PHPUnit_Framework_TestCase
                 $this->equalTo($data),
                 $this->equalTo(array())
             )
-            ->will($this->returnValue($data));
+            ->will($this->returnValue(new NativeArrayGateway($data)));
 
         /** @noinspection PhpParamsInspection */
         $response = new DeleteDocumentResponse($data, $this->serializer);
@@ -70,7 +70,7 @@ class DeleteDocumentResponseTest extends \PHPUnit_Framework_TestCase
                 $this->equalTo($data),
                 $this->equalTo([])
             )
-            ->will($this->returnValue($data));
+            ->will($this->returnValue(new NativeObjectGateway($data)));
 
         /** @noinspection PhpParamsInspection */
         $response = new DeleteDocumentResponse($data, $this->serializer);
@@ -87,7 +87,7 @@ class DeleteDocumentResponseTest extends \PHPUnit_Framework_TestCase
                 $this->equalTo($data),
                 $this->equalTo(array())
             )
-            ->will($this->returnValue($data));
+            ->will($this->returnValue(new NativeArrayGateway($data)));
 
         /** @noinspection PhpParamsInspection */
         $response = new DeleteDocumentResponse($data, $this->serializer);
@@ -104,7 +104,7 @@ class DeleteDocumentResponseTest extends \PHPUnit_Framework_TestCase
                 $this->equalTo($data),
                 $this->equalTo(array())
             )
-            ->will($this->returnValue($data));
+            ->will($this->returnValue(new NativeObjectGateway($data)));
 
         /** @noinspection PhpParamsInspection */
         $response = new DeleteDocumentResponse($data, $this->serializer);
@@ -121,7 +121,7 @@ class DeleteDocumentResponseTest extends \PHPUnit_Framework_TestCase
                 $this->equalTo($data),
                 $this->equalTo(array())
             )
-            ->will($this->returnValue($data));
+            ->will($this->returnValue(new NativeArrayGateway($data)));
 
         /** @noinspection PhpParamsInspection */
         $response = new DeleteDocumentResponse($data, $this->serializer);
@@ -138,7 +138,7 @@ class DeleteDocumentResponseTest extends \PHPUnit_Framework_TestCase
                 $this->equalTo($data),
                 $this->equalTo(array())
             )
-            ->will($this->returnValue($data));
+            ->will($this->returnValue(new NativeObjectGateway($data)));
 
         /** @noinspection PhpParamsInspection */
         $response = new DeleteDocumentResponse($data, $this->serializer);
@@ -155,7 +155,7 @@ class DeleteDocumentResponseTest extends \PHPUnit_Framework_TestCase
                 $this->equalTo($data),
                 $this->equalTo(array())
             )
-            ->will($this->returnValue($data));
+            ->will($this->returnValue(new NativeArrayGateway($data)));
 
         /** @noinspection PhpParamsInspection */
         $response = new DeleteDocumentResponse($data, $this->serializer);
@@ -172,7 +172,7 @@ class DeleteDocumentResponseTest extends \PHPUnit_Framework_TestCase
                 $this->equalTo($data),
                 $this->equalTo(array())
             )
-            ->will($this->returnValue($data));
+            ->will($this->returnValue(new NativeObjectGateway($data)));
 
         /** @noinspection PhpParamsInspection */
         $response = new DeleteDocumentResponse($data, $this->serializer);
@@ -189,7 +189,7 @@ class DeleteDocumentResponseTest extends \PHPUnit_Framework_TestCase
                 $this->equalTo($data),
                 $this->equalTo(array())
             )
-            ->will($this->returnValue($data));
+            ->will($this->returnValue(new NativeArrayGateway($data)));
 
         /** @noinspection PhpParamsInspection */
         $response = new DeleteDocumentResponse($data, $this->serializer);
@@ -206,7 +206,7 @@ class DeleteDocumentResponseTest extends \PHPUnit_Framework_TestCase
                 $this->equalTo($data),
                 $this->equalTo(array())
             )
-            ->will($this->returnValue($data));
+            ->will($this->returnValue(new NativeObjectGateway($data)));
 
         /** @noinspection PhpParamsInspection */
         $response = new DeleteDocumentResponse($data, $this->serializer);
@@ -223,7 +223,7 @@ class DeleteDocumentResponseTest extends \PHPUnit_Framework_TestCase
                 $this->equalTo($data),
                 $this->equalTo(array())
             )
-            ->will($this->returnValue($data));
+            ->will($this->returnValue(new NativeArrayGateway($data)));
 
         /** @noinspection PhpParamsInspection */
         $response = new DeleteDocumentResponse($data, $this->serializer);
@@ -240,7 +240,7 @@ class DeleteDocumentResponseTest extends \PHPUnit_Framework_TestCase
                 $this->equalTo($data),
                 $this->equalTo(array())
             )
-            ->will($this->returnValue($data));
+            ->will($this->returnValue(new NativeObjectGateway($data)));
 
         /** @noinspection PhpParamsInspection */
         $response = new DeleteDocumentResponse($data, $this->serializer);
@@ -259,9 +259,9 @@ class DeleteDocumentResponseTest extends \PHPUnit_Framework_TestCase
         ];
 
         if ($asObject) {
-            return new NativeObjectGateway((object)$data);
+            return (object)$data;
         }
 
-        return new NativeArrayGateway($data);
+        return $data;
     }
 }
