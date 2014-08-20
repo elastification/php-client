@@ -11,8 +11,10 @@ use Elastification\Client\Request\V090x\Index\CreateIndexRequest;
 use Elastification\Client\Request\V090x\Index\CreateMappingRequest;
 use Elastification\Client\Request\V090x\Index\DeleteIndexRequest;
 use Elastification\Client\Request\V090x\Index\DeleteMappingRequest;
+use Elastification\Client\Request\V090x\Index\GetFieldMappingRequest;
 use Elastification\Client\Request\V090x\Index\GetMappingRequest;
 use Elastification\Client\Request\V090x\Index\IndexExistsRequest;
+use Elastification\Client\Request\V090x\Index\IndexSettingsRequest;
 use Elastification\Client\Request\V090x\Index\IndexStatsRequest;
 use Elastification\Client\Request\V090x\Index\IndexStatusRequest;
 use Elastification\Client\Request\V090x\Index\IndexTypeExistsRequest;
@@ -645,10 +647,10 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
         /** @var IndexResponse $response */
         $response = $this->client->send($deleteMappingRequest);
 
-        echo 'deleteMapping(with index,type): ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-
         $this->assertTrue($response->isOk());
         $this->assertTrue($response->acknowledged());
+
+        echo 'deleteMapping(with index,type): ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
 
         //check if exists
         $getMappingRequest = new GetMappingRequest(self::INDEX, self::TYPE, $this->serializer);
@@ -661,6 +663,28 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
         }
 
         $this->fail();
+    }
+
+    public function testIndexSettingsWithIndex()
+    {
+        $this->createIndex();
+        $this->createDocument();
+        $this->refreshIndex();
+
+
+        $timeStart = microtime(true);
+
+        $indexStatsRequest = new IndexSettingsRequest(self::INDEX, null, $this->serializer);
+
+        /** @var IndexStatsResponse $response */
+        $response = $this->client->send($indexStatsRequest);
+
+        echo 'indexStats(with index): ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        $data = $response->getData()->getGatewayValue();
+//        $this->assertTrue(isset($data[self::INDEX]));
+        $this->assertArrayHasKey(self::INDEX, $data);
+//        $this->assertContains(self::INDEX, $data);
     }
 
     private function createIndex()

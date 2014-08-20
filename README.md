@@ -35,7 +35,7 @@ Dawen:
 - [x] Move GetMappingRequest/Response into index
 - [x] CreateMappingRequest
 - [x] DeleteMappingRequest
-- [ ] GetFieldMappingRequest
+- [ ] GetFieldMappingRequest (seems to be only in v1)
 - [ ] CountRequest / only term is possible here
 - [ ] Clear cache (global and index based, multi index)
 - [ ] flush (global and index based, multi index)
