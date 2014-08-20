@@ -26,6 +26,20 @@ class JmsSerializerTest extends \PHPUnit_Framework_TestCase
     private $customHandler;
 
     /**
+     * @var array
+     */
+    private $clientContext = ['index' => 'test', 'type' => 'test'];
+
+    /**
+     * @var array
+     */
+    private $classMap = [
+        'test' => [
+            'test' => 'Elastification\Client\Tests\Fixtures\Unit\Serializer\JmsSerializer\TestEntity'
+        ]
+    ];
+
+    /**
      * @author Mario Mueller
      */
     public function setUp()
@@ -101,7 +115,7 @@ class JmsSerializerTest extends \PHPUnit_Framework_TestCase
         $jmsMock = $this->getMockBuilder('JMS\Serializer\Serializer')
             ->disableOriginalConstructor()
             ->getMock();
-        $subject = new JmsSerializer($jmsMock);
+        $subject = new JmsSerializer($jmsMock, $this->customHandler, []);
 
         $this->assertEquals($defaultDeSerClass, $subject->getDeserializerClass());
 
@@ -123,6 +137,9 @@ class JmsSerializerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($deSerCtx, $subject->getJmsDeserializeContext());
     }
 
+    /**
+     * @author Mario Mueller
+     */
     public function testSerializer()
     {
         $fixture = new \stdClass();
@@ -137,11 +154,14 @@ class JmsSerializerTest extends \PHPUnit_Framework_TestCase
             ->with($this->equalTo($fixture), $this->equalTo('json'), $this->equalTo(null))
             ->willReturn('test_ok');
 
-        $subject = new JmsSerializer($jmsMock);
+        $subject = new JmsSerializer($jmsMock, $this->customHandler, []);
         $ret = $subject->serialize($fixture);
         $this->assertEquals('test_ok', $ret);
     }
 
+    /**
+     * @author Mario Mueller
+     */
     public function testSerializerWithContextSetInInstance()
     {
         $fixture = new \stdClass();
@@ -160,13 +180,16 @@ class JmsSerializerTest extends \PHPUnit_Framework_TestCase
             ->with($this->equalTo($fixture), $this->equalTo('json'), $this->equalTo($jmsCtx))
             ->willReturn('test_ok');
 
-        $subject = new JmsSerializer($jmsMock);
+        $subject = new JmsSerializer($jmsMock, $this->customHandler, []);
         $subject->setJmsSerializeContext($jmsCtx);
 
         $ret = $subject->serialize($fixture);
         $this->assertEquals('test_ok', $ret);
     }
 
+    /**
+     * @author Mario Mueller
+     */
     public function testSerializerWithContextSetInParams()
     {
         $fixture = new \stdClass();
@@ -185,11 +208,14 @@ class JmsSerializerTest extends \PHPUnit_Framework_TestCase
             ->with($this->equalTo($fixture), $this->equalTo('json'), $this->equalTo($jmsCtx))
             ->willReturn('test_ok');
 
-        $subject = new JmsSerializer($jmsMock);
+        $subject = new JmsSerializer($jmsMock, $this->customHandler, []);
         $ret = $subject->serialize($fixture, ['ctx' => $jmsCtx]);
         $this->assertEquals('test_ok', $ret);
     }
 
+    /**
+     * @author Mario Mueller
+     */
     public function testSerializerWithContextSetInInstanceAndParams()
     {
         $fixture = new \stdClass();
@@ -212,13 +238,15 @@ class JmsSerializerTest extends \PHPUnit_Framework_TestCase
             ->with($this->equalTo($fixture), $this->equalTo('json'), $this->equalTo($jmsCtx_MustWin))
             ->willReturn('test_ok');
 
-        $subject = new JmsSerializer($jmsMock);
+        $subject = new JmsSerializer($jmsMock, $this->customHandler, []);
         $subject->setJmsSerializeContext($jmsCtx);
         $ret = $subject->serialize($fixture, ['ctx' => $jmsCtx_MustWin]);
         $this->assertEquals('test_ok', $ret);
     }
 
-
+    /**
+     * @author Mario Mueller
+     */
     public function testDeserializer()
     {
         $fixture = '{"a": 123}';
@@ -238,8 +266,8 @@ class JmsSerializerTest extends \PHPUnit_Framework_TestCase
             )
             ->willReturn(new $defaultDeSerClass);
 
-        $subject = new JmsSerializer($jmsMock);
-        $ret = $subject->deserialize($fixture);
+        $subject = new JmsSerializer($jmsMock, $this->customHandler, $this->classMap);
+        $ret = $subject->deserialize($fixture, $this->clientContext);
         $this->assertInstanceOf('Elastification\Client\Serializer\Gateway\NativeObjectGateway', $ret);
     }
 
@@ -266,9 +294,9 @@ class JmsSerializerTest extends \PHPUnit_Framework_TestCase
             )
             ->willReturn(new $defaultDeSerClass);
 
-        $subject = new JmsSerializer($jmsMock);
+        $subject = new JmsSerializer($jmsMock, $this->customHandler, $this->classMap);
         $subject->setJmsDeserializeContext($deSerCtx);
-        $ret = $subject->deserialize($fixture);
+        $ret = $subject->deserialize($fixture, $this->clientContext);
         $this->assertInstanceOf('Elastification\Client\Serializer\Gateway\NativeObjectGateway', $ret);
     }
 
@@ -294,8 +322,8 @@ class JmsSerializerTest extends \PHPUnit_Framework_TestCase
             )
             ->willReturn(new $defaultDeSerClass);
 
-        $subject = new JmsSerializer($jmsMock);
-        $ret = $subject->deserialize($fixture, ['ctx' => $deSerCtx]);
+        $subject = new JmsSerializer($jmsMock, $this->customHandler, $this->classMap);
+        $ret = $subject->deserialize($fixture, array_merge(['ctx' => $deSerCtx], $this->clientContext));
         $this->assertInstanceOf('Elastification\Client\Serializer\Gateway\NativeObjectGateway', $ret);
     }
 
@@ -326,9 +354,9 @@ class JmsSerializerTest extends \PHPUnit_Framework_TestCase
             )
             ->willReturn(new $defaultDeSerClass);
 
-        $subject = new JmsSerializer($jmsMock);
+        $subject = new JmsSerializer($jmsMock, $this->customHandler, $this->classMap);
         $subject->setJmsDeserializeContext($deSerCtx);
-        $ret = $subject->deserialize($fixture, ['ctx' => $deSerCtx_MustWin]);
+        $ret = $subject->deserialize($fixture, array_merge(['ctx' => $deSerCtx_MustWin],$this->clientContext));
         $this->assertInstanceOf('Elastification\Client\Serializer\Gateway\NativeObjectGateway', $ret);
     }
 

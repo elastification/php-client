@@ -17,8 +17,10 @@
  */
 namespace Elastification\Client\Serializer;
 
+use Elastification\Client\Serializer\Exception\DeserializationFailureException;
 use Elastification\Client\Serializer\Gateway\GatewayInterface;
 use Elastification\Client\Serializer\Gateway\NativeObjectGateway;
+use Elastification\Client\Serializer\JmsSerializer\SourceSubscribingHandler;
 use JMS\Serializer\Context;
 use JMS\Serializer\DeserializationContext;
 use JMS\Serializer\SerializationContext;
@@ -70,13 +72,27 @@ class JmsSerializer implements SerializerInterface
      * @var DeserializationContext
      */
     private $jmsDeserializeContext;
+    /**
+     *
+     * @var array
+     */
+    private $indexTypeClassMap;
+    /**
+     *
+     * @var SourceSubscribingHandler
+     */
+    private $handler;
 
     /**
-     * @param Serializer $jms
+     * @param Serializer               $jms
+     * @param SourceSubscribingHandler $handler This must be the same instance as the one you used for the init of the Serializer
+     * @param array                    $indexTypeClassMap Represents an array of ['indexName' => ['typeName' => 'SourceClassName']]
      */
-    function __construct(Serializer $jms)
+    function __construct(Serializer $jms, SourceSubscribingHandler $handler, array $indexTypeClassMap)
     {
         $this->jms = $jms;
+        $this->indexTypeClassMap = $indexTypeClassMap;
+        $this->handler = $handler;
     }
 
     /**
@@ -106,12 +122,32 @@ class JmsSerializer implements SerializerInterface
      */
     public function deserialize($data, array $params = array())
     {
-        return new NativeObjectGateway($this->jms->deserialize(
-            $data,
-            $this->deserializerClass,
-            self::SERIALIZER_FORMAT,
-            $this->determineContext($this->jmsDeserializeContext, $params)
-        ));
+        $sourceClass = $this->getSourceClassFromMapping($params);
+        $this->handler->setSourceDeSerClass($sourceClass);
+        return new NativeObjectGateway(
+            $this->jms->deserialize(
+                $data,
+                $this->deserializerClass,
+                self::SERIALIZER_FORMAT,
+                $this->determineContext($this->jmsDeserializeContext, $params)
+            )
+        );
+    }
+
+    private function getSourceClassFromMapping($params)
+    {
+        $index = $params['index'];
+        $type = $params['type'];
+        if (!isset($this->indexTypeClassMap[$index])) {
+            throw new DeserializationFailureException('Cannot find index in source class map: ' . $index);
+        }
+
+        if (!isset($this->indexTypeClassMap[$index][$type])) {
+            throw new DeserializationFailureException(
+                'Cannot find type in source class map: ' . $type . ' in index ' . $index
+            );
+        }
+        return $this->indexTypeClassMap[$index][$type];
     }
 
     /**

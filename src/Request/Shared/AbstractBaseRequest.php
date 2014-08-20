@@ -18,6 +18,7 @@
 namespace Elastification\Client\Request\Shared;
 
 use Elastification\Client\Request\RequestInterface;
+use Elastification\Client\Serializer\JmsSerializer;
 use Elastification\Client\Serializer\SerializerInterface;
 
 /**
@@ -59,7 +60,12 @@ abstract class AbstractBaseRequest implements RequestInterface
     public function __construct($index, $type, SerializerInterface $serializer, array $serializerParams = array())
     {
         $this->serializer = $serializer;
-        $this->serializerParams = $serializerParams;
+        if ($serializer instanceof JmsSerializer) {
+            $this->serializerParams = array_merge(['index' => $index, 'type' => $type], $serializerParams);
+        } else {
+            $this->serializerParams = $serializerParams;
+        }
+
 
         if (!empty($index)) {
             $this->index = $index;
