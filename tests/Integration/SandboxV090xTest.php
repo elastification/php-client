@@ -14,6 +14,7 @@ use Elastification\Client\Request\V090x\Index\DeleteMappingRequest;
 use Elastification\Client\Request\V090x\Index\GetFieldMappingRequest;
 use Elastification\Client\Request\V090x\Index\GetMappingRequest;
 use Elastification\Client\Request\V090x\Index\IndexExistsRequest;
+use Elastification\Client\Request\V090x\Index\IndexSegmentsRequest;
 use Elastification\Client\Request\V090x\Index\IndexSettingsRequest;
 use Elastification\Client\Request\V090x\Index\IndexStatsRequest;
 use Elastification\Client\Request\V090x\Index\IndexStatusRequest;
@@ -683,6 +684,58 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
 
         $data = $response->getData()->getGatewayValue();
         $this->assertArrayHasKey(self::INDEX, $data);
+    }
+
+    public function testIndexSegmentsWithIndex()
+    {
+        $this->createIndex();
+        $this->createDocument();
+        $this->refreshIndex();
+
+        $timeStart = microtime(true);
+
+        $indexStatsRequest = new IndexSegmentsRequest(self::INDEX, null, $this->serializer);
+
+        /** @var IndexStatusResponse $response */
+        $response = $this->client->send($indexStatsRequest);
+
+        echo 'indexSegments(with index): ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        $this->assertTrue($response->isOk());
+
+        $shards = $response->getShards();
+        $this->assertTrue(isset($shards['total']));
+        $this->assertTrue(isset($shards['successful']));
+        $this->assertTrue(isset($shards['failed']));
+
+        $indices = $response->getIndices();
+        $this->assertTrue(isset($indices[self::INDEX]));
+    }
+
+    public function testIndexSegmentsWithoutIndex()
+    {
+        $this->createIndex();
+        $this->createDocument();
+        $this->refreshIndex();
+
+        $timeStart = microtime(true);
+
+        $indexStatsRequest = new IndexSegmentsRequest(null, null, $this->serializer);
+
+        /** @var IndexStatusResponse $response */
+        $response = $this->client->send($indexStatsRequest);
+
+        echo 'indexSegments(without index): ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        $this->assertTrue($response->isOk());
+
+        $shards = $response->getShards();
+        $this->assertTrue(isset($shards['total']));
+        $this->assertTrue(isset($shards['successful']));
+        $this->assertTrue(isset($shards['failed']));
+
+        $indices = $response->getIndices();
+        $this->assertTrue(isset($indices[self::INDEX]));
     }
 
     private function createIndex()
