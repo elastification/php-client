@@ -26,34 +26,31 @@ Dawen:
 - [x] Get status (global and index based, multi index)
 - [x] Get stats (global and index based, multi index)
 - [x] Get settings. (global and index based, multi index)
-- [x] Types Exists with HEAD method
-- [ ] index segments
-- [ ] index recovery
-- [ ] index clear cache
+- [x] Types Exists with HEAD metho
+- [x] index segments
+- [x] index clear cache
 - [ ] index template ?
-- [ ] index flush
-- [ ] index clear optimize
+- [ ] index optimize
 - [ ] Create Alias Index
 - [ ] Create Aliases
 - [ ] Delete Aliases
 - [ ] Get Aliases (global and index based, multi index)
 - [ ] Alias exists with HEAD method
+- [ ] CountRequest / only term is possible here
+- [ ] Integration tests for RequestManager
+- [ ] Think about an array of clients or a decision manager for get the right client (maybe voter pattern?)
 - [x] Move GetMappingRequest/Response into index
 - [x] CreateMappingRequest
 - [x] DeleteMappingRequest
-- [ ] GetFieldMappingRequest (seems to be only in v1)
-- [ ] CountRequest / only term is possible here
-- [ ] Clear cache (global and index based, multi index)
-- [ ] flush (global and index based, multi index)
 - [x] RefreshIndexRequest
 - [x] CreateIndexRequest
 - [x] DeleteIndexRequest
 - [x] IndexExistsRequest
 - [x] use setup and teardown for integration tests sandbox v090x. Delete Index at the end.
-- [ ] open/close index (only for version 1x)
 - [x] Unit Test for client
-- [ ] Integration tests for RequestManager
-- [ ] Think about an array of clients or a decision manager for get the right client (maybe voter pattern?)
+- [ ] open/close index (only for version 1x)
+- [ ] GetFieldMappingRequest (seems to be only in v1)
+- [ ] index recovery (v1)
 
 xenji:
 - [x] Add thrift transport

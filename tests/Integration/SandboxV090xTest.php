@@ -7,6 +7,7 @@ use Elastification\Client\Request\RequestManagerInterface;
 use Elastification\Client\Request\V090x\CreateDocumentRequest;
 use Elastification\Client\Request\V090x\DeleteDocumentRequest;
 use Elastification\Client\Request\V090x\GetDocumentRequest;
+use Elastification\Client\Request\V090x\Index\CacheClearRequest;
 use Elastification\Client\Request\V090x\Index\CreateIndexRequest;
 use Elastification\Client\Request\V090x\Index\CreateMappingRequest;
 use Elastification\Client\Request\V090x\Index\DeleteIndexRequest;
@@ -736,6 +737,26 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
 
         $indices = $response->getIndices();
         $this->assertTrue(isset($indices[self::INDEX]));
+    }
+
+    public function testClearCache()
+    {
+        $this->createIndex();
+        $this->createDocument();
+        $timeStart = microtime(true);
+
+        $refreshIndexRequest = new CacheClearRequest(self::INDEX, null, $this->serializer);
+
+        /** @var RefreshIndexResponse $response */
+        $response = $this->client->send($refreshIndexRequest);
+
+        echo 'clearCache: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        $this->assertTrue($response->isOk());
+        $shards = $response->getShards();
+        $this->assertTrue(isset($shards['total']));
+        $this->assertTrue(isset($shards['successful']));
+        $this->assertTrue(isset($shards['failed']));
     }
 
     private function createIndex()
