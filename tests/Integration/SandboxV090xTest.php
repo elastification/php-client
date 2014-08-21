@@ -15,6 +15,7 @@ use Elastification\Client\Request\V090x\Index\DeleteMappingRequest;
 use Elastification\Client\Request\V090x\Index\GetFieldMappingRequest;
 use Elastification\Client\Request\V090x\Index\GetMappingRequest;
 use Elastification\Client\Request\V090x\Index\IndexExistsRequest;
+use Elastification\Client\Request\V090x\Index\IndexOptimizeRequest;
 use Elastification\Client\Request\V090x\Index\IndexSegmentsRequest;
 use Elastification\Client\Request\V090x\Index\IndexSettingsRequest;
 use Elastification\Client\Request\V090x\Index\IndexStatsRequest;
@@ -751,6 +752,26 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
         $response = $this->client->send($refreshIndexRequest);
 
         echo 'clearCache: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        $this->assertTrue($response->isOk());
+        $shards = $response->getShards();
+        $this->assertTrue(isset($shards['total']));
+        $this->assertTrue(isset($shards['successful']));
+        $this->assertTrue(isset($shards['failed']));
+    }
+
+    public function testIndexOptimize()
+    {
+        $this->createIndex();
+        $this->createDocument();
+        $timeStart = microtime(true);
+
+        $refreshIndexRequest = new IndexOptimizeRequest(self::INDEX, null, $this->serializer);
+
+        /** @var RefreshIndexResponse $response */
+        $response = $this->client->send($refreshIndexRequest);
+
+        echo 'indexOptimize: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
 
         $this->assertTrue($response->isOk());
         $shards = $response->getShards();
