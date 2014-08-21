@@ -36,7 +36,7 @@ abstract class AbstractCacheClearRequest extends AbstractBaseRequest
      */
     public function getMethod()
     {
-        return RequestMethods::GET;
+        return RequestMethods::POST;
     }
 
     /**

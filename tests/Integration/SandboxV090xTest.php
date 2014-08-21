@@ -780,6 +780,18 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(isset($shards['failed']));
     }
 
+//    public function testData()
+//    {
+//        $this->createIndex();
+//        $this->createDocument();
+//        $this->createDocument();
+//        $this->createDocument();
+//        $this->createDocument();
+//        $this->createDocument();
+//
+//        die();
+//    }
+
     private function createIndex()
     {
         $createIndexRequest = new CreateIndexRequest(self::INDEX, null, $this->serializer);
