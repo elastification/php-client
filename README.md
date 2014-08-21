@@ -26,11 +26,12 @@ Dawen:
 - [x] Get status (global and index based, multi index)
 - [x] Get stats (global and index based, multi index)
 - [x] Get settings. (global and index based, multi index)
-- [x] Types Exists with HEAD metho
+- [x] Types Exists with HEAD method
 - [x] index segments
 - [x] index clear cache
 - [ ] index template ?
 - [x] index optimize
+- [ ] index flush
 - [ ] Create Alias Index
 - [ ] Create Aliases
 - [ ] Delete Aliases

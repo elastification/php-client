@@ -75,7 +75,7 @@ class CacheClearRequestTest extends \PHPUnit_Framework_TestCase
 
     public function testGetMethod()
     {
-        $this->assertSame(RequestMethods::GET, $this->request->getMethod());
+        $this->assertSame(RequestMethods::POST, $this->request->getMethod());
     }
 
     public function testGetAction()
