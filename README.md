@@ -31,7 +31,7 @@ Dawen:
 - [x] index clear cache
 - [ ] index template ?
 - [x] index optimize
-- [ ] index flush
+- [x] index flush
 - [ ] Create Alias Index
 - [ ] Create Aliases
 - [ ] Delete Aliases
