@@ -30,7 +30,7 @@ Dawen:
 - [x] index segments
 - [x] index clear cache
 - [ ] index template ?
-- [ ] index optimize
+- [x] index optimize
 - [ ] Create Alias Index
 - [ ] Create Aliases
 - [ ] Delete Aliases
