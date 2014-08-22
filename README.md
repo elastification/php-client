@@ -34,7 +34,6 @@ Dawen:
 - [x] index flush
 - [x] AliasesRequest
 - [x] Get Aliases (global and index based, multi index)
-- [ ] Alias exists with HEAD method
 - [ ] CountRequest / only term is possible here
 - [ ] Integration tests for RequestManager
 - [ ] Think about an array of clients or a decision manager for get the right client (maybe voter pattern?)
