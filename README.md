@@ -46,7 +46,7 @@ Dawen:
 - [x] IndexExistsRequest
 - [x] use setup and teardown for integration tests sandbox v090x. Delete Index at the end.
 - [x] Unit Test for client
-- [ ] singular _alias Put/Post/delete/head
+- [ ] singular _alias Put/Post/delete/head (v1)
 - [ ] open/close index (only for version 1x)
 - [ ] GetFieldMappingRequest (seems to be only in v1)
 - [ ] index recovery (v1)
