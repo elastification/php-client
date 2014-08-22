@@ -125,4 +125,17 @@ class SearchRequestTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(self::RESPONSE_CLASS, $response);
     }
 
+    public function testConstructorWithJmsSerializer()
+    {
+        $this->serializer = $this->getMockBuilder('Elastification\Client\Serializer\JmsSerializer')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $request = new SearchRequest(self::INDEX, self::TYPE, $this->serializer);
+
+        $params = $request->getSerializerParams();
+        $this->assertSame($params['index'], self::INDEX);
+        $this->assertSame($params['type'], self::TYPE);
+    }
+
 }
