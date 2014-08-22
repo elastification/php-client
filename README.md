@@ -32,10 +32,8 @@ Dawen:
 - [ ] index template ?
 - [x] index optimize
 - [x] index flush
-- [ ] Create Alias Index
-- [ ] Create Aliases
-- [ ] Delete Aliases
-- [ ] Get Aliases (global and index based, multi index)
+- [x] AliasesRequest
+- [x] Get Aliases (global and index based, multi index)
 - [ ] Alias exists with HEAD method
 - [ ] CountRequest / only term is possible here
 - [ ] Integration tests for RequestManager
@@ -49,6 +47,7 @@ Dawen:
 - [x] IndexExistsRequest
 - [x] use setup and teardown for integration tests sandbox v090x. Delete Index at the end.
 - [x] Unit Test for client
+- [ ] singular _alias Put/Post/delete/head
 - [ ] open/close index (only for version 1x)
 - [ ] GetFieldMappingRequest (seems to be only in v1)
 - [ ] index recovery (v1)

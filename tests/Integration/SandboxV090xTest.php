@@ -4,6 +4,7 @@ namespace Elastification\Client\Tests\Integration;
 use Elastification\Client\Exception\ClientException;
 use Elastification\Client\Request\RequestManager;
 use Elastification\Client\Request\RequestManagerInterface;
+use Elastification\Client\Request\V090x\AliasesRequest;
 use Elastification\Client\Request\V090x\CreateDocumentRequest;
 use Elastification\Client\Request\V090x\DeleteDocumentRequest;
 use Elastification\Client\Request\V090x\GetDocumentRequest;
@@ -12,6 +13,7 @@ use Elastification\Client\Request\V090x\Index\CreateIndexRequest;
 use Elastification\Client\Request\V090x\Index\CreateMappingRequest;
 use Elastification\Client\Request\V090x\Index\DeleteIndexRequest;
 use Elastification\Client\Request\V090x\Index\DeleteMappingRequest;
+use Elastification\Client\Request\V090x\Index\GetAliasesRequest;
 use Elastification\Client\Request\V090x\Index\GetFieldMappingRequest;
 use Elastification\Client\Request\V090x\Index\GetMappingRequest;
 use Elastification\Client\Request\V090x\Index\IndexExistsRequest;
@@ -25,6 +27,7 @@ use Elastification\Client\Request\V090x\Index\IndexTypeExistsRequest;
 use Elastification\Client\Request\V090x\Index\RefreshIndexRequest;
 use Elastification\Client\Request\V090x\SearchRequest;
 use Elastification\Client\Request\V090x\UpdateDocumentRequest;
+use Elastification\Client\Response\Response;
 use Elastification\Client\Response\ResponseInterface;
 use Elastification\Client\Response\V090x\CreateUpdateDocumentResponse;
 use Elastification\Client\Response\V090x\DocumentResponse;
@@ -799,6 +802,72 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(isset($shards['total']));
         $this->assertTrue(isset($shards['successful']));
         $this->assertTrue(isset($shards['failed']));
+    }
+
+    public function testAliases()
+    {
+        $this->createIndex();
+        $this->refreshIndex();
+
+        $aliases = [
+            'actions' => [
+                [
+                    'add' => [
+                        'index' => self::INDEX,
+                        'alias' => 'alias-' . self::INDEX
+                    ]
+                ]
+            ]
+        ];
+
+        $timeStart = microtime(true);
+
+        $aliasesRequest = new AliasesRequest(null, null, $this->serializer);
+        $aliasesRequest->setBody($aliases);
+
+        /** @var IndexResponse $response */
+        $response = $this->client->send($aliasesRequest);
+
+        echo 'aliases: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        $this->assertTrue($response->isOk());
+        $this->assertTrue($response->acknowledged());
+    }
+
+    public function testGetAliasesWithoutIndex()
+    {
+        $this->createIndex();
+
+        $aliases = [
+            'actions' => [
+                [
+                    'add' => [
+                        'index' => self::INDEX,
+                        'alias' => 'alias-' . self::INDEX
+                    ]
+                ]
+            ]
+        ];
+
+        $aliasesRequest = new AliasesRequest(null, null, $this->serializer);
+        $aliasesRequest->setBody($aliases);
+
+        /** @var IndexResponse $response */
+        $response = $this->client->send($aliasesRequest);
+
+        $timeStart = microtime(true);
+
+        $getAliasesRequest = new GetAliasesRequest(null, null, $this->serializer);
+
+        /** @var Response $response */
+        $response = $this->client->send($getAliasesRequest);
+
+        echo 'getAliases (without index): ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        $data = $response->getData()->getGatewayValue();
+
+        $this->assertArrayHasKey(self::INDEX, $data);
+        $this->assertTrue(isset($data[self::INDEX]['aliases']['alias-' . self::INDEX]));
     }
 
     private function createIndex()
