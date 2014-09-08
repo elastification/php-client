@@ -7,14 +7,15 @@ use Elastification\Client\Request\RequestManagerInterface;
 use Elastification\Client\Request\V090x\AliasesRequest;
 use Elastification\Client\Request\V090x\CreateDocumentRequest;
 use Elastification\Client\Request\V090x\DeleteDocumentRequest;
+use Elastification\Client\Request\V090x\DeleteTemplateRequest;
 use Elastification\Client\Request\V090x\GetDocumentRequest;
 use Elastification\Client\Request\V090x\Index\CacheClearRequest;
 use Elastification\Client\Request\V090x\Index\CreateIndexRequest;
 use Elastification\Client\Request\V090x\Index\CreateMappingRequest;
+use Elastification\Client\Request\V090x\CreateTemplateRequest;
 use Elastification\Client\Request\V090x\Index\DeleteIndexRequest;
 use Elastification\Client\Request\V090x\Index\DeleteMappingRequest;
 use Elastification\Client\Request\V090x\Index\GetAliasesRequest;
-use Elastification\Client\Request\V090x\Index\GetFieldMappingRequest;
 use Elastification\Client\Request\V090x\Index\GetMappingRequest;
 use Elastification\Client\Request\V090x\Index\IndexExistsRequest;
 use Elastification\Client\Request\V090x\Index\IndexFlushRequest;
@@ -868,6 +869,39 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
 
         $this->assertArrayHasKey(self::INDEX, $data);
         $this->assertTrue(isset($data[self::INDEX]['aliases']['alias-' . self::INDEX]));
+    }
+
+    public function testCreateDeleteTemplate()
+    {
+        $templateName = 'test-template';
+        $template = [
+            'template' => "te*",
+            'settings' => [
+                "number_of_shards" => 1
+            ],
+            'mappings' => [
+                'type1' => [
+                    '_source' => [ "enabled" => false ]
+                ]
+            ]
+        ];
+
+        $createTemplateRequest = new CreateTemplateRequest($templateName, $this->serializer);
+        $createTemplateRequest->setBody($template);
+
+        /** @var IndexResponse $createResponse */
+        $createResponse = $this->client->send($createTemplateRequest);
+
+        $this->assertTrue($createResponse->isOk());
+        $this->assertTrue($createResponse->acknowledged());
+
+        $deleteTemplateRequest = new DeleteTemplateRequest($templateName, $this->serializer);
+
+        /** @var IndexResponse $deleteResponse */
+        $deleteResponse = $this->client->send($deleteTemplateRequest);
+
+        $this->assertTrue($deleteResponse->isOk());
+        $this->assertTrue($deleteResponse->acknowledged());
     }
 
     private function createIndex()

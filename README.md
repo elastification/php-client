@@ -29,7 +29,9 @@ Dawen:
 - [x] Types Exists with HEAD method
 - [x] index segments
 - [x] index clear cache
-- [ ] index template ?
+- [ ] index template ? (tests: create template, get template, delete template)
+- [ ] warmers (check version)
+- [ ] logger by constructor or event listener
 - [x] index optimize
 - [x] index flush
 - [x] AliasesRequest
@@ -50,6 +52,7 @@ Dawen:
 - [ ] open/close index (only for version 1x)
 - [ ] GetFieldMappingRequest (seems to be only in v1)
 - [ ] index recovery (v1)
+- [ ] analyze (v1) ???
 
 xenji:
 - [x] Add thrift transport
