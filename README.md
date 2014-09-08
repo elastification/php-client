@@ -29,9 +29,9 @@ Dawen:
 - [x] Types Exists with HEAD method
 - [x] index segments
 - [x] index clear cache
-- [ ] index template ? (tests: create template, get template, delete template)
+- [x] index template ? (tests: create template, get template, delete template)
 - [ ] warmers (check version)
-- [ ] logger by constructor or event listener
+- [ ] logger by constructor or event listener or decorator. (decorator seems to look good)
 - [x] index optimize
 - [x] index flush
 - [x] AliasesRequest

@@ -17,8 +17,8 @@
  */
 namespace Elastification\Client\Request\V090x;
 
-use Elastification\Client\Request\Shared\AbstractCreateTemplateRequest;
-use Elastification\Client\Response\V090x\Index\IndexResponse;
+use Elastification\Client\Request\Shared\AbstractGetTemplateRequest;
+use Elastification\Client\Response\Response;
 use Elastification\Client\Serializer\SerializerInterface;
 
 /**
@@ -27,14 +27,14 @@ use Elastification\Client\Serializer\SerializerInterface;
  * @package Elastification\Client\Request\V090x
  * @author Daniel Wendlandt
  */
-class CreateTemplateRequest extends AbstractCreateTemplateRequest
+class GetTemplateRequest extends AbstractGetTemplateRequest
 {
 
     /**
      * @param string $rawData
      * @param \Elastification\Client\Serializer\SerializerInterface $serializer
      * @param array $serializerParams
-     * @return IndexResponse
+     * @return Response
      * @author Daniel Wendlandt
      */
     public function createResponse(
@@ -43,7 +43,7 @@ class CreateTemplateRequest extends AbstractCreateTemplateRequest
         array $serializerParams = array())
     {
 
-        return new IndexResponse($rawData, $serializer, $serializerParams);
+        return new Response($rawData, $serializer, $serializerParams);
     }
 
     /**
@@ -54,6 +54,6 @@ class CreateTemplateRequest extends AbstractCreateTemplateRequest
      */
     public function getSupportedClass()
     {
-        return 'Elastification\Client\Response\V090x\Index\IndexResponse';
+        return 'Elastification\Client\Response\Response';
     }
 }

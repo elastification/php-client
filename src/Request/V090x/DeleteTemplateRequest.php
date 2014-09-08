@@ -24,7 +24,7 @@ use Elastification\Client\Serializer\SerializerInterface;
 /**
  * Class CreateMappingRequest
  *
- * @package Elastification\Client\Request\V090x\Index
+ * @package Elastification\Client\Request\V090x
  * @author Daniel Wendlandt
  */
 class DeleteTemplateRequest extends AbstractDeleteTemplateRequest

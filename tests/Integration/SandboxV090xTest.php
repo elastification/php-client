@@ -9,6 +9,7 @@ use Elastification\Client\Request\V090x\CreateDocumentRequest;
 use Elastification\Client\Request\V090x\DeleteDocumentRequest;
 use Elastification\Client\Request\V090x\DeleteTemplateRequest;
 use Elastification\Client\Request\V090x\GetDocumentRequest;
+use Elastification\Client\Request\V090x\GetTemplateRequest;
 use Elastification\Client\Request\V090x\Index\CacheClearRequest;
 use Elastification\Client\Request\V090x\Index\CreateIndexRequest;
 use Elastification\Client\Request\V090x\Index\CreateMappingRequest;
@@ -894,6 +895,45 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($createResponse->isOk());
         $this->assertTrue($createResponse->acknowledged());
+
+        $deleteTemplateRequest = new DeleteTemplateRequest($templateName, $this->serializer);
+
+        /** @var IndexResponse $deleteResponse */
+        $deleteResponse = $this->client->send($deleteTemplateRequest);
+
+        $this->assertTrue($deleteResponse->isOk());
+        $this->assertTrue($deleteResponse->acknowledged());
+    }
+
+    public function testGetTemplate()
+    {
+        $templateName = 'test-template';
+        $template = [
+            'template' => "te*",
+            'settings' => [
+                "number_of_shards" => 1
+            ],
+            'mappings' => [
+                'type1' => [
+                    '_source' => [ "enabled" => false ]
+                ]
+            ]
+        ];
+
+        $createTemplateRequest = new CreateTemplateRequest($templateName, $this->serializer);
+        $createTemplateRequest->setBody($template);
+
+        /** @var IndexResponse $createResponse */
+        $createResponse = $this->client->send($createTemplateRequest);
+
+        $this->assertTrue($createResponse->isOk());
+        $this->assertTrue($createResponse->acknowledged());
+
+        $getTemplateRequest = new GetTemplateRequest($templateName, $this->serializer);
+
+        $getResponse = $this->client->send($getTemplateRequest);
+
+        $this->arrayHasKey($templateName, $getResponse->getData()->getGatewayValue());
 
         $deleteTemplateRequest = new DeleteTemplateRequest($templateName, $this->serializer);
 
