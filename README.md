@@ -29,14 +29,14 @@ Dawen:
 - [x] Types Exists with HEAD method
 - [x] index segments
 - [x] index clear cache
-- [x] index template ? (tests: create template, get template, delete template)
-- [ ] warmers (check version)
+- [x] index template
+- [x] warmers (create, delete, get)
+- [ ] CountRequest / only term is possible here
 - [ ] logger by constructor or event listener or decorator. (decorator seems to look good)
 - [x] index optimize
 - [x] index flush
 - [x] AliasesRequest
 - [x] Get Aliases (global and index based, multi index)
-- [ ] CountRequest / only term is possible here
 - [ ] Integration tests for RequestManager
 - [ ] Think about an array of clients or a decision manager for get the right client (maybe voter pattern?)
 - [x] Move GetMappingRequest/Response into index

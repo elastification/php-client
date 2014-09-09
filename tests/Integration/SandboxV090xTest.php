@@ -14,10 +14,13 @@ use Elastification\Client\Request\V090x\Index\CacheClearRequest;
 use Elastification\Client\Request\V090x\Index\CreateIndexRequest;
 use Elastification\Client\Request\V090x\Index\CreateMappingRequest;
 use Elastification\Client\Request\V090x\CreateTemplateRequest;
+use Elastification\Client\Request\V090x\Index\CreateWarmerRequest;
 use Elastification\Client\Request\V090x\Index\DeleteIndexRequest;
 use Elastification\Client\Request\V090x\Index\DeleteMappingRequest;
+use Elastification\Client\Request\V090x\Index\DeleteWarmerRequest;
 use Elastification\Client\Request\V090x\Index\GetAliasesRequest;
 use Elastification\Client\Request\V090x\Index\GetMappingRequest;
+use Elastification\Client\Request\V090x\Index\GetWarmerRequest;
 use Elastification\Client\Request\V090x\Index\IndexExistsRequest;
 use Elastification\Client\Request\V090x\Index\IndexFlushRequest;
 use Elastification\Client\Request\V090x\Index\IndexOptimizeRequest;
@@ -93,7 +96,6 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
         $this->requestManager = new RequestManager();
         $this->client = new Client($this->transportClient, $this->requestManager);
         $this->serializer = new NativeJsonSerializer();
-
     }
 
     protected function tearDown()
@@ -107,6 +109,8 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
         $this->guzzleClient = null;
         $this->requestManager = null;
         $this->client = null;
+        $this->serializer = null;
+        $this->transportClient = null;
 
 
     }
@@ -887,19 +891,27 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
             ]
         ];
 
+        $timeStart = microtime(true);
+
         $createTemplateRequest = new CreateTemplateRequest($templateName, $this->serializer);
         $createTemplateRequest->setBody($template);
 
         /** @var IndexResponse $createResponse */
         $createResponse = $this->client->send($createTemplateRequest);
 
+        echo 'createTemplate: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
         $this->assertTrue($createResponse->isOk());
         $this->assertTrue($createResponse->acknowledged());
+
+        $timeStart = microtime(true);
 
         $deleteTemplateRequest = new DeleteTemplateRequest($templateName, $this->serializer);
 
         /** @var IndexResponse $deleteResponse */
         $deleteResponse = $this->client->send($deleteTemplateRequest);
+
+        echo 'deleteTemplate: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
 
         $this->assertTrue($deleteResponse->isOk());
         $this->assertTrue($deleteResponse->acknowledged());
@@ -929,9 +941,13 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($createResponse->isOk());
         $this->assertTrue($createResponse->acknowledged());
 
+        $timeStart = microtime(true);
+
         $getTemplateRequest = new GetTemplateRequest($templateName, $this->serializer);
 
         $getResponse = $this->client->send($getTemplateRequest);
+
+        echo 'getTemplate: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
 
         $this->arrayHasKey($templateName, $getResponse->getData()->getGatewayValue());
 
@@ -944,15 +960,133 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($deleteResponse->acknowledged());
     }
 
-    private function createIndex()
+    public function testCreateDeleteWarmer()
     {
-        $createIndexRequest = new CreateIndexRequest(self::INDEX, null, $this->serializer);
+        $index = 'warmer-index';
+
+        if(!$this->hasIndex($index)) {
+            $this->createIndex($index);
+        }
+
+        $this->refreshIndex($index);
+        sleep(1);
+
+        $warmerName = 'test_warmer';
+
+        $warmer = [
+            'query' => [
+                'match_all' => []
+            ]
+        ];
+
+        $timeStart = microtime(true);
+
+        $createWarmerRequest = new CreateWarmerRequest($index, null, $this->serializer);
+        $createWarmerRequest->setWarmerName($warmerName);
+        $createWarmerRequest->setBody($warmer);
+
+        /** @var IndexResponse $createResponse */
+        $createResponse = $this->client->send($createWarmerRequest);
+
+        echo 'createWarmer: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        $this->assertTrue($createResponse->isOk());
+        $this->assertTrue($createResponse->acknowledged());
+
+        $this->refreshIndex($index);
+        sleep(1);
+
+        $timeStart = microtime(true);
+
+        $deleteRequest = new DeleteWarmerRequest($index, null, $this->serializer);
+        $deleteRequest->setWarmerName($warmerName);
+
+        $deleteResponse = $this->client->send($deleteRequest);
+
+        echo 'deleteWarmer: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        $this->assertTrue($deleteResponse->isOk());
+        $this->assertTrue($deleteResponse->acknowledged());
+
+        $this->deleteIndex($index);
+    }
+
+    public function testGetWarmer()
+    {
+        $index = 'warmer-index';
+
+        if(!$this->hasIndex($index)) {
+            $this->createIndex($index);
+        }
+
+        $this->refreshIndex($index);
+        sleep(1);
+
+        $warmerName = 'test_warmer';
+
+        $warmer = [
+            'query' => [
+                'match_all' => []
+            ]
+        ];
+
+        $timeStart = microtime(true);
+
+        $createWarmerRequest = new CreateWarmerRequest($index, null, $this->serializer);
+        $createWarmerRequest->setWarmerName($warmerName);
+        $createWarmerRequest->setBody($warmer);
+
+        /** @var IndexResponse $createResponse */
+        $createResponse = $this->client->send($createWarmerRequest);
+
+        echo 'createWarmer: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        $this->assertTrue($createResponse->isOk());
+        $this->assertTrue($createResponse->acknowledged());
+
+        $this->refreshIndex($index);
+
+        $getWarmerRequest = new GetWarmerRequest($index, null, $this->serializer);
+        $getWarmerRequest->setWarmerName($warmerName);
+
+        $getResponse = $this->client->send($getWarmerRequest);
+        $data = $getResponse->getData()->getGatewayValue();
+        $this->assertArrayHasKey($warmerName, $data['warmer-index']['warmers']);
+
+        sleep(1);
+
+        $timeStart = microtime(true);
+
+        $deleteRequest = new DeleteWarmerRequest($index, null, $this->serializer);
+        $deleteRequest->setWarmerName($warmerName);
+
+        $deleteResponse = $this->client->send($deleteRequest);
+
+        echo 'deleteWarmer: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        $this->assertTrue($deleteResponse->isOk());
+        $this->assertTrue($deleteResponse->acknowledged());
+
+        $this->deleteIndex($index);
+    }
+
+    private function createIndex($index = null)
+    {
+        if(null === $index) {
+            $index = self::INDEX;
+        }
+
+        $createIndexRequest = new CreateIndexRequest($index, null, $this->serializer);
         $this->client->send($createIndexRequest);
     }
 
-    private function hasIndex()
+    private function hasIndex($index = null)
     {
-        $indexExistsRequest = new IndexExistsRequest(self::INDEX, null, $this->serializer);
+        if(null === $index) {
+            $index = self::INDEX;
+        }
+
+        $indexExistsRequest = new IndexExistsRequest($index, null, $this->serializer);
         try {
             $this->client->send($indexExistsRequest);
             return true;
@@ -962,15 +1096,23 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
 
     }
 
-    private function deleteIndex()
+    private function deleteIndex($index = null)
     {
-        $deleteIndexRequest = new DeleteIndexRequest(self::INDEX, null, $this->serializer);
+        if(null === $index) {
+            $index = self::INDEX;
+        }
+
+        $deleteIndexRequest = new DeleteIndexRequest($index, null, $this->serializer);
         $this->client->send($deleteIndexRequest);
     }
 
-    private function refreshIndex()
+    private function refreshIndex($index = null)
     {
-        $refreshIndexRequest = new RefreshIndexRequest(self::INDEX, null, $this->serializer);
+        if(null === $index) {
+            $index = self::INDEX;
+        }
+
+        $refreshIndexRequest = new RefreshIndexRequest($index, null, $this->serializer);
         $this->client->send($refreshIndexRequest);
     }
 
