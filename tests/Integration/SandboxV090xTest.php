@@ -5,6 +5,7 @@ use Elastification\Client\Exception\ClientException;
 use Elastification\Client\Request\RequestManager;
 use Elastification\Client\Request\RequestManagerInterface;
 use Elastification\Client\Request\V090x\AliasesRequest;
+use Elastification\Client\Request\V090x\CountRequest;
 use Elastification\Client\Request\V090x\CreateDocumentRequest;
 use Elastification\Client\Request\V090x\DeleteDocumentRequest;
 use Elastification\Client\Request\V090x\DeleteTemplateRequest;
@@ -34,6 +35,7 @@ use Elastification\Client\Request\V090x\SearchRequest;
 use Elastification\Client\Request\V090x\UpdateDocumentRequest;
 use Elastification\Client\Response\Response;
 use Elastification\Client\Response\ResponseInterface;
+use Elastification\Client\Response\V090x\CountResponse;
 use Elastification\Client\Response\V090x\CreateUpdateDocumentResponse;
 use Elastification\Client\Response\V090x\DocumentResponse;
 use Elastification\Client\Response\V090x\Index\IndexResponse;
@@ -1068,6 +1070,30 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($deleteResponse->acknowledged());
 
         $this->deleteIndex($index);
+    }
+
+    public function testCount()
+    {
+        $this->createIndex();
+        $this->createDocument();
+        $this->createDocument();
+        $this->createDocument();
+        $this->refreshIndex();
+
+        $timeStart = microtime(true);
+        $countRequest = new CountRequest(self::INDEX, self::TYPE, $this->serializer);
+
+        /** @var CountResponse $response */
+        $response = $this->client->send($countRequest);
+
+        echo 'count: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        $this->assertSame(3, $response->getCount());
+
+        $shards = $response->getShards();
+        $this->assertTrue(isset($shards['total']));
+        $this->assertTrue(isset($shards['successful']));
+        $this->assertTrue(isset($shards['failed']));
     }
 
     private function createIndex($index = null)

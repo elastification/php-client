@@ -31,7 +31,7 @@ Dawen:
 - [x] index clear cache
 - [x] index template
 - [x] warmers (create, delete, get)
-- [ ] CountRequest / only term is possible here
+- [x] CountRequest / only term is possible here
 - [ ] logger by constructor or event listener or decorator. (decorator seems to look good)
 - [x] index optimize
 - [x] index flush
@@ -53,6 +53,8 @@ Dawen:
 - [ ] GetFieldMappingRequest (seems to be only in v1)
 - [ ] index recovery (v1)
 - [ ] analyze (v1) ???
+- [ ] document repository (create, update, exists, get) for each function there must be the registered request
+- [ ] document repository (create, update, exists, get) leave everything blank and index and type must be give in function
 
 xenji:
 - [x] Add thrift transport
