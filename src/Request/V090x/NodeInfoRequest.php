@@ -17,24 +17,24 @@
  */
 namespace Elastification\Client\Request\V090x;
 
-use Elastification\Client\Request\Shared\AbstractGetTemplateRequest;
-use Elastification\Client\Response\Response;
+use Elastification\Client\Request\Shared\AbstractNodeInfoRequest;
+use Elastification\Client\Response\V090x\NodeInfoResponse;
 use Elastification\Client\Serializer\SerializerInterface;
 
 /**
- * Class GetTemplateRequest
+ * Class NodeInfoRequest
  *
  * @package Elastification\Client\Request\V090x
  * @author Daniel Wendlandt
  */
-class GetTemplateRequest extends AbstractGetTemplateRequest
+class NodeInfoRequest extends AbstractNodeInfoRequest
 {
 
     /**
      * @param string $rawData
      * @param \Elastification\Client\Serializer\SerializerInterface $serializer
      * @param array $serializerParams
-     * @return Response
+     * @return NodeInfoResponse
      * @author Daniel Wendlandt
      */
     public function createResponse(
@@ -43,7 +43,7 @@ class GetTemplateRequest extends AbstractGetTemplateRequest
         array $serializerParams = array())
     {
 
-        return new Response($rawData, $serializer, $serializerParams);
+        return new NodeInfoResponse($rawData, $serializer, $serializerParams);
     }
 
     /**
@@ -54,6 +54,6 @@ class GetTemplateRequest extends AbstractGetTemplateRequest
      */
     public function getSupportedClass()
     {
-        return 'Elastification\Client\Response\Response';
+        return 'Elastification\Client\Response\V090x\NodeInfoResponse';
     }
 }

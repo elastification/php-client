@@ -22,29 +22,22 @@ use Elastification\Client\Request\RequestMethods;
 use Elastification\Client\Serializer\SerializerInterface;
 
 /**
- * Class AbstractNodeTemplateRequest
+ * Class AbstractNodeInfoRequest
  *
  * @package Elastification\Client\Request\Shared\Index
  * @author Daniel Wendlandt
  */
-abstract class AbstractGetTemplateRequest extends AbstractBaseRequest
+abstract class AbstractNodeInfoRequest extends AbstractBaseRequest
 {
 
-    const REQUEST_ACTION = '_template';
-
     /**
-     * @param string $templateName
      * @param SerializerInterface $serializer
      * @param array $serializerParams
      */
-    public function __construct($templateName, SerializerInterface $serializer, array $serializerParams = array())
+    public function __construct(SerializerInterface $serializer, array $serializerParams = array())
     {
         $this->serializer = $serializer;
         $this->serializerParams = $serializerParams;
-
-        if (!empty($templateName)) {
-            $this->type = $templateName;
-        }
     }
 
     /**
@@ -60,7 +53,7 @@ abstract class AbstractGetTemplateRequest extends AbstractBaseRequest
      */
     public function getIndex()
     {
-        return self::REQUEST_ACTION;
+        return null;
     }
 
     /**
@@ -87,14 +80,4 @@ abstract class AbstractGetTemplateRequest extends AbstractBaseRequest
         //do nothing
     }
 
-    /**
-     * Sets the template name
-     *
-     * @param $name
-     * @author Daniel Wendlandt
-     */
-    public function setTemplateName($name)
-    {
-        $this->type = $name;
-    }
 }

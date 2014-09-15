@@ -22,6 +22,9 @@ Global:
 
 Dawen:
 
+- [ ] Change integration tests configuration by providing a config file for different version tests
+- [ ] logger by constructor or event listener or decorator. (decorator seems to look good)
+- [ ] create base server info request
 - [x] Missing Unit tests for new requests (IndexStatusResponse)
 - [x] Get status (global and index based, multi index)
 - [x] Get stats (global and index based, multi index)
@@ -32,13 +35,10 @@ Dawen:
 - [x] index template
 - [x] warmers (create, delete, get)
 - [x] CountRequest / only term is possible here
-- [ ] logger by constructor or event listener or decorator. (decorator seems to look good)
 - [x] index optimize
 - [x] index flush
 - [x] AliasesRequest
 - [x] Get Aliases (global and index based, multi index)
-- [ ] Integration tests for RequestManager
-- [ ] Think about an array of clients or a decision manager for get the right client (maybe voter pattern?)
 - [x] Move GetMappingRequest/Response into index
 - [x] CreateMappingRequest
 - [x] DeleteMappingRequest
@@ -55,6 +55,7 @@ Dawen:
 - [ ] analyze (v1) ???
 - [ ] document repository (create, update, exists, get) for each function there must be the registered request
 - [ ] document repository (create, update, exists, get) leave everything blank and index and type must be give in function
+- [ ] Think about an array of clients or a decision manager for get the right client (maybe voter pattern?)
 
 xenji:
 - [x] Add thrift transport

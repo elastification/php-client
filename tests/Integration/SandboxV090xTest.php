@@ -31,6 +31,7 @@ use Elastification\Client\Request\V090x\Index\IndexStatsRequest;
 use Elastification\Client\Request\V090x\Index\IndexStatusRequest;
 use Elastification\Client\Request\V090x\Index\IndexTypeExistsRequest;
 use Elastification\Client\Request\V090x\Index\RefreshIndexRequest;
+use Elastification\Client\Request\V090x\NodeInfoRequest;
 use Elastification\Client\Request\V090x\SearchRequest;
 use Elastification\Client\Request\V090x\UpdateDocumentRequest;
 use Elastification\Client\Response\Response;
@@ -42,6 +43,7 @@ use Elastification\Client\Response\V090x\Index\IndexResponse;
 use Elastification\Client\Response\V090x\Index\IndexStatsResponse;
 use Elastification\Client\Response\V090x\Index\IndexStatusResponse;
 use Elastification\Client\Response\V090x\Index\RefreshIndexResponse;
+use Elastification\Client\Response\V090x\NodeInfoResponse;
 use Elastification\Client\Response\V090x\SearchResponse;
 use Elastification\Client\Serializer\NativeJsonSerializer;
 use Elastification\Client\Serializer\SerializerInterface;
@@ -1094,6 +1096,23 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(isset($shards['total']));
         $this->assertTrue(isset($shards['successful']));
         $this->assertTrue(isset($shards['failed']));
+    }
+
+    public function testNodeInfo()
+    {
+        $timeStart = microtime(true);
+        $countRequest = new NodeInfoRequest($this->serializer);
+
+        /** @var NodeInfoResponse $response */
+        $response = $this->client->send($countRequest);
+
+        echo 'nodeInfo: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        $this->assertTrue($response->isOk());
+        $this->assertNotEmpty($response->getName());
+        $this->assertNotEmpty($response->getTagline());
+        $this->assertSame(200, $response->getStatus());
+        $this->assertArrayHasKey('number', $response->getVersion());
     }
 
     private function createIndex($index = null)
