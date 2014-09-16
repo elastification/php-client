@@ -64,6 +64,7 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
     const TYPE = 'sandbox';
 
     private $url = 'http://localhost:9200/';
+//    private $url = 'http://192.168.33.109:9200/';
 
     /**
      * @var GuzzleClientInterface

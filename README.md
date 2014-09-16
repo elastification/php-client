@@ -22,9 +22,9 @@ Global:
 
 Dawen:
 
-- [ ] Change integration tests configuration by providing a config file for different version tests
 - [ ] logger by constructor or event listener or decorator. (decorator seems to look good)
-- [ ] create base server info request
+- [ ] start implementing v1x requests
+- [x] create base server info request
 - [x] Missing Unit tests for new requests (IndexStatusResponse)
 - [x] Get status (global and index based, multi index)
 - [x] Get stats (global and index based, multi index)
