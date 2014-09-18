@@ -20,15 +20,16 @@ namespace Elastification\Client\Response\V1x\Index;
 use Elastification\Client\Response\Response;
 
 /**
- * Class RefreshIndexResponse
+ * Class IndexStatusResponse
  *
- * @package Elastification\Client\Response\V1x\Index
+ * @package Elastification\Client\Response\V090x\Index
  * @author  Daniel Wendlandt
  */
-class RefreshIndexResponse extends Response
+class IndexStatusResponse extends Response
 {
 
     const PROP_SHARDS = '_shards';
+    const PROP_INDICES = 'indices';
 
     /**
      * Getter Method
@@ -41,6 +42,19 @@ class RefreshIndexResponse extends Response
         $this->processData();
 
         return $this->get(self::PROP_SHARDS);
+    }
+
+    /**
+     * Getter Method
+     *
+     * @return mixed
+     * @author Daniel Wendlandt
+     */
+    public function getIndices()
+    {
+        $this->processData();
+
+        return $this->get(self::PROP_INDICES);
     }
 
 }

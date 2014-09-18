@@ -5,15 +5,15 @@
  * Date: 17/06/14
  * Time: 19:02
  */
-namespace Elastification\Client\Tests\Unit\Request\V090x\Index;
+namespace Elastification\Client\Tests\Unit\Request\V1x\Index;
 
 use Elastification\Client\Request\RequestMethods;
-use Elastification\Client\Request\V090x\Index\DeleteMappingRequest;
+use Elastification\Client\Request\V1x\Index\CreateMappingRequest;
 
-class DeleteMappingRequestTest extends \PHPUnit_Framework_TestCase
+class CreateMappingRequestTest extends \PHPUnit_Framework_TestCase
 {
     const INDEX = 'test-index';
-    const RESPONSE_CLASS = 'Elastification\Client\Response\V090x\Index\IndexResponse';
+    const RESPONSE_CLASS = 'Elastification\Client\Response\V1x\Index\IndexResponse';
 
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
@@ -21,7 +21,7 @@ class DeleteMappingRequestTest extends \PHPUnit_Framework_TestCase
     private $serializer;
 
     /**
-     * @var DeleteMappingRequest
+     * @var CreateMappingRequest
      */
     private $request;
 
@@ -34,7 +34,7 @@ class DeleteMappingRequestTest extends \PHPUnit_Framework_TestCase
             ->getMock();
 
         /** @noinspection PhpParamsInspection */
-        $this->request = new DeleteMappingRequest(self::INDEX, null, $this->serializer);
+        $this->request = new CreateMappingRequest(self::INDEX, null, $this->serializer);
     }
 
     protected function tearDown()
@@ -53,12 +53,12 @@ class DeleteMappingRequestTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertInstanceOf(
-            'Elastification\Client\Request\Shared\Index\AbstractDeleteMappingRequest',
+            'Elastification\Client\Request\Shared\Index\AbstractCreateMappingRequest',
             $this->request
         );
 
         $this->assertInstanceOf(
-            'Elastification\Client\Request\V090x\Index\DeleteMappingRequest',
+            'Elastification\Client\Request\V1x\Index\CreateMappingRequest',
             $this->request
         );
     }
@@ -75,12 +75,12 @@ class DeleteMappingRequestTest extends \PHPUnit_Framework_TestCase
 
     public function testGetMethod()
     {
-        $this->assertSame(RequestMethods::DELETE, $this->request->getMethod());
+        $this->assertSame(RequestMethods::PUT, $this->request->getMethod());
     }
 
     public function testGetAction()
     {
-        $this->assertSame(DeleteMappingRequest::REQUEST_ACTION, $this->request->getAction());
+        $this->assertSame(CreateMappingRequest::REQUEST_ACTION, $this->request->getAction());
     }
 
     public function testGetSerializer()
@@ -98,12 +98,17 @@ class DeleteMappingRequestTest extends \PHPUnit_Framework_TestCase
     {
         $body = 'my test body';
 
-        $this->serializer->expects($this->never())
-            ->method('serialize');
+        $this->serializer->expects($this->once())
+            ->method('serialize')
+            ->with(
+                $this->equalTo($body),
+                $this->equalTo(array())
+            )
+            ->will($this->returnValue($body));
 
         $this->request->setBody($body);
 
-        $this->assertNull($this->request->getBody());
+        $this->assertSame($body, $this->request->getBody());
     }
 
     public function testGetSupportedClass()

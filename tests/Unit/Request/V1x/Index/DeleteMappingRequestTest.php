@@ -5,15 +5,15 @@
  * Date: 17/06/14
  * Time: 19:02
  */
-namespace Elastification\Client\Tests\Unit\Request\V090x\Index;
+namespace Elastification\Client\Tests\Unit\Request\V1x\Index;
 
 use Elastification\Client\Request\RequestMethods;
-use Elastification\Client\Request\V090x\Index\DeleteMappingRequest;
+use Elastification\Client\Request\V1x\Index\DeleteMappingRequest;
 
 class DeleteMappingRequestTest extends \PHPUnit_Framework_TestCase
 {
     const INDEX = 'test-index';
-    const RESPONSE_CLASS = 'Elastification\Client\Response\V090x\Index\IndexResponse';
+    const RESPONSE_CLASS = 'Elastification\Client\Response\V1x\Index\IndexResponse';
 
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
@@ -58,7 +58,7 @@ class DeleteMappingRequestTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertInstanceOf(
-            'Elastification\Client\Request\V090x\Index\DeleteMappingRequest',
+            'Elastification\Client\Request\V1x\Index\DeleteMappingRequest',
             $this->request
         );
     }

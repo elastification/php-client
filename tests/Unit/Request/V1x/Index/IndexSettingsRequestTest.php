@@ -5,15 +5,15 @@
  * Date: 17/06/14
  * Time: 19:02
  */
-namespace Elastification\Client\Tests\Unit\Request\V090x\Index;
+namespace Elastification\Client\Tests\Unit\Request\V1x\Index;
 
 use Elastification\Client\Request\RequestMethods;
-use Elastification\Client\Request\V090x\Index\DeleteMappingRequest;
+use Elastification\Client\Request\V1x\Index\IndexSettingsRequest;
 
-class DeleteMappingRequestTest extends \PHPUnit_Framework_TestCase
+class IndexSettingsRequestTest extends \PHPUnit_Framework_TestCase
 {
     const INDEX = 'test-index';
-    const RESPONSE_CLASS = 'Elastification\Client\Response\V090x\Index\IndexResponse';
+    const RESPONSE_CLASS = 'Elastification\Client\Response\Response';
 
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
@@ -21,7 +21,7 @@ class DeleteMappingRequestTest extends \PHPUnit_Framework_TestCase
     private $serializer;
 
     /**
-     * @var DeleteMappingRequest
+     * @var IndexSettingsRequest
      */
     private $request;
 
@@ -34,7 +34,7 @@ class DeleteMappingRequestTest extends \PHPUnit_Framework_TestCase
             ->getMock();
 
         /** @noinspection PhpParamsInspection */
-        $this->request = new DeleteMappingRequest(self::INDEX, null, $this->serializer);
+        $this->request = new IndexSettingsRequest(self::INDEX, null, $this->serializer);
     }
 
     protected function tearDown()
@@ -53,12 +53,12 @@ class DeleteMappingRequestTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertInstanceOf(
-            'Elastification\Client\Request\Shared\Index\AbstractDeleteMappingRequest',
+            'Elastification\Client\Request\Shared\Index\AbstractIndexSettingsRequest',
             $this->request
         );
 
         $this->assertInstanceOf(
-            'Elastification\Client\Request\V090x\Index\DeleteMappingRequest',
+            'Elastification\Client\Request\V1x\Index\IndexSettingsRequest',
             $this->request
         );
     }
@@ -75,12 +75,12 @@ class DeleteMappingRequestTest extends \PHPUnit_Framework_TestCase
 
     public function testGetMethod()
     {
-        $this->assertSame(RequestMethods::DELETE, $this->request->getMethod());
+        $this->assertSame(RequestMethods::GET, $this->request->getMethod());
     }
 
     public function testGetAction()
     {
-        $this->assertSame(DeleteMappingRequest::REQUEST_ACTION, $this->request->getAction());
+        $this->assertSame(IndexSettingsRequest::REQUEST_ACTION, $this->request->getAction());
     }
 
     public function testGetSerializer()

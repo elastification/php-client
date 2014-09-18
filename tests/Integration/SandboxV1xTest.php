@@ -8,9 +8,14 @@ use Elastification\Client\Request\V1x\CreateDocumentRequest;
 use Elastification\Client\Request\V1x\DeleteDocumentRequest;
 use Elastification\Client\Request\V1x\GetDocumentRequest;
 use Elastification\Client\Request\V1x\Index\CreateIndexRequest;
+use Elastification\Client\Request\V1x\Index\CreateMappingRequest;
 use Elastification\Client\Request\V1x\Index\DeleteIndexRequest;
+use Elastification\Client\Request\V1x\Index\DeleteMappingRequest;
 use Elastification\Client\Request\V1x\Index\GetMappingRequest;
 use Elastification\Client\Request\V1x\Index\IndexExistsRequest;
+use Elastification\Client\Request\V1x\Index\IndexSettingsRequest;
+use Elastification\Client\Request\V1x\Index\IndexStatsRequest;
+use Elastification\Client\Request\V1x\Index\IndexStatusRequest;
 use Elastification\Client\Request\V1x\Index\IndexTypeExistsRequest;
 use Elastification\Client\Request\V1x\Index\RefreshIndexRequest;
 use Elastification\Client\Request\V1x\NodeInfoRequest;
@@ -22,6 +27,8 @@ use Elastification\Client\Response\V1x\CreateUpdateDocumentResponse;
 use Elastification\Client\Response\V1x\DeleteDocumentResponse;
 use Elastification\Client\Response\V1x\DocumentResponse;
 use Elastification\Client\Response\V1x\Index\IndexResponse;
+use Elastification\Client\Response\V1x\Index\IndexStatsResponse;
+use Elastification\Client\Response\V1x\Index\IndexStatusResponse;
 use Elastification\Client\Response\V1x\Index\RefreshIndexResponse;
 use Elastification\Client\Response\V1x\NodeInfoResponse;
 use Elastification\Client\Response\V1x\SearchResponse;
@@ -484,224 +491,209 @@ class SandboxV1xTest extends \PHPUnit_Framework_TestCase
 
         $this->fail();
     }
-//
-//    public function testIndexStatsWithIndex()
-//    {
-//        $this->createIndex();
-//        $this->createDocument();
-//        $this->refreshIndex();
-//
-//
-//        $timeStart = microtime(true);
-//
-//        $indexStatsRequest = new IndexStatsRequest(self::INDEX, null, $this->serializer);
-//
-//        /** @var IndexStatsResponse $response */
-//        $response = $this->client->send($indexStatsRequest);
-//
-//        echo 'indexStats(with index): ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-//
-//        $this->assertTrue($response->isOk());
-//
-//        $shards = $response->getShards();
-//        $this->assertTrue(isset($shards['total']));
-//        $this->assertTrue(isset($shards['successful']));
-//        $this->assertTrue(isset($shards['failed']));
-//
-//        $all = $response->getAll();
-//        $this->assertTrue(isset($all['primaries']));
-//        $this->assertTrue(isset($all['total']));
-//
-//        $indices = $response->getIndices();
-//        $this->assertTrue(isset($indices[self::INDEX]));
-//    }
-//
-//    public function testIndexStatsWithoutIndex()
-//    {
-//        $this->createIndex();
-//        $this->createDocument();
-//        $this->refreshIndex();
-//
-//
-//        $timeStart = microtime(true);
-//
-//        $indexStatsRequest = new IndexStatsRequest(null, null, $this->serializer);
-//
-//        /** @var IndexStatsResponse $response */
-//        $response = $this->client->send($indexStatsRequest);
-//
-//        echo 'indexStats(without index): ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-//
-//        $this->assertTrue($response->isOk());
-//
-//        $shards = $response->getShards();
-//        $this->assertTrue(isset($shards['total']));
-//        $this->assertTrue(isset($shards['successful']));
-//        $this->assertTrue(isset($shards['failed']));
-//
-//        $all = $response->getAll();
-//        $this->assertTrue(isset($all['primaries']));
-//        $this->assertTrue(isset($all['total']));
-//
-//        $indices = $response->getIndices();
-//        $this->assertTrue(isset($indices[self::INDEX]));
-//    }
-//
-//    public function testIndexStatusWithIndex()
-//    {
-//        $this->createIndex();
-//        $this->createDocument();
-//        $this->refreshIndex();
-//
-//
-//        $timeStart = microtime(true);
-//
-//        $indexStatsRequest = new IndexStatusRequest(self::INDEX, null, $this->serializer);
-//
-//        /** @var IndexStatusResponse $response */
-//        $response = $this->client->send($indexStatsRequest);
-//
-//        echo 'indexStatus(with index): ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-//
-//        $this->assertTrue($response->isOk());
-//
-//        $shards = $response->getShards();
-//        $this->assertTrue(isset($shards['total']));
-//        $this->assertTrue(isset($shards['successful']));
-//        $this->assertTrue(isset($shards['failed']));
-//
-//        $indices = $response->getIndices();
-//        $this->assertTrue(isset($indices[self::INDEX]));
-//    }
-//
-//    public function testIndexStatusWithoutIndex()
-//    {
-//        $this->createIndex();
-//        $this->createDocument();
-//        $this->refreshIndex();
-//
-//
-//        $timeStart = microtime(true);
-//
-//        $indexStatsRequest = new IndexStatusRequest(null, null, $this->serializer);
-//
-//        /** @var IndexStatusResponse $response */
-//        $response = $this->client->send($indexStatsRequest);
-//
-//        echo 'indexStatus(with index): ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-//
-//        $this->assertTrue($response->isOk());
-//
-//        $shards = $response->getShards();
-//        $this->assertTrue(isset($shards['total']));
-//        $this->assertTrue(isset($shards['successful']));
-//        $this->assertTrue(isset($shards['failed']));
-//
-//        $indices = $response->getIndices();
-//        $this->assertTrue(isset($indices[self::INDEX]));
-//    }
-//
-//    public function testCreateMappingWithIndexAndType()
-//    {
-//        $this->createIndex();
-//
-//        $timeStart = microtime(true);
-//
-//        $mapping = [
-//            self::TYPE => [
-//                'properties' => [
-//                    'message' => ['type' => 'string']
-//                ]
-//            ]
-//        ];
-//
-//        $createMappingRequest = new CreateMappingRequest(self::INDEX , self::TYPE, $this->serializer);
-//        $createMappingRequest->setBody($mapping);
-//
-//        /** @var IndexResponse $response */
-//        $response = $this->client->send($createMappingRequest);
-//
-//        echo 'createMapping(with index,type): ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-//
-//        $this->assertTrue($response->isOk());
-//        $this->assertTrue($response->acknowledged());
-//
-//        //check if exists
-//        $getMappingRequest = new GetMappingRequest(self::INDEX, self::TYPE, $this->serializer);
-//
-//        /** @var ResponseInterface $getMappingResponse */
-//        $getMappingResponse = $this->client->send($getMappingRequest);
-//        $data = $getMappingResponse->getData();
-//
-//        $this->assertTrue(isset($data[self::TYPE]));
-//        $this->assertTrue(isset($data[self::TYPE]['properties']));
-//        $this->assertTrue(isset($data[self::TYPE]['properties']['message']));
-//        $this->assertTrue(isset($data[self::TYPE]['properties']['message']['type']));
-//        $this->assertSame('string', $data[self::TYPE]['properties']['message']['type']);
-//        //the not activated assertSame is for tessting it when Gateway is fixed.
-////        $this->assertSame($mapping[self::TYPE], $data[self::TYPE]);
-//    }
-//
-//    public function testDeleteMappingWithIndexAndType()
-//    {
-//        $this->createIndex();
-//        $mapping = [
-//            self::TYPE => [
-//                'properties' => [
-//                    'message' => ['type' => 'string']
-//                ]
-//            ]
-//        ];
-//
-//        $createMappingRequest = new CreateMappingRequest(self::INDEX , self::TYPE, $this->serializer);
-//        $createMappingRequest->setBody($mapping);
-//
-//        $this->client->send($createMappingRequest);
-//
-//        $timeStart = microtime(true);
-//
-//        $deleteMappingRequest = new DeleteMappingRequest(self::INDEX , self::TYPE, $this->serializer);
-//
-//        /** @var IndexResponse $response */
-//        $response = $this->client->send($deleteMappingRequest);
-//
-//        $this->assertTrue($response->isOk());
-//        $this->assertTrue($response->acknowledged());
-//
-//        echo 'deleteMapping(with index,type): ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-//
-//        //check if exists
-//        $getMappingRequest = new GetMappingRequest(self::INDEX, self::TYPE, $this->serializer);
-//
-//        try {
-//            $this->client->send($getMappingRequest);
-//        } catch (ClientException $exception) {
-//            $this->assertContains('Not Found', $exception->getMessage());
-//            return;
-//        }
-//
-//        $this->fail();
-//    }
-//
-//    public function testIndexSettingsWithIndex()
-//    {
-//        $this->createIndex();
-//        $this->createDocument();
-//        $this->refreshIndex();
-//
-//
-//        $timeStart = microtime(true);
-//
-//        $indexStatsRequest = new IndexSettingsRequest(self::INDEX, null, $this->serializer);
-//
-//        /** @var IndexStatsResponse $response */
-//        $response = $this->client->send($indexStatsRequest);
-//
-//        echo 'indexStats(with index): ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-//
-//        $data = $response->getData()->getGatewayValue();
-//        $this->assertArrayHasKey(self::INDEX, $data);
-//    }
+
+    public function testIndexStatsWithIndex()
+    {
+        $this->createIndex();
+        $this->createDocument();
+        $this->refreshIndex();
+
+
+        $timeStart = microtime(true);
+
+        $indexStatsRequest = new IndexStatsRequest(self::INDEX, null, $this->serializer);
+
+        /** @var IndexStatsResponse $response */
+        $response = $this->client->send($indexStatsRequest);
+
+        echo 'indexStats(with index): ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        $shards = $response->getShards();
+        $this->assertTrue(isset($shards['total']));
+        $this->assertTrue(isset($shards['successful']));
+        $this->assertTrue(isset($shards['failed']));
+
+        $all = $response->getAll();
+        $this->assertTrue(isset($all['primaries']));
+        $this->assertTrue(isset($all['total']));
+
+        $indices = $response->getIndices();
+        $this->assertTrue(isset($indices[self::INDEX]));
+    }
+
+    public function testIndexStatsWithoutIndex()
+    {
+        $this->createIndex();
+        $this->createDocument();
+        $this->refreshIndex();
+
+
+        $timeStart = microtime(true);
+
+        $indexStatsRequest = new IndexStatsRequest(null, null, $this->serializer);
+
+        /** @var IndexStatsResponse $response */
+        $response = $this->client->send($indexStatsRequest);
+
+        echo 'indexStats(without index): ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        $shards = $response->getShards();
+        $this->assertTrue(isset($shards['total']));
+        $this->assertTrue(isset($shards['successful']));
+        $this->assertTrue(isset($shards['failed']));
+
+        $all = $response->getAll();
+        $this->assertTrue(isset($all['primaries']));
+        $this->assertTrue(isset($all['total']));
+
+        $indices = $response->getIndices();
+        $this->assertTrue(isset($indices[self::INDEX]));
+    }
+
+    public function testIndexStatusWithIndex()
+    {
+        $this->createIndex();
+        $this->createDocument();
+        $this->refreshIndex();
+
+
+        $timeStart = microtime(true);
+
+        $indexStatsRequest = new IndexStatusRequest(self::INDEX, null, $this->serializer);
+
+        /** @var IndexStatusResponse $response */
+        $response = $this->client->send($indexStatsRequest);
+
+        echo 'indexStatus(with index): ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        $shards = $response->getShards();
+        $this->assertTrue(isset($shards['total']));
+        $this->assertTrue(isset($shards['successful']));
+        $this->assertTrue(isset($shards['failed']));
+
+        $indices = $response->getIndices();
+        $this->assertTrue(isset($indices[self::INDEX]));
+    }
+
+    public function testIndexStatusWithoutIndex()
+    {
+        $this->createIndex();
+        $this->createDocument();
+        $this->refreshIndex();
+
+
+        $timeStart = microtime(true);
+
+        $indexStatsRequest = new IndexStatusRequest(null, null, $this->serializer);
+
+        /** @var IndexStatusResponse $response */
+        $response = $this->client->send($indexStatsRequest);
+
+        echo 'indexStatus(with index): ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        $shards = $response->getShards();
+        $this->assertTrue(isset($shards['total']));
+        $this->assertTrue(isset($shards['successful']));
+        $this->assertTrue(isset($shards['failed']));
+
+        $indices = $response->getIndices();
+        $this->assertTrue(isset($indices[self::INDEX]));
+    }
+
+    public function testCreateMappingWithIndexAndType()
+    {
+        $this->createIndex();
+
+        $timeStart = microtime(true);
+
+        $mapping = [
+            self::TYPE => [
+                'properties' => [
+                    'message' => ['type' => 'string']
+                ]
+            ]
+        ];
+
+        $createMappingRequest = new CreateMappingRequest(self::INDEX , self::TYPE, $this->serializer);
+        $createMappingRequest->setBody($mapping);
+
+        /** @var IndexResponse $response */
+        $response = $this->client->send($createMappingRequest);
+
+        echo 'createMapping(with index,type): ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        $this->assertTrue($response->acknowledged());
+
+        //check if exists
+        $getMappingRequest = new GetMappingRequest(self::INDEX, self::TYPE, $this->serializer);
+
+        /** @var ResponseInterface $getMappingResponse */
+        $getMappingResponse = $this->client->send($getMappingRequest);
+        $data = $getMappingResponse->getData();
+
+        $this->assertTrue(isset($data[self::INDEX]));
+        $mappings = $data[self::INDEX]['mappings'];
+        $this->assertTrue(isset($mappings[self::TYPE]['properties']));
+        $this->assertTrue(isset($mappings[self::TYPE]['properties']['message']));
+        $this->assertTrue(isset($mappings[self::TYPE]['properties']['message']['type']));
+        $this->assertSame('string', $mappings[self::TYPE]['properties']['message']['type']);
+        //the not activated assertSame is for tessting it when Gateway is fixed.
+//        $this->assertSame($mapping[self::TYPE], $data[self::TYPE]);
+    }
+
+    public function testDeleteMappingWithIndexAndType()
+    {
+        $this->createIndex();
+        $mapping = [
+            self::TYPE => [
+                'properties' => [
+                    'message' => ['type' => 'string']
+                ]
+            ]
+        ];
+
+        $createMappingRequest = new CreateMappingRequest(self::INDEX , self::TYPE, $this->serializer);
+        $createMappingRequest->setBody($mapping);
+
+        $this->client->send($createMappingRequest);
+
+        $timeStart = microtime(true);
+
+        $deleteMappingRequest = new DeleteMappingRequest(self::INDEX , self::TYPE, $this->serializer);
+
+        /** @var IndexResponse $response */
+        $response = $this->client->send($deleteMappingRequest);
+
+        $this->assertTrue($response->acknowledged());
+
+        echo 'deleteMapping(with index,type): ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        //check if exists
+        $getMappingRequest = new GetMappingRequest(self::INDEX, self::TYPE, $this->serializer);
+
+        $response = $this->client->send($getMappingRequest);
+        $this->assertSame('{}', $response->getRawData());
+    }
+
+    public function testIndexSettingsWithIndex()
+    {
+        $this->createIndex();
+        $this->createDocument();
+        $this->refreshIndex();
+
+
+        $timeStart = microtime(true);
+
+        $indexStatsRequest = new IndexSettingsRequest(self::INDEX, null, $this->serializer);
+
+        /** @var IndexStatsResponse $response */
+        $response = $this->client->send($indexStatsRequest);
+
+        echo 'indexSettings(with index): ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        $data = $response->getData()->getGatewayValue();
+        $this->assertArrayHasKey(self::INDEX, $data);
+    }
 //
 //    public function testIndexSegmentsWithIndex()
 //    {

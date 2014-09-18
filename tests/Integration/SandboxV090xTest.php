@@ -697,7 +697,7 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
         /** @var IndexStatsResponse $response */
         $response = $this->client->send($indexStatsRequest);
 
-        echo 'indexStats(with index): ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+        echo 'indexSettings(with index): ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
 
         $data = $response->getData()->getGatewayValue();
         $this->assertArrayHasKey(self::INDEX, $data);

@@ -6,9 +6,9 @@
  * Time: 22:39
  */
 
-namespace Elastification\Client\Tests\Unit\Response\V090x\Index;
+namespace Elastification\Client\Tests\Unit\Response\V1x\Index;
 
-use Elastification\Client\Response\V090x\Index\IndexStatusResponse;
+use Elastification\Client\Response\V1x\Index\IndexStatusResponse;
 use Elastification\Client\Serializer\Gateway\NativeArrayGateway;
 use Elastification\Client\Serializer\Gateway\NativeObjectGateway;
 
@@ -40,43 +40,9 @@ class IndexStatusResponseTest extends \PHPUnit_Framework_TestCase
         $response = new IndexStatusResponse('data', $this->serializer);
         $this->assertInstanceOf('Elastification\Client\Response\ResponseInterface', $response);
         $this->assertInstanceOf('Elastification\Client\Response\Response', $response);
-        $this->assertInstanceOf('Elastification\Client\Response\V090x\Index\IndexStatusResponse', $response);
+        $this->assertInstanceOf('Elastification\Client\Response\V1x\Index\IndexStatusResponse', $response);
     }
 
-
-    public function testIsOkArray()
-    {
-        $data = $this->getData();
-
-        $this->serializer->expects($this->once())
-            ->method('deserialize')
-            ->with(
-                $this->equalTo($data),
-                $this->equalTo(array())
-            )
-            ->will($this->returnValue(new NativeArrayGateway($data)));
-
-        /** @noinspection PhpParamsInspection */
-        $response = new IndexStatusResponse($data, $this->serializer);
-        $this->assertSame($data[IndexStatusResponse::PROP_OK], $response->isOk());
-    }
-
-    public function testIsOkObject()
-    {
-        $data = $this->getData(true);
-
-        $this->serializer->expects($this->once())
-            ->method('deserialize')
-            ->with(
-                $this->equalTo($data),
-                $this->equalTo(array())
-            )
-            ->will($this->returnValue(new NativeObjectGateway($data)));
-
-        /** @noinspection PhpParamsInspection */
-        $response = new IndexStatusResponse($data, $this->serializer);
-        $this->assertSame($data->{IndexStatusResponse::PROP_OK}, $response->isOk());
-    }
 
     public function testGetShardsArray()
     {
@@ -149,7 +115,6 @@ class IndexStatusResponseTest extends \PHPUnit_Framework_TestCase
     private function getData($asObject = false)
     {
         $data = [
-            IndexStatusResponse::PROP_OK => true,
             IndexStatusResponse::PROP_SHARDS => array('total' => array()),
             IndexStatusResponse::PROP_INDICES => array('test-index' => array()),
         ];

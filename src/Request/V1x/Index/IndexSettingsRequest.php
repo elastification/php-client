@@ -15,74 +15,47 @@
  * This software consists of voluntary contributions made by many individuals
  * and is licensed under the MIT license.
  */
-namespace Elastification\Client\Response\V1x;
+namespace Elastification\Client\Request\V1x\Index;
 
+use Elastification\Client\Request\Shared\Index\AbstractIndexSettingsRequest;
 use Elastification\Client\Response\Response;
+use Elastification\Client\Serializer\SerializerInterface;
 
 /**
- * Class NodeInfoResponse
+ * Class IndexSettingsRequest
  *
- * @package Elastification\Client\Response\V1x
- * @author  Daniel Wendlandt
+ * This request returns successful empty response. If not existing index,
+ * there will be an exception at client send.
+ *
+ * @package Elastification\Client\Request\V090x\Index
+ * @author Daniel Wendlandt
  */
-class NodeInfoResponse extends Response
+class IndexSettingsRequest extends AbstractIndexSettingsRequest
 {
 
-    const PROP_STATUS = 'status';
-    const PROP_NAME = 'name';
-    const PROP_VERSION = 'version';
-    const PROP_TAGLINE = 'tagline';
-
     /**
-     * Getter Method
-     *
-     * @return mixed
+     * @param string $rawData
+     * @param \Elastification\Client\Serializer\SerializerInterface $serializer
+     * @param array $serializerParams
+     * @return Response
      * @author Daniel Wendlandt
      */
-    public function getVersion()
+    public function createResponse(
+        $rawData,
+        SerializerInterface $serializer,
+        array $serializerParams = array())
     {
-        $this->processData();
-
-        return $this->get(self::PROP_VERSION);
+        return new Response($rawData, $serializer, $serializerParams);
     }
 
     /**
-     * Getter Method
+     * gets a response class name that is supported by this class
      *
-     * @return mixed
+     * @return string
      * @author Daniel Wendlandt
      */
-    public function getName()
+    public function getSupportedClass()
     {
-        $this->processData();
-
-        return $this->get(self::PROP_NAME);
+        return 'Elastification\Client\Response\Response';
     }
-
-    /**
-     * Getter Method
-     *
-     * @return mixed
-     * @author Daniel Wendlandt
-     */
-    public function getStatus()
-    {
-        $this->processData();
-
-        return $this->get(self::PROP_STATUS);
-    }
-
-    /**
-     * Getter Method
-     *
-     * @return mixed
-     * @author Daniel Wendlandt
-     */
-    public function getTagline()
-    {
-        $this->processData();
-
-        return $this->get(self::PROP_TAGLINE);
-    }
-
 }
