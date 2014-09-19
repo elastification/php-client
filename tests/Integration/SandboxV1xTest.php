@@ -6,8 +6,11 @@ use Elastification\Client\Request\RequestManager;
 use Elastification\Client\Request\RequestManagerInterface;
 use Elastification\Client\Request\V1x\AliasesRequest;
 use Elastification\Client\Request\V1x\CreateDocumentRequest;
+use Elastification\Client\Request\V1x\CreateTemplateRequest;
 use Elastification\Client\Request\V1x\DeleteDocumentRequest;
+use Elastification\Client\Request\V1x\DeleteTemplateRequest;
 use Elastification\Client\Request\V1x\GetDocumentRequest;
+use Elastification\Client\Request\V1x\GetTemplateRequest;
 use Elastification\Client\Request\V1x\Index\CacheClearRequest;
 use Elastification\Client\Request\V1x\Index\CreateIndexRequest;
 use Elastification\Client\Request\V1x\Index\CreateMappingRequest;
@@ -873,90 +876,86 @@ class SandboxV1xTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(isset($data[self::INDEX]['aliases']['alias-' . self::INDEX]));
     }
 
-//    public function testCreateDeleteTemplate()
-//    {
-//        $templateName = 'test-template';
-//        $template = [
-//            'template' => "te*",
-//            'settings' => [
-//                "number_of_shards" => 1
-//            ],
-//            'mappings' => [
-//                'type1' => [
-//                    '_source' => [ "enabled" => false ]
-//                ]
-//            ]
-//        ];
-//
-//        $timeStart = microtime(true);
-//
-//        $createTemplateRequest = new CreateTemplateRequest($templateName, $this->serializer);
-//        $createTemplateRequest->setBody($template);
-//
-//        /** @var IndexResponse $createResponse */
-//        $createResponse = $this->client->send($createTemplateRequest);
-//
-//        echo 'createTemplate: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-//
-//        $this->assertTrue($createResponse->isOk());
-//        $this->assertTrue($createResponse->acknowledged());
-//
-//        $timeStart = microtime(true);
-//
-//        $deleteTemplateRequest = new DeleteTemplateRequest($templateName, $this->serializer);
-//
-//        /** @var IndexResponse $deleteResponse */
-//        $deleteResponse = $this->client->send($deleteTemplateRequest);
-//
-//        echo 'deleteTemplate: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-//
-//        $this->assertTrue($deleteResponse->isOk());
-//        $this->assertTrue($deleteResponse->acknowledged());
-//    }
-//
-//    public function testGetTemplate()
-//    {
-//        $templateName = 'test-template';
-//        $template = [
-//            'template' => "te*",
-//            'settings' => [
-//                "number_of_shards" => 1
-//            ],
-//            'mappings' => [
-//                'type1' => [
-//                    '_source' => [ "enabled" => false ]
-//                ]
-//            ]
-//        ];
-//
-//        $createTemplateRequest = new CreateTemplateRequest($templateName, $this->serializer);
-//        $createTemplateRequest->setBody($template);
-//
-//        /** @var IndexResponse $createResponse */
-//        $createResponse = $this->client->send($createTemplateRequest);
-//
-//        $this->assertTrue($createResponse->isOk());
-//        $this->assertTrue($createResponse->acknowledged());
-//
-//        $timeStart = microtime(true);
-//
-//        $getTemplateRequest = new GetTemplateRequest($templateName, $this->serializer);
-//
-//        $getResponse = $this->client->send($getTemplateRequest);
-//
-//        echo 'getTemplate: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-//
-//        $this->arrayHasKey($templateName, $getResponse->getData()->getGatewayValue());
-//
-//        $deleteTemplateRequest = new DeleteTemplateRequest($templateName, $this->serializer);
-//
-//        /** @var IndexResponse $deleteResponse */
-//        $deleteResponse = $this->client->send($deleteTemplateRequest);
-//
-//        $this->assertTrue($deleteResponse->isOk());
-//        $this->assertTrue($deleteResponse->acknowledged());
-//    }
-//
+    public function testCreateDeleteTemplate()
+    {
+        $templateName = 'test-template';
+        $template = [
+            'template' => "te*",
+            'settings' => [
+                "number_of_shards" => 1
+            ],
+            'mappings' => [
+                'type1' => [
+                    '_source' => [ "enabled" => false ]
+                ]
+            ]
+        ];
+
+        $timeStart = microtime(true);
+
+        $createTemplateRequest = new CreateTemplateRequest($templateName, $this->serializer);
+        $createTemplateRequest->setBody($template);
+
+        /** @var IndexResponse $createResponse */
+        $createResponse = $this->client->send($createTemplateRequest);
+
+        echo 'createTemplate: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        $this->assertTrue($createResponse->acknowledged());
+
+        $timeStart = microtime(true);
+
+        $deleteTemplateRequest = new DeleteTemplateRequest($templateName, $this->serializer);
+
+        /** @var IndexResponse $deleteResponse */
+        $deleteResponse = $this->client->send($deleteTemplateRequest);
+
+        echo 'deleteTemplate: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        $this->assertTrue($deleteResponse->acknowledged());
+    }
+
+    public function testGetTemplate()
+    {
+        $templateName = 'test-template';
+        $template = [
+            'template' => "te*",
+            'settings' => [
+                "number_of_shards" => 1
+            ],
+            'mappings' => [
+                'type1' => [
+                    '_source' => [ "enabled" => false ]
+                ]
+            ]
+        ];
+
+        $createTemplateRequest = new CreateTemplateRequest($templateName, $this->serializer);
+        $createTemplateRequest->setBody($template);
+
+        /** @var IndexResponse $createResponse */
+        $createResponse = $this->client->send($createTemplateRequest);
+
+        $this->assertTrue($createResponse->acknowledged());
+
+        $timeStart = microtime(true);
+
+        $getTemplateRequest = new GetTemplateRequest($templateName, $this->serializer);
+
+        $getResponse = $this->client->send($getTemplateRequest);
+
+        echo 'getTemplate: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        $this->arrayHasKey($templateName, $getResponse->getData()->getGatewayValue());
+
+        $deleteTemplateRequest = new DeleteTemplateRequest($templateName, $this->serializer);
+
+        /** @var IndexResponse $deleteResponse */
+        $deleteResponse = $this->client->send($deleteTemplateRequest);
+
+        $this->assertTrue($deleteResponse->acknowledged());
+    }
+
 //    public function testCreateDeleteWarmer()
 //    {
 //        $index = 'warmer-index';

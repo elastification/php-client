@@ -5,7 +5,7 @@
  * Date: 17/06/14
  * Time: 19:02
  */
-namespace Elastification\Client\Tests\Unit\Request\V090x\Index;
+namespace Elastification\Client\Tests\Unit\Request\V090x;
 
 use Elastification\Client\Request\RequestMethods;
 use Elastification\Client\Request\V090x\CreateTemplateRequest;
