@@ -4,15 +4,21 @@ namespace Elastification\Client\Tests\Integration;
 use Elastification\Client\Exception\ClientException;
 use Elastification\Client\Request\RequestManager;
 use Elastification\Client\Request\RequestManagerInterface;
+use Elastification\Client\Request\V1x\AliasesRequest;
 use Elastification\Client\Request\V1x\CreateDocumentRequest;
 use Elastification\Client\Request\V1x\DeleteDocumentRequest;
 use Elastification\Client\Request\V1x\GetDocumentRequest;
+use Elastification\Client\Request\V1x\Index\CacheClearRequest;
 use Elastification\Client\Request\V1x\Index\CreateIndexRequest;
 use Elastification\Client\Request\V1x\Index\CreateMappingRequest;
 use Elastification\Client\Request\V1x\Index\DeleteIndexRequest;
 use Elastification\Client\Request\V1x\Index\DeleteMappingRequest;
+use Elastification\Client\Request\V1x\Index\GetAliasesRequest;
 use Elastification\Client\Request\V1x\Index\GetMappingRequest;
 use Elastification\Client\Request\V1x\Index\IndexExistsRequest;
+use Elastification\Client\Request\V1x\Index\IndexFlushRequest;
+use Elastification\Client\Request\V1x\Index\IndexOptimizeRequest;
+use Elastification\Client\Request\V1x\Index\IndexSegmentsRequest;
 use Elastification\Client\Request\V1x\Index\IndexSettingsRequest;
 use Elastification\Client\Request\V1x\Index\IndexStatsRequest;
 use Elastification\Client\Request\V1x\Index\IndexStatusRequest;
@@ -624,6 +630,8 @@ class SandboxV1xTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($response->acknowledged());
 
+        $this->refreshIndex();
+
         //check if exists
         $getMappingRequest = new GetMappingRequest(self::INDEX, self::TYPE, $this->serializer);
 
@@ -694,185 +702,177 @@ class SandboxV1xTest extends \PHPUnit_Framework_TestCase
         $data = $response->getData()->getGatewayValue();
         $this->assertArrayHasKey(self::INDEX, $data);
     }
-//
-//    public function testIndexSegmentsWithIndex()
-//    {
-//        $this->createIndex();
-//        $this->createDocument();
-//        $this->refreshIndex();
-//
-//        $timeStart = microtime(true);
-//
-//        $indexStatsRequest = new IndexSegmentsRequest(self::INDEX, null, $this->serializer);
-//
-//        /** @var IndexStatusResponse $response */
-//        $response = $this->client->send($indexStatsRequest);
-//
-//        echo 'indexSegments(with index): ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-//
-//        $this->assertTrue($response->isOk());
-//
-//        $shards = $response->getShards();
-//        $this->assertTrue(isset($shards['total']));
-//        $this->assertTrue(isset($shards['successful']));
-//        $this->assertTrue(isset($shards['failed']));
-//
-//        $indices = $response->getIndices();
-//        $this->assertTrue(isset($indices[self::INDEX]));
-//    }
-//
-//    public function testIndexSegmentsWithoutIndex()
-//    {
-//        $this->createIndex();
-//        $this->createDocument();
-//        $this->refreshIndex();
-//
-//        $timeStart = microtime(true);
-//
-//        $indexStatsRequest = new IndexSegmentsRequest(null, null, $this->serializer);
-//
-//        /** @var IndexStatusResponse $response */
-//        $response = $this->client->send($indexStatsRequest);
-//
-//        echo 'indexSegments(without index): ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-//
-//        $this->assertTrue($response->isOk());
-//
-//        $shards = $response->getShards();
-//        $this->assertTrue(isset($shards['total']));
-//        $this->assertTrue(isset($shards['successful']));
-//        $this->assertTrue(isset($shards['failed']));
-//
-//        $indices = $response->getIndices();
-//        $this->assertTrue(isset($indices[self::INDEX]));
-//    }
-//
-//    public function testClearCache()
-//    {
-//        $this->createIndex();
-//        $this->createDocument();
-//        $timeStart = microtime(true);
-//
-//        $refreshIndexRequest = new CacheClearRequest(self::INDEX, null, $this->serializer);
-//
-//        /** @var RefreshIndexResponse $response */
-//        $response = $this->client->send($refreshIndexRequest);
-//
-//        echo 'clearCache: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-//
-//        $this->assertTrue($response->isOk());
-//        $shards = $response->getShards();
-//        $this->assertTrue(isset($shards['total']));
-//        $this->assertTrue(isset($shards['successful']));
-//        $this->assertTrue(isset($shards['failed']));
-//    }
-//
-//    public function testIndexOptimize()
-//    {
-//        $this->createIndex();
-//        $this->createDocument();
-//        $timeStart = microtime(true);
-//
-//        $refreshIndexRequest = new IndexOptimizeRequest(self::INDEX, null, $this->serializer);
-//
-//        /** @var RefreshIndexResponse $response */
-//        $response = $this->client->send($refreshIndexRequest);
-//
-//        echo 'indexOptimize: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-//
-//        $this->assertTrue($response->isOk());
-//        $shards = $response->getShards();
-//        $this->assertTrue(isset($shards['total']));
-//        $this->assertTrue(isset($shards['successful']));
-//        $this->assertTrue(isset($shards['failed']));
-//    }
-//
-//    public function testIndexFlush()
-//    {
-//        $this->createIndex();
-//        $this->createDocument();
-//        $timeStart = microtime(true);
-//
-//        $refreshIndexRequest = new IndexFlushRequest(self::INDEX, null, $this->serializer);
-//
-//        /** @var RefreshIndexResponse $response */
-//        $response = $this->client->send($refreshIndexRequest);
-//
-//        echo 'indexFlush: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-//
-//        $this->assertTrue($response->isOk());
-//        $shards = $response->getShards();
-//        $this->assertTrue(isset($shards['total']));
-//        $this->assertTrue(isset($shards['successful']));
-//        $this->assertTrue(isset($shards['failed']));
-//    }
-//
-//    public function testAliases()
-//    {
-//        $this->createIndex();
-//        $this->refreshIndex();
-//
-//        $aliases = [
-//            'actions' => [
-//                [
-//                    'add' => [
-//                        'index' => self::INDEX,
-//                        'alias' => 'alias-' . self::INDEX
-//                    ]
-//                ]
-//            ]
-//        ];
-//
-//        $timeStart = microtime(true);
-//
-//        $aliasesRequest = new AliasesRequest(null, null, $this->serializer);
-//        $aliasesRequest->setBody($aliases);
-//
-//        /** @var IndexResponse $response */
-//        $response = $this->client->send($aliasesRequest);
-//
-//        echo 'aliases: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-//
-//        $this->assertTrue($response->isOk());
-//        $this->assertTrue($response->acknowledged());
-//    }
-//
-//    public function testGetAliasesWithoutIndex()
-//    {
-//        $this->createIndex();
-//
-//        $aliases = [
-//            'actions' => [
-//                [
-//                    'add' => [
-//                        'index' => self::INDEX,
-//                        'alias' => 'alias-' . self::INDEX
-//                    ]
-//                ]
-//            ]
-//        ];
-//
-//        $aliasesRequest = new AliasesRequest(null, null, $this->serializer);
-//        $aliasesRequest->setBody($aliases);
-//
-//        /** @var IndexResponse $response */
-//        $response = $this->client->send($aliasesRequest);
-//
-//        $timeStart = microtime(true);
-//
-//        $getAliasesRequest = new GetAliasesRequest(null, null, $this->serializer);
-//
-//        /** @var Response $response */
-//        $response = $this->client->send($getAliasesRequest);
-//
-//        echo 'getAliases (without index): ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-//
-//        $data = $response->getData()->getGatewayValue();
-//
-//        $this->assertArrayHasKey(self::INDEX, $data);
-//        $this->assertTrue(isset($data[self::INDEX]['aliases']['alias-' . self::INDEX]));
-//    }
-//
+
+    public function testIndexSegmentsWithIndex()
+    {
+        $this->createIndex();
+        $this->createDocument();
+        $this->refreshIndex();
+
+        $timeStart = microtime(true);
+
+        $indexStatsRequest = new IndexSegmentsRequest(self::INDEX, null, $this->serializer);
+
+        /** @var IndexStatusResponse $response */
+        $response = $this->client->send($indexStatsRequest);
+
+        echo 'indexSegments(with index): ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        $shards = $response->getShards();
+        $this->assertTrue(isset($shards['total']));
+        $this->assertTrue(isset($shards['successful']));
+        $this->assertTrue(isset($shards['failed']));
+
+        $indices = $response->getIndices();
+        $this->assertTrue(isset($indices[self::INDEX]));
+    }
+
+    public function testIndexSegmentsWithoutIndex()
+    {
+        $this->createIndex();
+        $this->createDocument();
+        $this->refreshIndex();
+
+        $timeStart = microtime(true);
+
+        $indexStatsRequest = new IndexSegmentsRequest(null, null, $this->serializer);
+
+        /** @var IndexStatusResponse $response */
+        $response = $this->client->send($indexStatsRequest);
+
+        echo 'indexSegments(without index): ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        $shards = $response->getShards();
+        $this->assertTrue(isset($shards['total']));
+        $this->assertTrue(isset($shards['successful']));
+        $this->assertTrue(isset($shards['failed']));
+
+        $indices = $response->getIndices();
+        $this->assertTrue(isset($indices[self::INDEX]));
+    }
+
+    public function testClearCache()
+    {
+        $this->createIndex();
+        $this->createDocument();
+        $timeStart = microtime(true);
+
+        $refreshIndexRequest = new CacheClearRequest(self::INDEX, null, $this->serializer);
+
+        /** @var RefreshIndexResponse $response */
+        $response = $this->client->send($refreshIndexRequest);
+
+        echo 'cacheClear: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        $shards = $response->getShards();
+        $this->assertTrue(isset($shards['total']));
+        $this->assertTrue(isset($shards['successful']));
+        $this->assertTrue(isset($shards['failed']));
+    }
+
+    public function testIndexOptimize()
+    {
+        $this->createIndex();
+        $this->createDocument();
+        $timeStart = microtime(true);
+
+        $refreshIndexRequest = new IndexOptimizeRequest(self::INDEX, null, $this->serializer);
+
+        /** @var RefreshIndexResponse $response */
+        $response = $this->client->send($refreshIndexRequest);
+
+        echo 'indexOptimize: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        $shards = $response->getShards();
+        $this->assertTrue(isset($shards['total']));
+        $this->assertTrue(isset($shards['successful']));
+        $this->assertTrue(isset($shards['failed']));
+    }
+
+    public function testIndexFlush()
+    {
+        $this->createIndex();
+        $this->createDocument();
+        $timeStart = microtime(true);
+
+        $refreshIndexRequest = new IndexFlushRequest(self::INDEX, null, $this->serializer);
+
+        /** @var RefreshIndexResponse $response */
+        $response = $this->client->send($refreshIndexRequest);
+
+        echo 'indexFlush: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        $shards = $response->getShards();
+        $this->assertTrue(isset($shards['total']));
+        $this->assertTrue(isset($shards['successful']));
+        $this->assertTrue(isset($shards['failed']));
+    }
+
+    public function testAliases()
+    {
+        $this->createIndex();
+        $this->refreshIndex();
+
+        $aliases = [
+            'actions' => [
+                [
+                    'add' => [
+                        'index' => self::INDEX,
+                        'alias' => 'alias-' . self::INDEX
+                    ]
+                ]
+            ]
+        ];
+
+        $timeStart = microtime(true);
+
+        $aliasesRequest = new AliasesRequest(null, null, $this->serializer);
+        $aliasesRequest->setBody($aliases);
+
+        /** @var IndexResponse $response */
+        $response = $this->client->send($aliasesRequest);
+
+        echo 'aliases: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        $this->assertTrue($response->acknowledged());
+    }
+
+    public function testGetAliasesWithoutIndex()
+    {
+        $this->createIndex();
+
+        $aliases = [
+            'actions' => [
+                [
+                    'add' => [
+                        'index' => self::INDEX,
+                        'alias' => 'alias-' . self::INDEX
+                    ]
+                ]
+            ]
+        ];
+
+        $aliasesRequest = new AliasesRequest(null, null, $this->serializer);
+        $aliasesRequest->setBody($aliases);
+
+        /** @var IndexResponse $response */
+        $response = $this->client->send($aliasesRequest);
+
+        $timeStart = microtime(true);
+
+        $getAliasesRequest = new GetAliasesRequest(null, null, $this->serializer);
+
+        /** @var Response $response */
+        $response = $this->client->send($getAliasesRequest);
+
+        echo 'getAliases (without index): ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        $data = $response->getData()->getGatewayValue();
+
+        $this->assertArrayHasKey(self::INDEX, $data);
+        $this->assertTrue(isset($data[self::INDEX]['aliases']['alias-' . self::INDEX]));
+    }
+
 //    public function testCreateDeleteTemplate()
 //    {
 //        $templateName = 'test-template';

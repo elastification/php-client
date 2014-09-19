@@ -17,12 +17,12 @@
  */
 namespace Elastification\Client\Request\V1x\Index;
 
-use Elastification\Client\Request\Shared\Index\AbstractRefreshIndexRequest;
+use Elastification\Client\Request\Shared\Index\AbstractCacheClearRequest;
 use Elastification\Client\Response\V1x\Index\RefreshIndexResponse;
 use Elastification\Client\Serializer\SerializerInterface;
 
 /**
- * Class RefreshIndexRequest
+ * Class IndexSettingsRequest
  *
  * This request returns successful empty response. If not existing index,
  * there will be an exception at client send.
@@ -30,7 +30,7 @@ use Elastification\Client\Serializer\SerializerInterface;
  * @package Elastification\Client\Request\V1x\Index
  * @author Daniel Wendlandt
  */
-class RefreshIndexRequest extends AbstractRefreshIndexRequest
+class CacheClearRequest extends AbstractCacheClearRequest
 {
 
     /**

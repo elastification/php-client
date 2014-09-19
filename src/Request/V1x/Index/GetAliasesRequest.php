@@ -17,35 +17,33 @@
  */
 namespace Elastification\Client\Request\V1x\Index;
 
-use Elastification\Client\Request\Shared\Index\AbstractRefreshIndexRequest;
-use Elastification\Client\Response\V1x\Index\RefreshIndexResponse;
+use Elastification\Client\Request\Shared\Index\AbstractGetAliasesRequest;
+use Elastification\Client\Response\Response;
+use Elastification\Client\Response\ResponseInterface;
 use Elastification\Client\Serializer\SerializerInterface;
 
 /**
- * Class RefreshIndexRequest
+ * Class GetAliasesRequest
  *
- * This request returns successful empty response. If not existing index,
- * there will be an exception at client send.
- *
- * @package Elastification\Client\Request\V1x\Index
- * @author Daniel Wendlandt
+ * @package Elastification\Client\Request\V1x
+ * @author  Daniel Wendlandt
  */
-class RefreshIndexRequest extends AbstractRefreshIndexRequest
+class GetAliasesRequest extends AbstractGetAliasesRequest
 {
-
     /**
-     * @param string $rawData
+     * @param string                                                $rawData
      * @param \Elastification\Client\Serializer\SerializerInterface $serializer
-     * @param array $serializerParams
-     * @return RefreshIndexResponse
+     * @param array                                                 $serializerParams
+     *
+     * @return ResponseInterface
      * @author Daniel Wendlandt
      */
     public function createResponse(
         $rawData,
         SerializerInterface $serializer,
-        array $serializerParams = array())
-    {
-        return new RefreshIndexResponse($rawData, $serializer, $serializerParams);
+        array $serializerParams = array()
+    ) {
+        return new Response($rawData, $serializer, $serializerParams);
     }
 
     /**
@@ -56,6 +54,7 @@ class RefreshIndexRequest extends AbstractRefreshIndexRequest
      */
     public function getSupportedClass()
     {
-        return 'Elastification\Client\Response\V1x\Index\RefreshIndexResponse';
+        return 'Elastification\Client\Response\Response';
     }
+
 }
