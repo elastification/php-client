@@ -15,7 +15,7 @@ use Elastification\Client\Transport\Thrift\ThriftTransport;
  * @package Elastification\Client\Tests\Integration
  * @author  Mario Mueller
  */
-class SandboxV1xTest extends \PHPUnit_Framework_TestCase
+class SandboxThriftV1xTest extends \PHPUnit_Framework_TestCase
 {
 
     const INDEX = 'elastification';

@@ -5,6 +5,7 @@ use Elastification\Client\Exception\ClientException;
 use Elastification\Client\Request\RequestManager;
 use Elastification\Client\Request\RequestManagerInterface;
 use Elastification\Client\Request\V1x\AliasesRequest;
+use Elastification\Client\Request\V1x\CountRequest;
 use Elastification\Client\Request\V1x\CreateDocumentRequest;
 use Elastification\Client\Request\V1x\CreateTemplateRequest;
 use Elastification\Client\Request\V1x\DeleteDocumentRequest;
@@ -14,10 +15,13 @@ use Elastification\Client\Request\V1x\GetTemplateRequest;
 use Elastification\Client\Request\V1x\Index\CacheClearRequest;
 use Elastification\Client\Request\V1x\Index\CreateIndexRequest;
 use Elastification\Client\Request\V1x\Index\CreateMappingRequest;
+use Elastification\Client\Request\V1x\Index\CreateWarmerRequest;
 use Elastification\Client\Request\V1x\Index\DeleteIndexRequest;
 use Elastification\Client\Request\V1x\Index\DeleteMappingRequest;
+use Elastification\Client\Request\V1x\Index\DeleteWarmerRequest;
 use Elastification\Client\Request\V1x\Index\GetAliasesRequest;
 use Elastification\Client\Request\V1x\Index\GetMappingRequest;
+use Elastification\Client\Request\V1x\Index\GetWarmerRequest;
 use Elastification\Client\Request\V1x\Index\IndexExistsRequest;
 use Elastification\Client\Request\V1x\Index\IndexFlushRequest;
 use Elastification\Client\Request\V1x\Index\IndexOptimizeRequest;
@@ -32,6 +36,7 @@ use Elastification\Client\Request\V1x\SearchRequest;
 use Elastification\Client\Request\V1x\UpdateDocumentRequest;
 use Elastification\Client\Response\Response;
 use Elastification\Client\Response\ResponseInterface;
+use Elastification\Client\Response\V1x\CountResponse;
 use Elastification\Client\Response\V1x\CreateUpdateDocumentResponse;
 use Elastification\Client\Response\V1x\DeleteDocumentResponse;
 use Elastification\Client\Response\V1x\DocumentResponse;
@@ -859,7 +864,7 @@ class SandboxV1xTest extends \PHPUnit_Framework_TestCase
         $aliasesRequest->setBody($aliases);
 
         /** @var IndexResponse $response */
-        $response = $this->client->send($aliasesRequest);
+        $this->client->send($aliasesRequest);
 
         $timeStart = microtime(true);
 
@@ -956,139 +961,141 @@ class SandboxV1xTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($deleteResponse->acknowledged());
     }
 
-//    public function testCreateDeleteWarmer()
-//    {
-//        $index = 'warmer-index';
-//
-//        if(!$this->hasIndex($index)) {
-//            $this->createIndex($index);
-//        }
-//
-//        $this->refreshIndex($index);
-//        sleep(1);
-//
-//        $warmerName = 'test_warmer';
-//
-//        $warmer = [
-//            'query' => [
-//                'match_all' => []
-//            ]
-//        ];
-//
-//        $timeStart = microtime(true);
-//
-//        $createWarmerRequest = new CreateWarmerRequest($index, null, $this->serializer);
-//        $createWarmerRequest->setWarmerName($warmerName);
-//        $createWarmerRequest->setBody($warmer);
-//
-//        /** @var IndexResponse $createResponse */
-//        $createResponse = $this->client->send($createWarmerRequest);
-//
-//        echo 'createWarmer: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-//
-//        $this->assertTrue($createResponse->isOk());
-//        $this->assertTrue($createResponse->acknowledged());
-//
-//        $this->refreshIndex($index);
-//        sleep(1);
-//
-//        $timeStart = microtime(true);
-//
-//        $deleteRequest = new DeleteWarmerRequest($index, null, $this->serializer);
-//        $deleteRequest->setWarmerName($warmerName);
-//
-//        $deleteResponse = $this->client->send($deleteRequest);
-//
-//        echo 'deleteWarmer: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-//
-//        $this->assertTrue($deleteResponse->isOk());
-//        $this->assertTrue($deleteResponse->acknowledged());
-//
-//        $this->deleteIndex($index);
-//    }
-//
-//    public function testGetWarmer()
-//    {
-//        $index = 'warmer-index';
-//
-//        if(!$this->hasIndex($index)) {
-//            $this->createIndex($index);
-//        }
-//
-//        $this->refreshIndex($index);
-//        sleep(1);
-//
-//        $warmerName = 'test_warmer';
-//
-//        $warmer = [
-//            'query' => [
-//                'match_all' => []
-//            ]
-//        ];
-//
-//        $timeStart = microtime(true);
-//
-//        $createWarmerRequest = new CreateWarmerRequest($index, null, $this->serializer);
-//        $createWarmerRequest->setWarmerName($warmerName);
-//        $createWarmerRequest->setBody($warmer);
-//
-//        /** @var IndexResponse $createResponse */
-//        $createResponse = $this->client->send($createWarmerRequest);
-//
-//        echo 'createWarmer: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-//
-//        $this->assertTrue($createResponse->isOk());
-//        $this->assertTrue($createResponse->acknowledged());
-//
-//        $this->refreshIndex($index);
-//
-//        $getWarmerRequest = new GetWarmerRequest($index, null, $this->serializer);
-//        $getWarmerRequest->setWarmerName($warmerName);
-//
-//        $getResponse = $this->client->send($getWarmerRequest);
-//        $data = $getResponse->getData()->getGatewayValue();
-//        $this->assertArrayHasKey($warmerName, $data['warmer-index']['warmers']);
-//
-//        sleep(1);
-//
-//        $timeStart = microtime(true);
-//
-//        $deleteRequest = new DeleteWarmerRequest($index, null, $this->serializer);
-//        $deleteRequest->setWarmerName($warmerName);
-//
-//        $deleteResponse = $this->client->send($deleteRequest);
-//
-//        echo 'deleteWarmer: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-//
-//        $this->assertTrue($deleteResponse->isOk());
-//        $this->assertTrue($deleteResponse->acknowledged());
-//
-//        $this->deleteIndex($index);
-//    }
-//
-//    public function testCount()
-//    {
-//        $this->createIndex();
-//        $this->createDocument();
-//        $this->createDocument();
-//        $this->createDocument();
-//        $this->refreshIndex();
-//
-//        $timeStart = microtime(true);
-//        $countRequest = new CountRequest(self::INDEX, self::TYPE, $this->serializer);
-//
-//        /** @var CountResponse $response */
-//        $response = $this->client->send($countRequest);
-//
-//        echo 'count: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-//
-//        $this->assertSame(3, $response->getCount());
-//
-//        $shards = $response->getShards();
-//        $this->assertTrue(isset($shards['total']));
-//        $this->assertTrue(isset($shards['successful']));
-//        $this->assertTrue(isset($shards['failed']));
-//    }
+    public function testCreateDeleteWarmer()
+    {
+        $index = 'warmer-index';
+
+        if(!$this->hasIndex($index)) {
+            $this->createIndex($index);
+        }
+
+        $this->refreshIndex($index);
+        sleep(1);
+
+        $warmerName = 'test_warmer';
+
+        $warmer = [
+            'query' => [
+                'match_all' => []
+            ]
+        ];
+
+        $timeStart = microtime(true);
+
+        $createWarmerRequest = new CreateWarmerRequest($index, null, $this->serializer);
+        $createWarmerRequest->setWarmerName($warmerName);
+        $createWarmerRequest->setBody($warmer);
+
+        /** @var IndexResponse $createResponse */
+        $createResponse = $this->client->send($createWarmerRequest);
+
+        echo 'createWarmer: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        $this->assertTrue($createResponse->acknowledged());
+
+        $this->refreshIndex($index);
+        sleep(1);
+
+        $timeStart = microtime(true);
+
+        $deleteRequest = new DeleteWarmerRequest($index, null, $this->serializer);
+        $deleteRequest->setWarmerName($warmerName);
+
+        /** @var IndexResponse $deleteResponse */
+        $deleteResponse = $this->client->send($deleteRequest);
+
+        echo 'deleteWarmer: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        $this->assertTrue($deleteResponse->acknowledged());
+
+        $this->deleteIndex($index);
+    }
+
+    public function testGetWarmer()
+    {
+        $index = 'warmer-index';
+
+        if(!$this->hasIndex($index)) {
+            $this->createIndex($index);
+        }
+
+        $this->refreshIndex($index);
+        sleep(1);
+
+        $warmerName = 'test_warmer';
+
+        $warmer = [
+            'query' => [
+                'match_all' => []
+            ]
+        ];
+
+        $timeStart = microtime(true);
+
+        $createWarmerRequest = new CreateWarmerRequest($index, null, $this->serializer);
+        $createWarmerRequest->setWarmerName($warmerName);
+        $createWarmerRequest->setBody($warmer);
+
+        /** @var IndexResponse $createResponse */
+        $createResponse = $this->client->send($createWarmerRequest);
+
+        echo 'createWarmer: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        $this->assertTrue($createResponse->acknowledged());
+
+        $this->refreshIndex($index);
+
+        $timeStart = microtime(true);
+
+        $getWarmerRequest = new GetWarmerRequest($index, null, $this->serializer);
+        $getWarmerRequest->setWarmerName($warmerName);
+
+        echo 'getWarmer: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        $getResponse = $this->client->send($getWarmerRequest);
+        $data = $getResponse->getData()->getGatewayValue();
+        $this->assertArrayHasKey($warmerName, $data['warmer-index']['warmers']);
+
+        sleep(1);
+
+        $timeStart = microtime(true);
+
+        $deleteRequest = new DeleteWarmerRequest($index, null, $this->serializer);
+        $deleteRequest->setWarmerName($warmerName);
+
+        /** @var IndexResponse $deleteResponse */
+        $deleteResponse = $this->client->send($deleteRequest);
+
+        echo 'deleteWarmer: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        $this->assertTrue($deleteResponse->acknowledged());
+
+        $this->deleteIndex($index);
+    }
+
+    public function testCount()
+    {
+        $this->createIndex();
+        $this->createDocument();
+        $this->createDocument();
+        $this->createDocument();
+        $this->refreshIndex();
+
+        $timeStart = microtime(true);
+        $countRequest = new CountRequest(self::INDEX, self::TYPE, $this->serializer);
+
+        /** @var CountResponse $response */
+        $response = $this->client->send($countRequest);
+
+        echo 'count: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        $this->assertSame(3, $response->getCount());
+
+        $shards = $response->getShards();
+        $this->assertTrue(isset($shards['total']));
+        $this->assertTrue(isset($shards['successful']));
+        $this->assertTrue(isset($shards['failed']));
+    }
 
     private function createIndex($index = null)
     {

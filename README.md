@@ -23,7 +23,7 @@ Global:
 Dawen:
 
 - [ ] logger by constructor or event listener or decorator. (decorator seems to look good)
-- [ ] start implementing v1x requests
+- [x] start implementing v1x requests
 - [x] create base server info request
 - [x] Missing Unit tests for new requests (IndexStatusResponse)
 - [x] Get status (global and index based, multi index)
