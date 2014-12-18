@@ -142,7 +142,8 @@ class DocumentRepositoryV090xTest extends \PHPUnit_Framework_TestCase
 
         echo 'delete: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
 
-        $deleteReponse = $this->documentRepository->delete(self::INDEX, self::TYPE, $createResponse->getId());
+        $this->documentRepository->delete(self::INDEX, self::TYPE, $createResponse->getId());
+        
         try {
             $this->documentRepository->get(self::INDEX, self::TYPE, $createResponse->getId());
         } catch (ClientException $exception) {
