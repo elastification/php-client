@@ -127,7 +127,7 @@ class DocumentRepository implements DocumentRepositoryInterface
     /**
      * gets the right class string of a version
      *
-     * @param $class
+     * @param string $class
      * @return string
      * @author Daniel Wendlandt
      */
