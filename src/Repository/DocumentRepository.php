@@ -80,9 +80,7 @@ class DocumentRepository implements DocumentRepositoryInterface
      */
     public function create($index, $type, $document)
     {
-        $class = $this->getClass(self::CREATE_DOCUMENT);
-        /** @var RequestInterface $request */
-        $request =  $this->requestRepositoryFactory->create($class, $index, $type, $this->serializer);
+        $request = $this->createRequestInstance(self::CREATE_DOCUMENT, $index, $type);
         $request->setBody($document);
 
         return $this->client->send($request);
@@ -99,9 +97,7 @@ class DocumentRepository implements DocumentRepositoryInterface
      */
     public function delete($index, $type, $id)
     {
-        $class = $this->getClass(self::DELETE_DOCUMENT);
-        /** @var RequestInterface $request */
-        $request = $this->requestRepositoryFactory->create($class, $index, $type, $this->serializer);
+        $request = $this->createRequestInstance(self::DELETE_DOCUMENT, $index, $type);
         $request->setId($id);
 
         return $this->client->send($request);
@@ -118,9 +114,7 @@ class DocumentRepository implements DocumentRepositoryInterface
      */
     public function get($index, $type, $id)
     {
-        $class = $this->getClass(self::GET_DOCUMENT);
-        /** @var RequestInterface $request */
-        $request = $this->requestRepositoryFactory->create($class, $index, $type, $this->serializer);
+        $request = $this->createRequestInstance(self::GET_DOCUMENT, $index, $type);
         $request->setId($id);
 
         return $this->client->send($request);
@@ -136,9 +130,7 @@ class DocumentRepository implements DocumentRepositoryInterface
      */
     public function update($index, $type, $id, $document)
     {
-        $class = $this->getClass(self::UPDATE_DOCUMENT);
-        /** @var RequestInterface $request */
-        $request = $this->requestRepositoryFactory->create($class, $index, $type, $this->serializer);
+        $request = $this->createRequestInstance(self::UPDATE_DOCUMENT, $index, $type);
         $request->setId($id);
         $request->setBody($document);
 
@@ -155,6 +147,22 @@ class DocumentRepository implements DocumentRepositoryInterface
     private function getClass($class)
     {
         return $this->repositoryClassMap->getClassName($class);
+    }
+
+    /**
+     * creates an request instance
+     *
+     * @param string $requestName
+     * @param string $index
+     * @param string $type
+     * @return RequestInterface
+     * @author Daniel Wendlandt
+     */
+    private function createRequestInstance($requestName, $index, $type)
+    {
+        $class = $this->getClass($requestName);
+        /** @var RequestInterface $request */
+        return $this->requestRepositoryFactory->create($class, $index, $type, $this->serializer);
     }
 
 }
