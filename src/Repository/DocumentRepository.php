@@ -35,6 +35,9 @@ class DocumentRepository implements DocumentRepositoryInterface
      */
     private $repositoryClassMap;
 
+    /**
+     * @var RequestRepositoryFactoryInterface
+     */
     private $requestRepositoryFactory;
 
     /**
@@ -79,7 +82,6 @@ class DocumentRepository implements DocumentRepositoryInterface
     {
         $class = $this->getClass(self::CREATE_DOCUMENT);
         /** @var RequestInterface $request */
-//        $request = new $class($index, $type, $this->serializer);
         $request =  $this->requestRepositoryFactory->create($class, $index, $type, $this->serializer);
         $request->setBody($document);
 
@@ -87,6 +89,8 @@ class DocumentRepository implements DocumentRepositoryInterface
     }
 
     /**
+     * Deletes a document by id
+     *
      * @param string $index
      * @param string $type
      * @param string $id
@@ -97,7 +101,6 @@ class DocumentRepository implements DocumentRepositoryInterface
     {
         $class = $this->getClass(self::DELETE_DOCUMENT);
         /** @var RequestInterface $request */
-//        $request = new $class($index, $type, $this->serializer);
         $request = $this->requestRepositoryFactory->create($class, $index, $type, $this->serializer);
         $request->setId($id);
 
@@ -117,9 +120,27 @@ class DocumentRepository implements DocumentRepositoryInterface
     {
         $class = $this->getClass(self::GET_DOCUMENT);
         /** @var RequestInterface $request */
-//        $request = new $class($index, $type, $this->serializer);
         $request = $this->requestRepositoryFactory->create($class, $index, $type, $this->serializer);
         $request->setId($id);
+
+        return $this->client->send($request);
+    }
+
+    /**
+     * @param string $index
+     * @param string $type
+     * @param string $id
+     * @param mixed $document
+     * @return \Elastification\Client\Response\ResponseInterface
+     * @author Daniel Wendlandt
+     */
+    public function update($index, $type, $id, $document)
+    {
+        $class = $this->getClass(self::UPDATE_DOCUMENT);
+        /** @var RequestInterface $request */
+        $request = $this->requestRepositoryFactory->create($class, $index, $type, $this->serializer);
+        $request->setId($id);
+        $request->setBody($document);
 
         return $this->client->send($request);
     }

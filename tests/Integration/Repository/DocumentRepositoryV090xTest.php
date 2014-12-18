@@ -153,6 +153,25 @@ class DocumentRepositoryV090xTest extends \PHPUnit_Framework_TestCase
         $this->fail();
     }
 
+    public function testUpdateDocument()
+    {
+        $data = array('name' => 'test' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000));
+
+        $createResponse = $this->documentRepository->create(self::INDEX, self::TYPE, $data);
+        $this->refreshIndex();
+
+        $timeStart = microtime(true);
+
+        $data['name'] = 'test3';
+        $this->documentRepository->update(self::INDEX, self::TYPE, $createResponse->getId(), $data);
+
+        echo 'update: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        $getResponse = $this->documentRepository->get(self::INDEX, self::TYPE, $createResponse->getId());
+        $storedData = $getResponse->getSource();
+        $this->assertSame($data, $storedData);
+    }
+
     private function hasIndex($index = null)
     {
         if(null === $index) {

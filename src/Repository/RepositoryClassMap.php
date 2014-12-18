@@ -23,7 +23,8 @@ class RepositoryClassMap implements RepositoryClassMapInterface
     private $classMap = array(
         'CreateDocumentRequest' => self::CREATE_DOCUMENT_REQUEST,
         'DeleteDocumentRequest' => self::DELETE_DOCUMENT_REQUEST,
-        'GetDocumentRequest' => self::GET_DOCUMENT_REQUEST
+        'GetDocumentRequest' => self::GET_DOCUMENT_REQUEST,
+        'UpdateDocumentRequest' => self::UPDATE_DOCUMENT_REQUEST
     );
 
     /**

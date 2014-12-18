@@ -14,6 +14,7 @@ interface DocumentRepositoryInterface
     const CREATE_DOCUMENT = 'CreateDocumentRequest';
     const DELETE_DOCUMENT = 'DeleteDocumentRequest';
     const GET_DOCUMENT = 'GetDocumentRequest';
+    const UPDATE_DOCUMENT = 'UpdateDocumentRequest';
 
     /**
      * creates a document
@@ -45,5 +46,15 @@ interface DocumentRepositoryInterface
      * @author Daniel Wendlandt
      */
     public function get($index, $type, $id);
+
+    /**
+     * @param string $index
+     * @param string $type
+     * @param string $id
+     * @param mixed $document
+     * @return \Elastification\Client\Response\ResponseInterface
+     * @author Daniel Wendlandt
+     */
+    public function update($index, $type, $id, $document);
 
 }

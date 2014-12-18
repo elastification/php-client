@@ -82,6 +82,13 @@ class DocumentRepositoryTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Elastification\Client\Repository\DocumentRepository', $this->documentRepository);
     }
 
+    public function testConstructor()
+    {
+        $documentRepository = new DocumentRepository($this->client, $this->serializer);
+        $this->assertInstanceOf('Elastification\Client\Repository\DocumentRepositoryInterface', $documentRepository);
+        $this->assertInstanceOf('Elastification\Client\Repository\DocumentRepository', $documentRepository);
+    }
+
     public function testCreate()
     {
         $index = 'myIndex';
@@ -183,6 +190,46 @@ class DocumentRepositoryTest extends \PHPUnit_Framework_TestCase
             ->willReturn($return);
 
         $result = $this->documentRepository->delete($index, $type, $id);
+
+        $this->assertSame($return, $result);
+    }
+
+    public function testUpdate()
+    {
+        $index = 'myIndex';
+        $type = 'myType';
+        $return = 'itsMe';
+        $className = 'myClassName';
+        $id = 'testId';
+        $data = array('myValue');
+
+        $request = $this->getMockBuilder('Elastification\Client\Request\V1x\UpdateDocumentRequest')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $request->expects($this->once())
+            ->method('setBody')
+            ->with($data);
+
+        $request->expects($this->once())
+            ->method('setId')
+            ->with($id);
+
+        $this->requestRepositoryFactory->expects($this->once())
+            ->method('create')
+            ->with($className, $index, $type, $this->serializer)
+            ->willReturn($request);
+
+        $this->repositoryClassMap->expects($this->once())
+            ->method('getClassName')
+            ->with(DocumentRepositoryInterface::UPDATE_DOCUMENT)
+            ->willReturn($className);
+
+        $this->client->expects($this->once())
+            ->method('send')
+            ->willReturn($return);
+
+        $result = $this->documentRepository->update($index, $type, $id, $data);
 
         $this->assertSame($return, $result);
     }
