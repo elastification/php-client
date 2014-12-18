@@ -17,7 +17,6 @@
  */
 namespace Elastification\Client\Response;
 
-use Elastification\Client\Serializer\Gateway\NativeArrayGateway;
 use Elastification\Client\Serializer\SerializerInterface;
 
 /**
