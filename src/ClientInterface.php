@@ -64,6 +64,11 @@ interface ClientInterface
     const ELASTICSEARCH_VERSION_1_3_X = '1.3.x';
 
     /**
+     * @var string
+     */
+    const ELASTICSEARCH_VERSION_1_4_X = '1.4.x';
+
+    /**
      * Sends the request through the configured transport.
      *
      * @param RequestInterface $request
