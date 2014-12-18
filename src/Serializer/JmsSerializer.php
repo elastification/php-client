@@ -136,7 +136,7 @@ class JmsSerializer implements SerializerInterface
 
     /**
      * gets the source class.
-     * 
+     *
      * @param array $params
      * @return mixed
      * @author Daniel Wendlandt
