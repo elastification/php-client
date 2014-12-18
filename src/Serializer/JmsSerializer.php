@@ -138,7 +138,7 @@ class JmsSerializer implements SerializerInterface
      * gets the source class.
      *
      * @param array $params
-     * @return mixed
+     * @return string
      * @author Daniel Wendlandt
      */
     private function getSourceClassFromMapping(array $params)
