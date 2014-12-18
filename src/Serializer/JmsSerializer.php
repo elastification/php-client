@@ -134,7 +134,14 @@ class JmsSerializer implements SerializerInterface
         );
     }
 
-    private function getSourceClassFromMapping($params)
+    /**
+     * gets the source class.
+     * 
+     * @param array $params
+     * @return mixed
+     * @author Daniel Wendlandt
+     */
+    private function getSourceClassFromMapping(array $params)
     {
         $index = $params['index'];
         $type = $params['type'];
