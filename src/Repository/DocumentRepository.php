@@ -35,6 +35,8 @@ class DocumentRepository implements DocumentRepositoryInterface
      */
     private $repositoryClassMap;
 
+    private $requestRepositoryFactory;
+
     /**
      * @param ClientInterface $client
      * @param SerializerInterface $serializer
@@ -44,7 +46,8 @@ class DocumentRepository implements DocumentRepositoryInterface
     public function __construct(ClientInterface $client,
                                 SerializerInterface $serializer,
                                 RepositoryClassMapInterface $repositoryClassMap = null,
-                                $versionFolder = RepositoryClassMapInterface::VERSION_V1X)
+                                $versionFolder = RepositoryClassMapInterface::VERSION_V1X,
+                                RequestRepositoryFactoryInterface $requestRepositoryFactory = null)
     {
         $this->client = $client;
         $this->serializer = $serializer;
@@ -52,6 +55,14 @@ class DocumentRepository implements DocumentRepositoryInterface
 
         if (null === $repositoryClassMap) {
             $this->repositoryClassMap = new RepositoryClassMap($versionFolder);
+        } else {
+            $this->repositoryClassMap = $repositoryClassMap;
+        }
+
+        if(null === $requestRepositoryFactory) {
+            $this->requestRepositoryFactory = new RequestRepositoryFactory();
+        } else {
+            $this->requestRepositoryFactory = $requestRepositoryFactory;
         }
     }
 
@@ -68,7 +79,8 @@ class DocumentRepository implements DocumentRepositoryInterface
     {
         $class = $this->getClass(self::CREATE_DOCUMENT);
         /** @var RequestInterface $request */
-        $request = new $class($index, $type, $this->serializer);
+//        $request = new $class($index, $type, $this->serializer);
+        $request =  $this->requestRepositoryFactory->create($class, $index, $type, $this->serializer);
         $request->setBody($document);
 
         return $this->client->send($request);
@@ -85,7 +97,8 @@ class DocumentRepository implements DocumentRepositoryInterface
     {
         $class = $this->getClass(self::DELETE_DOCUMENT);
         /** @var RequestInterface $request */
-        $request = new $class($index, $type, $this->serializer);
+//        $request = new $class($index, $type, $this->serializer);
+        $request = $this->requestRepositoryFactory->create($class, $index, $type, $this->serializer);
         $request->setId($id);
 
         return $this->client->send($request);
@@ -104,7 +117,8 @@ class DocumentRepository implements DocumentRepositoryInterface
     {
         $class = $this->getClass(self::GET_DOCUMENT);
         /** @var RequestInterface $request */
-        $request = new $class($index, $type, $this->serializer);
+//        $request = new $class($index, $type, $this->serializer);
+        $request = $this->requestRepositoryFactory->create($class, $index, $type, $this->serializer);
         $request->setId($id);
 
         return $this->client->send($request);

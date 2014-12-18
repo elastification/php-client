@@ -114,9 +114,7 @@ class DocumentRepositoryV090xTest extends \PHPUnit_Framework_TestCase
     {
         $data = array('name' => 'test' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000));
 
-
         $createResponse = $this->documentRepository->create(self::INDEX, self::TYPE, $data);
-
 
         $timeStart = microtime(true);
         $getResponse = $this->documentRepository->get(self::INDEX, self::TYPE, $createResponse->getId());
@@ -143,7 +141,7 @@ class DocumentRepositoryV090xTest extends \PHPUnit_Framework_TestCase
         echo 'delete: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
 
         $this->documentRepository->delete(self::INDEX, self::TYPE, $createResponse->getId());
-        
+
         try {
             $this->documentRepository->get(self::INDEX, self::TYPE, $createResponse->getId());
         } catch (ClientException $exception) {
