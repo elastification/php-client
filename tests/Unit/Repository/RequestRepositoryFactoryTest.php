@@ -64,9 +64,6 @@ class RequestRepositoryFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($instance->getIndex(), $index);
         $this->assertSame($instance->getType(), $type);
         $this->assertSame($instance->getSerializer(), $this->serializer);
-
     }
-
-
 
 }
