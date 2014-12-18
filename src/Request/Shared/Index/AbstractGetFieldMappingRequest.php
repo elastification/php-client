@@ -39,7 +39,7 @@ abstract class AbstractGetFieldMappingRequest extends AbstractBaseRequest
     /**
      * getter for type. A short fake.
      *
-     * @return null|string
+     * @return string
      * @author Daniel Wendlandt
      */
     public function getType()
@@ -67,7 +67,7 @@ abstract class AbstractGetFieldMappingRequest extends AbstractBaseRequest
     }
 
     /**
-     * @return null
+     * @return string
      */
     public function getField()
     {
