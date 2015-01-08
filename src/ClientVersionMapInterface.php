@@ -19,6 +19,12 @@ namespace Elastification\Client;
 
 interface ClientVersionMapInterface
 {
+
+    /**
+     * Current Version
+     */
+    const VERSION_CURRENT = 'V1x';
+
     /**
      * Versions
      */
