@@ -8,6 +8,7 @@
 
 namespace Elastification\Client\Tests\Unit\Repository;
 
+use Elastification\Client\ClientVersionMapInterface;
 use Elastification\Client\Exception\RepositoryClassMapException;
 use Elastification\Client\Repository\RepositoryClassMap;
 use Elastification\Client\Repository\RepositoryClassMapInterface;
@@ -65,17 +66,17 @@ class RepositoryClassMapTest extends \PHPUnit_Framework_TestCase
     {
         $class = 'GetDocumentRequest';
 
-        $repositoryClassMapV090x = new RepositoryClassMap(RepositoryClassMapInterface::VERSION_V090X);
+        $repositoryClassMapV090x = new RepositoryClassMap(ClientVersionMapInterface::VERSION_V090X);
         $className = $repositoryClassMapV090x->getClassName($class);
-        $this->assertContains(RepositoryClassMapInterface::VERSION_V090X, $className);
+        $this->assertContains(ClientVersionMapInterface::VERSION_V090X, $className);
 
-        $repositoryClassMapV1x = new RepositoryClassMap(RepositoryClassMapInterface::VERSION_V1X);
+        $repositoryClassMapV1x = new RepositoryClassMap(ClientVersionMapInterface::VERSION_V1X);
         $className = $repositoryClassMapV1x->getClassName($class);
-        $this->assertContains(RepositoryClassMapInterface::VERSION_V1X, $className);
+        $this->assertContains(ClientVersionMapInterface::VERSION_V1X, $className);
 
         $repositoryClassMap = new RepositoryClassMap();
         $className = $repositoryClassMap->getClassName($class);
-        $this->assertContains(RepositoryClassMapInterface::VERSION_V1X, $className);
+        $this->assertContains(ClientVersionMapInterface::VERSION_V1X, $className);
     }
 
     public function testClassException()
@@ -115,12 +116,12 @@ class RepositoryClassMapTest extends \PHPUnit_Framework_TestCase
     private function versionTests($class)
     {
         //v90x
-        $repositoryClassMapV090x = new RepositoryClassMap(RepositoryClassMapInterface::VERSION_V090X);
+        $repositoryClassMapV090x = new RepositoryClassMap(ClientVersionMapInterface::VERSION_V090X);
         $className = $repositoryClassMapV090x->getClassName($class);
         $this->defaultInstanceByClassNameTest($className);
 
         //v1x
-        $repositoryClassMapV1x = new RepositoryClassMap(RepositoryClassMapInterface::VERSION_V1X);
+        $repositoryClassMapV1x = new RepositoryClassMap(ClientVersionMapInterface::VERSION_V1X);
         $className = $repositoryClassMapV1x->getClassName($class);
         $this->defaultInstanceByClassNameTest($className);
 

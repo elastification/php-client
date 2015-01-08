@@ -17,48 +17,23 @@
  */
 namespace Elastification\Client;
 
-use Elastification\Client\Exception\ClientException;
-use Elastification\Client\Exception\VersionException;
-
-/**
- * The version map. Elastification's php client support the use of multiple elasticsearch versions.
- *
- * This class shows all supported versions and their mapping to our version command
- * namespaces/folders.
- *
- * @package Elastification\Client
- * @author  Daniel Wendlandt
- */
-class ClientVersionMap implements ClientVersionMapInterface
+interface ClientVersionMapInterface
 {
-    private $versions = array(
-        array('regex' => '/0\.90.*/', 'version' => 'V090x'),
-        array('regex' => '/1\..*/', 'version' => 'V1x')
-//        '0.90' => 'V090x',
-//        '1.0' => 'V1X',
-//        '1.1' => 'V1X',
-//        '1.2' => 'V1X',
-//        '1.3' => 'V1X',
-    );
+    /**
+     * Versions
+     */
+    const VERSION_V090X = 'V090x';
+    const VERSION_V1X = 'V1x';
 
     /**
      * Get the defined version for folders.
      * We throw an exception in case of a non-matching version.
      *
-     * @param  string $version A version string in the schema of 0.90.x.
+     * @param   string $version A version string in the schema of 0.90.x.
+     *
      * @return string The internal namespace/folder
-     * @throws VersionException
+     * @throws Exception\ClientException
      * @author Daniel Wendlandt
      */
-    public function getVersion($version)
-    {
-
-        foreach($this->versions as $versionPattern) {
-            if(preg_match($versionPattern['regex'], $version)) {
-                return $versionPattern['version'];
-            }
-        }
-
-        throw new VersionException('Version not found');
-    }
+    public function getVersion($version);
 }

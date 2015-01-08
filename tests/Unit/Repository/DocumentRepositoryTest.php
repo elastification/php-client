@@ -8,11 +8,9 @@
 
 namespace Elastification\Client\Tests\Unit\Repository;
 
-use Elastification\Client\Exception\RepositoryClassMapException;
+use Elastification\Client\ClientVersionMapInterface;
 use Elastification\Client\Repository\DocumentRepository;
 use Elastification\Client\Repository\DocumentRepositoryInterface;
-use Elastification\Client\Repository\RepositoryClassMap;
-use Elastification\Client\Repository\RepositoryClassMapInterface;
 
 class DocumentRepositoryTest extends \PHPUnit_Framework_TestCase
 {
@@ -63,7 +61,7 @@ class DocumentRepositoryTest extends \PHPUnit_Framework_TestCase
         $this->documentRepository = new DocumentRepository($this->client,
             $this->serializer,
             $this->repositoryClassMap,
-            RepositoryClassMapInterface::VERSION_V1X,
+            ClientVersionMapInterface::VERSION_V1X,
             $this->requestRepositoryFactory);
     }
 

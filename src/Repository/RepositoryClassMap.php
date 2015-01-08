@@ -8,13 +8,18 @@
 
 namespace Elastification\Client\Repository;
 
+use Elastification\Client\ClientVersionMapInterface;
 use Elastification\Client\Exception\RepositoryClassMapException;
 
 class RepositoryClassMap implements RepositoryClassMapInterface
 {
+    /**
+     * all allowed versions go in here
+     * @var array
+     */
     private $allowedVersions = array(
-        self::VERSION_V090X => self::VERSION_V090X,
-        self::VERSION_V1X => self::VERSION_V1X
+        ClientVersionMapInterface::VERSION_V090X => ClientVersionMapInterface::VERSION_V090X,
+        ClientVersionMapInterface::VERSION_V1X => ClientVersionMapInterface::VERSION_V1X
     );
 
     /**
@@ -30,7 +35,7 @@ class RepositoryClassMap implements RepositoryClassMapInterface
     /**
      * @var string
      */
-    private $verionFolder = self::VERSION_V1X;
+    private $verionFolder = ClientVersionMapInterface::VERSION_V1X;
 
     /**
      * @param null|string $versionFolder

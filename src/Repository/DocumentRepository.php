@@ -9,6 +9,7 @@
 namespace Elastification\Client\Repository;
 
 use Elastification\Client\ClientInterface;
+use Elastification\Client\ClientVersionMapInterface;
 use Elastification\Client\Request\RequestInterface;
 use Elastification\Client\Serializer\SerializerInterface;
 
@@ -49,7 +50,7 @@ class DocumentRepository implements DocumentRepositoryInterface
     public function __construct(ClientInterface $client,
                                 SerializerInterface $serializer,
                                 RepositoryClassMapInterface $repositoryClassMap = null,
-                                $versionFolder = RepositoryClassMapInterface::VERSION_V1X,
+                                $versionFolder = ClientVersionMapInterface::VERSION_V1X,
                                 RequestRepositoryFactoryInterface $requestRepositoryFactory = null)
     {
         $this->client = $client;

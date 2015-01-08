@@ -13,12 +13,6 @@ use Elastification\Client\Exception\RepositoryClassMapException;
 interface RepositoryClassMapInterface
 {
     /**
-     * Versions
-     */
-    const VERSION_V090X = 'V090x';
-    const VERSION_V1X = 'V1x';
-
-    /**
      * classes
      */
     const CREATE_DOCUMENT_REQUEST = 'Elastification\Client\Request\%s\CreateDocumentRequest';
