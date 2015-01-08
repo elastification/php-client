@@ -17,7 +17,6 @@
  */
 namespace Elastification\Client;
 
-use Elastification\Client\Exception\ClientException;
 use Elastification\Client\Exception\VersionException;
 
 /**
