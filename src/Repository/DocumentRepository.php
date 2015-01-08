@@ -46,6 +46,7 @@ class DocumentRepository implements DocumentRepositoryInterface
      * @param SerializerInterface $serializer
      * @param RepositoryClassMapInterface $repositoryClassMap
      * @param string $versionFolder
+     * @param RequestRepositoryFactoryInterface $requestRepositoryFactory
      */
     public function __construct(ClientInterface $client,
                                 SerializerInterface $serializer,
