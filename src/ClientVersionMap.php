@@ -34,11 +34,6 @@ class ClientVersionMap implements ClientVersionMapInterface
     private $versions = array(
         array('regex' => '/0\.90.*/', 'version' => 'V090x'),
         array('regex' => '/1\..*/', 'version' => 'V1x')
-//        '0.90' => 'V090x',
-//        '1.0' => 'V1X',
-//        '1.1' => 'V1X',
-//        '1.2' => 'V1X',
-//        '1.3' => 'V1X',
     );
 
     /**
