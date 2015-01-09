@@ -18,7 +18,7 @@ Global:
 - [ ] Symfony2 Bundle
 - [ ] Vagrant boxes for different elasticsearch versions
 - [ ] Helper for Version response compare. (Symfony/Console)
-- [ ] Export/Import/Copy indeces Elasticsearch tool (php) based on php-client and console application with simple config json/yml
+- [ ] Export/Import/Copy indices Elasticsearch tool (php) based on php-client and console application with simple config json/yml
 
 Dawen:
 
@@ -53,8 +53,9 @@ Dawen:
 - [ ] GetFieldMappingRequest (seems to be only in v1)
 - [ ] index recovery (v1)
 - [ ] analyze (v1) ???
-- [ ] document repository (create, update, exists, get) for each function there must be the registered request
-- [ ] document repository (create, update, exists, get) leave everything blank and index and type must be give in function
+- [ ] bulk requests
+- [x] document repository (create, update, exists, get) leave everything blank and index and type must be give in function
+- [x] search repository leave everything blank and index and type must be give in function
 - [ ] Think about an array of clients or a decision manager for get the right client (maybe voter pattern?)
 
 xenji:

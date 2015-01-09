@@ -15,10 +15,13 @@ interface RepositoryClassMapInterface
     /**
      * classes
      */
+    //document
     const CREATE_DOCUMENT_REQUEST = 'Elastification\Client\Request\%s\CreateDocumentRequest';
     const DELETE_DOCUMENT_REQUEST = 'Elastification\Client\Request\%s\DeleteDocumentRequest';
     const GET_DOCUMENT_REQUEST = 'Elastification\Client\Request\%s\GetDocumentRequest';
     const UPDATE_DOCUMENT_REQUEST = 'Elastification\Client\Request\%s\UpdateDocumentRequest';
+    //search
+    const SEARCH_REQUEST = 'Elastification\Client\Request\%s\SearchRequest';
 
     /**
      * gets the complete namespaces class for a version

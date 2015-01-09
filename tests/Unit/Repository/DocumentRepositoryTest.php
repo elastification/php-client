@@ -76,6 +76,7 @@ class DocumentRepositoryTest extends \PHPUnit_Framework_TestCase
 
     public function testInstance()
     {
+        $this->assertInstanceOf('Elastification\Client\Repository\AbstractRepository', $this->documentRepository);
         $this->assertInstanceOf('Elastification\Client\Repository\DocumentRepositoryInterface', $this->documentRepository);
         $this->assertInstanceOf('Elastification\Client\Repository\DocumentRepository', $this->documentRepository);
     }
@@ -83,6 +84,7 @@ class DocumentRepositoryTest extends \PHPUnit_Framework_TestCase
     public function testConstructor()
     {
         $documentRepository = new DocumentRepository($this->client, $this->serializer);
+        $this->assertInstanceOf('Elastification\Client\Repository\AbstractRepository', $documentRepository);
         $this->assertInstanceOf('Elastification\Client\Repository\DocumentRepositoryInterface', $documentRepository);
         $this->assertInstanceOf('Elastification\Client\Repository\DocumentRepository', $documentRepository);
     }
