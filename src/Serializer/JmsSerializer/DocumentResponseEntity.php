@@ -23,7 +23,7 @@ use JMS\Serializer\Annotation as JMS;
  * @package Elastification\Client\Serializer\JmsSerializer
  * @author Daniel Wendlandt
  */
-class Document
+class DocumentResponseEntity
 {
     /**
      * @JMS\Type("string")
