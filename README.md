@@ -54,6 +54,7 @@ Dawen:
 - [ ] index recovery (v1)
 - [ ] analyze (v1) ???
 - [ ] bulk requests
+- [ ] index repository for refresh and other stuff
 - [x] document repository (create, update, exists, get) leave everything blank and index and type must be give in function
 - [x] search repository leave everything blank and index and type must be give in function
 - [ ] Think about an array of clients or a decision manager for get the right client (maybe voter pattern?)
