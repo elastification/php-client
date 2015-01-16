@@ -38,7 +38,9 @@ class NativeJsonSerializer implements SerializerInterface
      */
     public function serialize($data, array $params = array())
     {
-        return json_encode($data);
+        $forceObject = $this->forceObject($params);
+
+        return json_encode($data, $forceObject);
     }
 
     /**
@@ -77,6 +79,23 @@ class NativeJsonSerializer implements SerializerInterface
             $assoc = $params['assoc'];
         }
         return $assoc;
+    }
+
+    /**
+     * Decides whether to force objects.
+     *
+     * @param array $params The array of params.
+     *
+     * @return integer
+     * @author Patrick Pokatilo <mail@shyxormz.net>
+     */
+    private function forceObject($params)
+    {
+        $forceObject = false;
+        if (isset($params['force_object']) && is_bool($params['force_object'])) {
+            $forceObject = $params['force_object'];
+        }
+        return $forceObject;
     }
 
     /**
