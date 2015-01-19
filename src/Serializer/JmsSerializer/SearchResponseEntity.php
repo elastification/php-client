@@ -52,14 +52,14 @@ class SearchResponseEntity
     public $hits;
 
     /**
-     * @JMS\Type("stdClass")
-     * @var \stdClass
+     * @JMS\Type("array")
+     * @var array
      */
     public $aggregations;
 
     /**
-     * @JMS\Type("stdClass")
-     * @var \stdClass
+     * @JMS\Type("array")
+     * @var array
      */
     public $facets;
 }
