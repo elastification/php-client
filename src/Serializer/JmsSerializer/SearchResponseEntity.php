@@ -61,5 +61,5 @@ class SearchResponseEntity
      * @JMS\Type("stdClass")
      * @var \stdClass
      */
-    public $factes;
+    public $facets;
 }
