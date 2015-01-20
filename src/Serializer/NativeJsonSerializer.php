@@ -92,8 +92,8 @@ class NativeJsonSerializer implements SerializerInterface
     private function forceObject($params)
     {
         $forceObject = false;
-        if (isset($params['force_object']) && is_bool($params['force_object'])) {
-            $forceObject = $params['force_object'];
+        if (isset($params['force_object']) && is_bool($params['force_object']) && true === $params['force_object']) {
+            $forceObject = JSON_FORCE_OBJECT;
         }
         return $forceObject;
     }

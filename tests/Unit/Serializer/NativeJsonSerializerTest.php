@@ -71,4 +71,37 @@ class NativeJsonSerializerTest extends \PHPUnit_Framework_TestCase
         $result = $subject->deserialize($expected, ['assoc' => false]);
         $this->assertEquals($fixture->test, $result['test']);
     }
+
+    public function testNativeJsonSerializationWithoutForceObjectArray()
+    {
+        $subject = new NativeJsonSerializer();
+        $expected = '[[1,2,3]]';
+
+        $fixture = array(array(1,2,3));
+
+        $result = $subject->serialize($fixture);
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testNativeJsonSerializationWithForceObjectFalse()
+    {
+        $subject = new NativeJsonSerializer();
+        $expected = '[[1,2,3]]';
+
+        $fixture = array(array(1,2,3));
+
+        $result = $subject->serialize($fixture, array('force_object' => false));
+        $this->assertEquals($expected, $result);
+    }
+
+    public function testNativeJsonSerializationWithForceObjectTrue()
+    {
+        $subject = new NativeJsonSerializer();
+        $expected = '{"0":{"0":1,"1":2,"2":3}}';
+
+        $fixture = array(array(1,2,3));
+
+        $result = $subject->serialize($fixture, array('force_object' => true));
+        $this->assertEquals($expected, $result);
+    }
 }
