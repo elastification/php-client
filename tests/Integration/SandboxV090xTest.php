@@ -7,7 +7,9 @@ use Elastification\Client\Request\RequestManagerInterface;
 use Elastification\Client\Request\V090x\AliasesRequest;
 use Elastification\Client\Request\V090x\CountRequest;
 use Elastification\Client\Request\V090x\CreateDocumentRequest;
+use Elastification\Client\Request\V090x\DeleteByQueryRequest;
 use Elastification\Client\Request\V090x\DeleteDocumentRequest;
+use Elastification\Client\Request\V090x\DeleteSearchRequest;
 use Elastification\Client\Request\V090x\DeleteTemplateRequest;
 use Elastification\Client\Request\V090x\GetDocumentRequest;
 use Elastification\Client\Request\V090x\GetTemplateRequest;
@@ -1114,6 +1116,40 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
         $this->assertNotEmpty($response->getTagline());
         $this->assertSame(200, $response->getStatus());
         $this->assertArrayHasKey('number', $response->getVersion());
+    }
+
+    public function testDeleteSearch()
+    {
+
+        $this->createIndex();
+        $data = array('name' => 'test', 'value' => 'myTestVal' . rand(100, 10000));
+        $this->createDocument($data);
+        $data = array('name' => 'test', 'value' => 'myTestVal' . rand(100, 10000));
+        $this->createDocument($data);
+        $data = array('name' => 'mega', 'value' => 'myTestVal' . rand(100, 10000));
+        $this->createDocument($data);
+        $this->refreshIndex();
+
+
+        $countRequest = new CountRequest(self::INDEX, self::TYPE, $this->serializer);
+
+        /** @var CountResponse $response */
+        $response = $this->client->send($countRequest);
+        $this->assertSame(3, $response->getCount());
+
+        $timeStart = microtime(true);
+        $deleteSearchRequest = new DeleteByQueryRequest(self::INDEX, self::TYPE, $this->serializer);
+        $deleteSearchRequest->setBody(array('term' => array('name' => 'test')));
+        $response = $this->client->send($deleteSearchRequest);
+
+        echo 'delete search: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+        $this->refreshIndex();
+
+        $this->assertContains('_indices', $response->getRawData());
+        $this->assertContains(self::INDEX, $response->getRawData());
+
+        $response = $this->client->send($countRequest);
+        $this->assertSame(1, $response->getCount());
     }
 
     private function createIndex($index = null)
