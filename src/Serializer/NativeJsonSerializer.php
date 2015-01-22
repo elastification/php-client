@@ -66,6 +66,10 @@ class NativeJsonSerializer implements SerializerInterface
             throw new DeserializationFailureException(json_last_error_msg(), $jsonLastError);
         }
 
+        if(is_string($data) && empty($data)) {
+            return $this->createGateway($assoc, array());
+        }
+        
         // Fall through for versions below 5.5
         throw new DeserializationFailureException('JSON syntax error in: ' . $data);
     }
