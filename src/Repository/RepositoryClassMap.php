@@ -32,7 +32,10 @@ class RepositoryClassMap implements RepositoryClassMapInterface
         'GetDocumentRequest' => self::GET_DOCUMENT_REQUEST,
         'UpdateDocumentRequest' => self::UPDATE_DOCUMENT_REQUEST,
         //search
-        'SearchRequest' => self::SEARCH_REQUEST
+        'SearchRequest' => self::SEARCH_REQUEST,
+        //index
+        'IndexExistRequest' => self::INDEX_EXIST,
+        'CreateIndexRequest' => self::INDEX_CREATE
     );
 
     /**

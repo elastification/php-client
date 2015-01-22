@@ -22,6 +22,9 @@ interface RepositoryClassMapInterface
     const UPDATE_DOCUMENT_REQUEST = 'Elastification\Client\Request\%s\UpdateDocumentRequest';
     //search
     const SEARCH_REQUEST = 'Elastification\Client\Request\%s\SearchRequest';
+    //index
+    const INDEX_EXIST = 'Elastification\Client\Request\%s\Index\IndexExistsRequest';
+    const INDEX_CREATE = 'Elastification\Client\Request\%s\Index\CreateIndexRequest';
 
     /**
      * gets the complete namespaces class for a version
