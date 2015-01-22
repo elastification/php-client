@@ -104,4 +104,13 @@ class NativeJsonSerializerTest extends \PHPUnit_Framework_TestCase
         $result = $subject->serialize($fixture, array('force_object' => true));
         $this->assertEquals($expected, $result);
     }
+
+    public function testNativeJsonDeserializationWithEmptyStringAndNoJsonError()
+    {
+        $subject = new NativeJsonSerializer();
+        $expected = '';
+
+        $result = $subject->deserialize($expected);
+        $this->assertEquals(array(), $result->getGatewayValue());
+    }
 }

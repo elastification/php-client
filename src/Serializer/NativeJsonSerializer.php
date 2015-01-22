@@ -57,7 +57,13 @@ class NativeJsonSerializer implements SerializerInterface
 
         // json_last_error_msg is only present in 5.5 and higher.
         if (version_compare(PHP_VERSION, '5.5.0', '>=')) {
-            throw new DeserializationFailureException(json_last_error_msg(), json_last_error());
+            $jsonLastError = json_last_error();
+
+            if(JSON_ERROR_NONE === $jsonLastError && (is_string($data) && empty($data))) {
+                return $this->createGateway($assoc, array());
+            }
+
+            throw new DeserializationFailureException(json_last_error_msg(), $jsonLastError);
         }
 
         // Fall through for versions below 5.5
