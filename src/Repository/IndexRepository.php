@@ -89,4 +89,21 @@ class IndexRepository extends AbstractRepository implements IndexRepositoryInter
 
         return $this->client->send($request);
     }
+
+    /**
+     * Creates the mapping of all/index/types
+     *
+     * @param array $mapping
+     * @param string $index
+     * @param string $type
+     * @return \Elastification\Client\Response\ResponseInterface
+     * @author Daniel Wendlandt
+     */
+    public function createMapping(array $mapping, $index, $type)
+    {
+        $request = $this->createRequestInstance(self::INDEX_CREATE_MAPPING, $index, $type);
+        $request->setBody($mapping);
+
+        return $this->client->send($request);
+    }
 }

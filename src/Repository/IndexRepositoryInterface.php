@@ -15,6 +15,7 @@ interface IndexRepositoryInterface
     const INDEX_DELETE = 'DeleteIndexRequest';
     const INDEX_REFRESH = 'RefreshIndexRequest';
     const INDEX_GET_MAPPING = 'GetMappingRequest';
+    const INDEX_CREATE_MAPPING = 'CreateMappingRequest';
 
     /**
      * Checks if an index exists
@@ -61,4 +62,15 @@ interface IndexRepositoryInterface
      * @author Daniel Wendlandt
      */
     public function getMapping($index = null, $type = null);
+
+    /**
+     * Creates the mapping of all/index/types
+     *
+     * @param array $mapping
+     * @param string $index
+     * @param string $type
+     * @return \Elastification\Client\Response\ResponseInterface
+     * @author Daniel Wendlandt
+     */
+    public function createMapping(array $mapping, $index, $type);
 }

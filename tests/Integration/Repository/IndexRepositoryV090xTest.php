@@ -177,11 +177,32 @@ class IndexRepositoryV090xTest extends \PHPUnit_Framework_TestCase
 
         $timeStart = microtime(true);
         /** @var SearchResponse $response */
-        $response = $this->indexRepository->getMapping(null, null);
+        $response = $this->indexRepository->getMapping();
         echo 'index getMapping: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
 
-        var_dump($response->getData()->getGatewayValue());
         $this->assertContains(self::TYPE, $response->getRawData());
+    }
+
+    public function testIndexCreateMappingTypeBased()
+    {
+        $this->createSampleData();
+
+        $response = $this->indexRepository->getMapping(self::INDEX, self::TYPE);
+        $mapping = $response->getData()->getGatewayValue();
+
+        $this->indexRepository->delete(self::INDEX);
+        $this->assertFalse($this->indexRepository->exists(self::INDEX));
+
+        $this->indexRepository->create(self::INDEX);
+
+
+        $timeStart = microtime(true);
+        $this->indexRepository->createMapping($mapping, self::INDEX, self::TYPE);
+        echo 'index createMapping: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        $response = $this->indexRepository->getMapping(self::INDEX, self::TYPE);
+
+        $this->assertEquals($mapping, $response->getData()->getGatewayValue());
     }
 
     private function createSampleData()

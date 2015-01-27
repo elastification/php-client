@@ -28,6 +28,7 @@ interface RepositoryClassMapInterface
     const INDEX_DELETE = 'Elastification\Client\Request\%s\Index\DeleteIndexRequest';
     const INDEX_REFRESH = 'Elastification\Client\Request\%s\Index\RefreshIndexRequest';
     const INDEX_GET_MAPPING = 'Elastification\Client\Request\%s\Index\GetMappingRequest';
+    const INDEX_CREATE_MAPPING = 'Elastification\Client\Request\%s\Index\CreateMappingRequest';
 
     /**
      * gets the complete namespaces class for a version
