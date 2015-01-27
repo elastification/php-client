@@ -35,7 +35,9 @@ class RepositoryClassMap implements RepositoryClassMapInterface
         'SearchRequest' => self::SEARCH_REQUEST,
         //index
         'IndexExistRequest' => self::INDEX_EXIST,
-        'CreateIndexRequest' => self::INDEX_CREATE
+        'CreateIndexRequest' => self::INDEX_CREATE,
+        'DeleteIndexRequest' => self::INDEX_DELETE,
+        'RefreshIndexRequest' => self::INDEX_REFRESH
     );
 
     /**

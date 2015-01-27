@@ -25,6 +25,8 @@ interface RepositoryClassMapInterface
     //index
     const INDEX_EXIST = 'Elastification\Client\Request\%s\Index\IndexExistsRequest';
     const INDEX_CREATE = 'Elastification\Client\Request\%s\Index\CreateIndexRequest';
+    const INDEX_DELETE = 'Elastification\Client\Request\%s\Index\DeleteIndexRequest';
+    const INDEX_REFRESH= 'Elastification\Client\Request\%s\Index\RefreshIndexRequest';
 
     /**
      * gets the complete namespaces class for a version

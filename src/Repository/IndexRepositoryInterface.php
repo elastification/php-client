@@ -12,6 +12,8 @@ interface IndexRepositoryInterface
 {
     const INDEX_EXIST = 'IndexExistRequest';
     const INDEX_CREATE = 'CreateIndexRequest';
+    const INDEX_DELETE = 'DeleteIndexRequest';
+    const INDEX_REFRESH = 'RefreshIndexRequest';
 
     /**
      * Checks if an index exists
@@ -30,4 +32,22 @@ interface IndexRepositoryInterface
      * @author Daniel Wendlandt
      */
     public function create($index);
+
+    /**
+     * deletes an index.
+     *
+     * @param string $index
+     * @return \Elastification\Client\Response\ResponseInterface
+     * @author Daniel Wendlandt
+     */
+    public function delete($index);
+
+    /**
+     * refreshes an index.
+     *
+     * @param string $index
+     * @return \Elastification\Client\Response\ResponseInterface
+     * @author Daniel Wendlandt
+     */
+    public function refresh($index);
 }

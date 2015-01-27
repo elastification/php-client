@@ -46,4 +46,32 @@ class IndexRepository extends AbstractRepository implements IndexRepositoryInter
 
         return $this->client->send($request);
     }
+
+    /**
+     * deletes an index.
+     *
+     * @param string $index
+     * @return \Elastification\Client\Response\ResponseInterface
+     * @author Daniel Wendlandt
+     */
+    public function delete($index)
+    {
+        $request = $this->createRequestInstance(self::INDEX_DELETE, $index, null);
+
+        return $this->client->send($request);
+    }
+
+    /**
+     * refreshes an index.
+     *
+     * @param string $index
+     * @return \Elastification\Client\Response\ResponseInterface
+     * @author Daniel Wendlandt
+     */
+    public function refresh($index)
+    {
+        $request = $this->createRequestInstance(self::INDEX_REFRESH, $index, null);
+
+        return $this->client->send($request);
+    }
 }

@@ -157,6 +157,20 @@ class IndexRepositoryV090xTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->indexRepository->exists(self::INDEX));
     }
 
+    public function testIndexDelete()
+    {
+        $this->assertFalse($this->indexRepository->exists(self::INDEX));
+        $this->indexRepository->create(self::INDEX);
+        $this->assertTrue($this->indexRepository->exists(self::INDEX));
+
+        $timeStart = microtime(true);
+        /** @var SearchResponse $response */
+        $this->indexRepository->delete(self::INDEX);
+        echo 'index delete: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        $this->assertFalse($this->indexRepository->exists(self::INDEX));
+    }
+
     private function createSampleData()
     {
         foreach($this->data as $city) {

@@ -179,4 +179,64 @@ class IndexRepositoryTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($return, $result);
     }
 
+    public function testDelete()
+    {
+        $index = 'myIndex';
+        $return = 'itsMe';
+        $type = null;
+        $className = 'myClassName';
+
+        $request = $this->getMockBuilder('Elastification\Client\Request\RequestInterface')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->requestRepositoryFactory->expects($this->once())
+            ->method('create')
+            ->with($className, $index, $type, $this->serializer)
+            ->willReturn($request);
+
+        $this->repositoryClassMap->expects($this->once())
+            ->method('getClassName')
+            ->with(IndexRepositoryInterface::INDEX_DELETE)
+            ->willReturn($className);
+
+        $this->client->expects($this->once())
+            ->method('send')
+            ->willReturn($return);
+
+        $result = $this->indexRepository->delete($index);
+
+        $this->assertSame($return, $result);
+    }
+
+    public function testRefresh()
+    {
+        $index = 'myIndex';
+        $return = 'itsMe';
+        $type = null;
+        $className = 'myClassName';
+
+        $request = $this->getMockBuilder('Elastification\Client\Request\RequestInterface')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->requestRepositoryFactory->expects($this->once())
+            ->method('create')
+            ->with($className, $index, $type, $this->serializer)
+            ->willReturn($request);
+
+        $this->repositoryClassMap->expects($this->once())
+            ->method('getClassName')
+            ->with(IndexRepositoryInterface::INDEX_REFRESH)
+            ->willReturn($className);
+
+        $this->client->expects($this->once())
+            ->method('send')
+            ->willReturn($return);
+
+        $result = $this->indexRepository->refresh($index);
+
+        $this->assertSame($return, $result);
+    }
+
 }
