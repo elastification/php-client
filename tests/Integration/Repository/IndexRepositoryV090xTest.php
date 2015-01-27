@@ -171,6 +171,19 @@ class IndexRepositoryV090xTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->indexRepository->exists(self::INDEX));
     }
 
+    public function testIndexGetMapping()
+    {
+        $this->createSampleData();
+
+        $timeStart = microtime(true);
+        /** @var SearchResponse $response */
+        $response = $this->indexRepository->getMapping(null, null);
+        echo 'index getMapping: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        var_dump($response->getData()->getGatewayValue());
+        $this->assertContains(self::TYPE, $response->getRawData());
+    }
+
     private function createSampleData()
     {
         foreach($this->data as $city) {

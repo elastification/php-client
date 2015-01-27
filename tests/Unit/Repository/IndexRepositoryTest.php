@@ -103,7 +103,11 @@ class IndexRepositoryTest extends \PHPUnit_Framework_TestCase
 
         $this->requestRepositoryFactory->expects($this->once())
             ->method('create')
-            ->with($className, $index, $type, $this->serializer)
+            ->with(
+                $this->equalTo($className),
+                $this->equalTo($index),
+                $this->equalTo($type),
+                $this->equalTo($this->serializer))
             ->willReturn($request);
 
         $this->repositoryClassMap->expects($this->once())
@@ -132,7 +136,11 @@ class IndexRepositoryTest extends \PHPUnit_Framework_TestCase
 
         $this->requestRepositoryFactory->expects($this->once())
             ->method('create')
-            ->with($className, $index, $type, $this->serializer)
+            ->with(
+                $this->equalTo($className),
+                $this->equalTo($index),
+                $this->equalTo($type),
+                $this->equalTo($this->serializer))
             ->willReturn($request);
 
         $this->repositoryClassMap->expects($this->once())
@@ -162,7 +170,11 @@ class IndexRepositoryTest extends \PHPUnit_Framework_TestCase
 
         $this->requestRepositoryFactory->expects($this->once())
             ->method('create')
-            ->with($className, $index, $type, $this->serializer)
+            ->with(
+                $this->equalTo($className),
+                $this->equalTo($index),
+                $this->equalTo($type),
+                $this->equalTo($this->serializer))
             ->willReturn($request);
 
         $this->repositoryClassMap->expects($this->once())
@@ -192,7 +204,11 @@ class IndexRepositoryTest extends \PHPUnit_Framework_TestCase
 
         $this->requestRepositoryFactory->expects($this->once())
             ->method('create')
-            ->with($className, $index, $type, $this->serializer)
+            ->with(
+                $this->equalTo($className),
+                $this->equalTo($index),
+                $this->equalTo($type),
+                $this->equalTo($this->serializer))
             ->willReturn($request);
 
         $this->repositoryClassMap->expects($this->once())
@@ -222,7 +238,11 @@ class IndexRepositoryTest extends \PHPUnit_Framework_TestCase
 
         $this->requestRepositoryFactory->expects($this->once())
             ->method('create')
-            ->with($className, $index, $type, $this->serializer)
+            ->with(
+                $this->equalTo($className),
+                $this->equalTo($index),
+                $this->equalTo($type),
+                $this->equalTo($this->serializer))
             ->willReturn($request);
 
         $this->repositoryClassMap->expects($this->once())
@@ -239,4 +259,102 @@ class IndexRepositoryTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($return, $result);
     }
 
+    public function testGetMapping()
+    {
+        $index = 'myIndex';
+        $return = 'itsMe';
+        $type = 'myType';
+        $className = 'myClassName';
+
+        $request = $this->getMockBuilder('Elastification\Client\Request\RequestInterface')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->requestRepositoryFactory->expects($this->once())
+            ->method('create')
+            ->with(
+                $this->equalTo($className),
+                $this->equalTo($index),
+                $this->equalTo($type),
+                $this->equalTo($this->serializer))
+            ->willReturn($request);
+
+        $this->repositoryClassMap->expects($this->once())
+            ->method('getClassName')
+            ->with(IndexRepositoryInterface::INDEX_GET_MAPPING)
+            ->willReturn($className);
+
+        $this->client->expects($this->once())
+            ->method('send')
+            ->willReturn($return);
+
+        $result = $this->indexRepository->getMapping($index, $type);
+
+        $this->assertSame($return, $result);
+    }
+
+    public function testGetMappingWihtoutType()
+    {
+        $index = 'myIndex';
+        $return = 'itsMe';
+        $className = 'myClassName';
+
+        $request = $this->getMockBuilder('Elastification\Client\Request\RequestInterface')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->requestRepositoryFactory->expects($this->once())
+            ->method('create')
+            ->with(
+                $this->equalTo($className),
+                $this->equalTo($index),
+                $this->equalTo(null),
+                $this->equalTo($this->serializer))
+            ->willReturn($request);
+
+        $this->repositoryClassMap->expects($this->once())
+            ->method('getClassName')
+            ->with(IndexRepositoryInterface::INDEX_GET_MAPPING)
+            ->willReturn($className);
+
+        $this->client->expects($this->once())
+            ->method('send')
+            ->willReturn($return);
+
+        $result = $this->indexRepository->getMapping($index);
+
+        $this->assertSame($return, $result);
+    }
+
+    public function testGetMappingWihtoutParams()
+    {
+        $return = 'itsMe';
+        $className = 'myClassName';
+
+        $request = $this->getMockBuilder('Elastification\Client\Request\RequestInterface')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->requestRepositoryFactory->expects($this->once())
+            ->method('create')
+            ->with(
+                $this->equalTo($className),
+                $this->equalTo(null),
+                $this->equalTo(null),
+                $this->equalTo($this->serializer))
+            ->willReturn($request);
+
+        $this->repositoryClassMap->expects($this->once())
+            ->method('getClassName')
+            ->with(IndexRepositoryInterface::INDEX_GET_MAPPING)
+            ->willReturn($className);
+
+        $this->client->expects($this->once())
+            ->method('send')
+            ->willReturn($return);
+
+        $result = $this->indexRepository->getMapping();
+
+        $this->assertSame($return, $result);
+    }
 }

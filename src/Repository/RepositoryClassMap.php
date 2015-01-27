@@ -37,13 +37,14 @@ class RepositoryClassMap implements RepositoryClassMapInterface
         'IndexExistRequest' => self::INDEX_EXIST,
         'CreateIndexRequest' => self::INDEX_CREATE,
         'DeleteIndexRequest' => self::INDEX_DELETE,
-        'RefreshIndexRequest' => self::INDEX_REFRESH
+        'RefreshIndexRequest' => self::INDEX_REFRESH,
+        'GetMappingRequest' => self::INDEX_GET_MAPPING
     );
 
     /**
      * @var string
      */
-    private $verionFolder = ClientVersionMapInterface::VERSION_V1X;
+    private $versionFolder = ClientVersionMapInterface::VERSION_V1X;
 
     /**
      * @param null|string $versionFolder
@@ -53,7 +54,7 @@ class RepositoryClassMap implements RepositoryClassMapInterface
     {
         if(null !== $versionFolder){
             $this->checkVersion($versionFolder);
-            $this->verionFolder = $versionFolder;
+            $this->versionFolder = $versionFolder;
         }
     }
 
@@ -68,7 +69,7 @@ class RepositoryClassMap implements RepositoryClassMapInterface
     public function getClassName($class)
     {
         $this->checkRequestClass($class);
-        return sprintf($this->classMap[$class], $this->verionFolder);
+        return sprintf($this->classMap[$class], $this->versionFolder);
     }
 
     /**
