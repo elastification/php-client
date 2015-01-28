@@ -16,6 +16,7 @@ interface IndexRepositoryInterface
     const INDEX_REFRESH = 'RefreshIndexRequest';
     const INDEX_GET_MAPPING = 'GetMappingRequest';
     const INDEX_CREATE_MAPPING = 'CreateMappingRequest';
+    const INDEX_GET_ALIASES = 'GetAliasesRequest';
 
     /**
      * Checks if an index exists
@@ -73,4 +74,13 @@ interface IndexRepositoryInterface
      * @author Daniel Wendlandt
      */
     public function createMapping(array $mapping, $index, $type);
+
+    /**
+     * Gets all aliases based on indices.
+     *
+     * @param null|string $index
+     * @return \Elastification\Client\Response\ResponseInterface
+     * @author Daniel Wendlandt
+     */
+    public function getAliases($index = null);
 }

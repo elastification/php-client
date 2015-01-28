@@ -39,7 +39,8 @@ class RepositoryClassMap implements RepositoryClassMapInterface
         'DeleteIndexRequest' => self::INDEX_DELETE,
         'RefreshIndexRequest' => self::INDEX_REFRESH,
         'GetMappingRequest' => self::INDEX_GET_MAPPING,
-        'CreateMappingRequest' => self::INDEX_CREATE_MAPPING
+        'CreateMappingRequest' => self::INDEX_CREATE_MAPPING,
+        'GetAliasesRequest' => self::INDEX_GET_ALIASES
     );
 
     /**

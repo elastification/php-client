@@ -205,6 +205,33 @@ class IndexRepositoryV090xTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($mapping, $response->getData()->getGatewayValue());
     }
 
+    public function testGetAliasesWithoutParams()
+    {
+        $this->createSampleData();
+
+        $timeStart = microtime(true);
+        $response = $this->indexRepository->getAliases();
+        echo 'index getAliases without params: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        $resultAsArray = $response->getData()->getGatewayValue();
+        $this->assertTrue(isset($resultAsArray[self::INDEX]));
+        $this->assertEmpty($resultAsArray[self::INDEX]['aliases']);
+    }
+
+    public function testGetAliases()
+    {
+        $this->createSampleData();
+
+        $timeStart = microtime(true);
+        $response = $this->indexRepository->getAliases(self::INDEX);
+        echo 'index getAliases: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        $resultAsArray = $response->getData()->getGatewayValue();
+        $this->assertCount(1, $resultAsArray);
+        $this->assertTrue(isset($resultAsArray[self::INDEX]));
+        $this->assertEmpty($resultAsArray[self::INDEX]['aliases']);
+    }
+
     private function createSampleData()
     {
         foreach($this->data as $city) {

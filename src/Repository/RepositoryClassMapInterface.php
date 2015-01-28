@@ -29,6 +29,7 @@ interface RepositoryClassMapInterface
     const INDEX_REFRESH = 'Elastification\Client\Request\%s\Index\RefreshIndexRequest';
     const INDEX_GET_MAPPING = 'Elastification\Client\Request\%s\Index\GetMappingRequest';
     const INDEX_CREATE_MAPPING = 'Elastification\Client\Request\%s\Index\CreateMappingRequest';
+    const INDEX_GET_ALIASES = 'Elastification\Client\Request\%s\Index\GetAliasesRequest';
 
     /**
      * gets the complete namespaces class for a version

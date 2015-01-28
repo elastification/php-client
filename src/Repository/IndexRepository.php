@@ -106,4 +106,17 @@ class IndexRepository extends AbstractRepository implements IndexRepositoryInter
 
         return $this->client->send($request);
     }
+
+    /**
+     * Gets all aliases based on indices.
+     *
+     * @param null|string $index
+     * @return \Elastification\Client\Response\ResponseInterface
+     * @author Daniel Wendlandt
+     */
+    public function getAliases($index = null) {
+        $request = $this->createRequestInstance(self::INDEX_GET_ALIASES, $index, null);
+
+        return $this->client->send($request);
+    }
 }

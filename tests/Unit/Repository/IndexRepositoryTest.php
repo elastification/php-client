@@ -394,4 +394,69 @@ class IndexRepositoryTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame($return, $result);
     }
+
+    public function testGetAliasesWihtoutParams()
+    {
+        $return = 'itsMe';
+        $className = 'myClassName';
+
+        $request = $this->getMockBuilder('Elastification\Client\Request\RequestInterface')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->requestRepositoryFactory->expects($this->once())
+            ->method('create')
+            ->with(
+                $this->equalTo($className),
+                $this->equalTo(null),
+                $this->equalTo(null),
+                $this->equalTo($this->serializer))
+            ->willReturn($request);
+
+        $this->repositoryClassMap->expects($this->once())
+            ->method('getClassName')
+            ->with(IndexRepositoryInterface::INDEX_GET_ALIASES)
+            ->willReturn($className);
+
+        $this->client->expects($this->once())
+            ->method('send')
+            ->willReturn($return);
+
+        $result = $this->indexRepository->getAliases();
+
+        $this->assertSame($return, $result);
+    }
+
+    public function testGetAliasesWihtINdex()
+    {
+        $index = 'myIndex';
+        $return = 'itsMe';
+        $className = 'myClassName';
+
+        $request = $this->getMockBuilder('Elastification\Client\Request\RequestInterface')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->requestRepositoryFactory->expects($this->once())
+            ->method('create')
+            ->with(
+                $this->equalTo($className),
+                $this->equalTo($index),
+                $this->equalTo(null),
+                $this->equalTo($this->serializer))
+            ->willReturn($request);
+
+        $this->repositoryClassMap->expects($this->once())
+            ->method('getClassName')
+            ->with(IndexRepositoryInterface::INDEX_GET_ALIASES)
+            ->willReturn($className);
+
+        $this->client->expects($this->once())
+            ->method('send')
+            ->willReturn($return);
+
+        $result = $this->indexRepository->getAliases($index);
+
+        $this->assertSame($return, $result);
+    }
 }
