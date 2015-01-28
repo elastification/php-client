@@ -13,7 +13,6 @@ use Elastification\Client\Repository\DocumentRepository;
 use Elastification\Client\Repository\DocumentRepositoryInterface;
 use Elastification\Client\Repository\IndexRepository;
 use Elastification\Client\Repository\IndexRepositoryInterface;
-use Elastification\Client\Repository\RepositoryClassMapInterface;
 use Elastification\Client\Repository\SearchRepository;
 use Elastification\Client\Repository\SearchRepositoryInterface;
 use Elastification\Client\Request\V090x\Index\DeleteIndexRequest;
@@ -71,6 +70,11 @@ class IndexRepositoryV090xTest extends \PHPUnit_Framework_TestCase
     private $documentRepository;
 
     /**
+     * @var SearchRepositoryInterface
+     */
+    private $searchRepository;
+
+    /**
      * @var IndexRepositoryInterface
      */
     private $indexRepository;
@@ -95,6 +99,10 @@ class IndexRepositoryV090xTest extends \PHPUnit_Framework_TestCase
         $this->client = new Client($this->transportClient, $this->requestManager);
         $this->serializer = new NativeJsonSerializer();
         $this->documentRepository = new DocumentRepository($this->client,
+            $this->serializer,
+            null,
+            ClientVersionMap::VERSION_V090X);
+        $this->searchRepository = new SearchRepository($this->client,
             $this->serializer,
             null,
             ClientVersionMap::VERSION_V090X);
@@ -230,6 +238,55 @@ class IndexRepositoryV090xTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(1, $resultAsArray);
         $this->assertTrue(isset($resultAsArray[self::INDEX]));
         $this->assertEmpty($resultAsArray[self::INDEX]['aliases']);
+    }
+
+    public function testUpdateAliases()
+    {
+        $this->createSampleData();
+        $aliasesResponse = $this->indexRepository->getAliases(self::INDEX);
+        $aliasesAsArray = $aliasesResponse->getData()->getGatewayValue();
+        $this->assertCount(1, $aliasesAsArray);
+        $this->assertTrue(isset($aliasesAsArray[self::INDEX]));
+        $this->assertEmpty($aliasesAsArray[self::INDEX]['aliases']);
+
+        $aliasPostfix = '-alias';
+        $addAliases = array(
+            'actions' => array(
+                array(
+                    'add' => array('index' => self::INDEX, 'alias' => self::INDEX . $aliasPostfix)
+                )
+            )
+        );
+        $removeAliases = array(
+            'actions' => array(
+                array(
+                    'remove' => array('index' => self::INDEX, 'alias' => self::INDEX . $aliasPostfix)
+                )
+            )
+        );
+
+        $timeStart = microtime(true);
+        $this->indexRepository->updateAliases($addAliases);
+        echo 'index updateAliases: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        $aliasesResponse = $this->indexRepository->getAliases(self::INDEX);
+        $aliasesAsArray = $aliasesResponse->getData()->getGatewayValue();
+        $this->assertCount(1, $aliasesAsArray);
+        $this->assertTrue(isset($aliasesAsArray[self::INDEX]));
+        $this->assertCount(1, $aliasesAsArray[self::INDEX]['aliases']);
+
+        /** @var SearchResponse $searchResult */
+        $searchResult = $this->searchRepository->search(self::INDEX . $aliasPostfix, self::TYPE);
+        $this->assertSame(count($this->data), $searchResult->getHits()['total']);
+
+        $this->indexRepository->updateAliases($removeAliases);
+
+        $aliasesResponse = $this->indexRepository->getAliases(self::INDEX);
+        $aliasesAsArray = $aliasesResponse->getData()->getGatewayValue();
+        $this->assertCount(1, $aliasesAsArray);
+        $this->assertTrue(isset($aliasesAsArray[self::INDEX]));
+        $this->assertEmpty($aliasesAsArray[self::INDEX]['aliases']);
+
     }
 
     private function createSampleData()

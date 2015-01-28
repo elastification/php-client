@@ -9,6 +9,8 @@
 namespace Elastification\Client\Repository;
 
 use Elastification\Client\Exception\ClientException;
+use Elastification\Client\Exception\RepositoryException;
+use Elastification\Client\Exception\RequestException;
 
 class IndexRepository extends AbstractRepository implements IndexRepositoryInterface
 {
@@ -114,8 +116,29 @@ class IndexRepository extends AbstractRepository implements IndexRepositoryInter
      * @return \Elastification\Client\Response\ResponseInterface
      * @author Daniel Wendlandt
      */
-    public function getAliases($index = null) {
+    public function getAliases($index = null)
+    {
         $request = $this->createRequestInstance(self::INDEX_GET_ALIASES, $index, null);
+
+        return $this->client->send($request);
+    }
+
+    /**
+     * Updates aliases by given actions
+     *
+     * @param array $aliasActions
+     * @return \Elastification\Client\Response\ResponseInterface
+     * @throws RepositoryException
+     * @author Daniel Wendlandt
+     */
+    public function updateAliases(array $aliasActions)
+    {
+        if(!isset($aliasActions['actions'])) {
+            throw new RepositoryException('Actions key is missing');
+        }
+
+        $request = $this->createRequestInstance(self::INDEX_UPDATE_ALIASES, null, null);
+        $request->setBody($aliasActions);
 
         return $this->client->send($request);
     }

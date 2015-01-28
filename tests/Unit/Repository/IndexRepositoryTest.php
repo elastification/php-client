@@ -10,6 +10,7 @@ namespace Elastification\Client\Tests\Unit\Repository;
 
 use Elastification\Client\ClientVersionMapInterface;
 use Elastification\Client\Exception\ClientException;
+use Elastification\Client\Exception\RepositoryException;
 use Elastification\Client\Repository\IndexRepository;
 use Elastification\Client\Repository\IndexRepositoryInterface;
 
@@ -458,5 +459,63 @@ class IndexRepositoryTest extends \PHPUnit_Framework_TestCase
         $result = $this->indexRepository->getAliases($index);
 
         $this->assertSame($return, $result);
+    }
+
+    public function testUpdateAliases()
+    {
+        $return = 'itsMe';
+        $className = 'myClassName';
+        $aliasActions = array('actions' => array('add' => array()));
+
+        $request = $this->getMockBuilder('Elastification\Client\Request\RequestInterface')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $request->expects($this->once())->method('setBody')->with($this->equalTo($aliasActions));
+
+        $this->requestRepositoryFactory->expects($this->once())
+            ->method('create')
+            ->with(
+                $this->equalTo($className),
+                $this->equalTo(null),
+                $this->equalTo(null),
+                $this->equalTo($this->serializer))
+            ->willReturn($request);
+
+        $this->repositoryClassMap->expects($this->once())
+            ->method('getClassName')
+            ->with(IndexRepositoryInterface::INDEX_UPDATE_ALIASES)
+            ->willReturn($className);
+
+        $this->client->expects($this->once())
+            ->method('send')
+            ->willReturn($return);
+
+        $result = $this->indexRepository->updateAliases($aliasActions);
+
+        $this->assertSame($return, $result);
+    }
+
+    public function testUpdateAliasesMissingActionsKeyException()
+    {
+        $aliasActions = array('actionsWrong' => array('add' => array()));
+
+        $request = $this->getMockBuilder('Elastification\Client\Request\RequestInterface')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $request->expects($this->never())->method('setBody');
+        $this->requestRepositoryFactory->expects($this->never())->method('create');
+        $this->repositoryClassMap->expects($this->never())->method('getClassName');
+        $this->client->expects($this->never())->method('send');
+
+        try {
+            $this->indexRepository->updateAliases($aliasActions);
+        } catch(RepositoryException $exception) {
+            $this->assertContains('Actions key is missing', $exception->getMessage());
+            return;
+        }
+
+        $this->fail();
     }
 }

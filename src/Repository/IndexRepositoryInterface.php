@@ -8,6 +8,8 @@
 
 namespace Elastification\Client\Repository;
 
+use Elastification\Client\Exception\RepositoryException;
+
 interface IndexRepositoryInterface
 {
     const INDEX_EXIST = 'IndexExistRequest';
@@ -17,6 +19,7 @@ interface IndexRepositoryInterface
     const INDEX_GET_MAPPING = 'GetMappingRequest';
     const INDEX_CREATE_MAPPING = 'CreateMappingRequest';
     const INDEX_GET_ALIASES = 'GetAliasesRequest';
+    const INDEX_UPDATE_ALIASES = 'UpdateAliasesRequest';
 
     /**
      * Checks if an index exists
@@ -83,4 +86,16 @@ interface IndexRepositoryInterface
      * @author Daniel Wendlandt
      */
     public function getAliases($index = null);
+
+    /**
+     * Updates aliases by given actions
+     *
+     * @param array $aliasActions
+     * @return \Elastification\Client\Response\ResponseInterface
+     * @throws RepositoryException
+     * @author Daniel Wendlandt
+     */
+    public function updateAliases(array $aliasActions);
+
+
 }

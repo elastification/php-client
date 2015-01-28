@@ -40,7 +40,8 @@ class RepositoryClassMap implements RepositoryClassMapInterface
         'RefreshIndexRequest' => self::INDEX_REFRESH,
         'GetMappingRequest' => self::INDEX_GET_MAPPING,
         'CreateMappingRequest' => self::INDEX_CREATE_MAPPING,
-        'GetAliasesRequest' => self::INDEX_GET_ALIASES
+        'GetAliasesRequest' => self::INDEX_GET_ALIASES,
+        'UpdateAliasesRequest' => self::INDEX_UPDATE_ALIASES
     );
 
     /**
