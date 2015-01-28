@@ -33,6 +33,14 @@ abstract class AbstractUpdateAliasesRequest extends AbstractBaseRequest
     /**
      * @inheritdoc
      */
+    public function getIndex()
+    {
+        return null;
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function getType()
     {
         return null;

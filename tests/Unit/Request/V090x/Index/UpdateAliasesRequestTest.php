@@ -65,7 +65,7 @@ class UpdateAliasesRequestTest extends \PHPUnit_Framework_TestCase
 
     public function testGetIndex()
     {
-        $this->assertSame(self::INDEX, $this->request->getIndex());
+        $this->assertNull($this->request->getIndex());
     }
 
     public function testGetType()
