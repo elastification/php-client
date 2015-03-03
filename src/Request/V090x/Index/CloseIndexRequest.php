@@ -56,6 +56,6 @@ class CloseIndexRequest extends AbstractCloseIndexRequest
      */
     public function getSupportedClass()
     {
-        return IndexResponse::class;
+        return 'Elastification\Client\Response\V090x\Index\IndexResponse';
     }
 }

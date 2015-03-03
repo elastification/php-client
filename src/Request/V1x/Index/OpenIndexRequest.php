@@ -56,6 +56,6 @@ class OpenIndexRequest extends AbstractOpenIndexRequest
      */
     public function getSupportedClass()
     {
-        return IndexResponse::class;
+        return 'Elastification\Client\Response\V1x\Index\IndexResponse';
     }
 }
