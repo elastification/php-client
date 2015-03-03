@@ -56,6 +56,6 @@ class UpdateIndexSettingsRequest extends AbstractUpdateIndexSettingsRequest
      */
     public function getSupportedClass()
     {
-        return IndexResponse::class;
+        return 'Elastification\Client\Response\V090x\Index\IndexResponse';
     }
 }
