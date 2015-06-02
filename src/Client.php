@@ -113,7 +113,7 @@ class Client implements ClientInterface
     }
 
     /**
-     * @param ResponseInterface   $response
+     * @param ResponseInterface          $response
      * @param                     string $supportedClass
      *
      * @throws Exception\ClientException
@@ -138,6 +138,7 @@ class Client implements ClientInterface
         if (null !== $body) {
             $transportRequest->setBody($body);
         }
+
         return $transportRequest;
     }
 

@@ -51,7 +51,7 @@ class LoggerClient implements ClientInterface
         ClientInterface $client,
         LoggerInterface $logger
     ) {
-       $this->client = $client;
+        $this->client = $client;
         $this->logger = $logger;
     }
 
@@ -67,7 +67,7 @@ class LoggerClient implements ClientInterface
      */
     public function send(RequestInterface $request)
     {
-        $this->logger->info('request: '. get_class($request), $this->generateLogRequestData($request));
+        $this->logger->info('request: ' . get_class($request), $this->generateLogRequestData($request));
 
         try {
             $timeTaken = microtime(true);
@@ -76,13 +76,15 @@ class LoggerClient implements ClientInterface
             $this->logger->debug(
                 'time taken: ' .
                 (microtime(true) - $timeTaken) .
-                's (' . get_class($request) . ')');
+                's (' . get_class($request) . ')'
+            );
 
             $this->logger->debug('response: ' . get_class($response), $this->generateLogResponseData($response));
 
             return $response;
-        } catch(ClientException $exception) {
-            $this->logger->error($exception->getMessage(),
+        } catch (ClientException $exception) {
+            $this->logger->error(
+                $exception->getMessage(),
                 array(
                     'code' => $exception->getCode(),
                     'file' => $exception->getFile(),
@@ -90,12 +92,12 @@ class LoggerClient implements ClientInterface
                     'trace' => $exception->getTrace(),
                     'message' => $exception->getMessage(),
 
-                ));
+                )
+            );
 
             throw $exception;
         }
     }
-
 
     /**
      * @inheritdoc
@@ -109,10 +111,12 @@ class LoggerClient implements ClientInterface
      * generates an array with all request information in it.
      *
      * @param RequestInterface $request
+     *
      * @return array
      * @author Daniel Wendlandt
      */
-    private function generateLogRequestData(RequestInterface $request) {
+    private function generateLogRequestData(RequestInterface $request)
+    {
         return array(
             'class' => get_class($request),
             'method' => $request->getMethod(),
@@ -128,10 +132,12 @@ class LoggerClient implements ClientInterface
      * generates an array with all response information in it.
      *
      * @param ResponseInterface $response
+     *
      * @return array
      * @author Daniel Wendlandt
      */
-    private function generateLogResponseData(ResponseInterface $response) {
+    private function generateLogResponseData(ResponseInterface $response)
+    {
         return array(
             'class' => get_class($response),
             'raw_data' => $response->getRawData()

@@ -21,8 +21,9 @@ use JMS\Serializer\Annotation as JMS;
 
 /**
  * Response Entity for Elasticseach Responses.
+ *
  * @package Elastification\Client\Serializer\JmsSerializer
- * @author Mario Mueller
+ * @author  Mario Mueller
  */
 class SearchResponseEntity
 {

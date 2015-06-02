@@ -25,23 +25,24 @@ use Elastification\Client\Serializer\SerializerInterface;
  * Class IndexStatusRequest
  *
  * @package Elastification\Client\Request\V1x\Index
- * @author Daniel Wendlandt
+ * @author  Daniel Wendlandt
  */
 class IndexStatusRequest extends AbstractIndexStatusRequest
 {
 
     /**
-     * @param string $rawData
+     * @param string                                                $rawData
      * @param \Elastification\Client\Serializer\SerializerInterface $serializer
-     * @param array $serializerParams
+     * @param array                                                 $serializerParams
+     *
      * @return IndexStatusResponse
      * @author Daniel Wendlandt
      */
     public function createResponse(
         $rawData,
         SerializerInterface $serializer,
-        array $serializerParams = array())
-    {
+        array $serializerParams = array()
+    ) {
         return new IndexStatusResponse($rawData, $serializer, $serializerParams);
     }
 

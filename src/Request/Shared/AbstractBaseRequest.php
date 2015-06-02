@@ -66,7 +66,6 @@ abstract class AbstractBaseRequest implements RequestInterface
             $this->serializerParams = $serializerParams;
         }
 
-
         if (!empty($index)) {
             $this->index = $index;
         }
@@ -92,7 +91,6 @@ abstract class AbstractBaseRequest implements RequestInterface
         return $this->type;
     }
 
-
     /**
      * @inheritdoc
      */
@@ -108,5 +106,4 @@ abstract class AbstractBaseRequest implements RequestInterface
     {
         return $this->serializerParams;
     }
-
 }

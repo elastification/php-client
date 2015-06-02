@@ -23,24 +23,26 @@ use Elastification\Client\Serializer\SerializerInterface;
 
 /**
  * Class CreateDocumentRequest
+ *
  * @package Elastification\Client\Request\V090x
- * @author Daniel Wendlandt
+ * @author  Daniel Wendlandt
  */
 class CreateDocumentRequest extends AbstractCreateDocumentRequest
 {
 
     /**
-     * @param string $rawData
+     * @param string                                                $rawData
      * @param \Elastification\Client\Serializer\SerializerInterface $serializer
-     * @param array $serializerParams
+     * @param array                                                 $serializerParams
+     *
      * @return CreateUpdateDocumentResponse
      * @author Daniel Wendlandt
      */
     public function createResponse(
         $rawData,
         SerializerInterface $serializer,
-        array $serializerParams = array())
-    {
+        array $serializerParams = array()
+    ) {
         return new CreateUpdateDocumentResponse($rawData, $serializer, $serializerParams);
     }
 

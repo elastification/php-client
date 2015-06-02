@@ -86,6 +86,7 @@ abstract class AbstractGetFieldMappingRequest extends AbstractBaseRequest
      * before setting data it should be serialized
      *
      * @param mixed $body
+     *
      * @throws \Elastification\Client\Exception\RequestException
      * @author Daniel Wendlandt
      */
@@ -93,7 +94,5 @@ abstract class AbstractGetFieldMappingRequest extends AbstractBaseRequest
     {
         // do nothing here
     }
-
-
 
 }

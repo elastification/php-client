@@ -18,12 +18,12 @@
 namespace Elastification\Client\Transport\Thrift;
 
 use Elasticsearch\Method;
-use Elastification\Client\Transport\TransportRequestInterface;
 use Elasticsearch\RestRequest;
+use Elastification\Client\Transport\TransportRequestInterface;
 
 /**
  * @package Elastification\Client\Transport\Thrift
- * @author Mario Mueller
+ * @author  Mario Mueller
  */
 class ThriftTransportRequest implements TransportRequestInterface
 {
@@ -34,7 +34,7 @@ class ThriftTransportRequest implements TransportRequestInterface
 
     /**
      * @param string $method The http method to use.
-     * @param array $vals
+     * @param array  $vals
      */
     function __construct($method, $vals = null)
     {
@@ -44,6 +44,7 @@ class ThriftTransportRequest implements TransportRequestInterface
 
     /**
      * @param string $body The raw request body.
+     *
      * @return void
      * @author Mario Mueller
      */
@@ -54,6 +55,7 @@ class ThriftTransportRequest implements TransportRequestInterface
 
     /**
      * @param string $path The path according to the Elasticsearch http interface.
+     *
      * @return void
      * @author Mario Mueller
      */
@@ -73,6 +75,7 @@ class ThriftTransportRequest implements TransportRequestInterface
 
     /**
      * @param array $params
+     *
      * @return void
      * @author Mario Mueller
      */
@@ -80,6 +83,5 @@ class ThriftTransportRequest implements TransportRequestInterface
     {
         $this->request->parameters = $params;
     }
-
 
 }

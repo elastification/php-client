@@ -25,7 +25,7 @@ use Elastification\Client\Request\Shared\AbstractBaseRequest;
  * Class AbstractIndexFlushRequest
  *
  * @package Elastification\Client\Request\Shared\Index
- * @author Daniel Wendlandt
+ * @author  Daniel Wendlandt
  */
 abstract class AbstractIndexFlushRequest extends AbstractBaseRequest
 {

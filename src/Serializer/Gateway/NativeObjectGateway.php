@@ -90,6 +90,7 @@ class NativeObjectGateway implements GatewayInterface
         if (property_exists($this->jsonData, $offset)) {
             return GatewayFactory::factory($this->jsonData->$offset);
         }
+
         return null;
     }
 
@@ -140,6 +141,7 @@ class NativeObjectGateway implements GatewayInterface
     public function current()
     {
         $property = $this->properties[$this->currentPointer];
+
         return $this->jsonData->$property;
     }
 

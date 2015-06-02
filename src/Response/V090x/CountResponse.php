@@ -56,5 +56,4 @@ class CountResponse extends Response
 
         return $this->get(self::PROP_SHARDS);
     }
-
 }

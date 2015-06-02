@@ -15,6 +15,7 @@
  * This software consists of voluntary contributions made by many individuals
  * and is licensed under the MIT license.
  */
+
 namespace Elastification\Client\Request\Shared;
 
 use Elastification\Client\Exception\RequestException;
@@ -80,5 +81,4 @@ abstract class AbstractGetDocumentRequest extends AbstractBaseRequest
 
         $this->action = $id;
     }
-
 }

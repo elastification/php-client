@@ -25,5 +25,4 @@ namespace Elastification\Client\Exception;
  */
 class RepositoryException extends \Exception
 {
-
 }

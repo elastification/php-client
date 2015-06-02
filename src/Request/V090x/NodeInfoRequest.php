@@ -25,23 +25,24 @@ use Elastification\Client\Serializer\SerializerInterface;
  * Class NodeInfoRequest
  *
  * @package Elastification\Client\Request\V090x
- * @author Daniel Wendlandt
+ * @author  Daniel Wendlandt
  */
 class NodeInfoRequest extends AbstractNodeInfoRequest
 {
 
     /**
-     * @param string $rawData
+     * @param string                                                $rawData
      * @param \Elastification\Client\Serializer\SerializerInterface $serializer
-     * @param array $serializerParams
+     * @param array                                                 $serializerParams
+     *
      * @return NodeInfoResponse
      * @author Daniel Wendlandt
      */
     public function createResponse(
         $rawData,
         SerializerInterface $serializer,
-        array $serializerParams = array())
-    {
+        array $serializerParams = array()
+    ) {
 
         return new NodeInfoResponse($rawData, $serializer, $serializerParams);
     }

@@ -25,7 +25,7 @@ use Elastification\Client\Request\Shared\AbstractBaseRequest;
  * Class AbstractUpdateIndexSettingsRequest
  *
  * @package Elastification\Client\Request\Shared\Index
- * @author Patrick Pokatilo <mail@shyxormz.net>
+ * @author  Patrick Pokatilo <mail@shyxormz.net>
  */
 abstract class AbstractUpdateIndexSettingsRequest extends AbstractBaseRequest
 {

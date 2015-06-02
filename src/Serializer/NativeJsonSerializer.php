@@ -59,14 +59,14 @@ class NativeJsonSerializer implements SerializerInterface
         if (version_compare(PHP_VERSION, '5.5.0', '>=')) {
             $jsonLastError = json_last_error();
 
-            if(JSON_ERROR_NONE === $jsonLastError && (is_string($data) && (empty($data) || '{}' == $data))) {
+            if (JSON_ERROR_NONE === $jsonLastError && (is_string($data) && (empty($data) || '{}' == $data))) {
                 return $this->createGateway($assoc, array());
             }
 
             throw new DeserializationFailureException(json_last_error_msg(), $jsonLastError);
         }
 
-        if(is_string($data) && empty($data)) {
+        if (is_string($data) && empty($data)) {
             return $this->createGateway($assoc, array());
         }
 
@@ -88,6 +88,7 @@ class NativeJsonSerializer implements SerializerInterface
         if (isset($params['assoc']) && is_bool($params['assoc'])) {
             $assoc = $params['assoc'];
         }
+
         return $assoc;
     }
 
@@ -105,6 +106,7 @@ class NativeJsonSerializer implements SerializerInterface
         if (isset($params['force_object']) && is_bool($params['force_object']) && true === $params['force_object']) {
             $forceObject = JSON_FORCE_OBJECT;
         }
+
         return $forceObject;
     }
 
@@ -129,6 +131,7 @@ class NativeJsonSerializer implements SerializerInterface
         } else {
             $instance = new NativeObjectGateway($decodedJson);
         }
+
         return $instance;
     }
 }

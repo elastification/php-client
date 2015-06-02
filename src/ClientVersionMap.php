@@ -40,6 +40,7 @@ class ClientVersionMap implements ClientVersionMapInterface
      * We throw an exception in case of a non-matching version.
      *
      * @param  string $version A version string in the schema of 0.90.x.
+     *
      * @return string The internal namespace/folder
      * @throws VersionException
      * @author Daniel Wendlandt
@@ -47,8 +48,8 @@ class ClientVersionMap implements ClientVersionMapInterface
     public function getVersion($version)
     {
 
-        foreach($this->versions as $versionPattern) {
-            if(preg_match($versionPattern['regex'], $version)) {
+        foreach ($this->versions as $versionPattern) {
+            if (preg_match($versionPattern['regex'], $version)) {
                 return $versionPattern['version'];
             }
         }

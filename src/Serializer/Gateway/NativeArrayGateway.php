@@ -68,6 +68,7 @@ class NativeArrayGateway implements GatewayInterface
         if (isset($this->jsonData[$offset])) {
             return GatewayFactory::factory($this->jsonData[$offset]);
         }
+
         return null;
     }
 

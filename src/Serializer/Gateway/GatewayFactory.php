@@ -20,6 +20,7 @@ abstract class GatewayFactory
         } elseif (is_object($value)) {
             return new NativeObjectGateway($value);
         }
+
         return $value;
     }
 }

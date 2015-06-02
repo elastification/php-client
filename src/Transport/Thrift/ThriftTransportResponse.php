@@ -17,12 +17,12 @@
  */
 namespace Elastification\Client\Transport\Thrift;
 
-use Elastification\Client\Transport\TransportResponseInterface;
 use Elasticsearch\RestResponse;
+use Elastification\Client\Transport\TransportResponseInterface;
 
 /**
  * @package Elastification\Client\Transport\Thrift
- * @author Mario Mueller
+ * @author  Mario Mueller
  */
 class ThriftTransportResponse implements TransportResponseInterface
 {

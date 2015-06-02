@@ -25,23 +25,24 @@ use Elastification\Client\Serializer\SerializerInterface;
  * Class GetWarmerRequest
  *
  * @package Elastification\Client\Request\V090x\Index
- * @author Daniel Wendlandt
+ * @author  Daniel Wendlandt
  */
 class GetWarmerRequest extends AbstractGetWarmerRequest
 {
 
     /**
-     * @param string $rawData
+     * @param string                                                $rawData
      * @param \Elastification\Client\Serializer\SerializerInterface $serializer
-     * @param array $serializerParams
+     * @param array                                                 $serializerParams
+     *
      * @return Response
      * @author Daniel Wendlandt
      */
     public function createResponse(
         $rawData,
         SerializerInterface $serializer,
-        array $serializerParams = array())
-    {
+        array $serializerParams = array()
+    ) {
 
         return new Response($rawData, $serializer, $serializerParams);
     }

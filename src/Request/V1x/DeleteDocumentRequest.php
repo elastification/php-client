@@ -24,16 +24,17 @@ use Elastification\Client\Serializer\SerializerInterface;
 class DeleteDocumentRequest extends AbstractDeleteDocumentRequest
 {
     /**
-     * @param string $rawData
+     * @param string                                                $rawData
      * @param \Elastification\Client\Serializer\SerializerInterface $serializer
-     * @param array $serializerParams
+     * @param array                                                 $serializerParams
+     *
      * @return DeleteDocumentResponse
      */
     public function createResponse(
         $rawData,
         SerializerInterface $serializer,
-        array $serializerParams = array())
-    {
+        array $serializerParams = array()
+    ) {
         return new DeleteDocumentResponse($rawData, $serializer, $serializerParams);
     }
 

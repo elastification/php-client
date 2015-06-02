@@ -86,5 +86,4 @@ abstract class AbstractAliasesRequest extends AbstractBaseRequest
 
         $this->body = $this->serializer->serialize($body, $this->serializerParams);
     }
-
 }

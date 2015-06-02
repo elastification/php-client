@@ -15,6 +15,7 @@
  * This software consists of voluntary contributions made by many individuals
  * and is licensed under the MIT license.
  */
+
 namespace Elastification\Client\Request\Shared;
 
 use Elastification\Client\Request\RequestMethods;
@@ -60,5 +61,4 @@ abstract class AbstractCreateDocumentRequest extends AbstractBaseRequest
     {
         $this->body = $this->serializer->serialize($body, $this->serializerParams);
     }
-
 }

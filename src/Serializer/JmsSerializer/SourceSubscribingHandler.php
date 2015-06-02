@@ -88,6 +88,7 @@ class SourceSubscribingHandler implements SubscribingHandlerInterface
         Context $context
     ) {
         $this->sourceDeSerClass = empty($this->sourceDeSerClass) ? $type['name'] : $this->sourceDeSerClass;
+
         return $visitor->getNavigator()->accept($data, ['name' => $this->sourceDeSerClass], $context);
     }
 

@@ -85,8 +85,10 @@ class JmsSerializer implements SerializerInterface
 
     /**
      * @param Serializer               $jms
-     * @param SourceSubscribingHandler $handler This must be the same instance as the one you used for the init of the Serializer
-     * @param array                    $indexTypeClassMap Represents an array of ['indexName' => ['typeName' => 'SourceClassName']]
+     * @param SourceSubscribingHandler $handler           This must be the same instance as the one you used for the
+     *                                                    init of the Serializer
+     * @param array                    $indexTypeClassMap Represents an array of ['indexName' => ['typeName' =>
+     *                                                    'SourceClassName']]
      */
     function __construct(Serializer $jms, SourceSubscribingHandler $handler, array $indexTypeClassMap)
     {
@@ -124,6 +126,7 @@ class JmsSerializer implements SerializerInterface
     {
         $sourceClass = $this->getSourceClassFromMapping($params);
         $this->handler->setSourceDeSerClass($sourceClass);
+
         return new NativeObjectGateway(
             $this->jms->deserialize(
                 $data,
@@ -138,6 +141,7 @@ class JmsSerializer implements SerializerInterface
      * gets the source class.
      *
      * @param array $params
+     *
      * @return string
      * @author Daniel Wendlandt
      */
@@ -154,6 +158,7 @@ class JmsSerializer implements SerializerInterface
                 'Cannot find type in source class map: ' . $type . ' in index ' . $index
             );
         }
+
         return $this->indexTypeClassMap[$index][$type];
     }
 
@@ -169,13 +174,13 @@ class JmsSerializer implements SerializerInterface
     private function determineContext($internalProperty, array $params)
     {
         $ctx = null;
-        if ($internalProperty != null && isset($params['ctx']) !== true) {
+        if ($internalProperty !== null && isset($params['ctx']) !== true) {
             // We need to clone it as jms contexts are not reusable.
             $ctx = clone $internalProperty;
         }
 
         // When a passed context exists, override the internal one
-        if (isset($params['ctx'])) {
+        if (isset($params['ctx']) === true) {
             $ctx = $params['ctx'];
         }
 

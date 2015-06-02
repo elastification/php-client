@@ -1,9 +1,19 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: dwendlandt
- * Date: 17/12/14
- * Time: 08:11
+/*
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *
+ * This software consists of voluntary contributions made by many individuals
+ * and is licensed under the MIT license.
  */
 
 namespace Elastification\Client\Repository;
@@ -25,6 +35,7 @@ interface IndexRepositoryInterface
      * Checks if an index exists
      *
      * @param string $index
+     *
      * @return bool
      * @author Daniel Wendlandt
      */
@@ -34,6 +45,7 @@ interface IndexRepositoryInterface
      * Creates an index.
      *
      * @param string $index
+     *
      * @return \Elastification\Client\Response\ResponseInterface
      * @author Daniel Wendlandt
      */
@@ -43,6 +55,7 @@ interface IndexRepositoryInterface
      * deletes an index.
      *
      * @param string $index
+     *
      * @return \Elastification\Client\Response\ResponseInterface
      * @author Daniel Wendlandt
      */
@@ -52,6 +65,7 @@ interface IndexRepositoryInterface
      * refreshes an index.
      *
      * @param string $index
+     *
      * @return \Elastification\Client\Response\ResponseInterface
      * @author Daniel Wendlandt
      */
@@ -62,6 +76,7 @@ interface IndexRepositoryInterface
      *
      * @param null|string $index
      * @param null|string $type
+     *
      * @return \Elastification\Client\Response\ResponseInterface
      * @author Daniel Wendlandt
      */
@@ -70,9 +85,10 @@ interface IndexRepositoryInterface
     /**
      * Creates the mapping of all/index/types
      *
-     * @param array $mapping
+     * @param array  $mapping
      * @param string $index
      * @param string $type
+     *
      * @return \Elastification\Client\Response\ResponseInterface
      * @author Daniel Wendlandt
      */
@@ -82,6 +98,7 @@ interface IndexRepositoryInterface
      * Gets all aliases based on indices.
      *
      * @param null|string $index
+     *
      * @return \Elastification\Client\Response\ResponseInterface
      * @author Daniel Wendlandt
      */
@@ -91,11 +108,10 @@ interface IndexRepositoryInterface
      * Updates aliases by given actions
      *
      * @param array $aliasActions
+     *
      * @return \Elastification\Client\Response\ResponseInterface
      * @throws RepositoryException
      * @author Daniel Wendlandt
      */
     public function updateAliases(array $aliasActions);
-
-
 }

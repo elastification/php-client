@@ -25,7 +25,6 @@ abstract class AbstractGetAliasesRequest extends AbstractBaseRequest
 
     const REQUEST_ACTION = '_aliases';
 
-
     /**
      * @inheritdoc
      */
@@ -65,6 +64,7 @@ abstract class AbstractGetAliasesRequest extends AbstractBaseRequest
      * before setting data it should be serialized
      *
      * @param mixed $body
+     *
      * @throws \Elastification\Client\Exception\RequestException
      * @author Daniel Wendlandt
      */
@@ -72,5 +72,4 @@ abstract class AbstractGetAliasesRequest extends AbstractBaseRequest
     {
         // do nothing here
     }
-
 }

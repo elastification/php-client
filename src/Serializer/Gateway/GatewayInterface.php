@@ -29,7 +29,7 @@ namespace Elastification\Client\Serializer\Gateway;
  *
  * For performance reasons you should call this method as soon as possible in your code and work with the real result.
  *
- * @see Elastification\Client\Serializer\Gateway\GatewayInterface#getGatewayValue
+ * @see    Elastification\Client\Serializer\Gateway\GatewayInterface#getGatewayValue
  * @author Mario Mueller
  */
 interface GatewayInterface extends \ArrayAccess, \Iterator, \Countable

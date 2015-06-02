@@ -25,23 +25,24 @@ use Elastification\Client\Serializer\SerializerInterface;
  * Class GetTemplateRequest
  *
  * @package Elastification\Client\Request\V1x
- * @author Daniel Wendlandt
+ * @author  Daniel Wendlandt
  */
 class GetTemplateRequest extends AbstractGetTemplateRequest
 {
 
     /**
-     * @param string $rawData
+     * @param string                                                $rawData
      * @param \Elastification\Client\Serializer\SerializerInterface $serializer
-     * @param array $serializerParams
+     * @param array                                                 $serializerParams
+     *
      * @return Response
      * @author Daniel Wendlandt
      */
     public function createResponse(
         $rawData,
         SerializerInterface $serializer,
-        array $serializerParams = array())
-    {
+        array $serializerParams = array()
+    ) {
 
         return new Response($rawData, $serializer, $serializerParams);
     }

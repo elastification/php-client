@@ -33,7 +33,6 @@ interface ResponseInterface
      * @param array               $serializerParams
      *
      * @author Daniel Wendlandt
-     * @return void
      */
     public function __construct($rawData, SerializerInterface $serializer, array $serializerParams = array());
 

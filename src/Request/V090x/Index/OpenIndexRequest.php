@@ -26,14 +26,15 @@ use Elastification\Client\Serializer\SerializerInterface;
  * Class OpenIndexRequest
  *
  * @package Elastification\Client\Request\V090x\Index
- * @author Patrick Pokatilo <mail@shyxormz.net>
+ * @author  Patrick Pokatilo <mail@shyxormz.net>
  */
 class OpenIndexRequest extends AbstractOpenIndexRequest
 {
     /**
-     * @param string $rawData
+     * @param string              $rawData
      * @param SerializerInterface $serializer
-     * @param array $serializerParams
+     * @param array               $serializerParams
+     *
      * @return IndexResponse
      * @author Daniel Wendlandt
      * @author Patrick Pokatilo <mail@shyxormz.net>
@@ -41,8 +42,8 @@ class OpenIndexRequest extends AbstractOpenIndexRequest
     public function createResponse(
         $rawData,
         SerializerInterface $serializer,
-        array $serializerParams = array())
-    {
+        array $serializerParams = array()
+    ) {
 
         return new IndexResponse($rawData, $serializer, $serializerParams);
     }

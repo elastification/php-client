@@ -25,14 +25,14 @@ use Elastification\Client\Serializer\SerializerInterface;
  * Class AbstractNodeInfoRequest
  *
  * @package Elastification\Client\Request\Shared\Index
- * @author Daniel Wendlandt
+ * @author  Daniel Wendlandt
  */
 abstract class AbstractNodeInfoRequest extends AbstractBaseRequest
 {
 
     /**
      * @param SerializerInterface $serializer
-     * @param array $serializerParams
+     * @param array               $serializerParams
      */
     public function __construct(SerializerInterface $serializer, array $serializerParams = array())
     {
@@ -79,5 +79,4 @@ abstract class AbstractNodeInfoRequest extends AbstractBaseRequest
     {
         //do nothing
     }
-
 }

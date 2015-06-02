@@ -21,7 +21,7 @@ use JMS\Serializer\Annotation as JMS;
 
 /**
  * @package Elastification\Client\Serializer\JmsSerializer
- * @author Daniel Wendlandt
+ * @author  Daniel Wendlandt
  */
 class DocumentResponseEntity
 {

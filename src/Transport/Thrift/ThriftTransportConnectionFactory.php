@@ -57,9 +57,9 @@ class ThriftTransportConnectionFactory
 
     /**
      * @param string $host
-     * @param int $port
-     * @param int $sendTimeout
-     * @param int $receiveTimeout
+     * @param int    $port
+     * @param int    $sendTimeout
+     * @param int    $receiveTimeout
      *
      * @return TSocket
      * @author Mario Mueller
@@ -92,6 +92,7 @@ class ThriftTransportConnectionFactory
         } else {
             $transport = new TBufferedTransport($socket);
         }
+
         return $transport;
     }
 }

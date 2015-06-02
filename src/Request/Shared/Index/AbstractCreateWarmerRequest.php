@@ -26,7 +26,7 @@ use Elastification\Client\Request\Shared\AbstractBaseRequest;
  * Class AbstractCreateMappingRequest
  *
  * @package Elastification\Client\Request\Shared\Index
- * @author Daniel Wendlandt
+ * @author  Daniel Wendlandt
  */
 abstract class AbstractCreateWarmerRequest extends AbstractBaseRequest
 {
@@ -56,7 +56,7 @@ abstract class AbstractCreateWarmerRequest extends AbstractBaseRequest
      */
     public function getAction()
     {
-        if(empty($this->warmerName)) {
+        if (empty($this->warmerName)) {
             throw new RequestException('Warmer name is not set');
         }
 
@@ -94,12 +94,11 @@ abstract class AbstractCreateWarmerRequest extends AbstractBaseRequest
      * sets the name of the warmer
      *
      * @param string $warmerName
+     *
      * @author Daniel Wendlandt
      */
     public function setWarmerName($warmerName)
     {
         $this->warmerName = $warmerName;
     }
-
-
 }

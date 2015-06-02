@@ -15,6 +15,7 @@
  * This software consists of voluntary contributions made by many individuals
  * and is licensed under the MIT license.
  */
+
 namespace Elastification\Client\Request\V1x\Index;
 
 use Elastification\Client\Request\Shared\Index\AbstractCreateIndexRequest;
@@ -28,23 +29,24 @@ use Elastification\Client\Serializer\SerializerInterface;
  * there will be an exception at client send.
  *
  * @package Elastification\Client\Request\V090x\Index
- * @author Daniel Wendlandt
+ * @author  Daniel Wendlandt
  */
 class CreateIndexRequest extends AbstractCreateIndexRequest
 {
 
     /**
-     * @param string $rawData
+     * @param string                                                $rawData
      * @param \Elastification\Client\Serializer\SerializerInterface $serializer
-     * @param array $serializerParams
+     * @param array                                                 $serializerParams
+     *
      * @return IndexResponse
      * @author Daniel Wendlandt
      */
     public function createResponse(
         $rawData,
         SerializerInterface $serializer,
-        array $serializerParams = array())
-    {
+        array $serializerParams = array()
+    ) {
 
         return new IndexResponse($rawData, $serializer, $serializerParams);
     }

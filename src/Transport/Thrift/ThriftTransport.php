@@ -17,10 +17,10 @@
  */
 namespace Elastification\Client\Transport\Thrift;
 
+use Elasticsearch\RestClient;
 use Elastification\Client\Transport\Exception\TransportLayerException;
 use Elastification\Client\Transport\TransportInterface;
 use Elastification\Client\Transport\TransportRequestInterface;
-use Elasticsearch\RestClient;
 
 /**
  * Thrift transport implementation.
@@ -28,7 +28,7 @@ use Elasticsearch\RestClient;
  * This needs the elasticsearch thrift plugin to be installed on the server side.
  *
  * @package Elastification\Client\Transport\Thrift
- * @author Mario Mueller
+ * @author  Mario Mueller
  */
 class ThriftTransport implements TransportInterface
 {
@@ -47,6 +47,7 @@ class ThriftTransport implements TransportInterface
 
     /**
      * @param string $httpMethod The http method to use.
+     *
      * @return \Elastification\Client\Transport\TransportRequestInterface
      * @author Mario Mueller
      */
@@ -57,6 +58,7 @@ class ThriftTransport implements TransportInterface
 
     /**
      * @param TransportRequestInterface $request The configured request to send.
+     *
      * @return \Elastification\Client\Transport\TransportResponseInterface
      * @author Mario Mueller
      */

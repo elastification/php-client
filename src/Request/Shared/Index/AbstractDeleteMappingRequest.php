@@ -25,7 +25,7 @@ use Elastification\Client\Request\Shared\AbstractBaseRequest;
  * Class AbstractDeleteMappingRequest
  *
  * @package Elastification\Client\Request\Shared\Index
- * @author Daniel Wendlandt
+ * @author  Daniel Wendlandt
  */
 abstract class AbstractDeleteMappingRequest extends AbstractBaseRequest
 {
@@ -63,6 +63,7 @@ abstract class AbstractDeleteMappingRequest extends AbstractBaseRequest
      * before setting data it should be serialized
      *
      * @param mixed $body
+     *
      * @throws \Elastification\Client\Exception\RequestException
      * @author Daniel Wendlandt
      */

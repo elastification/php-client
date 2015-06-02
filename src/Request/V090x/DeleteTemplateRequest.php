@@ -25,23 +25,24 @@ use Elastification\Client\Serializer\SerializerInterface;
  * Class CreateMappingRequest
  *
  * @package Elastification\Client\Request\V090x
- * @author Daniel Wendlandt
+ * @author  Daniel Wendlandt
  */
 class DeleteTemplateRequest extends AbstractDeleteTemplateRequest
 {
 
     /**
-     * @param string $rawData
+     * @param string                                                $rawData
      * @param \Elastification\Client\Serializer\SerializerInterface $serializer
-     * @param array $serializerParams
+     * @param array                                                 $serializerParams
+     *
      * @return IndexResponse
      * @author Daniel Wendlandt
      */
     public function createResponse(
         $rawData,
         SerializerInterface $serializer,
-        array $serializerParams = array())
-    {
+        array $serializerParams = array()
+    ) {
 
         return new IndexResponse($rawData, $serializer, $serializerParams);
     }
