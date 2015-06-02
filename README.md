@@ -15,7 +15,7 @@ ToDo
 ====
 
 Global:
-- [ ] Symfony2 Bundle
+- [x] Symfony2 Bundle
 - [ ] Vagrant boxes for different elasticsearch versions
 - [ ] Helper for Version response compare. (Symfony/Console)
 - [ ] Export/Import/Copy indices Elasticsearch tool (php) based on php-client and console application with simple config json/yml
