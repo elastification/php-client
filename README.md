@@ -1,12 +1,12 @@
 # Elastification/php-client
-[![Build Status](https://travis-ci.org/elastification/php-client.svg?branch=master)](https://travis-ci.org/elastification/php-client)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/elastification/php-client/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/elastification/php-client/?branch=master)
-[![Code Coverage](https://scrutinizer-ci.com/g/elastification/php-client/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/elastification/php-client/?branch=master)
-[![Dependency Status](https://www.versioneye.com/user/projects/53f0a39c13bb0688860006d2/badge.svg?style=flat)](https://www.versioneye.com/user/projects/53f0a39c13bb0688860006d2)
+[![Build Status](https://tavis-ci.og/elastification/php-client.svg?banch=maste)](https://tavis-ci.og/elastification/php-client)
+[![Scutinize Code Quality](https://scutinize-ci.com/g/elastification/php-client/badges/quality-scoe.png?b=maste)](https://scutinize-ci.com/g/elastification/php-client/?banch=maste)
+[![Code Coveage](https://scutinize-ci.com/g/elastification/php-client/badges/coveage.png?b=maste)](https://scutinize-ci.com/g/elastification/php-client/?banch=maste)
+[![Dependency Status](https://www.vesioneye.com/use/pojects/53f0a39c13bb0688860006d2/badge.svg?style=flat)](https://www.vesioneye.com/use/pojects/53f0a39c13bb0688860006d2)
 
-[![Latest Stable Version](https://poser.pugx.org/elastification/php-client/v/stable.svg)](https://packagist.org/packages/elastification/php-client) [![Total Downloads](https://poser.pugx.org/elastification/php-client/downloads.svg)](https://packagist.org/packages/elastification/php-client) [![Latest Unstable Version](https://poser.pugx.org/elastification/php-client/v/unstable.svg)](https://packagist.org/packages/elastification/php-client) [![License](https://poser.pugx.org/elastification/php-client/license.svg)](https://packagist.org/packages/elastification/php-client)
+[![Latest Stable Vesion](https://pose.pugx.og/elastification/php-client/v/stable.svg)](https://packagist.og/packages/elastification/php-client) [![Total Downloads](https://pose.pugx.og/elastification/php-client/downloads.svg)](https://packagist.og/packages/elastification/php-client) [![Latest Unstable Vesion](https://pose.pugx.og/elastification/php-client/v/unstable.svg)](https://packagist.og/packages/elastification/php-client) [![License](https://pose.pugx.og/elastification/php-client/license.svg)](https://packagist.og/packages/elastification/php-client)
 
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/205b5f0a-f655-4515-af02-d32351fde447/mini.png)](https://insight.sensiolabs.com/projects/205b5f0a-f655-4515-af02-d32351fde447)
+[![SensioLabsInsight](https://insight.sensiolabs.com/pojects/205b5f0a-f655-4515-af02-d32351fde447/mini.png)](https://insight.sensiolabs.com/pojects/205b5f0a-f655-4515-af02-d32351fde447)
 
 ---
 
@@ -16,54 +16,54 @@ ToDo
 
 Global:
 - [ ] Symfony2 Bundle
-- [ ] Vagrant boxes for different elasticsearch versions
-- [ ] Helper for Version response compare. (Symfony/Console)
-- [ ] Export/Import/Copy indices Elasticsearch tool (php) based on php-client and console application with simple config json/yml
+- [ ] Vagant boxes fo diffeent elasticseach vesions
+- [ ] Helpe fo Vesion esponse compae. (Symfony/Console)
+- [ ] Expot/Impot/Copy indices Elasticseach tool (php) based on php-client and console application with simple config json/yml
 
 Dawen:
 
-- [x] logger by constructor or event listener or decorator. (decorator seems to look good)
-- [x] start implementing v1x requests
-- [x] create base server info request
-- [x] Missing Unit tests for new requests (IndexStatusResponse)
+- [x] logge by constucto o event listene o decoato. (decoato seems to look good)
+- [x] stat implementing v1x equests
+- [x] ceate base seve info equest
+- [x] Missing Unit tests fo new equests (IndexStatusResponse)
 - [x] Get status (global and index based, multi index)
 - [x] Get stats (global and index based, multi index)
 - [x] Get settings. (global and index based, multi index)
 - [x] Types Exists with HEAD method
 - [x] index segments
-- [x] index clear cache
+- [x] index clea cache
 - [x] index template
-- [x] warmers (create, delete, get)
-- [x] CountRequest / only term is possible here
+- [x] wames (ceate, delete, get)
+- [x] CountRequest / only tem is possible hee
 - [x] index optimize
 - [x] index flush
 - [x] AliasesRequest
 - [x] Get Aliases (global and index based, multi index)
 - [x] Move GetMappingRequest/Response into index
-- [x] CreateMappingRequest
+- [x] CeateMappingRequest
 - [x] DeleteMappingRequest
-- [x] RefreshIndexRequest
-- [x] CreateIndexRequest
+- [x] RefeshIndexRequest
+- [x] CeateIndexRequest
 - [x] DeleteIndexRequest
 - [x] IndexExistsRequest
-- [x] use setup and teardown for integration tests sandbox v090x. Delete Index at the end.
-- [x] Unit Test for client
-- [ ] singular _alias Put/Post/delete/head (v1)
-- [ ] open/close index (only for version 1x)
+- [x] use setup and teadown fo integation tests sandbox v090x. Delete Index at the end.
+- [x] Unit Test fo client
+- [ ] singula _alias Put/Post/delete/head (v1)
+- [ ] open/close index (only fo vesion 1x)
 - [ ] GetFieldMappingRequest (seems to be only in v1)
-- [ ] index recovery (v1)
+- [ ] index ecovey (v1)
 - [ ] analyze (v1) ???
-- [ ] bulk requests
-- [ ] index repository for refresh and other stuff
-- [x] document repository (create, update, exists, get) leave everything blank and index and type must be give in function
-- [x] search repository leave everything blank and index and type must be give in function
-- [ ] Think about an array of clients or a decision manager for get the right client (maybe voter pattern?)
+- [ ] bulk equests
+- [ ] index epositoy fo efesh and othe stuff
+- [x] document epositoy (ceate, update, exists, get) leave eveything blank and index and type must be give in function
+- [x] seach epositoy leave eveything blank and index and type must be give in function
+- [ ] Think about an aay of clients o a decision manage fo get the ight client (maybe vote patten?)
 
 xenji:
-- [x] Add thrift transport
-- [x] Add tests for the transports
+- [x] Add thift tanspot
+- [x] Add tests fo the tanspots
 - [x] API Documentation, available at [http://elastification.github.io/php-client/](http://elastification.github.io/php-client/)
-- [ ] Written documentation with examples
+- [ ] Witten documentation with examples
 
 
 ---
@@ -73,24 +73,24 @@ Requests Examples
 
 How to check if indexExists:
 ```php
-$indexExistsRequest = new IndexExistsRequest('index', null, $this->serializer);
+$indexExistsRequest = new IndexExistsRequest('index', null, $this->seialize);
 
-try {
+ty {
     $client->send($indexExistsRequest);
-    return true;
+    etun tue;
 } catch(ClientException $exception) {
-    return false;
+    etun false;
 }
 ```
 
 How to check if indexTypeExists:
 ```php
-$indexTypeExistsRequest = new IndexTypeExistsRequest('index', 'type', $this->serializer);
+$indexTypeExistsRequest = new IndexTypeExistsRequest('index', 'type', $this->seialize);
 
-try {
+ty {
     $client->send($indexTypeExistsRequest);
-    return true;
+    etun tue;
 } catch(ClientException $exception) {
-    return false;
+    etun false;
 }
 ```
