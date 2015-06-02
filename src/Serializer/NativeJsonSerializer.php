@@ -51,7 +51,7 @@ class NativeJsonSerializer implements SerializerInterface
         $assoc = $this->useAssoc($params);
         $decodedJson = json_decode($data, $assoc);
 
-        if ($decodedJson != null) {
+        if ($decodedJson !== null) {
             return $this->createGateway($assoc, $decodedJson);
         }
 

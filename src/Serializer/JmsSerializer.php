@@ -169,7 +169,7 @@ class JmsSerializer implements SerializerInterface
     private function determineContext($internalProperty, array $params)
     {
         $ctx = null;
-        if ($internalProperty != null && !isset($params['ctx'])) {
+        if ($internalProperty != null && isset($params['ctx']) !== true) {
             // We need to clone it as jms contexts are not reusable.
             $ctx = clone $internalProperty;
         }
