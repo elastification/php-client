@@ -59,14 +59,17 @@ class NativeJsonSerializer implements SerializerInterface
         if (version_compare(PHP_VERSION, '5.5.0', '>=')) {
             $jsonLastError = json_last_error();
 
-            if (JSON_ERROR_NONE === $jsonLastError && (is_string($data) && (empty($data) || '{}' == $data))) {
+            if (
+                JSON_ERROR_NONE === $jsonLastError
+                && ($data === '' || '{}' == $data)
+            ) {
                 return $this->createGateway($assoc, array());
             }
 
             throw new DeserializationFailureException(json_last_error_msg(), $jsonLastError);
         }
 
-        if (is_string($data) && empty($data)) {
+        if ($data === '') {
             return $this->createGateway($assoc, array());
         }
 
