@@ -75,8 +75,25 @@ class AliasesRequestTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($this->request->getType());
     }
 
-    public function testGetMethod()
+    public function testGetMethodEmptyBody()
     {
+        $this->assertSame(RequestMethods::GET, $this->request->getMethod());
+    }
+
+    public function testGetMethodFilledBody()
+    {
+        $body = 'my test body';
+
+        $this->serializer->expects($this->once())
+            ->method('serialize')
+            ->with(
+                $this->equalTo($body),
+                $this->equalTo(array())
+            )
+            ->will($this->returnValue($body));
+
+        $this->request->setBody($body);
+
         $this->assertSame(RequestMethods::POST, $this->request->getMethod());
     }
 

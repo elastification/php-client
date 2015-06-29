@@ -56,7 +56,7 @@ abstract class AbstractAliasesRequest extends AbstractBaseRequest
      */
     public function getMethod()
     {
-        return RequestMethods::POST;
+        return empty($this->body) ? RequestMethods::GET : RequestMethods::POST;
     }
 
     /**
