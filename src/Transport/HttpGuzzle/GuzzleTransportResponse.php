@@ -18,7 +18,7 @@
 namespace Elastification\Client\Transport\HttpGuzzle;
 
 use Elastification\Client\Transport\TransportResponseInterface;
-use GuzzleHttp\Message\ResponseInterface;
+use Psr\Http\Message\ResponseInterface;
 
 /**
  * @package Elastification\Client\Transport\HttpGuzzle

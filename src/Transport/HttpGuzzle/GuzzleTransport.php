@@ -21,6 +21,7 @@ use Elastification\Client\Transport\Exception\TransportLayerException;
 use Elastification\Client\Transport\TransportInterface;
 use Elastification\Client\Transport\TransportRequestInterface;
 use GuzzleHttp\ClientInterface;
+use GuzzleHttp\Psr7\Request;
 
 /**
  * @package Elastification\Client\Transport\HttpGuzzle
@@ -49,7 +50,7 @@ class GuzzleTransport implements TransportInterface
      */
     public function createRequest($httpMethod)
     {
-        return new GuzzleTransportRequest($this->guzzleClient->createRequest($httpMethod));
+        return new GuzzleTransportRequest(new Request($httpMethod, ''));
     }
 
     /**

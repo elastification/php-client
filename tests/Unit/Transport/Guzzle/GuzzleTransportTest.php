@@ -13,78 +13,72 @@ class GuzzleTransportTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $guzzleRequestMock = $this->getMockBuilder('GuzzleHttp\Message\RequestInterface')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $guzzleClientMock->expects($this->once())
-            ->method('createRequest')
-            ->with($this->equalTo($requestMethod))
-            ->willReturn($guzzleRequestMock);
-
         $guzzleTransport = new GuzzleTransport($guzzleClientMock);
         $request = $guzzleTransport->createRequest($requestMethod);
+
+        $this->assertInstanceOf('Psr\Http\Message\RequestInterface', $request->getWrappedRequest());
+        $this->assertSame($requestMethod, $request->getWrappedRequest()->getMethod());
 
         $this->assertInstanceOf('Elastification\Client\Transport\HttpGuzzle\GuzzleTransportRequest', $request);
     }
 
     public function testGuzzleTransportSendRequest()
     {
-        $requestMethod = 'POST';
         $guzzleClientMock = $this->getMockBuilder('GuzzleHttp\ClientInterface')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $guzzleRequestMock = $this->getMockBuilder('GuzzleHttp\Message\RequestInterface')
+        $guzzleRequestMock = $this->getMockBuilder('Psr\Http\Message\RequestInterface')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $guzzleResponseMock = $this->getMockBuilder('GuzzleHttp\Message\ResponseInterface')
+        $guzzleResponseMock = $this->getMockBuilder('Psr\Http\Message\ResponseInterface')
             ->disableOriginalConstructor()
             ->getMock();
-
-        $guzzleClientMock->expects($this->once())
-            ->method('createRequest')
-            ->with($this->equalTo($requestMethod))
-            ->willReturn($guzzleRequestMock);
 
         $guzzleClientMock->expects($this->once())
             ->method('send')
             ->with($this->equalTo($guzzleRequestMock))
             ->willReturn($guzzleResponseMock);
 
-        $guzzleTransport = new GuzzleTransport($guzzleClientMock);
-        $request = $guzzleTransport->createRequest($requestMethod);
+        $transportRequestMock = $this->getMockBuilder('Elastification\Client\Transport\HttpGuzzle\GuzzleTransportRequest')
+            ->disableOriginalConstructor()
+            ->getMock();
 
-        $response = $guzzleTransport->send($request);
+        $transportRequestMock->expects($this->once())->method('getWrappedRequest')->willReturn($guzzleRequestMock);
+
+        $guzzleTransport = new GuzzleTransport($guzzleClientMock);
+
+        $response = $guzzleTransport->send($transportRequestMock);
         $this->assertInstanceOf('Elastification\Client\Transport\HttpGuzzle\GuzzleTransportResponse', $response);
     }
 
     public function testGuzzleTransportSendRequestWithException()
     {
         $this->setExpectedException('Elastification\Client\Transport\Exception\TransportLayerException');
-        $requestMethod = 'POST';
+
         $guzzleClientMock = $this->getMockBuilder('GuzzleHttp\ClientInterface')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $guzzleRequestMock = $this->getMockBuilder('GuzzleHttp\Message\RequestInterface')
+        $guzzleRequestMock = $this->getMockBuilder('Psr\Http\Message\RequestInterface')
             ->disableOriginalConstructor()
             ->getMock();
-
-        $guzzleClientMock->expects($this->once())
-            ->method('createRequest')
-            ->with($this->equalTo($requestMethod))
-            ->willReturn($guzzleRequestMock);
 
         $guzzleClientMock->expects($this->once())
             ->method('send')
             ->with($this->equalTo($guzzleRequestMock))
             ->willThrowException(new \Exception('Something went wrong'));
 
+        $transportRequestMock = $this->getMockBuilder('Elastification\Client\Transport\HttpGuzzle\GuzzleTransportRequest')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $transportRequestMock->expects($this->once())->method('getWrappedRequest')->willReturn($guzzleRequestMock);
+
+
         $guzzleTransport = new GuzzleTransport($guzzleClientMock);
-        $request = $guzzleTransport->createRequest($requestMethod);
-        $guzzleTransport->send($request);
+        $guzzleTransport->send($transportRequestMock);
     }
 }
 

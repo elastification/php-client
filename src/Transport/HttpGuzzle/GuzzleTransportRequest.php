@@ -18,8 +18,8 @@
 namespace Elastification\Client\Transport\HttpGuzzle;
 
 use Elastification\Client\Transport\TransportRequestInterface;
-use GuzzleHttp\Message\RequestInterface;
-use GuzzleHttp\Stream\Stream;
+use GuzzleHttp\Psr7\Request;
+use Psr\Http\Message\RequestInterface;
 
 /**
  * @package Elastification\Client\Transport\HttpGuzzle
@@ -48,7 +48,7 @@ class GuzzleTransportRequest implements TransportRequestInterface
      */
     public function setBody($body)
     {
-        $this->guzzleRequest->setBody(Stream::factory($body));
+        $this->guzzleRequest = $this->guzzleRequest->withBody(\GuzzleHttp\Psr7\stream_for($body));
     }
 
     /**
@@ -59,11 +59,12 @@ class GuzzleTransportRequest implements TransportRequestInterface
      */
     public function setPath($path)
     {
-        $this->guzzleRequest->setPath($path);
+        $uri = $this->guzzleRequest->getUri()->withPath($path);
+        $this->guzzleRequest = new Request($this->guzzleRequest->getMethod(), $uri);
     }
 
     /**
-     * @return RequestInterface
+     * @return Request
      * @author Mario Mueller
      */
     public function getWrappedRequest()
@@ -79,6 +80,7 @@ class GuzzleTransportRequest implements TransportRequestInterface
      */
     public function setQueryParams(array $params)
     {
-        $this->guzzleRequest->setQuery($params);
+        $uri = $this->guzzleRequest->getUri()->withQuery(\GuzzleHttp\Psr7\build_query($params));
+        $this->guzzleRequest = new Request($this->guzzleRequest->getMethod(), $uri);
     }
 }

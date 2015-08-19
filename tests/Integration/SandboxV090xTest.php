@@ -99,7 +99,7 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
     {
         parent::setUp();
 
-        $this->guzzleClient = new GuzzleClient(array('base_url' => $this->url));
+        $this->guzzleClient = new GuzzleClient(array('base_uri' => $this->url));
         $this->transportClient = new GuzzleTransport($this->guzzleClient);
         $this->requestManager = new RequestManager();
         $this->client = new Client($this->transportClient, $this->requestManager);
