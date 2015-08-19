@@ -21,7 +21,7 @@
         "source": "https://github.com/elastification/php-client/tree/master"
     },
     "require": {
-        "php": ">=5.4.10",
+        "php": ">=5.5.0",
         "psr/log": "~1.0"
     },
     "require-dev": {
