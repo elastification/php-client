@@ -407,6 +407,86 @@ class SandboxV1xTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    public function testMatchAllSearchWithParamSize()
+    {
+        $this->createIndex();
+        $data = array('name' => 'test' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000));
+        $this->createDocument($data);
+        $data = array('name' => 'test' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000));
+        $this->createDocument($data);
+        $data = array('name' => 'test' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000));
+        $this->createDocument($data);
+        $data = array('name' => 'test' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000));
+        $this->createDocument($data);
+        $this->refreshIndex();
+
+        $timeStart = microtime(true);
+        $searchRequest = new SearchRequest(self::INDEX, self::TYPE, $this->serializer);
+
+        $query = [
+            "query" => [
+                "match_all" => []
+            ]
+        ];
+
+        $searchRequest->setBody($query);
+        $searchRequest->setParameter('size', 1);
+
+        /** @var SearchResponse $response */
+        $response = $this->client->send($searchRequest);
+
+        echo 'search(with size param): ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        $this->assertGreaterThan(0, $response->took());
+        $this->assertFalse($response->timedOut());
+        $shards = $response->getShards();
+        $this->assertTrue(isset($shards['total']));
+        $this->assertTrue(isset($shards['successful']));
+        $this->assertTrue(isset($shards['failed']));
+        $this->assertGreaterThan(2, $response->totalHits());
+        $this->assertGreaterThan(0, $response->maxScoreHits());
+
+        $hitsHits = $response->getHitsHits();
+        $this->assertCount(1, $hitsHits);
+    }
+
+    public function testMatchAllSearchWithParamScroll()
+    {
+        $this->createIndex();
+        $data = array('name' => 'test' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000));
+        $this->createDocument($data);
+        $data = array('name' => 'test' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000));
+        $this->createDocument($data);
+        $data = array('name' => 'test' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000));
+        $this->createDocument($data);
+        $data = array('name' => 'test' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000));
+        $this->createDocument($data);
+        $this->refreshIndex();
+
+        $timeStart = microtime(true);
+        $searchRequest = new SearchRequest(self::INDEX, self::TYPE, $this->serializer);
+
+        $query = [
+            "query" => [
+                "match_all" => []
+            ]
+        ];
+
+        $searchRequest->setBody($query);
+        $searchRequest->setParameter('scroll', '1m');
+        $searchRequest->setParameter('search_type', 'scan');
+
+        /** @var SearchResponse $response */
+        $response = $this->client->send($searchRequest);
+
+        echo 'search(with scroll params): ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        $responseData = $response->getData()->getGatewayValue();
+
+        $this->assertTrue(isset($responseData['_scroll_id']));
+        $this->assertGreaterThan(5, strlen($responseData['_scroll_id']));
+    }
+
     public function testGetMappingWithType()
     {
         $this->createIndex();

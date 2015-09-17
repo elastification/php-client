@@ -50,6 +50,11 @@ abstract class AbstractBaseRequest implements RequestInterface
     protected $type = null;
 
     /**
+     * @var array
+     */
+    protected $parameters = array();
+
+    /**
      * @param string                                                $index
      * @param string                                                $type
      * @param \Elastification\Client\Serializer\SerializerInterface $serializer
@@ -105,5 +110,28 @@ abstract class AbstractBaseRequest implements RequestInterface
     public function getSerializerParams()
     {
         return $this->serializerParams;
+    }
+
+    /**
+     * Sets a parameter and casts value to string
+     *
+     * @param string $name
+     * @param mixed $value
+     * @author Daniel Wendlandt
+     */
+    public function setParameter($name, $value)
+    {
+        $this->parameters[$name] = (string) $value;
+    }
+
+    /**
+     * Getter for parameters
+     *
+     * @return array
+     * @author Daniel Wendlandt
+     */
+    public function getParameters()
+    {
+        return $this->parameters;
     }
 }

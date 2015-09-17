@@ -125,4 +125,17 @@ class SearchRequestTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf(self::RESPONSE_CLASS, $response);
     }
 
+    public function testSetGetParameters()
+    {
+        $name = 'my_param';
+        $value = 555;
+
+        $this->request->setParameter($name, $value);
+
+        $parameters = $this->request->getParameters();
+        $this->assertArrayHasKey($name, $parameters);
+        $this->assertEquals((string) $value, $parameters[$name]);
+        $this->assertTrue(is_string($parameters[$name]));
+    }
+
 }

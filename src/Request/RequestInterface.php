@@ -118,4 +118,21 @@ interface RequestInterface
      */
     public function getSupportedClass();
 
+    /**
+     * Sets a parameter and casts value to string
+     *
+     * @param string $name
+     * @param mixed $value
+     * @author Daniel Wendlandt
+     */
+    public function setParameter($name, $value);
+
+    /**
+     * Getter for parameters
+     *
+     * @return array
+     * @author Daniel Wendlandt
+     */
+    public function getParameters();
+
 }

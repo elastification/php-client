@@ -93,6 +93,7 @@ class Client implements ClientInterface
         $transportRequest = $this->transport->createRequest($request->getMethod());
         $transportRequest->setPath($this->generatePath($request));
         $transportRequest = $this->setBody($transportRequest, $request->getBody());
+        $transportRequest = $this->setQueryParameters($transportRequest, $request->getParameters());
 
         try {
             $transportResponse = $this->transport->send($transportRequest);
@@ -137,6 +138,23 @@ class Client implements ClientInterface
     {
         if (null !== $body) {
             $transportRequest->setBody($body);
+        }
+
+        return $transportRequest;
+    }
+
+    /**
+     * Sets query params to transport request
+     *
+     * @param TransportRequestInterface $transportRequest
+     * @param mixed $parameters
+     * @return TransportRequestInterface
+     * @author Daniel Wendlandt
+     */
+    private function setQueryParameters(TransportRequestInterface $transportRequest, $parameters)
+    {
+        if(!empty($parameters) && is_array($parameters)) {
+            $transportRequest->setQueryParams($parameters);
         }
 
         return $transportRequest;

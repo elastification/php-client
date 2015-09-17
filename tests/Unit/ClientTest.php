@@ -159,6 +159,10 @@ class ClientTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($serializer));
 
         $request->expects($this->once())
+            ->method('getParameters')
+            ->will($this->returnValue(null));
+
+        $request->expects($this->once())
             ->method('getSerializerParams')
             ->will($this->returnValue($serializerParams));
 
@@ -182,6 +186,116 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $transportRequest->expects($this->once())
             ->method('setPath')
             ->with($this->equalTo($path));
+
+        $transportRequest->expects($this->never())
+            ->method('setQueryParams');
+
+        $this->transport->expects($this->once())
+            ->method('createRequest')
+            ->with($this->equalTo($method))
+            ->willReturn($transportRequest);
+
+        $transportResponse = $this->getMockBuilder('Elastification\Client\Transport\TransportResponseInterface')
+            ->getMock();
+
+        $transportResponse->expects($this->once())
+            ->method('getBody')
+            ->willReturn($responseBody);
+
+        $this->transport->expects($this->once())
+            ->method('send')
+            ->with($this->identicalTo($transportRequest))
+            ->willReturn($transportResponse);
+
+
+
+        /** @noinspection PhpParamsInspection */
+        $clentResponse = $this->client->send($request);
+
+        $this->assertSame($response, $clentResponse);
+    }
+
+    public function testSendWithParamsWithoutBody()
+    {
+        $method = 'GET';
+        $index = 'test-index';
+        $type = 'test-type';
+        $action = 'test-action';
+        $divider = ClientInterface::PATH_DIVIDER;
+        $path = $index . $divider . $type . $divider . $action;
+        $responseBody = 'this is a simple response body for this mocking hell';
+        $serializerParams = array();
+        $supportedClass = 'Elastification\Client\Response\ResponseInterface';
+        $params = array('my-param' => 'my-value');
+
+        //serializer
+        $serializer = $this->getMockBuilder('Elastification\Client\Serializer\SerializerInterface')
+            ->getMock();
+
+        //response
+        $response = $this->getMockBuilder('Elastification\Client\Response\ResponseInterface')
+            ->getMock();
+
+        //request
+        $request = $this->getMockBuilder('Elastification\Client\Request\RequestInterface')
+            ->getMock();
+
+        $request->expects($this->exactly(2))
+            ->method('getMethod')
+            ->will($this->returnValue($method));
+
+        $request->expects($this->exactly(2))
+            ->method('getIndex')
+            ->will($this->returnValue($index));
+
+        $request->expects($this->exactly(2))
+            ->method('getType')
+            ->will($this->returnValue($type));
+
+        $request->expects($this->exactly(2))
+            ->method('getAction')
+            ->will($this->returnValue($action));
+
+        $request->expects($this->once())
+            ->method('getBody')
+            ->will($this->returnValue(null));
+
+        $request->expects($this->once())
+            ->method('getSerializer')
+            ->will($this->returnValue($serializer));
+
+        $request->expects($this->once())
+            ->method('getParameters')
+            ->willReturn($params);
+
+        $request->expects($this->once())
+            ->method('getSerializerParams')
+            ->will($this->returnValue($serializerParams));
+
+        $request->expects($this->once())
+            ->method('createResponse')
+            ->with(
+                $this->equalTo($responseBody),
+                $this->identicalTo($serializer),
+                $this->identicalTo($serializerParams)
+            )
+            ->willReturn($response);
+
+        $request->expects($this->once())
+            ->method('getSupportedClass')
+            ->willReturn($supportedClass);
+
+        //transport
+        $transportRequest = $this->getMockBuilder('Elastification\Client\Transport\TransportRequestInterface')
+            ->getMock();
+
+        $transportRequest->expects($this->once())
+            ->method('setPath')
+            ->with($this->equalTo($path));
+
+        $transportRequest->expects($this->once())
+            ->method('setQueryParams')
+            ->with($this->identicalTo($params));
 
         $this->transport->expects($this->once())
             ->method('createRequest')
