@@ -8,7 +8,6 @@ use Elastification\Client\Request\V1x\AliasesRequest;
 use Elastification\Client\Request\V1x\CountRequest;
 use Elastification\Client\Request\V1x\CreateDocumentRequest;
 use Elastification\Client\Request\V1x\CreateTemplateRequest;
-use Elastification\Client\Request\V1x\DeleteByQueryRequest;
 use Elastification\Client\Request\V1x\DeleteDocumentRequest;
 use Elastification\Client\Request\V1x\DeleteTemplateRequest;
 use Elastification\Client\Request\V1x\GetDocumentRequest;
@@ -34,6 +33,7 @@ use Elastification\Client\Request\V1x\Index\IndexTypeExistsRequest;
 use Elastification\Client\Request\V1x\Index\RefreshIndexRequest;
 use Elastification\Client\Request\V1x\NodeInfoRequest;
 use Elastification\Client\Request\V1x\SearchRequest;
+use Elastification\Client\Request\V1x\SearchScrollRequest;
 use Elastification\Client\Request\V1x\UpdateDocumentRequest;
 use Elastification\Client\Response\Response;
 use Elastification\Client\Response\ResponseInterface;
@@ -485,6 +485,56 @@ class SandboxV1xTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue(isset($responseData['_scroll_id']));
         $this->assertGreaterThan(5, strlen($responseData['_scroll_id']));
+    }
+
+    public function testSearchScroll()
+    {
+        $this->createIndex();
+        $data = array('name' => 'test' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000));
+        $this->createDocument($data);
+        $data = array('name' => 'test' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000));
+        $this->createDocument($data);
+        $data = array('name' => 'test' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000));
+        $this->createDocument($data);
+        $data = array('name' => 'test' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000));
+        $this->createDocument($data);
+        $this->refreshIndex();
+
+
+        $searchRequest = new SearchRequest(self::INDEX, self::TYPE, $this->serializer);
+
+        $query = [
+            "query" => [
+                "match_all" => []
+            ]
+        ];
+
+        $searchRequest->setBody($query);
+        $searchRequest->setParameter('scroll', '1m');
+        $searchRequest->setParameter('search_type', 'scan');
+
+        /** @var SearchResponse $response */
+        $response = $this->client->send($searchRequest);
+        $responseData = $response->getData()->getGatewayValue();
+        $this->assertTrue(isset($responseData['_scroll_id']));
+
+
+        $timeStart = microtime(true);
+        $scrollRequest = new SearchScrollRequest(self::INDEX, self::TYPE, $this->serializer);
+        $scrollRequest->setScroll('1m');
+        $scrollRequest->setScrollId($responseData['_scroll_id']);
+
+        $responseScroll = $this->client->send($scrollRequest);
+
+        echo 'searchScroll: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+
+        $scrollData = $responseScroll->getData()->getGatewayValue();
+        $scrollHits = $responseScroll->getHitsHits();
+
+        $this->assertTrue(isset($scrollData['_scroll_id']));
+        $this->assertGreaterThan(5, strlen($scrollData['_scroll_id']));
+
+        $this->assertCount(4, $scrollHits);
     }
 
     public function testGetMappingWithType()
