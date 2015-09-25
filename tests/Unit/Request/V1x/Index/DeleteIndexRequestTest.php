@@ -68,9 +68,19 @@ class DeleteIndexRequestTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(self::INDEX, $this->request->getIndex());
     }
 
-    public function testGetType()
+    public function testGetTypeWithNull()
     {
         $this->assertNull($this->request->getType());
+    }
+
+    public function testGetTypeWithParam()
+    {
+        $type = 'my-type';
+
+        /** @noinspection PhpParamsInspection */
+        $request = new DeleteIndexRequest(self::INDEX, $type, $this->serializer);
+
+        $this->assertSame($type, $request->getType());
     }
 
     public function testGetMethod()

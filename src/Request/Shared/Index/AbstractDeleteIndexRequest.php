@@ -49,14 +49,6 @@ abstract class AbstractDeleteIndexRequest extends AbstractBaseRequest
     /**
      * @inheritdoc
      */
-    public function getType()
-    {
-        return null;
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function getBody()
     {
         return null;
