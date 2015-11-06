@@ -261,10 +261,10 @@ class SandboxV1xTest extends \PHPUnit_Framework_TestCase
         $bulkUpdateRequest->addDocument('doc2', $doc2);
         $bulkUpdateRequest->addDocument('doc3', $doc3);
 
-        var_dump($bulkUpdateRequest->getBody());
-//        $reponse = $this->client->send($bulkUpdateRequest);
-//
-//        var_dump($reponse->getRawData());
+//        var_dump($bulkUpdateRequest->getBody());
+        $reponse = $this->client->send($bulkUpdateRequest);
+
+        var_dump($reponse->getRawData());
         die('loool');
 //
 //        $createDocumentRequest->setBody($data);

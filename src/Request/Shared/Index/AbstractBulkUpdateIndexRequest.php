@@ -29,6 +29,7 @@ use Elastification\Client\Request\Shared\AbstractBaseRequest;
  */
 abstract class AbstractBulkUpdateIndexRequest extends AbstractBaseRequest
 {
+    const REQUEST_ACTION = '_bulk';
 
     /**
      * @var null|mixed
@@ -88,7 +89,7 @@ abstract class AbstractBulkUpdateIndexRequest extends AbstractBaseRequest
             $this->body .= PHP_EOL;
         }
 
-        $this->body .= json_encode($update) . PHP_EOL;
+        $this->body .= json_encode($update) . "\n";
         $this->body .= '{"doc": ' . $this->serializer->serialize($doc, $this->serializerParams) . '}';
     }
 }
