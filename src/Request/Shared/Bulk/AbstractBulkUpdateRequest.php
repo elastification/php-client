@@ -16,7 +16,7 @@
  * and is licensed under the MIT license.
  */
 
-namespace Elastification\Client\Request\Shared\Index;
+namespace Elastification\Client\Request\Shared\Bulk;
 
 use Elastification\Client\Request\RequestMethods;
 use Elastification\Client\Request\Shared\AbstractBaseRequest;
@@ -27,9 +27,11 @@ use Elastification\Client\Request\Shared\AbstractBaseRequest;
  * @package Elastification\Client\Request\Shared\Index
  * @author  Daniel Wendlandt
  */
-abstract class AbstractBulkUpdateIndexRequest extends AbstractBaseRequest
+abstract class AbstractBulkUpdateRequest extends AbstractBaseRequest
 {
+    const LINE_BREAK = "\n";
     const REQUEST_ACTION = '_bulk';
+    const BULK_ACTION = 'update';
 
     /**
      * @var null|mixed
@@ -37,11 +39,33 @@ abstract class AbstractBulkUpdateIndexRequest extends AbstractBaseRequest
     private $body = null;
 
     /**
+     * This will overwrite getIndex method for returning null.
+     * The index property is only for internal use.
+     *
+     * @return null
+     */
+    public function getIndex()
+    {
+        return null;
+    }
+
+    /**
+     * This will overwrite getType method for returning null.
+     * The type property is only for internal use.
+     *
+     * @return null
+     */
+    public function getType()
+    {
+        return null;
+    }
+
+    /**
      * @inheritdoc
      */
     public function getMethod()
     {
-        return RequestMethods::PUT;
+        return RequestMethods::POST;
     }
 
     /**
@@ -49,7 +73,7 @@ abstract class AbstractBulkUpdateIndexRequest extends AbstractBaseRequest
      */
     public function getAction()
     {
-        return null;
+        return self::REQUEST_ACTION;
     }
 
     /**
@@ -71,25 +95,27 @@ abstract class AbstractBulkUpdateIndexRequest extends AbstractBaseRequest
     /**
      * adds a document to the body and transforms it in the right format.
      *
+     * @param array|object $doc
      * @param string $id
-     * @param array $doc
+     * @param null|int $retryOnConflict
+     *
      * @author Daniel Wendlandt
      */
-    public function addDocument($id, array $doc)
+    public function addDocument($doc, $id = null, $retryOnConflict = null)
     {
         $update = array(
-            'update' => array(
+            self::BULK_ACTION => array(
                 '_id' => $id,
                 '_index' => $this->index,
                 '_type' => $this->type
             )
         );
 
-        if(null !== $this->body) {
-            $this->body .= PHP_EOL;
+        if(null !== $retryOnConflict) {
+            $update[self::BULK_ACTION]['_retry_on_conflict'] = (int) $retryOnConflict;
         }
 
-        $this->body .= json_encode($update) . "\n";
-        $this->body .= '{"doc": ' . $this->serializer->serialize($doc, $this->serializerParams) . '}';
+        $this->body .= json_encode($update) . self::LINE_BREAK;
+        $this->body .= '{"doc":' . $this->serializer->serialize($doc, $this->serializerParams) . '}' . self::LINE_BREAK;
     }
 }

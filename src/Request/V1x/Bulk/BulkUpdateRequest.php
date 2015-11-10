@@ -16,22 +16,19 @@
  * and is licensed under the MIT license.
  */
 
-namespace Elastification\Client\Request\V1x\Index;
+namespace Elastification\Client\Request\V1x\Bulk;
 
-use Elastification\Client\Request\Shared\Index\AbstractBulkUpdateIndexRequest;
+use Elastification\Client\Request\Shared\Bulk\AbstractBulkCreateRequest;
+use Elastification\Client\Request\Shared\Bulk\AbstractBulkUpdateRequest;
+use Elastification\Client\Response\V1x\BulkResponse;
 use Elastification\Client\Response\V1x\Index\IndexResponse;
 use Elastification\Client\Serializer\SerializerInterface;
 
 /**
- * Class CreateIndexRequest
- *
- * This request returns successful empty response. If not existing index,
- * there will be an exception at client send.
- *
- * @package Elastification\Client\Request\V090x\Index
- * @author  Daniel Wendlandt
+ * Class BulkUpdateRequest
+ * @package Elastification\Client\Request\V1x\Bulk
  */
-class BulkUpdateIndexRequest extends AbstractBulkUpdateIndexRequest
+class BulkUpdateRequest extends AbstractBulkUpdateRequest
 {
 
     /**
@@ -48,7 +45,7 @@ class BulkUpdateIndexRequest extends AbstractBulkUpdateIndexRequest
         array $serializerParams = array()
     ) {
 
-        return new IndexResponse($rawData, $serializer, $serializerParams);
+        return new BulkResponse($rawData, $serializer, $serializerParams);
     }
 
     /**
@@ -59,6 +56,6 @@ class BulkUpdateIndexRequest extends AbstractBulkUpdateIndexRequest
      */
     public function getSupportedClass()
     {
-        return 'Elastification\Client\Response\V1x\Index\IndexResponse';
+        return 'Elastification\Client\Response\V1x\BulkResponse';
     }
 }

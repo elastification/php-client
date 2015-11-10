@@ -6,7 +6,7 @@
  * Time: 11:47
  */
 
-namespace Elastification\Client\Tests\Integration;
+namespace Elastification\Client\Tests\Integration\Repository\V90x;
 
 use Elastification\Client\ClientVersionMap;
 use Elastification\Client\Repository\DocumentRepository;
