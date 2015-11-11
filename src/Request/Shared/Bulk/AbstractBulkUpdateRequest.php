@@ -101,9 +101,9 @@ abstract class AbstractBulkUpdateRequest extends AbstractBaseRequest
      *
      * @author Daniel Wendlandt
      */
-    public function addDocument($doc, $id = null, $retryOnConflict = null)
+    public function addDocument($doc, $id, $retryOnConflict = null)
     {
-        $update = array(
+        $action = array(
             self::BULK_ACTION => array(
                 '_id' => $id,
                 '_index' => $this->index,
@@ -112,10 +112,10 @@ abstract class AbstractBulkUpdateRequest extends AbstractBaseRequest
         );
 
         if(null !== $retryOnConflict) {
-            $update[self::BULK_ACTION]['_retry_on_conflict'] = (int) $retryOnConflict;
+            $action[self::BULK_ACTION]['_retry_on_conflict'] = (int) $retryOnConflict;
         }
 
-        $this->body .= json_encode($update) . self::LINE_BREAK;
+        $this->body .= json_encode($action) . self::LINE_BREAK;
         $this->body .= '{"doc":' . $this->serializer->serialize($doc, $this->serializerParams) . '}' . self::LINE_BREAK;
     }
 }

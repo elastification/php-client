@@ -12,16 +12,6 @@ class BulkUpdateRequestTest extends AbstractElastic
 
     const TYPE = 'bulk-update';
 
-    protected function setUp()
-    {
-        parent::setUp();
-    }
-
-    protected function tearDown()
-    {
-        parent::tearDown();
-    }
-
     public function testBulkUpdateDocsNotExisting()
     {
         $this->createIndex();

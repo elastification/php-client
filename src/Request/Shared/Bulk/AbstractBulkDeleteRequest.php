@@ -27,11 +27,11 @@ use Elastification\Client\Request\Shared\AbstractBaseRequest;
  * @package Elastification\Client\Request\Shared\Index
  * @author  Daniel Wendlandt
  */
-abstract class AbstractBulkCreateRequest extends AbstractBaseRequest
+abstract class AbstractBulkDeleteRequest extends AbstractBaseRequest
 {
     const LINE_BREAK = "\n";
     const REQUEST_ACTION = '_bulk';
-    const BULK_ACTION = 'create';
+    const BULK_ACTION = 'delete';
 
     /**
      * @var null|mixed
@@ -95,21 +95,21 @@ abstract class AbstractBulkCreateRequest extends AbstractBaseRequest
     /**
      * adds a document to the body and transforms it in the right format.
      *
-     * @param array|object $doc
-     * @param string $id
+     * @param array $idList
      * @author Daniel Wendlandt
      */
-    public function addDocument($doc, $id = null)
+    public function add(array $idList)
     {
-        $action = array(
-            self::BULK_ACTION => array(
-                '_id' => $id,
-                '_index' => $this->index,
-                '_type' => $this->type
-            )
-        );
+        foreach ($idList as $id) {
+            $action = array(
+                self::BULK_ACTION => array(
+                    '_id' => $id,
+                    '_index' => $this->index,
+                    '_type' => $this->type
+                )
+            );
 
-        $this->body .= json_encode($action) . self::LINE_BREAK;
-        $this->body .= $this->serializer->serialize($doc, $this->serializerParams) . self::LINE_BREAK;
+            $this->body .= json_encode($action) . self::LINE_BREAK;
+        }
     }
 }

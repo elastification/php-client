@@ -11,20 +11,6 @@ class BulkCreateRequestTest extends AbstractElastic
 
     const TYPE = 'bulk-create';
 
-    protected function setUp()
-    {
-        parent::setUp();
-    }
-
-    protected function tearDown()
-    {
-        if($this->hasIndex()) {
-            $this->deleteIndex();
-        }
-
-        parent::tearDown();
-    }
-
     public function testBulkCreate()
     {
         $this->createIndex();

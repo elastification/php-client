@@ -27,11 +27,11 @@ use Elastification\Client\Request\Shared\AbstractBaseRequest;
  * @package Elastification\Client\Request\Shared\Index
  * @author  Daniel Wendlandt
  */
-abstract class AbstractBulkCreateRequest extends AbstractBaseRequest
+abstract class AbstractBulkIndexRequest extends AbstractBaseRequest
 {
     const LINE_BREAK = "\n";
     const REQUEST_ACTION = '_bulk';
-    const BULK_ACTION = 'create';
+    const BULK_ACTION = 'index';
 
     /**
      * @var null|mixed
