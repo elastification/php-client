@@ -31,38 +31,9 @@ use Elastification\Client\Exception\ClientException;
 use Elastification\Client\Request\RequestManager;
 use Elastification\Client\Request\RequestManagerInterface;
 
-class IndexRepositoryV090xTest extends \PHPUnit_Framework_TestCase
+class IndexRepositoryV090xTest extends AbstractElastic
 {
-    const INDEX = 'dawen-elastic';
-    const TYPE = 'index-repository';
-
-    private $url = 'http://127.0.0.1:9200/';
-//    private $url = 'http://192.168.33.109:9200/';
-
-    /**
-     * @var GuzzleClientInterface
-     */
-    private $guzzleClient;
-
-    /**
-     * @var RequestManagerInterface
-     */
-    private $requestManager;
-
-    /**
-     * @var ClientInterface
-     */
-    private $client;
-
-    /**
-     * @var SerializerInterface
-     */
-    private $serializer;
-
-    /**
-     * @var TransportInterface
-     */
-    private $transportClient;
+    const TYPE = 'repository-index';
 
     /**
      * @var DocumentRepositoryInterface
@@ -93,21 +64,19 @@ class IndexRepositoryV090xTest extends \PHPUnit_Framework_TestCase
     {
         parent::setUp();
 
-        $this->guzzleClient = new GuzzleClient(array('base_url' => $this->url));
-        $this->transportClient = new GuzzleTransport($this->guzzleClient);
-        $this->requestManager = new RequestManager();
-        $this->client = new Client($this->transportClient, $this->requestManager);
-        $this->serializer = new NativeJsonSerializer();
-        $this->documentRepository = new DocumentRepository($this->client,
-            $this->serializer,
+        $this->documentRepository = new DocumentRepository(
+            $this->getClient(),
+            $this->getSerializer(),
             null,
             ClientVersionMap::VERSION_V090X);
-        $this->searchRepository = new SearchRepository($this->client,
-            $this->serializer,
+        $this->searchRepository = new SearchRepository(
+            $this->getClient(),
+            $this->getSerializer(),
             null,
             ClientVersionMap::VERSION_V090X);
-        $this->indexRepository = new IndexRepository($this->client,
-            $this->serializer,
+        $this->indexRepository = new IndexRepository(
+            $this->getClient(),
+            $this->getSerializer(),
             null,
             ClientVersionMap::VERSION_V090X);
 
@@ -115,28 +84,18 @@ class IndexRepositoryV090xTest extends \PHPUnit_Framework_TestCase
 
     protected function tearDown()
     {
-        parent::tearDown();
-
-        if($this->hasIndex()) {
-            $this->deleteIndex();
-        }
-
-        $this->guzzleClient = null;
-        $this->requestManager = null;
-        $this->client = null;
-        $this->serializer = null;
-        $this->transportClient = null;
         $this->documentRepository = null;
         $this->indexRepository = null;
+        $this->searchRepository = null;
+
+        parent::tearDown();
     }
 
 
     public function testIndexExistsWithoutExisting()
     {
-        $timeStart = microtime(true);
         /** @var SearchResponse $response */
-        $result = $this->indexRepository->exists(self::INDEX);
-        echo 'index exist without: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+        $result = $this->indexRepository->exists(ES_INDEX);
 
         $this->assertFalse($result);
     }
@@ -145,48 +104,37 @@ class IndexRepositoryV090xTest extends \PHPUnit_Framework_TestCase
     {
         $this->createSampleData();
 
-        $timeStart = microtime(true);
         /** @var SearchResponse $response */
-        $result = $this->indexRepository->exists(self::INDEX);
-        echo 'index exist with: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+        $result = $this->indexRepository->exists(ES_INDEX);
 
         $this->assertTrue($result);
     }
 
     public function testIndexCreate()
     {
-        $this->assertFalse($this->indexRepository->exists(self::INDEX));
+        $this->assertFalse($this->indexRepository->exists(ES_INDEX));
+        $this->indexRepository->create(ES_INDEX);
 
-        $timeStart = microtime(true);
-        /** @var SearchResponse $response */
-        $response = $this->indexRepository->create(self::INDEX);
-        echo 'index create: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-
-        $this->assertTrue($this->indexRepository->exists(self::INDEX));
+        $this->assertTrue($this->indexRepository->exists(ES_INDEX));
     }
 
     public function testIndexDelete()
     {
-        $this->assertFalse($this->indexRepository->exists(self::INDEX));
-        $this->indexRepository->create(self::INDEX);
-        $this->assertTrue($this->indexRepository->exists(self::INDEX));
+        $this->assertFalse($this->indexRepository->exists(ES_INDEX));
+        $this->indexRepository->create(ES_INDEX);
+        $this->assertTrue($this->indexRepository->exists(ES_INDEX));
 
-        $timeStart = microtime(true);
-        /** @var SearchResponse $response */
-        $this->indexRepository->delete(self::INDEX);
-        echo 'index delete: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+        $this->indexRepository->delete(ES_INDEX);
 
-        $this->assertFalse($this->indexRepository->exists(self::INDEX));
+        $this->assertFalse($this->indexRepository->exists(ES_INDEX));
     }
 
     public function testIndexGetMapping()
     {
         $this->createSampleData();
 
-        $timeStart = microtime(true);
         /** @var SearchResponse $response */
         $response = $this->indexRepository->getMapping();
-        echo 'index getMapping: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
 
         $this->assertContains(self::TYPE, $response->getRawData());
     }
@@ -195,20 +143,16 @@ class IndexRepositoryV090xTest extends \PHPUnit_Framework_TestCase
     {
         $this->createSampleData();
 
-        $response = $this->indexRepository->getMapping(self::INDEX, self::TYPE);
+        $response = $this->indexRepository->getMapping(ES_INDEX, self::TYPE);
         $mapping = $response->getData()->getGatewayValue();
 
-        $this->indexRepository->delete(self::INDEX);
-        $this->assertFalse($this->indexRepository->exists(self::INDEX));
+        $this->indexRepository->delete(ES_INDEX);
+        $this->assertFalse($this->indexRepository->exists(ES_INDEX));
 
-        $this->indexRepository->create(self::INDEX);
+        $this->indexRepository->create(ES_INDEX);
+        $this->indexRepository->createMapping($mapping, ES_INDEX, self::TYPE);
 
-
-        $timeStart = microtime(true);
-        $this->indexRepository->createMapping($mapping, self::INDEX, self::TYPE);
-        echo 'index createMapping: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-
-        $response = $this->indexRepository->getMapping(self::INDEX, self::TYPE);
+        $response = $this->indexRepository->getMapping(ES_INDEX, self::TYPE);
 
         $this->assertEquals($mapping, $response->getData()->getGatewayValue());
     }
@@ -217,121 +161,79 @@ class IndexRepositoryV090xTest extends \PHPUnit_Framework_TestCase
     {
         $this->createSampleData();
 
-        $timeStart = microtime(true);
         $response = $this->indexRepository->getAliases();
-        echo 'index getAliases without params: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
 
         $resultAsArray = $response->getData()->getGatewayValue();
-        $this->assertTrue(isset($resultAsArray[self::INDEX]));
-        $this->assertEmpty($resultAsArray[self::INDEX]['aliases']);
+        $this->assertTrue(isset($resultAsArray[ES_INDEX]));
+        $this->assertEmpty($resultAsArray[ES_INDEX]['aliases']);
     }
 
     public function testGetAliases()
     {
         $this->createSampleData();
 
-        $timeStart = microtime(true);
-        $response = $this->indexRepository->getAliases(self::INDEX);
-        echo 'index getAliases: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+        $response = $this->indexRepository->getAliases(ES_INDEX);
 
         $resultAsArray = $response->getData()->getGatewayValue();
         $this->assertCount(1, $resultAsArray);
-        $this->assertTrue(isset($resultAsArray[self::INDEX]));
-        $this->assertEmpty($resultAsArray[self::INDEX]['aliases']);
+        $this->assertTrue(isset($resultAsArray[ES_INDEX]));
+        $this->assertEmpty($resultAsArray[ES_INDEX]['aliases']);
     }
 
     public function testUpdateAliases()
     {
         $this->createSampleData();
-        $aliasesResponse = $this->indexRepository->getAliases(self::INDEX);
+        $aliasesResponse = $this->indexRepository->getAliases(ES_INDEX);
         $aliasesAsArray = $aliasesResponse->getData()->getGatewayValue();
         $this->assertCount(1, $aliasesAsArray);
-        $this->assertTrue(isset($aliasesAsArray[self::INDEX]));
-        $this->assertEmpty($aliasesAsArray[self::INDEX]['aliases']);
+        $this->assertTrue(isset($aliasesAsArray[ES_INDEX]));
+        $this->assertEmpty($aliasesAsArray[ES_INDEX]['aliases']);
 
         $aliasPostfix = '-alias';
         $addAliases = array(
             'actions' => array(
                 array(
-                    'add' => array('index' => self::INDEX, 'alias' => self::INDEX . $aliasPostfix)
+                    'add' => array('index' => ES_INDEX, 'alias' => ES_INDEX . $aliasPostfix)
                 )
             )
         );
         $removeAliases = array(
             'actions' => array(
                 array(
-                    'remove' => array('index' => self::INDEX, 'alias' => self::INDEX . $aliasPostfix)
+                    'remove' => array('index' => ES_INDEX, 'alias' => ES_INDEX . $aliasPostfix)
                 )
             )
         );
 
-        $timeStart = microtime(true);
         $this->indexRepository->updateAliases($addAliases);
-        echo 'index updateAliases: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
 
-        $aliasesResponse = $this->indexRepository->getAliases(self::INDEX);
+        $aliasesResponse = $this->indexRepository->getAliases(ES_INDEX);
         $aliasesAsArray = $aliasesResponse->getData()->getGatewayValue();
         $this->assertCount(1, $aliasesAsArray);
-        $this->assertTrue(isset($aliasesAsArray[self::INDEX]));
-        $this->assertCount(1, $aliasesAsArray[self::INDEX]['aliases']);
+        $this->assertTrue(isset($aliasesAsArray[ES_INDEX]));
+        $this->assertCount(1, $aliasesAsArray[ES_INDEX]['aliases']);
 
         /** @var SearchResponse $searchResult */
-        $searchResult = $this->searchRepository->search(self::INDEX . $aliasPostfix, self::TYPE);
+        $searchResult = $this->searchRepository->search(ES_INDEX . $aliasPostfix, self::TYPE);
         $this->assertSame(count($this->data), $searchResult->getHits()['total']);
 
         $this->indexRepository->updateAliases($removeAliases);
 
-        $aliasesResponse = $this->indexRepository->getAliases(self::INDEX);
+        $aliasesResponse = $this->indexRepository->getAliases(ES_INDEX);
         $aliasesAsArray = $aliasesResponse->getData()->getGatewayValue();
         $this->assertCount(1, $aliasesAsArray);
-        $this->assertTrue(isset($aliasesAsArray[self::INDEX]));
-        $this->assertEmpty($aliasesAsArray[self::INDEX]['aliases']);
+        $this->assertTrue(isset($aliasesAsArray[ES_INDEX]));
+        $this->assertEmpty($aliasesAsArray[ES_INDEX]['aliases']);
 
     }
 
     private function createSampleData()
     {
         foreach($this->data as $city) {
-            $this->documentRepository->create(self::INDEX, self::TYPE, $city);
+            $this->documentRepository->create(ES_INDEX, self::TYPE, $city);
         }
 
         $this->refreshIndex();
-    }
-
-    private function hasIndex($index = null)
-    {
-        if(null === $index) {
-            $index = self::INDEX;
-        }
-
-        $indexExistsRequest = new IndexExistsRequest($index, null, $this->serializer);
-        try {
-            $this->client->send($indexExistsRequest);
-            return true;
-        } catch(ClientException $exception) {
-            return false;
-        }
-
-    }
-
-    private function deleteIndex($index = null)
-    {
-        if(null === $index) {
-            $index = self::INDEX;
-        }
-
-        $deleteIndexRequest = new DeleteIndexRequest($index, null, $this->serializer);
-        $this->client->send($deleteIndexRequest);
-    }
-
-    private function refreshIndex($index = null)
-    {
-        if(null === $index) {
-            $index = self::INDEX;
-        }
-
-        $refreshIndexRequest = new RefreshIndexRequest($index, null, $this->serializer);
-        $this->client->send($refreshIndexRequest);
     }
 }
 
