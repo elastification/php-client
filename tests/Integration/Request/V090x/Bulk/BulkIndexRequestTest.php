@@ -1,11 +1,11 @@
 <?php
-namespace Elastification\Client\Tests\Integration\Request\V1x\Bulk;
+namespace Elastification\Client\Tests\Integration\Request\V090x\Bulk;
 
 use Elastification\Client\Request\Shared\Bulk\AbstractBulkCreateRequest;
 use Elastification\Client\Request\Shared\Bulk\AbstractBulkIndexRequest;
-use Elastification\Client\Request\V1x\Bulk\BulkIndexRequest;
-use Elastification\Client\Response\V1x\BulkResponse;
-use Elastification\Client\Tests\Integration\Request\V1x\AbstractElastic;
+use Elastification\Client\Request\V090x\Bulk\BulkIndexRequest;
+use Elastification\Client\Response\V090x\BulkResponse;
+use Elastification\Client\Tests\Integration\Request\V090x\AbstractElastic;
 
 class BulkIndexRequestTest extends AbstractElastic
 {
@@ -31,7 +31,6 @@ class BulkIndexRequestTest extends AbstractElastic
         $response = $this->getClient()->send($bulkIndexRequest);
 
         $this->assertGreaterThanOrEqual(0, $response->took());
-        $this->assertFalse($response->errors());
 
         $items = $response->getItems();
         $this->assertTrue(is_array($items));
@@ -42,7 +41,7 @@ class BulkIndexRequestTest extends AbstractElastic
             $this->assertSame(ES_INDEX, $item[AbstractBulkIndexRequest::BULK_ACTION]['_index']);
             $this->assertSame(self::TYPE, $item[AbstractBulkIndexRequest::BULK_ACTION]['_type']);
             $this->assertSame(1, $item[AbstractBulkIndexRequest::BULK_ACTION]['_version']);
-            $this->assertSame(201, $item[AbstractBulkIndexRequest::BULK_ACTION]['status']);
+            $this->assertTrue($item[AbstractBulkIndexRequest::BULK_ACTION]['ok']);
 
             $doc = $this->getDocument(ES_INDEX, self::TYPE, $item[AbstractBulkIndexRequest::BULK_ACTION]['_id']);
             $this->assertEquals($allDocs[$key], $doc);
@@ -68,7 +67,6 @@ class BulkIndexRequestTest extends AbstractElastic
         $response = $this->getClient()->send($bulkIndexRequest);
 
         $this->assertGreaterThanOrEqual(0, $response->took());
-        $this->assertFalse($response->errors());
 
         $items = $response->getItems();
         $this->assertTrue(is_array($items));
@@ -86,7 +84,7 @@ class BulkIndexRequestTest extends AbstractElastic
             $this->assertSame(ES_INDEX, $itemAction['_index']);
             $this->assertSame(self::TYPE, $itemAction['_type']);
             $this->assertSame(1, $itemAction['_version']);
-            $this->assertSame(201, $itemAction['status']);
+            $this->assertTrue($itemAction['ok']);
 
             $doc = $this->getDocument(ES_INDEX, self::TYPE, $itemAction['_id']);
             $this->assertEquals($allDocs[$key], $doc);
@@ -112,7 +110,6 @@ class BulkIndexRequestTest extends AbstractElastic
         $response = $this->getClient()->send($bulkIndexRequest);
 
         $this->assertGreaterThanOrEqual(0, $response->took());
-        $this->assertFalse($response->errors());
 
         $items = $response->getItems();
         $this->assertTrue(is_array($items));
@@ -123,7 +120,7 @@ class BulkIndexRequestTest extends AbstractElastic
             $this->assertSame(ES_INDEX, $item[AbstractBulkIndexRequest::BULK_ACTION]['_index']);
             $this->assertSame(self::TYPE, $item[AbstractBulkIndexRequest::BULK_ACTION]['_type']);
             $this->assertSame(1, $item[AbstractBulkIndexRequest::BULK_ACTION]['_version']);
-            $this->assertSame(201, $item[AbstractBulkIndexRequest::BULK_ACTION]['status']);
+            $this->assertTrue($item[AbstractBulkIndexRequest::BULK_ACTION]['ok']);
 
             $doc = $this->getDocument(ES_INDEX, self::TYPE, $item[AbstractBulkIndexRequest::BULK_ACTION]['_id']);
             $this->assertEquals($allDocs[$key], $doc);

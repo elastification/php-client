@@ -18,10 +18,8 @@
 
 namespace Elastification\Client\Request\V1x\Bulk;
 
-use Elastification\Client\Request\Shared\Bulk\AbstractBulkCreateRequest;
 use Elastification\Client\Request\Shared\Bulk\AbstractBulkUpdateRequest;
 use Elastification\Client\Response\V1x\BulkResponse;
-use Elastification\Client\Response\V1x\Index\IndexResponse;
 use Elastification\Client\Serializer\SerializerInterface;
 
 /**
@@ -36,7 +34,7 @@ class BulkUpdateRequest extends AbstractBulkUpdateRequest
      * @param \Elastification\Client\Serializer\SerializerInterface $serializer
      * @param array                                                 $serializerParams
      *
-     * @return IndexResponse
+     * @return BulkResponse
      * @author Daniel Wendlandt
      */
     public function createResponse(

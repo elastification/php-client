@@ -1,13 +1,13 @@
 <?php
-namespace Elastification\Client\Tests\Integration\Request\V1x\Bulk;
+namespace Elastification\Client\Tests\Integration\Request\V090x\Bulk;
 
 use Elastification\Client\Exception\ClientException;
 use Elastification\Client\Request\Shared\Bulk\AbstractBulkDeleteRequest;
-use Elastification\Client\Request\V1x\Bulk\BulkCreateRequest;
-use Elastification\Client\Request\V1x\Bulk\BulkDeleteRequest;
-use Elastification\Client\Request\V1x\GetDocumentRequest;
-use Elastification\Client\Response\V1x\BulkResponse;
-use Elastification\Client\Tests\Integration\Request\V1x\AbstractElastic;
+use Elastification\Client\Request\V090x\Bulk\BulkCreateRequest;
+use Elastification\Client\Request\V090x\Bulk\BulkDeleteRequest;
+use Elastification\Client\Request\V090x\GetDocumentRequest;
+use Elastification\Client\Response\V090x\BulkResponse;
+use Elastification\Client\Tests\Integration\Request\V090x\AbstractElastic;
 
 class BulkDeleteRequestTest extends AbstractElastic
 {
@@ -34,12 +34,10 @@ class BulkDeleteRequestTest extends AbstractElastic
         /** @var BulkResponse $response */
         $response = $this->getClient()->send($bulkCreateRequest);
         $this->assertGreaterThanOrEqual(0, $response->took());
-        $this->assertFalse($response->errors());
 
         $response = $this->getClient()->send($bulkDeleteRequest);
 
         $this->assertGreaterThanOrEqual(0, $response->took());
-        $this->assertFalse($response->errors());
 
         $items = $response->getItems();
         $this->assertTrue(is_array($items));
@@ -50,7 +48,7 @@ class BulkDeleteRequestTest extends AbstractElastic
             $this->assertSame(ES_INDEX, $item[AbstractBulkDeleteRequest::BULK_ACTION]['_index']);
             $this->assertSame(self::TYPE, $item[AbstractBulkDeleteRequest::BULK_ACTION]['_type']);
             $this->assertSame(2, $item[AbstractBulkDeleteRequest::BULK_ACTION]['_version']);
-            $this->assertSame(200, $item[AbstractBulkDeleteRequest::BULK_ACTION]['status']);
+            $this->assertTrue($item[AbstractBulkDeleteRequest::BULK_ACTION]['ok']);
 
             $docRequest = new GetDocumentRequest(ES_INDEX, self::TYPE, $this->getSerializer());
             $docRequest->setId($item[AbstractBulkDeleteRequest::BULK_ACTION]['_id']);
@@ -75,7 +73,6 @@ class BulkDeleteRequestTest extends AbstractElastic
         $response = $this->getClient()->send($bulkDeleteRequest);
 
         $this->assertGreaterThanOrEqual(0, $response->took());
-        $this->assertFalse($response->errors());
 
         $items = $response->getItems();
         $this->assertTrue(is_array($items));
@@ -86,7 +83,7 @@ class BulkDeleteRequestTest extends AbstractElastic
             $this->assertSame(ES_INDEX, $item[AbstractBulkDeleteRequest::BULK_ACTION]['_index']);
             $this->assertSame(self::TYPE, $item[AbstractBulkDeleteRequest::BULK_ACTION]['_type']);
             $this->assertSame(1, $item[AbstractBulkDeleteRequest::BULK_ACTION]['_version']);
-            $this->assertSame(404, $item[AbstractBulkDeleteRequest::BULK_ACTION]['status']);
+            $this->assertFalse($item[AbstractBulkDeleteRequest::BULK_ACTION]['found']);
 
             $docRequest = new GetDocumentRequest(ES_INDEX, self::TYPE, $this->getSerializer());
             $docRequest->setId($item[AbstractBulkDeleteRequest::BULK_ACTION]['_id']);
@@ -109,12 +106,10 @@ class BulkDeleteRequestTest extends AbstractElastic
         /** @var BulkResponse $response */
         $response = $this->getClient()->send($bulkCreateRequest);
         $this->assertGreaterThanOrEqual(0, $response->took());
-        $this->assertFalse($response->errors());
 
         $response = $this->getClient()->send($bulkDeleteRequest);
 
         $this->assertGreaterThanOrEqual(0, $response->took());
-        $this->assertFalse($response->errors());
 
         $items = $response->getItems();
         $this->assertTrue(is_array($items));
@@ -127,7 +122,7 @@ class BulkDeleteRequestTest extends AbstractElastic
 
             if(0 === $key) {
                 $this->assertSame(2, $item[AbstractBulkDeleteRequest::BULK_ACTION]['_version']);
-                $this->assertSame(200, $item[AbstractBulkDeleteRequest::BULK_ACTION]['status']);
+                $this->assertTrue($item[AbstractBulkDeleteRequest::BULK_ACTION]['ok']);
 
                 $docRequest = new GetDocumentRequest(ES_INDEX, self::TYPE, $this->getSerializer());
                 $docRequest->setId($item[AbstractBulkDeleteRequest::BULK_ACTION]['_id']);
@@ -140,7 +135,7 @@ class BulkDeleteRequestTest extends AbstractElastic
                 }
             } else {
                 $this->assertSame(1, $item[AbstractBulkDeleteRequest::BULK_ACTION]['_version']);
-                $this->assertSame(404, $item[AbstractBulkDeleteRequest::BULK_ACTION]['status']);
+                $this->assertFalse($item[AbstractBulkDeleteRequest::BULK_ACTION]['found']);
             }
         }
     }

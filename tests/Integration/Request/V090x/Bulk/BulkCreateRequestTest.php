@@ -1,10 +1,10 @@
 <?php
-namespace Elastification\Client\Tests\Integration\Request\V1x\Bulk;
+namespace Elastification\Client\Tests\Integration\Request\V090x\Bulk;
 
 use Elastification\Client\Request\Shared\Bulk\AbstractBulkCreateRequest;
-use Elastification\Client\Request\V1x\Bulk\BulkCreateRequest;
-use Elastification\Client\Response\V1x\BulkResponse;
-use Elastification\Client\Tests\Integration\Request\V1x\AbstractElastic;
+use Elastification\Client\Request\V090x\Bulk\BulkCreateRequest;
+use Elastification\Client\Response\V090x\BulkResponse;
+use Elastification\Client\Tests\Integration\Request\V090x\AbstractElastic;
 
 class BulkCreateRequestTest extends AbstractElastic
 {
@@ -30,7 +30,6 @@ class BulkCreateRequestTest extends AbstractElastic
         $response = $this->getClient()->send($bulkUpdateRequest);
 
         $this->assertGreaterThanOrEqual(0, $response->took());
-        $this->assertFalse($response->errors());
 
         $items = $response->getItems();
         $this->assertTrue(is_array($items));
@@ -41,7 +40,7 @@ class BulkCreateRequestTest extends AbstractElastic
             $this->assertSame(ES_INDEX, $item[AbstractBulkCreateRequest::BULK_ACTION]['_index']);
             $this->assertSame(self::TYPE, $item[AbstractBulkCreateRequest::BULK_ACTION]['_type']);
             $this->assertSame(1, $item[AbstractBulkCreateRequest::BULK_ACTION]['_version']);
-            $this->assertSame(201, $item[AbstractBulkCreateRequest::BULK_ACTION]['status']);
+            $this->assertTrue($item[AbstractBulkCreateRequest::BULK_ACTION]['ok']);
 
             $doc = $this->getDocument(ES_INDEX, self::TYPE, $item[AbstractBulkCreateRequest::BULK_ACTION]['_id']);
             $this->assertEquals($allDocs[$key], $doc);
@@ -68,8 +67,6 @@ class BulkCreateRequestTest extends AbstractElastic
         $response = $this->getClient()->send($bulkUpdateRequest);
 
         $this->assertGreaterThanOrEqual(0, $response->took());
-        $this->assertTrue($response->errors());
-
 
         $items = $response->getItems();
         $this->assertTrue(is_array($items));
@@ -79,7 +76,6 @@ class BulkCreateRequestTest extends AbstractElastic
             $this->assertArrayHasKey(AbstractBulkCreateRequest::BULK_ACTION, $item);
             $this->assertSame(ES_INDEX, $item[AbstractBulkCreateRequest::BULK_ACTION]['_index']);
             $this->assertSame(self::TYPE, $item[AbstractBulkCreateRequest::BULK_ACTION]['_type']);
-            $this->assertSame(409, $item[AbstractBulkCreateRequest::BULK_ACTION]['status']);
             $this->assertContains('document already exists', $item[AbstractBulkCreateRequest::BULK_ACTION]['error']);
 
             $doc = $this->getDocument(ES_INDEX, self::TYPE, $item[AbstractBulkCreateRequest::BULK_ACTION]['_id']);

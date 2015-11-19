@@ -15,65 +15,45 @@
  * This software consists of voluntary contributions made by many individuals
  * and is licensed under the MIT license.
  */
-namespace Elastification\Client\Response\Shared;
 
-use Elastification\Client\Response\Response;
+namespace Elastification\Client\Request\V090x\Bulk;
+
+use Elastification\Client\Request\Shared\Bulk\AbstractBulkDeleteRequest;
+use Elastification\Client\Response\V090x\BulkResponse;
+use Elastification\Client\Serializer\SerializerInterface;
 
 /**
- * Class AbstractSearchResponse
- *
- * @package Elastification\Client\Response\Shared
- * @author  Daniel Wendlandt
+ * Class BulkUpdateRequest
+ * @package Elastification\Client\Request\V090x\Bulk
  */
-abstract class AbstractBulkResponse extends Response
+class BulkDeleteRequest extends AbstractBulkDeleteRequest
 {
-    const PROP_TOOK = 'took';
-    const PROP_ERRORS = 'errors';
-    const PROP_ITEMS = 'items';
-
-    const PROP_INDEX = '_index';
-    const PROP_TYPE = '_type';
-    const PROP_ID = '_id';
-    const PROP_VERSION = '_version';
-    const PROP_STATUS = 'status';
 
     /**
-     * Getter Method
+     * @param string                                                $rawData
+     * @param \Elastification\Client\Serializer\SerializerInterface $serializer
+     * @param array                                                 $serializerParams
      *
-     * @return mixed
+     * @return BulkResponse
      * @author Daniel Wendlandt
      */
-    public function took()
-    {
-        $this->processData();
+    public function createResponse(
+        $rawData,
+        SerializerInterface $serializer,
+        array $serializerParams = array()
+    ) {
 
-        return $this->get(self::PROP_TOOK);
+        return new BulkResponse($rawData, $serializer, $serializerParams);
     }
 
     /**
-     * Getter Method
+     * gets a response class name that is supported by this class
      *
-     * @return bool
+     * @return string
      * @author Daniel Wendlandt
      */
-    public function errors()
+    public function getSupportedClass()
     {
-        $this->processData();
-
-        return $this->get(self::PROP_ERRORS);
+        return 'Elastification\Client\Response\V090x\BulkResponse';
     }
-
-    /**
-     * Getter Method
-     *
-     * @return mixed
-     * @author Daniel Wendlandt
-     */
-    public function getItems()
-    {
-        $this->processData();
-
-        return $this->get(self::PROP_ITEMS);
-    }
-
 }

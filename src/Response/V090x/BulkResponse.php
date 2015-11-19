@@ -15,7 +15,7 @@
  * This software consists of voluntary contributions made by many individuals
  * and is licensed under the MIT license.
  */
-namespace Elastification\Client\Response\V1x;
+namespace Elastification\Client\Response\V090x;
 
 use Elastification\Client\Response\Response;
 
@@ -28,14 +28,14 @@ use Elastification\Client\Response\Response;
 class BulkResponse extends Response
 {
     const PROP_TOOK = 'took';
-    const PROP_ERRORS = 'errors';
     const PROP_ITEMS = 'items';
 
     const PROP_INDEX = '_index';
     const PROP_TYPE = '_type';
     const PROP_ID = '_id';
     const PROP_VERSION = '_version';
-    const PROP_STATUS = 'status';
+    const PROP_ERROR = 'error';
+    const PROP_OK = 'ok';
 
     /**
      * Getter Method
@@ -48,19 +48,6 @@ class BulkResponse extends Response
         $this->processData();
 
         return $this->get(self::PROP_TOOK);
-    }
-
-    /**
-     * Getter Method
-     *
-     * @return bool
-     * @author Daniel Wendlandt
-     */
-    public function errors()
-    {
-        $this->processData();
-
-        return $this->get(self::PROP_ERRORS);
     }
 
     /**

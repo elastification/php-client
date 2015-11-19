@@ -44,7 +44,6 @@ class BulkResponseTest extends \PHPUnit_Framework_TestCase
         $response = new BulkResponse('data', $this->serializer);
         $this->assertInstanceOf('Elastification\Client\Response\ResponseInterface', $response);
         $this->assertInstanceOf('Elastification\Client\Response\Response', $response);
-        $this->assertInstanceOf('Elastification\Client\Response\Shared\AbstractBulkResponse', $response);
         $this->assertInstanceOf('Elastification\Client\Response\V1x\BulkResponse', $response);
     }
 
@@ -224,10 +223,10 @@ class BulkResponseTest extends \PHPUnit_Framework_TestCase
     private function getData($asObject = false)
     {
         $data = [
-            AbstractBulkResponse::PROP_TOOK => 1,
-            AbstractBulkResponse::PROP_STATUS => 200,
-            AbstractBulkResponse::PROP_ERRORS => false,
-            AbstractBulkResponse::PROP_ITEMS => $this->getItemData($asObject),
+            BulkResponse::PROP_TOOK => 1,
+            BulkResponse::PROP_STATUS => 200,
+            BulkResponse::PROP_ERRORS => false,
+            BulkResponse::PROP_ITEMS => $this->getItemData($asObject),
         ];
 
         if ($asObject) {
