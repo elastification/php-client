@@ -6,9 +6,9 @@
  * Time: 22:39
  */
 
-namespace Elastification\Client\Tests\Unit\Response\V1x;
+namespace Elastification\Client\Tests\Unit\Response\V090x;
 
-use Elastification\Client\Response\V1x\BulkResponse;
+use Elastification\Client\Response\V090x\BulkResponse;
 use Elastification\Client\Serializer\Gateway\NativeArrayGateway;
 use Elastification\Client\Serializer\Gateway\NativeObjectGateway;
 
@@ -43,7 +43,7 @@ class BulkResponseTest extends \PHPUnit_Framework_TestCase
         $response = new BulkResponse('data', $this->serializer);
         $this->assertInstanceOf('Elastification\Client\Response\ResponseInterface', $response);
         $this->assertInstanceOf('Elastification\Client\Response\Response', $response);
-        $this->assertInstanceOf('Elastification\Client\Response\V1x\BulkResponse', $response);
+        $this->assertInstanceOf('Elastification\Client\Response\V090x\BulkResponse', $response);
     }
 
 
@@ -151,40 +151,6 @@ class BulkResponseTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($this->serializer, $response->getSerializer());
     }
 
-    public function testErrorsArray()
-    {
-        $data = $this->getData();
-
-        $this->serializer->expects($this->once())
-            ->method('deserialize')
-            ->with(
-                $this->equalTo($data),
-                $this->equalTo(array())
-            )
-            ->will($this->returnValue(new NativeArrayGateway($data)));
-
-        /** @noinspection PhpParamsInspection */
-        $response = new BulkResponse($data, $this->serializer);
-        $this->assertSame($data[BulkResponse::PROP_ERRORS], $response->errors());
-    }
-
-    public function testErrorsObject()
-    {
-        $data = $this->getData(true);
-
-        $this->serializer->expects($this->once())
-            ->method('deserialize')
-            ->with(
-                $this->equalTo($data),
-                $this->equalTo(array())
-            )
-            ->will($this->returnValue(new NativeObjectGateway($data)));
-
-        /** @noinspection PhpParamsInspection */
-        $response = new BulkResponse($data, $this->serializer);
-        $this->assertSame($data->{BulkResponse::PROP_ERRORS}, $response->errors());
-    }
-
     public function testGetItemsArray()
     {
         $data = $this->getData();
@@ -223,8 +189,7 @@ class BulkResponseTest extends \PHPUnit_Framework_TestCase
     {
         $data = [
             BulkResponse::PROP_TOOK => 1,
-            BulkResponse::PROP_STATUS => 200,
-            BulkResponse::PROP_ERRORS => false,
+            BulkResponse::PROP_OK => true,
             BulkResponse::PROP_ITEMS => $this->getItemData($asObject),
         ];
 

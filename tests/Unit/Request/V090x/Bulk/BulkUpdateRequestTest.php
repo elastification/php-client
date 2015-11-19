@@ -5,17 +5,17 @@
  * Date: 17/06/14
  * Time: 19:02
  */
-namespace Elastification\Client\Tests\Unit\Request\V1x\Bulk;
+namespace Elastification\Client\Tests\Unit\Request\V090x\Bulk;
 
 use Elastification\Client\Request\RequestMethods;
 use Elastification\Client\Request\Shared\Bulk\AbstractBulkUpdateRequest;
-use Elastification\Client\Request\V1x\Bulk\BulkUpdateRequest;
+use Elastification\Client\Request\V090x\Bulk\BulkUpdateRequest;
 
 class BulkUpdateRequestTest extends \PHPUnit_Framework_TestCase
 {
     const INDEX = 'test-index';
     const TYPE = 'test-type';
-    const RESPONSE_CLASS = 'Elastification\Client\Response\V1x\BulkResponse';
+    const RESPONSE_CLASS = 'Elastification\Client\Response\V090x\BulkResponse';
 
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
@@ -60,7 +60,7 @@ class BulkUpdateRequestTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertInstanceOf(
-            'Elastification\Client\Request\V1x\Bulk\BulkUpdateRequest',
+            'Elastification\Client\Request\V090x\Bulk\BulkUpdateRequest',
             $this->request
         );
     }

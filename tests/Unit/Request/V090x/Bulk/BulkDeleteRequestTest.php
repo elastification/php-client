@@ -5,17 +5,18 @@
  * Date: 17/06/14
  * Time: 19:02
  */
-namespace Elastification\Client\Tests\Unit\Request\V1x\Bulk;
+namespace Elastification\Client\Tests\Unit\Request\V090x\Bulk;
 
 use Elastification\Client\Request\RequestMethods;
-use Elastification\Client\Request\Shared\Bulk\AbstractBulkUpdateRequest;
-use Elastification\Client\Request\V1x\Bulk\BulkUpdateRequest;
+use Elastification\Client\Request\Shared\Bulk\AbstractBulkDeleteRequest;
+use Elastification\Client\Request\V090x\Bulk\BulkCreateRequest;
+use Elastification\Client\Request\V090x\Bulk\BulkDeleteRequest;
 
-class BulkUpdateRequestTest extends \PHPUnit_Framework_TestCase
+class BulkDeleteRequestTest extends \PHPUnit_Framework_TestCase
 {
     const INDEX = 'test-index';
     const TYPE = 'test-type';
-    const RESPONSE_CLASS = 'Elastification\Client\Response\V1x\BulkResponse';
+    const RESPONSE_CLASS = 'Elastification\Client\Response\V090x\BulkResponse';
 
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
@@ -23,7 +24,7 @@ class BulkUpdateRequestTest extends \PHPUnit_Framework_TestCase
     private $serializer;
 
     /**
-     * @var BulkUpdateRequest
+     * @var BulkDeleteRequest
      */
     private $request;
 
@@ -36,7 +37,7 @@ class BulkUpdateRequestTest extends \PHPUnit_Framework_TestCase
             ->getMock();
 
         /** @noinspection PhpParamsInspection */
-        $this->request = new BulkUpdateRequest(self::INDEX, self::TYPE, $this->serializer);
+        $this->request = new BulkDeleteRequest(self::INDEX, self::TYPE, $this->serializer);
     }
 
     protected function tearDown()
@@ -55,12 +56,12 @@ class BulkUpdateRequestTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertInstanceOf(
-            'Elastification\Client\Request\Shared\Bulk\AbstractBulkUpdateRequest',
+            'Elastification\Client\Request\Shared\Bulk\AbstractBulkDeleteRequest',
             $this->request
         );
 
         $this->assertInstanceOf(
-            'Elastification\Client\Request\V1x\Bulk\BulkUpdateRequest',
+            'Elastification\Client\Request\V090x\Bulk\BulkDeleteRequest',
             $this->request
         );
     }
@@ -82,7 +83,7 @@ class BulkUpdateRequestTest extends \PHPUnit_Framework_TestCase
 
     public function testGetAction()
     {
-        $this->assertSame(BulkUpdateRequest::REQUEST_ACTION, $this->request->getAction());
+        $this->assertSame(BulkCreateRequest::REQUEST_ACTION, $this->request->getAction());
     }
 
     public function testGetSerializer()
@@ -124,54 +125,33 @@ class BulkUpdateRequestTest extends \PHPUnit_Framework_TestCase
 
     public function testAddAction()
     {
-        $id = 'my-id';
-        $doc = array('my' => 'doc');
-        $serializedDoc = 'my-doc';
-        $action = array(
-            AbstractBulkUpdateRequest::BULK_ACTION => array(
-                '_id' => $id,
+        $id1 = 'my-id1';
+        $id2 = 'my-id2';
+
+        $action1 = array(
+            AbstractBulkDeleteRequest::BULK_ACTION => array(
+                '_id' => $id1,
                 '_index' => self::INDEX,
                 '_type' => self::TYPE
             )
         );
 
-        $this->serializer->expects($this->once())->method('serialize')->with($doc, array())->willReturn($serializedDoc);
-
-        $this->request->addDocument($doc, $id);
-
-        $expected = json_encode($action) .
-            AbstractBulkUpdateRequest::LINE_BREAK .
-            '{"doc":' . $serializedDoc . '}' .
-            AbstractBulkUpdateRequest::LINE_BREAK;
-
-        $result = $this->request->getBody();
-
-        $this->assertSame($expected, $result);
-    }
-
-    public function testAddActionWithRetryOnConflict()
-    {
-        $id = 'my-id';
-        $retryOnConflict = 2;
-        $doc = array('my' => 'doc');
-        $serializedDoc = 'my-doc';
-        $action = array(
-            AbstractBulkUpdateRequest::BULK_ACTION => array(
-                '_id' => $id,
+        $action2 = array(
+            AbstractBulkDeleteRequest::BULK_ACTION => array(
+                '_id' => $id2,
                 '_index' => self::INDEX,
-                '_type' => self::TYPE,
-                '_retry_on_conflict' => $retryOnConflict
+                '_type' => self::TYPE
             )
         );
 
-        $this->serializer->expects($this->once())->method('serialize')->with($doc, array())->willReturn($serializedDoc);
+        $this->serializer->expects($this->never())->method('serialize');
 
-        $this->request->addDocument($doc, $id, $retryOnConflict);
+        $this->request->add(array($id1, $id2));
 
-        $expected = json_encode($action) .
-            AbstractBulkUpdateRequest::LINE_BREAK .
-            '{"doc":' . $serializedDoc . '}' .
-            AbstractBulkUpdateRequest::LINE_BREAK;
+        $expected = json_encode($action1) .
+            AbstractBulkDeleteRequest::LINE_BREAK .
+            json_encode($action2) .
+            AbstractBulkDeleteRequest::LINE_BREAK;
 
         $result = $this->request->getBody();
 
