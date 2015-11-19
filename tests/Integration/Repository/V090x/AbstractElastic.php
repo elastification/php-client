@@ -1,5 +1,5 @@
 <?php
-namespace Elastification\Client\Tests\Integration\Repository\V90x;
+namespace Elastification\Client\Tests\Integration\Repository\V090x;
 
 use Elastification\Client\Exception\ClientException;
 use Elastification\Client\Request\RequestManager;
@@ -21,7 +21,7 @@ use GuzzleHttp\ClientInterface as GuzzleClientInterface;
 use Elastification\Client\Client;
 use Elastification\Client\ClientInterface;
 
-class AbstractElastic extends \PHPUnit_Framework_TestCase
+abstract class AbstractElastic extends \PHPUnit_Framework_TestCase
 {
 
     /**

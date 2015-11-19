@@ -6,31 +6,16 @@
  * Time: 11:47
  */
 
-namespace Elastification\Client\Tests\Integration\Repository\V90x;
+namespace Elastification\Client\Tests\Integration\Repository\V090x;
 
 use Elastification\Client\ClientVersionMap;
 use Elastification\Client\Repository\DocumentRepository;
 use Elastification\Client\Repository\DocumentRepositoryInterface;
-use Elastification\Client\Repository\RepositoryClassMapInterface;
 use Elastification\Client\Repository\SearchRepository;
 use Elastification\Client\Repository\SearchRepositoryInterface;
-use Elastification\Client\Request\V090x\Index\DeleteIndexRequest;
-use Elastification\Client\Request\V090x\Index\IndexExistsRequest;
-use Elastification\Client\Request\V090x\Index\RefreshIndexRequest;
 use Elastification\Client\Response\V090x\SearchResponse;
-use Elastification\Client\Serializer\NativeJsonSerializer;
-use Elastification\Client\Serializer\SerializerInterface;
-use Elastification\Client\Transport\HttpGuzzle\GuzzleTransport;
-use Elastification\Client\Transport\TransportInterface;
-use GuzzleHttp\Client as GuzzleClient;
-use GuzzleHttp\ClientInterface as GuzzleClientInterface;
-use Elastification\Client\Client;
-use Elastification\Client\ClientInterface;
-use Elastification\Client\Exception\ClientException;
-use Elastification\Client\Request\RequestManager;
-use Elastification\Client\Request\RequestManagerInterface;
 
-class SearchRepositoryV090xTest extends AbstractElastic
+class SearchRepositoryTest extends AbstractElastic
 {
     const TYPE = 'repository-search';
 

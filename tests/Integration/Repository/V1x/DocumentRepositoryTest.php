@@ -6,16 +6,16 @@
  * Time: 11:47
  */
 
-namespace Elastification\Client\Tests\Integration\Repository\V90x;
+namespace Elastification\Client\Tests\Integration\Repository\V1x;
 
 use Elastification\Client\ClientVersionMap;
 use Elastification\Client\Repository\DocumentRepository;
 use Elastification\Client\Repository\DocumentRepositoryInterface;
-use Elastification\Client\Response\V090x\CreateUpdateDocumentResponse;
-use Elastification\Client\Response\V090x\DocumentResponse;
+use Elastification\Client\Response\V1x\CreateUpdateDocumentResponse;
+use Elastification\Client\Response\V1x\DocumentResponse;
 use Elastification\Client\Exception\ClientException;
 
-class DocumentRepositoryV090xTest extends AbstractElastic
+class DocumentRepositoryTest extends AbstractElastic
 {
     const TYPE = 'repository-document';
 
@@ -32,7 +32,7 @@ class DocumentRepositoryV090xTest extends AbstractElastic
             $this->getClient(),
             $this->getSerializer(),
             null,
-            ClientVersionMap::VERSION_V090X);
+            ClientVersionMap::VERSION_V1X);
     }
 
     protected function tearDown()
@@ -53,7 +53,7 @@ class DocumentRepositoryV090xTest extends AbstractElastic
         $this->assertSame(ES_INDEX, $response->getIndex());
         $this->assertSame(self::TYPE, $response->getType());
         $this->assertSame(1, $response->getVersion());
-        $this->assertTrue($response->isOk());
+        $this->assertTrue($response->getData()['created']);
         $this->assertTrue(strlen($response->getId()) > 5);
     }
 
@@ -66,7 +66,7 @@ class DocumentRepositoryV090xTest extends AbstractElastic
         /** @var DocumentResponse $getResponse */
         $getResponse = $this->documentRepository->get(ES_INDEX, self::TYPE, $createResponse->getId());
 
-        $this->assertTrue($getResponse->exists());
+        $this->assertTrue($getResponse->found());
         $this->assertSame($createResponse->getId(), $getResponse->getId());
         $this->assertSame(1, $getResponse->getVersion());
         $this->assertSame(ES_INDEX, $getResponse->getIndex());

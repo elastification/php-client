@@ -21,7 +21,7 @@ use GuzzleHttp\ClientInterface as GuzzleClientInterface;
 use Elastification\Client\Client;
 use Elastification\Client\ClientInterface;
 
-class AbstractElastic extends \PHPUnit_Framework_TestCase
+abstract class AbstractElastic extends \PHPUnit_Framework_TestCase
 {
 
     /**

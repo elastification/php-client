@@ -1,5 +1,5 @@
 <?php
-namespace Elastification\Client\Tests\Integration\Request\V1x;
+namespace Elastification\Client\Tests\Integration\Repository\V1x;
 
 use Elastification\Client\Exception\ClientException;
 use Elastification\Client\Request\RequestManager;
