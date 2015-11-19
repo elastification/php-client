@@ -30,38 +30,10 @@ use Elastification\Client\Exception\ClientException;
 use Elastification\Client\Request\RequestManager;
 use Elastification\Client\Request\RequestManagerInterface;
 
-class SearchRepositoryV090xTest extends \PHPUnit_Framework_TestCase
+class SearchRepositoryV090xTest extends AbstractElastic
 {
-    const INDEX = 'dawen-elastic';
-    const TYPE = 'repository';
+    const TYPE = 'repository-search';
 
-    private $url = 'http://127.0.0.1:9200/';
-//    private $url = 'http://192.168.33.109:9200/';
-
-    /**
-     * @var GuzzleClientInterface
-     */
-    private $guzzleClient;
-
-    /**
-     * @var RequestManagerInterface
-     */
-    private $requestManager;
-
-    /**
-     * @var ClientInterface
-     */
-    private $client;
-
-    /**
-     * @var SerializerInterface
-     */
-    private $serializer;
-
-    /**
-     * @var TransportInterface
-     */
-    private $transportClient;
 
     /**
      * @var DocumentRepositoryInterface
@@ -87,17 +59,14 @@ class SearchRepositoryV090xTest extends \PHPUnit_Framework_TestCase
     {
         parent::setUp();
 
-        $this->guzzleClient = new GuzzleClient(array('base_url' => $this->url));
-        $this->transportClient = new GuzzleTransport($this->guzzleClient);
-        $this->requestManager = new RequestManager();
-        $this->client = new Client($this->transportClient, $this->requestManager);
-        $this->serializer = new NativeJsonSerializer();
-        $this->documentRepository = new DocumentRepository($this->client,
-            $this->serializer,
+        $this->documentRepository = new DocumentRepository(
+            $this->getClient(),
+            $this->getSerializer(),
             null,
             ClientVersionMap::VERSION_V090X);
-        $this->searchRepository = new SearchRepository($this->client,
-            $this->serializer,
+        $this->searchRepository = new SearchRepository(
+            $this->getClient(),
+            $this->getSerializer(),
             null,
             ClientVersionMap::VERSION_V090X);
 
@@ -106,28 +75,17 @@ class SearchRepositoryV090xTest extends \PHPUnit_Framework_TestCase
 
     protected function tearDown()
     {
-        parent::tearDown();
-
-        if($this->hasIndex()) {
-            $this->deleteIndex();
-        }
-
-        $this->guzzleClient = null;
-        $this->requestManager = null;
-        $this->client = null;
-        $this->serializer = null;
-        $this->transportClient = null;
         $this->documentRepository = null;
         $this->searchRepository = null;
+
+        parent::tearDown();
     }
 
 
     public function testSearchWithoutQueryParam()
     {
-        $timeStart = microtime(true);
         /** @var SearchResponse $response */
-        $response = $this->searchRepository->search(self::INDEX, self::TYPE);
-        echo 'search: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+        $response = $this->searchRepository->search(ES_INDEX, self::TYPE);
 
         $this->assertEquals(count($this->data), $response->getHits()['total']);
     }
@@ -137,10 +95,8 @@ class SearchRepositoryV090xTest extends \PHPUnit_Framework_TestCase
         $size = 2;
         $query = array('size' => $size);
 
-        $timeStart = microtime(true);
         /** @var SearchResponse $response */
-        $response = $this->searchRepository->search(self::INDEX, self::TYPE, $query);
-        echo 'search size only: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+        $response = $this->searchRepository->search(ES_INDEX, self::TYPE, $query);
 
         $this->assertEquals($size, count($response->getHitsHits()));
     }
@@ -157,58 +113,19 @@ class SearchRepositoryV090xTest extends \PHPUnit_Framework_TestCase
             )
         );
 
-        $timeStart = microtime(true);
         /** @var SearchResponse $response */
-        $response = $this->searchRepository->search(self::INDEX, self::TYPE, $query);
-        echo 'search size only: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+        $response = $this->searchRepository->search(ES_INDEX, self::TYPE, $query);
 
         $this->assertEquals(2, $response->getHits()['total']);
-
     }
 
     private function createSampleData()
     {
         foreach($this->data as $city) {
-            $this->documentRepository->create(self::INDEX, self::TYPE, $city);
+            $this->documentRepository->create(ES_INDEX, self::TYPE, $city);
         }
 
         $this->refreshIndex();
-    }
-
-    private function hasIndex($index = null)
-    {
-        if(null === $index) {
-            $index = self::INDEX;
-        }
-
-        $indexExistsRequest = new IndexExistsRequest($index, null, $this->serializer);
-        try {
-            $this->client->send($indexExistsRequest);
-            return true;
-        } catch(ClientException $exception) {
-            return false;
-        }
-
-    }
-
-    private function deleteIndex($index = null)
-    {
-        if(null === $index) {
-            $index = self::INDEX;
-        }
-
-        $deleteIndexRequest = new DeleteIndexRequest($index, null, $this->serializer);
-        $this->client->send($deleteIndexRequest);
-    }
-
-    private function refreshIndex($index = null)
-    {
-        if(null === $index) {
-            $index = self::INDEX;
-        }
-
-        $refreshIndexRequest = new RefreshIndexRequest($index, null, $this->serializer);
-        $this->client->send($refreshIndexRequest);
     }
 }
 
