@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit backupGlobals="false"
+         backupStaticAttributes="false"
+         colors="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         processIsolation="false"
+         stopOnFailure="false"
+         syntaxCheck="false"
+         bootstrap="tests/bootstrap.php"
+        >
+
+    <php>
+        <!--Index settings-->
+        <const name="ES_INDEX" value="elastification-integration-test" />
+        <!--Host settings-->
+        <const name="V090X_URL" value="http://192.168.33.109:9200/" />
+        <const name="V1X_URL" value="http://192.168.33.173:9200/" />
+    </php>
+
+    <testsuites>
+        <testsuite name="Elastification PHP-Client Integartion Testsuite">
+            <!--enable unit test-->
+            <directory>./tests/Integration</directory>
+        </testsuite>
+    </testsuites>
+
+    <filter>
+        <whitelist>
+            <directory>./</directory>
+            <exclude>
+                <directory>./Resources</directory>
+                <directory>./tests</directory>
+                <directory>./vendor</directory>
+            </exclude>
+        </whitelist>
+    </filter>
+</phpunit>

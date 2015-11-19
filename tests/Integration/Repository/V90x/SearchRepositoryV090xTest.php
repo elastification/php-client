@@ -6,15 +6,18 @@
  * Time: 11:47
  */
 
-namespace Elastification\Client\Tests\Integration;
+namespace Elastification\Client\Tests\Integration\Repository\V90x;
 
 use Elastification\Client\ClientVersionMap;
 use Elastification\Client\Repository\DocumentRepository;
 use Elastification\Client\Repository\DocumentRepositoryInterface;
 use Elastification\Client\Repository\RepositoryClassMapInterface;
+use Elastification\Client\Repository\SearchRepository;
+use Elastification\Client\Repository\SearchRepositoryInterface;
 use Elastification\Client\Request\V090x\Index\DeleteIndexRequest;
 use Elastification\Client\Request\V090x\Index\IndexExistsRequest;
 use Elastification\Client\Request\V090x\Index\RefreshIndexRequest;
+use Elastification\Client\Response\V090x\SearchResponse;
 use Elastification\Client\Serializer\NativeJsonSerializer;
 use Elastification\Client\Serializer\SerializerInterface;
 use Elastification\Client\Transport\HttpGuzzle\GuzzleTransport;
@@ -27,7 +30,7 @@ use Elastification\Client\Exception\ClientException;
 use Elastification\Client\Request\RequestManager;
 use Elastification\Client\Request\RequestManagerInterface;
 
-class DocumentRepositoryV090xTest extends \PHPUnit_Framework_TestCase
+class SearchRepositoryV090xTest extends \PHPUnit_Framework_TestCase
 {
     const INDEX = 'dawen-elastic';
     const TYPE = 'repository';
@@ -65,6 +68,21 @@ class DocumentRepositoryV090xTest extends \PHPUnit_Framework_TestCase
      */
     private $documentRepository;
 
+    /**
+     * @var SearchRepositoryInterface
+     */
+    private $searchRepository;
+
+    /**
+     * @var array
+     */
+    private $data = array(
+        array('city' => 'Berlin', 'country' => 'Germany'),
+        array('city' => 'Cologne', 'country' => 'Germany'),
+        array('city' => 'Paris', 'country' => 'France'),
+        array('city' => 'Barcelona', 'country' => 'Spain')
+    );
+
     protected function setUp()
     {
         parent::setUp();
@@ -78,6 +96,12 @@ class DocumentRepositoryV090xTest extends \PHPUnit_Framework_TestCase
             $this->serializer,
             null,
             ClientVersionMap::VERSION_V090X);
+        $this->searchRepository = new SearchRepository($this->client,
+            $this->serializer,
+            null,
+            ClientVersionMap::VERSION_V090X);
+
+        $this->createSampleData();
     }
 
     protected function tearDown()
@@ -94,84 +118,61 @@ class DocumentRepositoryV090xTest extends \PHPUnit_Framework_TestCase
         $this->serializer = null;
         $this->transportClient = null;
         $this->documentRepository = null;
+        $this->searchRepository = null;
     }
 
 
-    public function testCreateDocument()
+    public function testSearchWithoutQueryParam()
     {
-        $data = array('name' => 'test' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000));
-
         $timeStart = microtime(true);
-        $response = $this->documentRepository->create(self::INDEX, self::TYPE, $data);
-        echo 'create: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+        /** @var SearchResponse $response */
+        $response = $this->searchRepository->search(self::INDEX, self::TYPE);
+        echo 'search: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
 
-        $this->assertSame(self::INDEX, $response->getIndex());
-        $this->assertSame(self::TYPE, $response->getType());
-        $this->assertSame(1, $response->getVersion());
-        $this->assertTrue($response->isOk());
-        $this->assertTrue(strlen($response->getId()) > 5);
+        $this->assertEquals(count($this->data), $response->getHits()['total']);
     }
 
-    public function testGetDocument()
+    public function testSearchSizeOnly()
     {
-        $data = array('name' => 'test' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000));
-
-        $createResponse = $this->documentRepository->create(self::INDEX, self::TYPE, $data);
+        $size = 2;
+        $query = array('size' => $size);
 
         $timeStart = microtime(true);
-        $getResponse = $this->documentRepository->get(self::INDEX, self::TYPE, $createResponse->getId());
-        echo 'get: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+        /** @var SearchResponse $response */
+        $response = $this->searchRepository->search(self::INDEX, self::TYPE, $query);
+        echo 'search size only: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
 
-        $this->assertTrue($getResponse->exists());
-        $this->assertSame($createResponse->getId(), $getResponse->getId());
-        $this->assertSame(1, $getResponse->getVersion());
-        $this->assertSame(self::INDEX, $getResponse->getIndex());
-        $this->assertSame(self::TYPE, $getResponse->getType());
-        $this->assertSame($data['name'], $getResponse->getSource()['name']);
-        $this->assertSame($data['value'], $getResponse->getSource()['value']);
+        $this->assertEquals($size, count($response->getHitsHits()));
     }
 
-    public function testDeleteDocument()
+    public function testSearchGermany()
     {
-        $data = array('name' => 'test' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000));
-
-        $createResponse = $this->documentRepository->create(self::INDEX, self::TYPE, $data);
-        $this->refreshIndex();
+        $query = array(
+            'query' => array(
+                'term' => array(
+                    'country' => array(
+                        'value' => 'germany'
+                    )
+                )
+            )
+        );
 
         $timeStart = microtime(true);
+        /** @var SearchResponse $response */
+        $response = $this->searchRepository->search(self::INDEX, self::TYPE, $query);
+        echo 'search size only: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
 
-        echo 'delete: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
+        $this->assertEquals(2, $response->getHits()['total']);
 
-        $this->documentRepository->delete(self::INDEX, self::TYPE, $createResponse->getId());
+    }
 
-        try {
-            $this->documentRepository->get(self::INDEX, self::TYPE, $createResponse->getId());
-        } catch (ClientException $exception) {
-            $this->assertContains('Not Found', $exception->getMessage());
-
-            return;
+    private function createSampleData()
+    {
+        foreach($this->data as $city) {
+            $this->documentRepository->create(self::INDEX, self::TYPE, $city);
         }
 
-        $this->fail();
-    }
-
-    public function testUpdateDocument()
-    {
-        $data = array('name' => 'test' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000));
-
-        $createResponse = $this->documentRepository->create(self::INDEX, self::TYPE, $data);
         $this->refreshIndex();
-
-        $timeStart = microtime(true);
-
-        $data['name'] = 'test3';
-        $this->documentRepository->update(self::INDEX, self::TYPE, $createResponse->getId(), $data);
-
-        echo 'update: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-
-        $getResponse = $this->documentRepository->get(self::INDEX, self::TYPE, $createResponse->getId());
-        $storedData = $getResponse->getSource();
-        $this->assertSame($data, $storedData);
     }
 
     private function hasIndex($index = null)

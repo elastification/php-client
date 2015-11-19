@@ -25,7 +25,7 @@
         "psr/log": "~1.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "~4.1",
+        "phpunit/phpunit": "~4.8",
         "munkie/elasticsearch-thrift-php": "~1.4",
         "guzzlehttp/guzzle": ">=6.0,<7.0",
         "jms/serializer": "~0.15"
