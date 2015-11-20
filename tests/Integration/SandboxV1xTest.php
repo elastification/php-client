@@ -722,6 +722,31 @@ class SandboxV1xTest extends \PHPUnit_Framework_TestCase
 //        $this->assertTrue(isset($data[self::INDEX]['aliases']['alias-' . self::INDEX]));
 //    }
 //
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //    public function testCreateDeleteTemplate()
 //    {
 //        $templateName = 'test-template';
@@ -802,6 +827,25 @@ class SandboxV1xTest extends \PHPUnit_Framework_TestCase
 //        $this->assertTrue($deleteResponse->acknowledged());
 //    }
 //
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //    public function testCreateDeleteWarmer()
 //    {
 //        $index = 'warmer-index';
@@ -914,6 +958,21 @@ class SandboxV1xTest extends \PHPUnit_Framework_TestCase
 //        $this->deleteIndex($index);
 //    }
 //
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //    public function testCount()
 //    {
 //        $this->createIndex();
@@ -955,39 +1014,11 @@ class SandboxV1xTest extends \PHPUnit_Framework_TestCase
 
 
 
-//    public function testDeleteSearch()
-//    {
-//
-//        $this->createIndex();
-//        $data = array('name' => 'test', 'value' => 'myTestVal' . rand(100, 10000));
-//        $this->createDocument($data);
-//        $data = array('name' => 'test', 'value' => 'myTestVal' . rand(100, 10000));
-//        $this->createDocument($data);
-//        $data = array('name' => 'mega', 'value' => 'myTestVal' . rand(100, 10000));
-//        $this->createDocument($data);
-//        $this->refreshIndex();
-//
-//
-//        $countRequest = new CountRequest(self::INDEX, self::TYPE, $this->serializer);
-//
-//        /** @var CountResponse $response */
-//        $response = $this->client->send($countRequest);
-//        $this->assertSame(3, $response->getCount());
-//
-//        $timeStart = microtime(true);
-//        $deleteSearchRequest = new DeleteByQueryRequest(self::INDEX, self::TYPE, $this->serializer);
-//        $deleteSearchRequest->setBody(array('term' => array('name' => 'test')));
-//        $response = $this->client->send($deleteSearchRequest);
-//
-//        echo 'delete search: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-//        $this->refreshIndex();
-//
-//        $this->assertContains('_indices', $response->getRawData());
-//        $this->assertContains(self::INDEX, $response->getRawData());
-//
-//        $response = $this->client->send($countRequest);
-//        $this->assertSame(1, $response->getCount());
-//    }
+
+
+
+
+
 
     private function createIndex($index = null)
     {
