@@ -120,22 +120,6 @@ class SandboxV1xTest extends \PHPUnit_Framework_TestCase
         $this->transportClient = null;
     }
 
-//    public function testNodeInfo()
-//    {
-//        $timeStart = microtime(true);
-//        $countRequest = new NodeInfoRequest($this->serializer);
-//
-//        /** @var NodeInfoResponse $response */
-//        $response = $this->client->send($countRequest);
-//
-//        echo 'nodeInfo: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-//
-//        $this->assertNotEmpty($response->getName());
-//        $this->assertNotEmpty($response->getTagline());
-//        $this->assertSame(200, $response->getStatus());
-//        $this->assertArrayHasKey('number', $response->getVersion());
-//    }
-//
 //    public function testDeleteIndex()
 //    {
 //        $this->createIndex();
@@ -245,91 +229,9 @@ class SandboxV1xTest extends \PHPUnit_Framework_TestCase
 //        $this->assertTrue($response->created());
 //    }
 
-    public function testBulkUpdateIndex()
-    {
-        $this->createIndex();
-        $timeStart = microtime(true);
-//
-//        $createDocumentRequest = new CreateDocumentRequest(self::INDEX, self::TYPE, $this->serializer);
-        $doc1 = array('name' => 'test1' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000));
-        $doc2 = array('name' => 'test2' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000));
-        $doc3 = array('name' => 'test3' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000));
-
-        $bulkUpdateRequest = new BulkUpdateIndexRequest(self::INDEX, self::TYPE, $this->serializer);
-
-        $bulkUpdateRequest->addDocument('doc1', $doc1);
-        $bulkUpdateRequest->addDocument('doc2', $doc2);
-        $bulkUpdateRequest->addDocument('doc3', $doc3);
-
-//        var_dump($bulkUpdateRequest->getBody());
-        $reponse = $this->client->send($bulkUpdateRequest);
-
-        var_dump($reponse->getRawData());
-        die('loool');
-//
-//        $createDocumentRequest->setBody($data);
-//        /** @var CreateUpdateDocumentResponse $response */
-//        $response = $this->client->send($createDocumentRequest);
-//
-//        echo 'createDocument: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-//
-//        $this->assertSame(self::INDEX, $response->getIndex());
-//        $this->assertSame(self::TYPE, $response->getType());
-//        $this->assertSame(1, $response->getVersion());
-//        $this->assertTrue(strlen($response->getId()) > 5);
-//        $this->assertTrue($response->created());
-    }
 
 //
-//    public function testGetDocument()
-//    {
-//        $this->createIndex();
-//        $data = array('name' => 'test' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000));
-//        $id = $this->createDocument($data);
-//        $this->refreshIndex();
 //
-//        $timeStart = microtime(true);
-//
-//        $getDocumentRequest = new GetDocumentRequest(self::INDEX, self::TYPE, $this->serializer);
-//        $getDocumentRequest->setId($id);
-//
-//        /** @var DocumentResponse $getDocumentResponse */
-//        $getDocumentResponse = $this->client->send($getDocumentRequest);
-//
-//        echo 'getDocument: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-//
-//        $this->assertSame($id, $getDocumentResponse->getId());
-//        $this->assertSame(1, $getDocumentResponse->getVersion());
-//        $this->assertSame(self::INDEX, $getDocumentResponse->getIndex());
-//        $this->assertSame(self::TYPE, $getDocumentResponse->getType());
-//        $this->assertSame($data['name'], $getDocumentResponse->getSource()['name']);
-//        $this->assertSame($data['value'], $getDocumentResponse->getSource()['value']);
-//        $this->assertTrue($getDocumentResponse->found());
-//    }
-//
-//    public function testGetDocumentMissingDoc()
-//    {
-//        $this->createIndex();
-//        $data = array('name' => 'test' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000));
-//        $this->createDocument($data);
-//        $this->refreshIndex();
-//
-//        $timeStart = microtime(true);
-//
-//        $getDocumentRequest = new GetDocumentRequest(self::INDEX, self::TYPE, $this->serializer);
-//        $getDocumentRequest->setId('notExisting');
-//
-//        try {
-//            $this->client->send($getDocumentRequest);
-//        } catch (ClientException $exception) {
-//            $this->assertSame(404, $exception->getCode());
-//            $this->assertContains('Client error:', $exception->getMessage());
-//            echo 'getDocumentMissingDoc: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-//            return;
-//        }
-//
-//        $this->fail();
-//    }
 //
 //    public function testUpdateDocument()
 //    {
