@@ -208,94 +208,35 @@ class SandboxV1xTest extends \PHPUnit_Framework_TestCase
 //        $this->assertInstanceOf('Elastification\Client\Response\Response', $response);
 //    }
 //
-//    public function testCreateDocument()
-//    {
-//        $this->createIndex();
-//        $timeStart = microtime(true);
-//
-//        $createDocumentRequest = new CreateDocumentRequest(self::INDEX, self::TYPE, $this->serializer);
-//        $data = array('name' => 'test' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000));
-//
-//        $createDocumentRequest->setBody($data);
-//        /** @var CreateUpdateDocumentResponse $response */
-//        $response = $this->client->send($createDocumentRequest);
-//
-//        echo 'createDocument: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-//
-//        $this->assertSame(self::INDEX, $response->getIndex());
-//        $this->assertSame(self::TYPE, $response->getType());
-//        $this->assertSame(1, $response->getVersion());
-//        $this->assertTrue(strlen($response->getId()) > 5);
-//        $this->assertTrue($response->created());
-//    }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //
 //
 //
-//    public function testUpdateDocument()
-//    {
-//        $this->createIndex();
-//        $data = array('name' => 'test' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000));
-//        $id = $this->createDocument($data);
-//        $this->refreshIndex();
 //
-//        $timeStart = microtime(true);
 //
-//        $updateDocumentRequest = new UpdateDocumentRequest(self::INDEX, self::TYPE, $this->serializer);
-//        $updateDocumentRequest->setId($id);
-//        $data['name'] = 'testName';
-//        $updateDocumentRequest->setBody($data);
 //
-//        /** @var CreateUpdateDocumentResponse $updateDocumentResponse */
-//        $updateDocumentResponse = $this->client->send($updateDocumentRequest);
-//
-//        echo 'updateDocument: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-//
-//        $this->assertSame(self::INDEX, $updateDocumentResponse->getIndex());
-//        $this->assertSame(self::TYPE, $updateDocumentResponse->getType());
-//        $this->assertSame(2, $updateDocumentResponse->getVersion());
-//        $this->assertSame($id, $updateDocumentResponse->getId());
-//        $this->assertFalse($updateDocumentResponse->created());
-//    }
-//
-//    public function testDeleteDocument()
-//    {
-//        $this->createIndex();
-//        $data = array('name' => 'test' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000));
-//        $id = $this->createDocument($data);
-//        $this->refreshIndex();
-//
-//        $timeStart = microtime(true);
-//
-//        $deleteDocumentRequest = new DeleteDocumentRequest(self::INDEX, self::TYPE, $this->serializer);;
-//        $deleteDocumentRequest->setId($id);
-//
-//        /** @var DeleteDocumentResponse $response */
-//        $response = $this->client->send($deleteDocumentRequest);
-//
-//        $this->assertTrue($response->found());
-//        $this->assertSame($id, $response->getId());
-//        $this->assertSame(self::INDEX, $response->getIndex());
-//        $this->assertSame(self::TYPE, $response->getType());
-//        $this->assertGreaterThan(1, $response->getVersion());
-//
-//        echo 'deleteDocument: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-//
-//        $getDocumentRequest = new GetDocumentRequest(self::INDEX, self::TYPE, $this->serializer);
-//        $getDocumentRequest->setId($id);
-//
-//        try {
-//            $this->client->send($getDocumentRequest);
-//        } catch (ClientException $exception) {
-//            $this->assertSame(404, $exception->getCode());
-//            $this->assertContains('Client error:', $exception->getMessage());
-//
-//            return;
-//        }
-//
-//        $this->fail();
-//    }
 //
 //    public function testMatchAllSearch()
 //    {
