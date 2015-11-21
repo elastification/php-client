@@ -2,9 +2,7 @@
 namespace Elastification\Client\Tests\Integration\Request\V1x\Index;
 
 
-use Elastification\Client\Request\V1x\Index\CreateIndexRequest;
 use Elastification\Client\Request\V1x\Index\RefreshIndexRequest;
-use Elastification\Client\Response\V1x\Index\IndexResponse;
 use Elastification\Client\Response\V1x\Index\RefreshIndexResponse;
 use Elastification\Client\Tests\Integration\Request\V1x\AbstractElastic;
 

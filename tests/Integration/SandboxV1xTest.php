@@ -126,22 +126,7 @@ class SandboxV1xTest extends \PHPUnit_Framework_TestCase
 //
 
 //
-//    public function testIndexExists()
-//    {
-//        $this->createIndex();
-//        $this->refreshIndex();
-//
-//        $timeStart = microtime(true);
-//
-//        $indexExistsRequest = new IndexExistsRequest(self::INDEX, null, $this->serializer);
-//
-//        /** @var ResponseInterface $response */
-//        $response = $this->client->send($indexExistsRequest);
-//
-//        echo 'indexExists: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-//
-//        $this->assertInstanceOf('Elastification\Client\Response\Response', $response);
-//    }
+
 //
 
 //
