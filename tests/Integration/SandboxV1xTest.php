@@ -122,40 +122,7 @@ class SandboxV1xTest extends \PHPUnit_Framework_TestCase
 
 //
 //
-//    public function testCreateIndex()
-//    {
-//        $timeStart = microtime(true);
-//
-//        $settings = array(
-//            'settings' => array(
-//                'index' => array(
-//                    'number_of_shards' => 3,
-//                    'number_of_replicas' => 2
-//                )
-//            ),
-//            'mappings' => array(
-//                'test-type' => array(
-//                    '_source' => array('enabled' => false),
-//                    'properties' => array(
-//                        'test-field' => array(
-//                            'type' => 'string',
-//                            'index' => 'not_analyzed'
-//                        )
-//                    )
-//                )
-//            )
-//        );
-//
-//        $createIndexRequest = new CreateIndexRequest(self::INDEX, null, $this->serializer);
-//        $createIndexRequest->setBody($settings);
-//
-//        /** @var IndexResponse $response */
-//        $response = $this->client->send($createIndexRequest);
-//
-//        echo 'createIndex: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-//
-//        $this->assertTrue($response->acknowledged());
-//    }
+
 //
 //    public function testRefreshIndex()
 //    {
