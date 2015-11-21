@@ -8,8 +8,6 @@ use Elastification\Client\Tests\Integration\Request\V1x\AbstractElastic;
 
 class IndexExistsRequestTest extends AbstractElastic
 {
-    const TYPE = 'request-index-refresh';
-
     public function testIndexExists()
     {
         $this->createIndex();
