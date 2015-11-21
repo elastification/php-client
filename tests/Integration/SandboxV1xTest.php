@@ -209,37 +209,6 @@ class SandboxV1xTest extends \PHPUnit_Framework_TestCase
 //    }
 //
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//
-//
-//
-//
-//
-//
-//
-
-
 //
 //    public function testGetMappingWithType()
 //    {
@@ -657,6 +626,27 @@ class SandboxV1xTest extends \PHPUnit_Framework_TestCase
 //        $this->assertTrue(isset($shards['failed']));
 //    }
 //
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //    public function testAliases()
 //    {
 //        $this->createIndex();
@@ -729,104 +719,6 @@ class SandboxV1xTest extends \PHPUnit_Framework_TestCase
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//    public function testCreateDeleteTemplate()
-//    {
-//        $templateName = 'test-template';
-//        $template = [
-//            'template' => "te*",
-//            'settings' => [
-//                "number_of_shards" => 1
-//            ],
-//            'mappings' => [
-//                'type1' => [
-//                    '_source' => [ "enabled" => false ]
-//                ]
-//            ]
-//        ];
-//
-//        $timeStart = microtime(true);
-//
-//        $createTemplateRequest = new CreateTemplateRequest($templateName, $this->serializer);
-//        $createTemplateRequest->setBody($template);
-//
-//        /** @var IndexResponse $createResponse */
-//        $createResponse = $this->client->send($createTemplateRequest);
-//
-//        echo 'createTemplate: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-//
-//        $this->assertTrue($createResponse->acknowledged());
-//
-//        $timeStart = microtime(true);
-//
-//        $deleteTemplateRequest = new DeleteTemplateRequest($templateName, $this->serializer);
-//
-//        /** @var IndexResponse $deleteResponse */
-//        $deleteResponse = $this->client->send($deleteTemplateRequest);
-//
-//        echo 'deleteTemplate: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-//
-//        $this->assertTrue($deleteResponse->acknowledged());
-//    }
-//
-//    public function testGetTemplate()
-//    {
-//        $templateName = 'test-template';
-//        $template = [
-//            'template' => "te*",
-//            'settings' => [
-//                "number_of_shards" => 1
-//            ],
-//            'mappings' => [
-//                'type1' => [
-//                    '_source' => [ "enabled" => false ]
-//                ]
-//            ]
-//        ];
-//
-//        $createTemplateRequest = new CreateTemplateRequest($templateName, $this->serializer);
-//        $createTemplateRequest->setBody($template);
-//
-//        /** @var IndexResponse $createResponse */
-//        $createResponse = $this->client->send($createTemplateRequest);
-//
-//        $this->assertTrue($createResponse->acknowledged());
-//
-//        $timeStart = microtime(true);
-//
-//        $getTemplateRequest = new GetTemplateRequest($templateName, $this->serializer);
-//
-//        $getResponse = $this->client->send($getTemplateRequest);
-//
-//        echo 'getTemplate: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-//
-//        $this->arrayHasKey($templateName, $getResponse->getData()->getGatewayValue());
-//
-//        $deleteTemplateRequest = new DeleteTemplateRequest($templateName, $this->serializer);
-//
-//        /** @var IndexResponse $deleteResponse */
-//        $deleteResponse = $this->client->send($deleteTemplateRequest);
-//
-//        $this->assertTrue($deleteResponse->acknowledged());
-//    }
-//
 
 
 
@@ -958,48 +850,6 @@ class SandboxV1xTest extends \PHPUnit_Framework_TestCase
 //        $this->deleteIndex($index);
 //    }
 //
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//    public function testCount()
-//    {
-//        $this->createIndex();
-//        $this->createDocument();
-//        $this->createDocument();
-//        $this->createDocument();
-//        $this->refreshIndex();
-//
-//        $timeStart = microtime(true);
-//        $countRequest = new CountRequest(self::INDEX, self::TYPE, $this->serializer);
-//
-//        /** @var CountResponse $response */
-//        $response = $this->client->send($countRequest);
-//
-//        echo 'count: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-//
-//        $this->assertSame(3, $response->getCount());
-//
-//        $shards = $response->getShards();
-//        $this->assertTrue(isset($shards['total']));
-//        $this->assertTrue(isset($shards['successful']));
-//        $this->assertTrue(isset($shards['failed']));
-//    }
-
-
-
-
 
 
 
