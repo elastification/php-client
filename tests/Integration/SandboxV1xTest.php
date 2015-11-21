@@ -120,21 +120,7 @@ class SandboxV1xTest extends \PHPUnit_Framework_TestCase
         $this->transportClient = null;
     }
 
-//    public function testDeleteIndex()
-//    {
-//        $this->createIndex();
 //
-//        $timeStart = microtime(true);
-//
-//        $createIndexRequest = new DeleteIndexRequest(self::INDEX, null, $this->serializer);
-//
-//        /** @var IndexResponse $response */
-//        $response = $this->client->send($createIndexRequest);
-//
-//        echo 'deleteIndex: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-//
-//        $this->assertTrue($response->acknowledged());
-//    }
 //
 //    public function testCreateIndex()
 //    {
@@ -627,55 +613,6 @@ class SandboxV1xTest extends \PHPUnit_Framework_TestCase
 //    }
 //
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//    public function testAliases()
-//    {
-//        $this->createIndex();
-//        $this->refreshIndex();
-//
-//        $aliases = [
-//            'actions' => [
-//                [
-//                    'add' => [
-//                        'index' => self::INDEX,
-//                        'alias' => 'alias-' . self::INDEX
-//                    ]
-//                ]
-//            ]
-//        ];
-//
-//        $timeStart = microtime(true);
-//
-//        $aliasesRequest = new AliasesRequest(null, null, $this->serializer);
-//        $aliasesRequest->setBody($aliases);
-//
-//        /** @var IndexResponse $response */
-//        $response = $this->client->send($aliasesRequest);
-//
-//        echo 'aliases: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-//
-//        $this->assertTrue($response->acknowledged());
-//    }
-//
 //    public function testGetAliasesWithoutIndex()
 //    {
 //        $this->createIndex();
@@ -712,31 +649,6 @@ class SandboxV1xTest extends \PHPUnit_Framework_TestCase
 //        $this->assertTrue(isset($data[self::INDEX]['aliases']['alias-' . self::INDEX]));
 //    }
 //
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 //    public function testCreateDeleteWarmer()
 //    {
