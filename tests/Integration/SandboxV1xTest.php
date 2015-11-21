@@ -175,46 +175,7 @@ class SandboxV1xTest extends \PHPUnit_Framework_TestCase
 //
 //
 //
-//    public function testIndexTypeExists()
-//    {
-//        $this->createIndex();
-//        $this->refreshIndex();
-//        $this->createDocument();
-//        $this->refreshIndex();
 //
-//        $timeStart = microtime(true);
-//
-//        $indexExistsRequest = new IndexTypeExistsRequest(self::INDEX, self::TYPE, $this->serializer);
-//
-//        /** @var ResponseInterface $response */
-//        $response = $this->client->send($indexExistsRequest);
-//
-//        echo 'indexTypeExists: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-//
-//        $this->assertInstanceOf('Elastification\Client\Response\Response', $response);
-//    }
-//
-//    public function testIndexTypeExistsNotExisting()
-//    {
-//        $this->createIndex();
-//        $this->createDocument();
-//        $this->refreshIndex();
-//
-//        $timeStart = microtime(true);
-//
-//        $indexExistsRequest = new IndexTypeExistsRequest(self::INDEX, 'not-existing-type', $this->serializer);
-//
-//        try {
-//            $this->client->send($indexExistsRequest);
-//        } catch(ClientException $exception) {
-//            echo 'indexTypeExists(not existing): ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-//            $this->assertSame(404, $exception->getCode());
-//            $this->assertContains('Client error:', $exception->getMessage());
-//            return;
-//        }
-//
-//        $this->fail();
-//    }
 //
 //    public function testIndexStatsWithIndex()
 //    {
