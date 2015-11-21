@@ -8,7 +8,7 @@ use Elastification\Client\Tests\Integration\Request\V1x\AbstractElastic;
 
 class IndexStatusRequestTest extends AbstractElastic
 {
-    const TYPE = 'request-index-stats';
+    const TYPE = 'request-index-status';
 
     public function testIndexStatusWithIndex()
     {

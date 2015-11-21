@@ -121,15 +121,6 @@ class SandboxV1xTest extends \PHPUnit_Framework_TestCase
     }
 
 //
-//
-
-//
-
-//
-
-//
-
-//
 //    public function testGetMappingWithType()
 //    {
 //        $this->createIndex();
@@ -170,16 +161,6 @@ class SandboxV1xTest extends \PHPUnit_Framework_TestCase
 //        $this->assertContains(self::TYPE, $response->getRawData());
 //        $this->assertContains('properties', $response->getRawData());
 //    }
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //    public function testCreateMappingWithIndexAndType()
 //    {
@@ -258,25 +239,7 @@ class SandboxV1xTest extends \PHPUnit_Framework_TestCase
 //        $this->assertSame('{}', $response->getRawData());
 //    }
 //
-//    public function testIndexSettingsWithIndex()
-//    {
-//        $this->createIndex();
-//        $this->createDocument();
-//        $this->refreshIndex();
 //
-//
-//        $timeStart = microtime(true);
-//
-//        $indexStatsRequest = new IndexSettingsRequest(self::INDEX, null, $this->serializer);
-//
-//        /** @var IndexStatsResponse $response */
-//        $response = $this->client->send($indexStatsRequest);
-//
-//        echo 'indexSettings(with index): ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-//
-//        $data = $response->getData()->getGatewayValue();
-//        $this->assertArrayHasKey(self::INDEX, $data);
-//    }
 //
 //    public function testIndexSegmentsWithIndex()
 //    {
