@@ -173,27 +173,7 @@ class SandboxV1xTest extends \PHPUnit_Framework_TestCase
 //
 //
 //
-//    public function testIndexExistsNotExisting()
-//    {
-//        $this->createIndex();
-//        $this->refreshIndex();
 //
-//        $timeStart = microtime(true);
-//
-//        $indexExistsRequest = new IndexExistsRequest('not-existing-index', null, $this->serializer);
-//
-//        try {
-//            $this->client->send($indexExistsRequest);
-//        } catch(ClientException $exception) {
-//            echo 'indexExists(not existing): ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-//
-//            $this->assertSame(404, $exception->getCode());
-//            $this->assertContains('Client error:', $exception->getMessage());
-//            return;
-//        }
-//
-//        $this->fail();
-//    }
 //
 //    public function testIndexTypeExists()
 //    {
