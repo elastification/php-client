@@ -179,55 +179,7 @@ class SandboxV1xTest extends \PHPUnit_Framework_TestCase
 //
 //
 //
-//    public function testIndexStatusWithIndex()
-//    {
-//        $this->createIndex();
-//        $this->createDocument();
-//        $this->refreshIndex();
 //
-//
-//        $timeStart = microtime(true);
-//
-//        $indexStatsRequest = new IndexStatusRequest(self::INDEX, null, $this->serializer);
-//
-//        /** @var IndexStatusResponse $response */
-//        $response = $this->client->send($indexStatsRequest);
-//
-//        echo 'indexStatus(with index): ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-//
-//        $shards = $response->getShards();
-//        $this->assertTrue(isset($shards['total']));
-//        $this->assertTrue(isset($shards['successful']));
-//        $this->assertTrue(isset($shards['failed']));
-//
-//        $indices = $response->getIndices();
-//        $this->assertTrue(isset($indices[self::INDEX]));
-//    }
-//
-//    public function testIndexStatusWithoutIndex()
-//    {
-//        $this->createIndex();
-//        $this->createDocument();
-//        $this->refreshIndex();
-//
-//
-//        $timeStart = microtime(true);
-//
-//        $indexStatsRequest = new IndexStatusRequest(null, null, $this->serializer);
-//
-//        /** @var IndexStatusResponse $response */
-//        $response = $this->client->send($indexStatsRequest);
-//
-//        echo 'indexStatus(with index): ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-//
-//        $shards = $response->getShards();
-//        $this->assertTrue(isset($shards['total']));
-//        $this->assertTrue(isset($shards['successful']));
-//        $this->assertTrue(isset($shards['failed']));
-//
-//        $indices = $response->getIndices();
-//        $this->assertTrue(isset($indices[self::INDEX]));
-//    }
 //
 //    public function testCreateMappingWithIndexAndType()
 //    {

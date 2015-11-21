@@ -2,57 +2,49 @@
 namespace Elastification\Client\Tests\Integration\Request\V1x\Index;
 
 
-use Elastification\Client\Request\V1x\Index\IndexStatsRequest;
-use Elastification\Client\Response\V1x\Index\IndexStatsResponse;
+use Elastification\Client\Request\V1x\Index\IndexStatusRequest;
+use Elastification\Client\Response\V1x\Index\IndexStatusResponse;
 use Elastification\Client\Tests\Integration\Request\V1x\AbstractElastic;
 
-class IndexStatsRequestTest extends AbstractElastic
+class IndexStatusRequestTest extends AbstractElastic
 {
     const TYPE = 'request-index-stats';
 
-    public function testIndexStatsWithIndex()
+    public function testIndexStatusWithIndex()
     {
         $this->createIndex();
         $this->createDocument(self::TYPE);
         $this->refreshIndex();
 
-        $indexStatsRequest = new IndexStatsRequest(ES_INDEX, null, $this->getSerializer());
+        $indexStatsRequest = new IndexStatusRequest(ES_INDEX, null, $this->getSerializer());
 
-        /** @var IndexStatsResponse $response */
+        /** @var IndexStatusResponse $response */
         $response = $this->getClient()->send($indexStatsRequest);
 
         $shards = $response->getShards();
         $this->assertTrue(isset($shards['total']));
         $this->assertTrue(isset($shards['successful']));
         $this->assertTrue(isset($shards['failed']));
-
-        $all = $response->getAll();
-        $this->assertTrue(isset($all['primaries']));
-        $this->assertTrue(isset($all['total']));
 
         $indices = $response->getIndices();
         $this->assertTrue(isset($indices[ES_INDEX]));
     }
 
-    public function testIndexStatsWithoutIndex()
+    public function testIndexStatusWithoutIndex()
     {
         $this->createIndex();
         $this->createDocument(self::TYPE);
         $this->refreshIndex();
 
-        $indexStatsRequest = new IndexStatsRequest(null, null, $this->getSerializer());
+        $indexStatsRequest = new IndexStatusRequest(null, null, $this->getSerializer());
 
-        /** @var IndexStatsResponse $response */
+        /** @var IndexStatusResponse $response */
         $response = $this->getClient()->send($indexStatsRequest);
 
         $shards = $response->getShards();
         $this->assertTrue(isset($shards['total']));
         $this->assertTrue(isset($shards['successful']));
         $this->assertTrue(isset($shards['failed']));
-
-        $all = $response->getAll();
-        $this->assertTrue(isset($all['primaries']));
-        $this->assertTrue(isset($all['total']));
 
         $indices = $response->getIndices();
         $this->assertTrue(isset($indices[ES_INDEX]));
