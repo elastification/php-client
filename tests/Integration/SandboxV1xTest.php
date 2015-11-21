@@ -241,64 +241,8 @@ class SandboxV1xTest extends \PHPUnit_Framework_TestCase
 //
 //
 //
-//    public function testIndexSegmentsWithIndex()
-//    {
-//        $this->createIndex();
-//        $this->createDocument();
-//        $this->refreshIndex();
-//
-//        $timeStart = microtime(true);
-//
-//        $indexStatsRequest = new IndexSegmentsRequest(self::INDEX, null, $this->serializer);
-//
-//        /** @var IndexStatusResponse $response */
-//        $response = $this->client->send($indexStatsRequest);
-//
-//        echo 'indexSegments(with index): ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-//
-//        $shards = $response->getShards();
-//        $this->assertTrue(isset($shards['total']));
-//        $this->assertTrue(isset($shards['successful']));
-//        $this->assertTrue(isset($shards['failed']));
-//
-//        $indices = $response->getIndices();
-//        $this->assertTrue(isset($indices[self::INDEX]));
-//    }
-//
-//    public function testIndexSegmentsWithoutIndex()
-//    {
-//        $this->createIndex();
-//        $this->createDocument();
-//        $this->refreshIndex();
-//
-//        $timeStart = microtime(true);
-//
-//        $indexStatsRequest = new IndexSegmentsRequest(null, null, $this->serializer);
-//
-//        /** @var IndexStatusResponse $response */
-//        $response = $this->client->send($indexStatsRequest);
-//
-//        echo 'indexSegments(without index): ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-//
-//        $shards = $response->getShards();
-//        $this->assertTrue(isset($shards['total']));
-//        $this->assertTrue(isset($shards['successful']));
-//        $this->assertTrue(isset($shards['failed']));
-//
-//        $indices = $response->getIndices();
-//        $this->assertTrue(isset($indices[self::INDEX]));
-//    }
 //
 //
-//
-//
-//
-//
-//
-
-//
-//
-
 //    public function testCreateDeleteWarmer()
 //    {
 //        $index = 'warmer-index';

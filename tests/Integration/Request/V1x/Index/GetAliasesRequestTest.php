@@ -10,7 +10,7 @@ use Elastification\Client\Tests\Integration\Request\V1x\AbstractElastic;
 
 class GetAliasesRequestTest extends AbstractElastic
 {
-    const TYPE = 'request-get-aliases';
+    const TYPE = 'request-index-get-aliases';
 
     public function testGetAliasesWithoutIndex()
     {
