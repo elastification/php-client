@@ -124,25 +124,7 @@ class SandboxV1xTest extends \PHPUnit_Framework_TestCase
 //
 
 //
-//    public function testRefreshIndex()
-//    {
-//        $this->createIndex();
-//        $this->createDocument();
-//        $timeStart = microtime(true);
-//
-//        $refreshIndexRequest = new RefreshIndexRequest(self::INDEX, null, $this->serializer);
-//
-//        /** @var RefreshIndexResponse $response */
-//        $response = $this->client->send($refreshIndexRequest);
-//
-//        echo 'refreshIndex: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-//
-//
-//        $shards = $response->getShards();
-//        $this->assertTrue(isset($shards['total']));
-//        $this->assertTrue(isset($shards['successful']));
-//        $this->assertTrue(isset($shards['failed']));
-//    }
+
 //
 //    public function testIndexExists()
 //    {
