@@ -18,7 +18,6 @@ class IndexTypeExistsRequestTest extends AbstractElastic
         $this->createDocument(self::TYPE);
         $this->refreshIndex();
 
-
         $indexExistsRequest = new IndexTypeExistsRequest(ES_INDEX, self::TYPE, $this->getSerializer());
 
         /** @var ResponseInterface $response */
@@ -32,7 +31,6 @@ class IndexTypeExistsRequestTest extends AbstractElastic
         $this->createIndex();
         $this->createDocument(self::TYPE);
         $this->refreshIndex();
-
 
         $indexExistsRequest = new IndexTypeExistsRequest(ES_INDEX, 'not-existing-type', $this->getSerializer());
 
