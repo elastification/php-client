@@ -110,7 +110,6 @@ class SearchRequestTest extends AbstractElastic
         $this->createDocument(self::TYPE, $data);
         $this->refreshIndex();
 
-        $timeStart = microtime(true);
         $searchRequest = new SearchRequest(ES_INDEX, self::TYPE, $this->getSerializer());
 
         $query = [
@@ -125,8 +124,6 @@ class SearchRequestTest extends AbstractElastic
 
         /** @var SearchResponse $response */
         $response = $this->getClient()->send($searchRequest);
-
-        echo 'search(with scroll params): ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
 
         $responseData = $response->getData()->getGatewayValue();
 
