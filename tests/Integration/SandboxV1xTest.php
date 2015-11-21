@@ -527,24 +527,7 @@ class SandboxV1xTest extends \PHPUnit_Framework_TestCase
 //        $this->assertTrue(isset($shards['failed']));
 //    }
 //
-//    public function testIndexFlush()
-//    {
-//        $this->createIndex();
-//        $this->createDocument();
-//        $timeStart = microtime(true);
 //
-//        $refreshIndexRequest = new IndexFlushRequest(self::INDEX, null, $this->serializer);
-//
-//        /** @var RefreshIndexResponse $response */
-//        $response = $this->client->send($refreshIndexRequest);
-//
-//        echo 'indexFlush: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-//
-//        $shards = $response->getShards();
-//        $this->assertTrue(isset($shards['total']));
-//        $this->assertTrue(isset($shards['successful']));
-//        $this->assertTrue(isset($shards['failed']));
-//    }
 //
 
 //    public function testGetAliasesWithoutIndex()
