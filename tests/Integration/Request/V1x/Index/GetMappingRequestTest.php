@@ -35,14 +35,10 @@ class GetMappingRequestTest extends AbstractElastic
         $this->createDocument(self::TYPE, $data);
         $this->refreshIndex();
 
-        $timeStart = microtime(true);
-
         $getMappingRequest = new GetMappingRequest(ES_INDEX, null, $this->getSerializer());
 
         /** @var ResponseInterface $response */
         $response = $this->getClient()->send($getMappingRequest);
-
-        echo 'getMapping(without type): ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
 
         $this->assertContains(ES_INDEX, $response->getRawData());
         $this->assertContains(self::TYPE, $response->getRawData());
