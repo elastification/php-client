@@ -121,46 +121,7 @@ class SandboxV1xTest extends \PHPUnit_Framework_TestCase
     }
 
 //
-//    public function testGetMappingWithType()
-//    {
-//        $this->createIndex();
-//        $data = array('name' => 'test' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000));
-//        $this->createDocument($data);
-//        $this->refreshIndex();
 //
-//        $timeStart = microtime(true);
-//
-//        $getMappingRequest = new GetMappingRequest(self::INDEX, self::TYPE, $this->serializer);
-//
-//        /** @var ResponseInterface $response */
-//        $response = $this->client->send($getMappingRequest);
-//
-//        echo 'getMapping: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-//
-//        $this->assertContains(self::TYPE, $response->getRawData());
-//        $this->assertContains('properties', $response->getRawData());
-//    }
-//
-//    public function testGetMappingWithoutType()
-//    {
-//        $this->createIndex();
-//        $data = array('name' => 'test' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000));
-//        $this->createDocument($data);
-//        $this->refreshIndex();
-//
-//        $timeStart = microtime(true);
-//
-//        $getMappingRequest = new GetMappingRequest(self::INDEX, null, $this->serializer);
-//
-//        /** @var ResponseInterface $response */
-//        $response = $this->client->send($getMappingRequest);
-//
-//        echo 'getMapping(without type): ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-//
-//        $this->assertContains(self::INDEX, $response->getRawData());
-//        $this->assertContains(self::TYPE, $response->getRawData());
-//        $this->assertContains('properties', $response->getRawData());
-//    }
 //
 //    public function testCreateMappingWithIndexAndType()
 //    {
