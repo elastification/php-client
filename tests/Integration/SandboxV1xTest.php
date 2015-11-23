@@ -125,39 +125,7 @@ class SandboxV1xTest extends \PHPUnit_Framework_TestCase
 //
 //
 //
-//    public function testDeleteMappingWithIndexAndType()
-//    {
-//        $this->createIndex();
-//        $mapping = [
-//            self::TYPE => [
-//                'properties' => [
-//                    'message' => ['type' => 'string']
-//                ]
-//            ]
-//        ];
 //
-//        $createMappingRequest = new CreateMappingRequest(self::INDEX , self::TYPE, $this->serializer);
-//        $createMappingRequest->setBody($mapping);
-//
-//        $this->client->send($createMappingRequest);
-//
-//        $timeStart = microtime(true);
-//
-//        $deleteMappingRequest = new DeleteMappingRequest(self::INDEX , self::TYPE, $this->serializer);
-//
-//        /** @var IndexResponse $response */
-//        $response = $this->client->send($deleteMappingRequest);
-//
-//        $this->assertTrue($response->acknowledged());
-//
-//        echo 'deleteMapping(with index,type): ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-//
-//        //check if exists
-//        $getMappingRequest = new GetMappingRequest(self::INDEX, self::TYPE, $this->serializer);
-//
-//        $response = $this->client->send($getMappingRequest);
-//        $this->assertSame('{}', $response->getRawData());
-//    }
 //
 //
 //
