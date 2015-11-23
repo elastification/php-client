@@ -16,8 +16,6 @@ class CreateMappingRequestTest extends AbstractElastic
     {
         $this->createIndex();
 
-        $timeStart = microtime(true);
-
         $mapping = [
             self::TYPE => [
                 'properties' => [
@@ -32,8 +30,6 @@ class CreateMappingRequestTest extends AbstractElastic
         /** @var IndexResponse $response */
         $response = $this->getClient()->send($createMappingRequest);
 
-        echo 'createMapping(with index,type): ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-
         $this->assertTrue($response->acknowledged());
 
         $this->refreshIndex();
@@ -43,7 +39,7 @@ class CreateMappingRequestTest extends AbstractElastic
 
         /** @var ResponseInterface $getMappingResponse */
         $getMappingResponse = $this->getClient()->send($getMappingRequest);
-        $data = $getMappingResponse->getData();
+        $data = $getMappingResponse->getData()->getGatewayValue();
 
         $this->assertTrue(isset($data[ES_INDEX]));
         $mappings = $data[ES_INDEX]['mappings'];
@@ -51,7 +47,5 @@ class CreateMappingRequestTest extends AbstractElastic
         $this->assertTrue(isset($mappings[self::TYPE]['properties']['message']));
         $this->assertTrue(isset($mappings[self::TYPE]['properties']['message']['type']));
         $this->assertSame('string', $mappings[self::TYPE]['properties']['message']['type']);
-        //the not activated assertSame is for tessting it when Gateway is fixed.
-//        $this->assertSame($mapping[self::TYPE], $data[self::TYPE]);
     }
 }
