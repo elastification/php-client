@@ -123,23 +123,6 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
 
     }
 
-    public function testDeleteIndex()
-    {
-        $this->createIndex();
-
-        $timeStart = microtime(true);
-
-        $createIndexRequest = new DeleteIndexRequest(self::INDEX, null, $this->serializer);
-
-        /** @var IndexResponse $response */
-        $response = $this->client->send($createIndexRequest);
-
-        echo 'deleteIndex: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-
-        $this->assertTrue($response->isOk());
-        $this->assertTrue($response->acknowledged());
-    }
-
     public function testCreateIndex()
     {
         $timeStart = microtime(true);
