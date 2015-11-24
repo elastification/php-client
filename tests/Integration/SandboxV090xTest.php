@@ -710,90 +710,6 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(isset($data[self::INDEX]['aliases']['alias-' . self::INDEX]));
     }
 
-    public function testCreateDeleteTemplate()
-    {
-        $templateName = 'test-template';
-        $template = [
-            'template' => "te*",
-            'settings' => [
-                "number_of_shards" => 1
-            ],
-            'mappings' => [
-                'type1' => [
-                    '_source' => [ "enabled" => false ]
-                ]
-            ]
-        ];
-
-        $timeStart = microtime(true);
-
-        $createTemplateRequest = new CreateTemplateRequest($templateName, $this->serializer);
-        $createTemplateRequest->setBody($template);
-
-        /** @var IndexResponse $createResponse */
-        $createResponse = $this->client->send($createTemplateRequest);
-
-        echo 'createTemplate: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-
-        $this->assertTrue($createResponse->isOk());
-        $this->assertTrue($createResponse->acknowledged());
-
-        $timeStart = microtime(true);
-
-        $deleteTemplateRequest = new DeleteTemplateRequest($templateName, $this->serializer);
-
-        /** @var IndexResponse $deleteResponse */
-        $deleteResponse = $this->client->send($deleteTemplateRequest);
-
-        echo 'deleteTemplate: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-
-        $this->assertTrue($deleteResponse->isOk());
-        $this->assertTrue($deleteResponse->acknowledged());
-    }
-
-    public function testGetTemplate()
-    {
-        $templateName = 'test-template';
-        $template = [
-            'template' => "te*",
-            'settings' => [
-                "number_of_shards" => 1
-            ],
-            'mappings' => [
-                'type1' => [
-                    '_source' => [ "enabled" => false ]
-                ]
-            ]
-        ];
-
-        $createTemplateRequest = new CreateTemplateRequest($templateName, $this->serializer);
-        $createTemplateRequest->setBody($template);
-
-        /** @var IndexResponse $createResponse */
-        $createResponse = $this->client->send($createTemplateRequest);
-
-        $this->assertTrue($createResponse->isOk());
-        $this->assertTrue($createResponse->acknowledged());
-
-        $timeStart = microtime(true);
-
-        $getTemplateRequest = new GetTemplateRequest($templateName, $this->serializer);
-
-        $getResponse = $this->client->send($getTemplateRequest);
-
-        echo 'getTemplate: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-
-        $this->arrayHasKey($templateName, $getResponse->getData()->getGatewayValue());
-
-        $deleteTemplateRequest = new DeleteTemplateRequest($templateName, $this->serializer);
-
-        /** @var IndexResponse $deleteResponse */
-        $deleteResponse = $this->client->send($deleteTemplateRequest);
-
-        $this->assertTrue($deleteResponse->isOk());
-        $this->assertTrue($deleteResponse->acknowledged());
-    }
-
     public function testCreateDeleteWarmer()
     {
         $index = 'warmer-index';
@@ -903,48 +819,6 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
 
         $this->deleteIndex($index);
     }
-
-    public function testCount()
-    {
-        $this->createIndex();
-        $this->createDocument();
-        $this->createDocument();
-        $this->createDocument();
-        $this->refreshIndex();
-
-        $timeStart = microtime(true);
-        $countRequest = new CountRequest(self::INDEX, self::TYPE, $this->serializer);
-
-        /** @var CountResponse $response */
-        $response = $this->client->send($countRequest);
-
-        echo 'count: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-
-        $this->assertSame(3, $response->getCount());
-
-        $shards = $response->getShards();
-        $this->assertTrue(isset($shards['total']));
-        $this->assertTrue(isset($shards['successful']));
-        $this->assertTrue(isset($shards['failed']));
-    }
-
-    public function testNodeInfo()
-    {
-        $timeStart = microtime(true);
-        $countRequest = new NodeInfoRequest($this->serializer);
-
-        /** @var NodeInfoResponse $response */
-        $response = $this->client->send($countRequest);
-
-        echo 'nodeInfo: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-
-        $this->assertTrue($response->isOk());
-        $this->assertNotEmpty($response->getName());
-        $this->assertNotEmpty($response->getTagline());
-        $this->assertSame(200, $response->getStatus());
-        $this->assertArrayHasKey('number', $response->getVersion());
-    }
-
 
     public function testUpdateAliases()
     {
