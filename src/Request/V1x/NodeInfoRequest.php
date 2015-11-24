@@ -24,7 +24,7 @@ use Elastification\Client\Serializer\SerializerInterface;
 /**
  * Class NodeInfoRequest
  *
- * @package Elastification\Client\Request\V090x
+ * @package Elastification\Client\Request\V1x
  * @author  Daniel Wendlandt
  */
 class NodeInfoRequest extends AbstractNodeInfoRequest
