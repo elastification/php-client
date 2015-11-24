@@ -119,8 +119,6 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
         $this->client = null;
         $this->serializer = null;
         $this->transportClient = null;
-
-
     }
 
 
@@ -166,67 +164,6 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
     }
 
 
-    public function testIndexStatsWithIndex()
-    {
-        $this->createIndex();
-        $this->createDocument();
-        $this->refreshIndex();
-
-
-        $timeStart = microtime(true);
-
-        $indexStatsRequest = new IndexStatsRequest(self::INDEX, null, $this->serializer);
-
-        /** @var IndexStatsResponse $response */
-        $response = $this->client->send($indexStatsRequest);
-
-        echo 'indexStats(with index): ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-
-        $this->assertTrue($response->isOk());
-
-        $shards = $response->getShards();
-        $this->assertTrue(isset($shards['total']));
-        $this->assertTrue(isset($shards['successful']));
-        $this->assertTrue(isset($shards['failed']));
-
-        $all = $response->getAll();
-        $this->assertTrue(isset($all['primaries']));
-        $this->assertTrue(isset($all['total']));
-
-        $indices = $response->getIndices();
-        $this->assertTrue(isset($indices[self::INDEX]));
-    }
-
-    public function testIndexStatsWithoutIndex()
-    {
-        $this->createIndex();
-        $this->createDocument();
-        $this->refreshIndex();
-
-
-        $timeStart = microtime(true);
-
-        $indexStatsRequest = new IndexStatsRequest(null, null, $this->serializer);
-
-        /** @var IndexStatsResponse $response */
-        $response = $this->client->send($indexStatsRequest);
-
-        echo 'indexStats(without index): ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-
-        $this->assertTrue($response->isOk());
-
-        $shards = $response->getShards();
-        $this->assertTrue(isset($shards['total']));
-        $this->assertTrue(isset($shards['successful']));
-        $this->assertTrue(isset($shards['failed']));
-
-        $all = $response->getAll();
-        $this->assertTrue(isset($all['primaries']));
-        $this->assertTrue(isset($all['total']));
-
-        $indices = $response->getIndices();
-        $this->assertTrue(isset($indices[self::INDEX]));
-    }
 
     public function testIndexStatusWithIndex()
     {
