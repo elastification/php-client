@@ -18,8 +18,8 @@
 namespace Elastification\Client\Request\V090x\Index;
 
 use Elastification\Client\Request\Shared\Index\AbstractUpdateAliasesRequest;
-use Elastification\Client\Response\Response;
 use Elastification\Client\Response\ResponseInterface;
+use Elastification\Client\Response\V090x\Index\IndexResponse;
 use Elastification\Client\Serializer\SerializerInterface;
 
 /**
@@ -43,7 +43,7 @@ class UpdateAliasesRequest extends AbstractUpdateAliasesRequest
         SerializerInterface $serializer,
         array $serializerParams = array()
     ) {
-        return new Response($rawData, $serializer, $serializerParams);
+        return new IndexResponse($rawData, $serializer, $serializerParams);
     }
 
     /**
@@ -54,7 +54,7 @@ class UpdateAliasesRequest extends AbstractUpdateAliasesRequest
      */
     public function getSupportedClass()
     {
-        return 'Elastification\Client\Response\Response';
+        return 'Elastification\Client\Response\V090x\Index\IndexResponse';
     }
 
 }
