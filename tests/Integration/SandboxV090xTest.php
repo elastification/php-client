@@ -197,55 +197,6 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
     }
 
 
-    public function testMatchAllSearch()
-    {
-        $this->createIndex();
-        $data = array('name' => 'test' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000));
-        $this->createDocument($data);
-        $data = array('name' => 'test' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000));
-        $this->createDocument($data);
-        $data = array('name' => 'test' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000));
-        $this->createDocument($data);
-        $data = array('name' => 'test' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000));
-        $this->createDocument($data);
-        $this->refreshIndex();
-
-        $timeStart = microtime(true);
-        $searchRequest = new SearchRequest(self::INDEX, self::TYPE, $this->serializer);
-
-        $query = [
-            "query" => [
-                "match_all" => []
-            ]
-        ];
-
-        $searchRequest->setBody($query);
-        /** @var SearchResponse $response */
-        $response = $this->client->send($searchRequest);
-
-        echo 'search: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-
-        $this->assertGreaterThan(0, $response->took());
-        $this->assertFalse($response->timedOut());
-        $shards = $response->getShards();
-        $this->assertTrue(isset($shards['total']));
-        $this->assertTrue(isset($shards['successful']));
-        $this->assertTrue(isset($shards['failed']));
-        $this->assertGreaterThan(2, $response->totalHits());
-        $this->assertGreaterThan(0, $response->maxScoreHits());
-
-        $hits = $response->getHits();
-        $this->assertArrayHasKey('total', $hits);
-        $this->assertArrayHasKey('max_score', $hits);
-        $this->assertArrayHasKey('hits', $hits);
-
-        $hitsHits = $response->getHitsHits();
-        foreach ($hitsHits as $hit) {
-            $this->assertSame(self::INDEX, $hit['_index']);
-            $this->assertSame(self::TYPE, $hit['_type']);
-        }
-    }
-
     public function testGetMappingWithType()
     {
         $this->createIndex();
