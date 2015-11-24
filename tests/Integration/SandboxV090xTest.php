@@ -644,35 +644,6 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(isset($shards['failed']));
     }
 
-    public function testAliases()
-    {
-        $this->createIndex();
-        $this->refreshIndex();
-
-        $aliases = [
-            'actions' => [
-                [
-                    'add' => [
-                        'index' => self::INDEX,
-                        'alias' => 'alias-' . self::INDEX
-                    ]
-                ]
-            ]
-        ];
-
-        $timeStart = microtime(true);
-
-        $aliasesRequest = new AliasesRequest(null, null, $this->serializer);
-        $aliasesRequest->setBody($aliases);
-
-        /** @var IndexResponse $response */
-        $response = $this->client->send($aliasesRequest);
-
-        echo 'aliases: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-
-        $this->assertTrue($response->isOk());
-        $this->assertTrue($response->acknowledged());
-    }
 
     public function testGetAliasesWithoutIndex()
     {
