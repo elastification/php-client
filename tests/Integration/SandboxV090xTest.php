@@ -196,54 +196,6 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(isset($shards['failed']));
     }
 
-    public function testGetDocument()
-    {
-        $this->createIndex();
-        $data = array('name' => 'test' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000));
-        $id = $this->createDocument($data);
-        $this->refreshIndex();
-
-        $timeStart = microtime(true);
-
-        $getDocumentRequest = new GetDocumentRequest(self::INDEX, self::TYPE, $this->serializer);
-        $getDocumentRequest->setId($id);
-
-        /** @var DocumentResponse $getDocumentResponse */
-        $getDocumentResponse = $this->client->send($getDocumentRequest);
-
-        echo 'getDocument: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-
-        $this->assertTrue($getDocumentResponse->exists());
-        $this->assertSame($id, $getDocumentResponse->getId());
-        $this->assertSame(1, $getDocumentResponse->getVersion());
-        $this->assertSame(self::INDEX, $getDocumentResponse->getIndex());
-        $this->assertSame(self::TYPE, $getDocumentResponse->getType());
-        $this->assertSame($data['name'], $getDocumentResponse->getSource()['name']);
-        $this->assertSame($data['value'], $getDocumentResponse->getSource()['value']);
-    }
-
-    public function testGetDocumentMissingDoc()
-    {
-        $this->createIndex();
-        $data = array('name' => 'test' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000));
-        $this->createDocument($data);
-        $this->refreshIndex();
-
-        $timeStart = microtime(true);
-
-        $getDocumentRequest = new GetDocumentRequest(self::INDEX, self::TYPE, $this->serializer);
-        $getDocumentRequest->setId('notExisting');
-
-        try {
-            $this->client->send($getDocumentRequest);
-        } catch (ClientException $exception) {
-            $this->assertContains('Not Found', $exception->getMessage());
-            echo 'getDocumentMissingDoc: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-            return;
-        }
-
-        $this->fail();
-    }
 
     public function testUpdateDocument()
     {
