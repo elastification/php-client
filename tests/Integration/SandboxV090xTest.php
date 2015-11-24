@@ -196,27 +196,6 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(isset($shards['failed']));
     }
 
-    public function testCreateDocument()
-    {
-        $this->createIndex();
-        $timeStart = microtime(true);
-
-        $createDocumentRequest = new CreateDocumentRequest(self::INDEX, self::TYPE, $this->serializer);
-        $data = array('name' => 'test' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000));
-
-        $createDocumentRequest->setBody($data);
-        /** @var CreateUpdateDocumentResponse $response */
-        $response = $this->client->send($createDocumentRequest);
-
-        echo 'createDocument: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-
-        $this->assertSame(self::INDEX, $response->getIndex());
-        $this->assertSame(self::TYPE, $response->getType());
-        $this->assertSame(1, $response->getVersion());
-        $this->assertTrue($response->isOk());
-        $this->assertTrue(strlen($response->getId()) > 5);
-    }
-
     public function testGetDocument()
     {
         $this->createIndex();
