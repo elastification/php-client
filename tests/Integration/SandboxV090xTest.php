@@ -123,26 +123,6 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
 
     }
 
-    public function testRefreshIndex()
-    {
-        $this->createIndex();
-        $this->createDocument();
-        $timeStart = microtime(true);
-
-        $refreshIndexRequest = new RefreshIndexRequest(self::INDEX, null, $this->serializer);
-
-        /** @var RefreshIndexResponse $response */
-        $response = $this->client->send($refreshIndexRequest);
-
-        echo 'refreshIndex: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-
-        $this->assertTrue($response->isOk());
-        $shards = $response->getShards();
-        $this->assertTrue(isset($shards['total']));
-        $this->assertTrue(isset($shards['successful']));
-        $this->assertTrue(isset($shards['failed']));
-    }
-
 
     public function testGetMappingWithType()
     {
@@ -185,42 +165,6 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
         $this->assertContains('properties', $response->getRawData());
     }
 
-    public function testIndexExists()
-    {
-        $this->createIndex();
-        $this->refreshIndex();
-
-        $timeStart = microtime(true);
-
-        $indexExistsRequest = new IndexExistsRequest(self::INDEX, null, $this->serializer);
-
-        /** @var ResponseInterface $response */
-        $response = $this->client->send($indexExistsRequest);
-
-        echo 'indexExists: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-
-        $this->assertInstanceOf('Elastification\Client\Response\Response', $response);
-    }
-
-    public function testIndexExistsNotExisting()
-    {
-        $this->createIndex();
-        $this->refreshIndex();
-
-        $timeStart = microtime(true);
-
-        $indexExistsRequest = new IndexExistsRequest('not-existing-index', null, $this->serializer);
-
-        try {
-            $this->client->send($indexExistsRequest);
-        } catch(ClientException $exception) {
-            echo 'indexExists(not existing): ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-            $this->assertContains('Not Found', $exception->getMessage());
-            return;
-        }
-
-        $this->fail();
-    }
 
     public function testIndexTypeExists()
     {
