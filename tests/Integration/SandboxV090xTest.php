@@ -197,62 +197,6 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
     }
 
 
-    public function testUpdateDocument()
-    {
-        $this->createIndex();
-        $data = array('name' => 'test' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000));
-        $id = $this->createDocument($data);
-        $this->refreshIndex();
-
-        $timeStart = microtime(true);
-
-        $updateDocumentRequest = new UpdateDocumentRequest(self::INDEX, self::TYPE, $this->serializer);
-        $updateDocumentRequest->setId($id);
-        $data['name'] = 'testName';
-        $updateDocumentRequest->setBody($data);
-
-        /** @var CreateUpdateDocumentResponse $updateDocumentResponse */
-        $updateDocumentResponse = $this->client->send($updateDocumentRequest);
-
-        echo 'updateDocument: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-
-        $this->assertSame(self::INDEX, $updateDocumentResponse->getIndex());
-        $this->assertSame(self::TYPE, $updateDocumentResponse->getType());
-        $this->assertSame(2, $updateDocumentResponse->getVersion());
-        $this->assertTrue($updateDocumentResponse->isOk());
-        $this->assertSame($id, $updateDocumentResponse->getId());
-    }
-
-    public function testDeleteDocument()
-    {
-        $this->createIndex();
-        $data = array('name' => 'test' . rand(100, 10000), 'value' => 'myTestVal' . rand(100, 10000));
-        $id = $this->createDocument($data);
-        $this->refreshIndex();
-
-        $timeStart = microtime(true);
-
-        $deleteDocumentRequest = new DeleteDocumentRequest(self::INDEX, self::TYPE, $this->serializer);;
-        $deleteDocumentRequest->setId($id);
-
-        $this->client->send($deleteDocumentRequest);
-
-        echo 'deleteDocument: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-
-        $getDocumentRequest = new GetDocumentRequest(self::INDEX, self::TYPE, $this->serializer);
-        $getDocumentRequest->setId($id);
-
-        try {
-            $this->client->send($getDocumentRequest);
-        } catch (ClientException $exception) {
-            $this->assertContains('Not Found', $exception->getMessage());
-
-            return;
-        }
-
-        $this->fail();
-    }
-
     public function testMatchAllSearch()
     {
         $this->createIndex();
