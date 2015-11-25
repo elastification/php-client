@@ -248,27 +248,6 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
         $this->fail();
     }
 
-
-    public function testClearCache()
-    {
-        $this->createIndex();
-        $this->createDocument();
-        $timeStart = microtime(true);
-
-        $refreshIndexRequest = new CacheClearRequest(self::INDEX, null, $this->serializer);
-
-        /** @var RefreshIndexResponse $response */
-        $response = $this->client->send($refreshIndexRequest);
-
-        echo 'clearCache: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-
-        $this->assertTrue($response->isOk());
-        $shards = $response->getShards();
-        $this->assertTrue(isset($shards['total']));
-        $this->assertTrue(isset($shards['successful']));
-        $this->assertTrue(isset($shards['failed']));
-    }
-
     public function testIndexOptimize()
     {
         $this->createIndex();
