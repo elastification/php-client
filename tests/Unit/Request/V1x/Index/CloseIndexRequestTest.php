@@ -93,17 +93,12 @@ class CloseIndexRequestTest extends \PHPUnit_Framework_TestCase
     {
         $body = 'my test body';
 
-        $this->serializer->expects($this->once())
-            ->method('serialize')
-            ->with(
-                $this->equalTo($body),
-                $this->equalTo(array())
-            )
-            ->will($this->returnValue($body));
+        $this->serializer->expects($this->never())
+            ->method('serialize');
 
         $this->request->setBody($body);
 
-        $this->assertSame($body, $this->request->getBody());
+        $this->assertNull($this->request->getBody());
     }
 
     public function testGetSupportedClass()
