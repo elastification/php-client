@@ -29,7 +29,7 @@ use Elastification\Client\Request\Shared\AbstractBaseRequest;
  */
 abstract class AbstractCloseIndexRequest extends AbstractBaseRequest
 {
-    const REQUEST_ACTION = '_open';
+    const REQUEST_ACTION = '_close';
 
     /**
      * @var null|mixed
@@ -65,6 +65,6 @@ abstract class AbstractCloseIndexRequest extends AbstractBaseRequest
      */
     public function setBody($body)
     {
-        $this->body = $this->serializer->serialize($body, $this->serializerParams);
+        //do nithing
     }
 }
