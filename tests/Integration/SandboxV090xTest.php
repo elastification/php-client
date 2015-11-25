@@ -248,43 +248,6 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
         $this->fail();
     }
 
-
-    public function testGetAliasesWithoutIndex()
-    {
-        $this->createIndex();
-
-        $aliases = [
-            'actions' => [
-                [
-                    'add' => [
-                        'index' => self::INDEX,
-                        'alias' => 'alias-' . self::INDEX
-                    ]
-                ]
-            ]
-        ];
-
-        $aliasesRequest = new AliasesRequest(null, null, $this->serializer);
-        $aliasesRequest->setBody($aliases);
-
-        /** @var IndexResponse $response */
-        $response = $this->client->send($aliasesRequest);
-
-        $timeStart = microtime(true);
-
-        $getAliasesRequest = new GetAliasesRequest(null, null, $this->serializer);
-
-        /** @var Response $response */
-        $response = $this->client->send($getAliasesRequest);
-
-        echo 'getAliases (without index): ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-
-        $data = $response->getData()->getGatewayValue();
-
-        $this->assertArrayHasKey(self::INDEX, $data);
-        $this->assertTrue(isset($data[self::INDEX]['aliases']['alias-' . self::INDEX]));
-    }
-
     public function testCreateDeleteWarmer()
     {
         $index = 'warmer-index';
