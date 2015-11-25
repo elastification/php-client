@@ -358,65 +358,6 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
         $this->deleteIndex($index);
     }
 
-    public function testUpdateAliases()
-    {
-
-        $this->createIndex();
-        $data = array('name' => 'test', 'value' => 'myTestVal' . rand(100, 10000));
-        $this->createDocument($data);
-        $data = array('name' => 'test', 'value' => 'myTestVal' . rand(100, 10000));
-        $this->createDocument($data);
-        $data = array('name' => 'mega', 'value' => 'myTestVal' . rand(100, 10000));
-        $this->createDocument($data);
-        $this->refreshIndex();
-
-
-        $countRequest = new CountRequest(self::INDEX, self::TYPE, $this->serializer);
-
-        /** @var CountResponse $response */
-        $response = $this->client->send($countRequest);
-        $this->assertSame(3, $response->getCount());
-
-        //create alias
-        $aliasPostfix = '-alias';
-        $addAliases = array(
-            'actions' => array(
-                array(
-                    'add' => array('index' => self::INDEX, 'alias' => self::INDEX . $aliasPostfix)
-                )
-            )
-        );
-
-        $timeStart = microtime(true);
-        $updateAliasesRequest = new UpdateAliasesRequest(null, null, $this->serializer);
-        $updateAliasesRequest->setBody($addAliases);
-        $this->client->send($updateAliasesRequest);
-
-        echo 'update aliases: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-
-        $getAliasesReuqest = new GetAliasesRequest(self::INDEX, null, $this->serializer);
-        $getAliasResponse = $this->client->send($getAliasesReuqest);
-        $aliases = $getAliasResponse->getData()->getGatewayValue();
-        $this->assertTrue(isset($aliases[self::INDEX]));
-        $this->assertCount(1, $aliases[self::INDEX]['aliases']);
-        $this->assertTrue(isset($aliases[self::INDEX]['aliases'][self::INDEX . $aliasPostfix]));
-
-
-        $removeAliases = array(
-            'actions' => array(
-                array(
-                    'remove' => array('index' => self::INDEX, 'alias' => self::INDEX . $aliasPostfix)
-                )
-            )
-        );
-
-        $updateAliasesRequest->setBody($removeAliases);
-        $this->client->send($updateAliasesRequest);
-        $getAliasResponse = $this->client->send($getAliasesReuqest);
-        $aliases = $getAliasResponse->getData()->getGatewayValue();
-        $this->assertTrue(isset($aliases[self::INDEX]));
-        $this->assertCount(0, $aliases[self::INDEX]['aliases']);
-    }
 
 
 

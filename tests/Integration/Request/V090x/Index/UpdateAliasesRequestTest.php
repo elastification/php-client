@@ -1,11 +1,11 @@
 <?php
-namespace Elastification\Client\Tests\Integration\Request\V1x\Index;
+namespace Elastification\Client\Tests\Integration\Request\V090x\Index;
 
 
-use Elastification\Client\Request\V1x\Index\GetAliasesRequest;
-use Elastification\Client\Request\V1x\Index\UpdateAliasesRequest;
+use Elastification\Client\Request\V090x\Index\GetAliasesRequest;
+use Elastification\Client\Request\V090x\Index\UpdateAliasesRequest;
 use Elastification\Client\Response\Response;
-use Elastification\Client\Tests\Integration\Request\V1x\AbstractElastic;
+use Elastification\Client\Tests\Integration\Request\V090x\AbstractElastic;
 
 class UpdateAliasesRequestTest extends AbstractElastic
 {
