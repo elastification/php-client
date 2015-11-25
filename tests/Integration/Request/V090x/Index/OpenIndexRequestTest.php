@@ -1,11 +1,11 @@
 <?php
-namespace Elastification\Client\Tests\Integration\Request\V1x\Index;
+namespace Elastification\Client\Tests\Integration\Request\V090x\Index;
 
 
-use Elastification\Client\Request\V1x\Index\CloseIndexRequest;
-use Elastification\Client\Request\V1x\Index\OpenIndexRequest;
-use Elastification\Client\Response\V1x\Index\IndexResponse;
-use Elastification\Client\Tests\Integration\Request\V1x\AbstractElastic;
+use Elastification\Client\Request\V090x\Index\CloseIndexRequest;
+use Elastification\Client\Request\V090x\Index\OpenIndexRequest;
+use Elastification\Client\Response\V090x\Index\IndexResponse;
+use Elastification\Client\Tests\Integration\Request\V090x\AbstractElastic;
 
 class OpenIndexRequestTest extends AbstractElastic
 {
