@@ -248,46 +248,6 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
         $this->fail();
     }
 
-    public function testIndexOptimize()
-    {
-        $this->createIndex();
-        $this->createDocument();
-        $timeStart = microtime(true);
-
-        $refreshIndexRequest = new IndexOptimizeRequest(self::INDEX, null, $this->serializer);
-
-        /** @var RefreshIndexResponse $response */
-        $response = $this->client->send($refreshIndexRequest);
-
-        echo 'indexOptimize: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-
-        $this->assertTrue($response->isOk());
-        $shards = $response->getShards();
-        $this->assertTrue(isset($shards['total']));
-        $this->assertTrue(isset($shards['successful']));
-        $this->assertTrue(isset($shards['failed']));
-    }
-
-    public function testIndexFlush()
-    {
-        $this->createIndex();
-        $this->createDocument();
-        $timeStart = microtime(true);
-
-        $refreshIndexRequest = new IndexFlushRequest(self::INDEX, null, $this->serializer);
-
-        /** @var RefreshIndexResponse $response */
-        $response = $this->client->send($refreshIndexRequest);
-
-        echo 'indexFlush: ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-
-        $this->assertTrue($response->isOk());
-        $shards = $response->getShards();
-        $this->assertTrue(isset($shards['total']));
-        $this->assertTrue(isset($shards['successful']));
-        $this->assertTrue(isset($shards['failed']));
-    }
-
 
     public function testGetAliasesWithoutIndex()
     {
