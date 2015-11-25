@@ -165,59 +165,6 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
 
 
 
-    public function testIndexStatusWithIndex()
-    {
-        $this->createIndex();
-        $this->createDocument();
-        $this->refreshIndex();
-
-
-        $timeStart = microtime(true);
-
-        $indexStatsRequest = new IndexStatusRequest(self::INDEX, null, $this->serializer);
-
-        /** @var IndexStatusResponse $response */
-        $response = $this->client->send($indexStatsRequest);
-
-        echo 'indexStatus(with index): ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-
-        $this->assertTrue($response->isOk());
-
-        $shards = $response->getShards();
-        $this->assertTrue(isset($shards['total']));
-        $this->assertTrue(isset($shards['successful']));
-        $this->assertTrue(isset($shards['failed']));
-
-        $indices = $response->getIndices();
-        $this->assertTrue(isset($indices[self::INDEX]));
-    }
-
-    public function testIndexStatusWithoutIndex()
-    {
-        $this->createIndex();
-        $this->createDocument();
-        $this->refreshIndex();
-
-
-        $timeStart = microtime(true);
-
-        $indexStatsRequest = new IndexStatusRequest(null, null, $this->serializer);
-
-        /** @var IndexStatusResponse $response */
-        $response = $this->client->send($indexStatsRequest);
-
-        echo 'indexStatus(with index): ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-
-        $this->assertTrue($response->isOk());
-
-        $shards = $response->getShards();
-        $this->assertTrue(isset($shards['total']));
-        $this->assertTrue(isset($shards['successful']));
-        $this->assertTrue(isset($shards['failed']));
-
-        $indices = $response->getIndices();
-        $this->assertTrue(isset($indices[self::INDEX]));
-    }
 
     public function testCreateMappingWithIndexAndType()
     {
@@ -299,26 +246,6 @@ class SandboxV090xTest extends \PHPUnit_Framework_TestCase
         }
 
         $this->fail();
-    }
-
-    public function testIndexSettingsWithIndex()
-    {
-        $this->createIndex();
-        $this->createDocument();
-        $this->refreshIndex();
-
-
-        $timeStart = microtime(true);
-
-        $indexStatsRequest = new IndexSettingsRequest(self::INDEX, null, $this->serializer);
-
-        /** @var IndexStatsResponse $response */
-        $response = $this->client->send($indexStatsRequest);
-
-        echo 'indexSettings(with index): ' . (microtime(true) - $timeStart) . 's' . PHP_EOL;
-
-        $data = $response->getData()->getGatewayValue();
-        $this->assertArrayHasKey(self::INDEX, $data);
     }
 
     public function testIndexSegmentsWithIndex()
