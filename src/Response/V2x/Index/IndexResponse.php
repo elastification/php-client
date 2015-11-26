@@ -22,7 +22,7 @@ use Elastification\Client\Response\Response;
 /**
  * Class CreateUpdateDocumentResponse
  *
- * @package Elastification\Client\Response\V1x\Index
+ * @package Elastification\Client\Response\V2x\Index
  * @author  Daniel Wendlandt
  */
 class IndexResponse extends Response

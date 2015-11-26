@@ -20,70 +20,41 @@ namespace Elastification\Client\Response\V2x;
 use Elastification\Client\Response\Response;
 
 /**
- * @package Elastification\Client\Response\V2x
+ * Class IndexStatsResponse
+ *
+ * @package Elastification\Client\Response\V2x\Index
  * @author  Daniel Wendlandt
  */
-class CreateUpdateDocumentResponse extends Response
+class CountResponse extends Response
 {
 
-    const PROP_CREATED = 'created';
-    const PROP_ID = '_id';
-    const PROP_VERSION = '_version';
-    const PROP_INDEX = '_index';
-    const PROP_TYPE = '_type';
+    const PROP_COUNT = 'count';
+    const PROP_SHARDS = '_shards';
 
     /**
-     * @return boolean
-     * @author Mario Mueller
+     * Getter Method
+     *
+     * @return mixed
+     * @author Daniel Wendlandt
      */
-    public function created()
+    public function getCount()
     {
         $this->processData();
 
-        return $this->get(self::PROP_CREATED);
+        return $this->get(self::PROP_COUNT);
     }
 
     /**
-     * @return string
-     * @author Mario Mueller
+     * Getter Method
+     *
+     * @return mixed
+     * @author Daniel Wendlandt
      */
-    public function getId()
+    public function getShards()
     {
         $this->processData();
 
-        return $this->get(self::PROP_ID);
+        return $this->get(self::PROP_SHARDS);
     }
 
-    /**
-     * @return integer
-     * @author Mario Mueller
-     */
-    public function getVersion()
-    {
-        $this->processData();
-
-        return $this->get(self::PROP_VERSION);
-    }
-
-    /**
-     * @return string
-     * @author Mario Mueller
-     */
-    public function getIndex()
-    {
-        $this->processData();
-
-        return $this->get(self::PROP_INDEX);
-    }
-
-    /**
-     * @return string
-     * @author Mario Mueller
-     */
-    public function getType()
-    {
-        $this->processData();
-
-        return $this->get(self::PROP_TYPE);
-    }
 }

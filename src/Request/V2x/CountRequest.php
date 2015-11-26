@@ -15,30 +15,26 @@
  * This software consists of voluntary contributions made by many individuals
  * and is licensed under the MIT license.
  */
-namespace Elastification\Client\Request\V2x\Index;
+namespace Elastification\Client\Request\V2x;
 
-use Elastification\Client\Request\Shared\Index\AbstractRefreshIndexRequest;
-use Elastification\Client\Response\V2x\Index\RefreshIndexResponse;
+use Elastification\Client\Request\Shared\AbstractCountRequest;
+use Elastification\Client\Response\V2x\CountResponse;
 use Elastification\Client\Serializer\SerializerInterface;
 
 /**
- * Class RefreshIndexRequest
+ * Class CountRequest
  *
- * This request returns successful empty response. If not existing index,
- * there will be an exception at client send.
- *
- * @package Elastification\Client\Request\V2x\Index
+ * @package Elastification\Client\Request\V2x
  * @author  Daniel Wendlandt
  */
-class RefreshIndexRequest extends AbstractRefreshIndexRequest
+class CountRequest extends AbstractCountRequest
 {
-
     /**
      * @param string                                                $rawData
      * @param \Elastification\Client\Serializer\SerializerInterface $serializer
      * @param array                                                 $serializerParams
      *
-     * @return RefreshIndexResponse
+     * @return CountResponse
      * @author Daniel Wendlandt
      */
     public function createResponse(
@@ -46,7 +42,7 @@ class RefreshIndexRequest extends AbstractRefreshIndexRequest
         SerializerInterface $serializer,
         array $serializerParams = array()
     ) {
-        return new RefreshIndexResponse($rawData, $serializer, $serializerParams);
+        return new CountResponse($rawData, $serializer, $serializerParams);
     }
 
     /**
@@ -57,6 +53,6 @@ class RefreshIndexRequest extends AbstractRefreshIndexRequest
      */
     public function getSupportedClass()
     {
-        return 'Elastification\Client\Response\V2x\Index\RefreshIndexResponse';
+        return 'Elastification\Client\Response\V2x\CountResponse';
     }
 }
