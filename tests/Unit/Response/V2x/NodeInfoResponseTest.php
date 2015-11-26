@@ -6,9 +6,9 @@
  * Time: 22:39
  */
 
-namespace Elastification\Client\Tests\Unit\Response\V1x;
+namespace Elastification\Client\Tests\Unit\Response\V2x;
 
-use Elastification\Client\Response\V1x\NodeInfoResponse;
+use Elastification\Client\Response\V2x\NodeInfoResponse;
 use Elastification\Client\Serializer\Gateway\NativeArrayGateway;
 use Elastification\Client\Serializer\Gateway\NativeObjectGateway;
 
@@ -40,7 +40,7 @@ class NodeInfoResponseTest extends \PHPUnit_Framework_TestCase
         $response = new NodeInfoResponse('data', $this->serializer);
         $this->assertInstanceOf('Elastification\Client\Response\ResponseInterface', $response);
         $this->assertInstanceOf('Elastification\Client\Response\Response', $response);
-        $this->assertInstanceOf('Elastification\Client\Response\V1x\NodeInfoResponse', $response);
+        $this->assertInstanceOf('Elastification\Client\Response\V2x\NodeInfoResponse', $response);
     }
 
     public function testGetTaglineArray()
@@ -109,40 +109,6 @@ class NodeInfoResponseTest extends \PHPUnit_Framework_TestCase
         /** @noinspection PhpParamsInspection */
         $response = new NodeInfoResponse($data, $this->serializer);
         $this->assertSame($data->{NodeInfoResponse::PROP_VERSION}, $response->getVersion());
-    }
-
-    public function testGetStatusArray()
-    {
-        $data = $this->getData();
-
-        $this->serializer->expects($this->once())
-            ->method('deserialize')
-            ->with(
-                $this->equalTo($data),
-                $this->equalTo(array())
-            )
-            ->will($this->returnValue(new NativeArrayGateway($data)));
-
-        /** @noinspection PhpParamsInspection */
-        $response = new NodeInfoResponse($data, $this->serializer);
-        $this->assertSame($data[NodeInfoResponse::PROP_STATUS], $response->getStatus());
-    }
-
-    public function testGetStatusObject()
-    {
-        $data = $this->getData(true);
-
-        $this->serializer->expects($this->once())
-            ->method('deserialize')
-            ->with(
-                $this->equalTo($data),
-                $this->equalTo(array())
-            )
-            ->will($this->returnValue(new NativeObjectGateway($data)));
-
-        /** @noinspection PhpParamsInspection */
-        $response = new NodeInfoResponse($data, $this->serializer);
-        $this->assertSame($data->{NodeInfoResponse::PROP_STATUS}, $response->getStatus());
     }
 
     public function testGetNameArray()

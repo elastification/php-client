@@ -15,14 +15,14 @@
  * This software consists of voluntary contributions made by many individuals
  * and is licensed under the MIT license.
  */
-namespace Elastification\Client\Response\V1x;
+namespace Elastification\Client\Response\V2x;
 
 use Elastification\Client\Response\Response;
 
 /**
  * Class NodeInfoResponse
  *
- * @package Elastification\Client\Response\V1x
+ * @package Elastification\Client\Response\V2x
  * @author  Daniel Wendlandt
  */
 class NodeInfoResponse extends Response
@@ -30,9 +30,9 @@ class NodeInfoResponse extends Response
 
     const PROP_STATUS = 'status';
     const PROP_NAME = 'name';
-    const PROP_TAGLINE = 'tagline';
     const PROP_CLUSTER_NAME = 'cluster_name';
     const PROP_VERSION = 'version';
+    const PROP_TAGLINE = 'tagline';
 
     /**
      * Getter Method
@@ -58,19 +58,6 @@ class NodeInfoResponse extends Response
         $this->processData();
 
         return $this->get(self::PROP_NAME);
-    }
-
-    /**
-     * Getter Method
-     *
-     * @return mixed
-     * @author Daniel Wendlandt
-     */
-    public function getStatus()
-    {
-        $this->processData();
-
-        return $this->get(self::PROP_STATUS);
     }
 
     /**

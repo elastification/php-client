@@ -1,8 +1,8 @@
 <?php
-namespace Elastification\Client\Tests\Integration\Request\V1x;
+namespace Elastification\Client\Tests\Integration\Request\V2x;
 
-use Elastification\Client\Request\V1x\NodeInfoRequest;
-use Elastification\Client\Response\V1x\NodeInfoResponse;
+use Elastification\Client\Request\V2x\NodeInfoRequest;
+use Elastification\Client\Response\V2x\NodeInfoResponse;
 
 class NodeInfoRequestTest extends AbstractElastic
 {
@@ -16,10 +16,9 @@ class NodeInfoRequestTest extends AbstractElastic
         /** @var NodeInfoResponse $response */
         $response = $this->getClient()->send($countRequest);
 
-        $this->assertNotEmpty($response->getClusterName());
         $this->assertNotEmpty($response->getName());
+        $this->assertNotEmpty($response->getClusterName());
         $this->assertNotEmpty($response->getTagline());
-        $this->assertSame(200, $response->getStatus());
         $this->assertArrayHasKey('number', $response->getVersion());
     }
 
