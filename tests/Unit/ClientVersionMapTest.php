@@ -33,6 +33,14 @@ class ClientVersionMapTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Elastification\Client\ClientVersionMap', $this->versionMap);
     }
 
+    public function testGetVersionV2x()
+    {
+        $this->assertSame(ClientVersionMapInterface::VERSION_V2X, $this->versionMap->getVersion('2.1'));
+        $this->assertSame(ClientVersionMapInterface::VERSION_V2X, $this->versionMap->getVersion('2.2.1'));
+        $this->assertSame(ClientVersionMapInterface::VERSION_V2X, $this->versionMap->getVersion('2.3.*'));
+        $this->assertSame(ClientVersionMapInterface::VERSION_V2X, $this->versionMap->getVersion('2.5'));
+    }
+
     public function testGetVersionV1x()
     {
         $this->assertSame(ClientVersionMapInterface::VERSION_V1X, $this->versionMap->getVersion('1.4'));
@@ -63,7 +71,7 @@ class ClientVersionMapTest extends \PHPUnit_Framework_TestCase
     public function testGetVersion2Exception()
     {
         try {
-            $this->versionMap->getVersion('2.1');
+            $this->versionMap->getVersion('3.1');
         } catch(VersionException $exception) {
             $this->assertSame('Version not found', $exception->getMessage());
             return;

@@ -18,6 +18,7 @@
         <!--Host settings-->
         <const name="V090X_URL" value="http://192.168.33.109:9200/" />
         <const name="V1X_URL" value="http://192.168.33.173:9200/" />
+        <const name="V2X_URL" value="http://192.168.33.200:9200/" />
     </php>
 
     <testsuites>

@@ -15,32 +15,32 @@
  * This software consists of voluntary contributions made by many individuals
  * and is licensed under the MIT license.
  */
-namespace Elastification\Client;
+namespace Elastification\Client\Response\V2x\Index;
 
-interface ClientVersionMapInterface
+use Elastification\Client\Response\Response;
+
+/**
+ * Class CreateUpdateDocumentResponse
+ *
+ * @package Elastification\Client\Response\V1x\Index
+ * @author  Daniel Wendlandt
+ */
+class IndexResponse extends Response
 {
 
-    /**
-     * Current Version
-     */
-    const VERSION_CURRENT = 'V2x';
+    const PROP_ACKNOWLEDGED = 'acknowledged';
 
     /**
-     * Versions
-     */
-    const VERSION_V090X = 'V090x';
-    const VERSION_V1X = 'V1x';
-    const VERSION_V2X = 'V2x';
-
-    /**
-     * Get the defined version for folders.
-     * We throw an exception in case of a non-matching version.
+     * Getter Method
      *
-     * @param   string $version A version string in the schema of 0.90.x.
-     *
-     * @return string The internal namespace/folder
-     * @throws Exception\ClientException
+     * @return mixed
      * @author Daniel Wendlandt
      */
-    public function getVersion($version);
+    public function acknowledged()
+    {
+        $this->processData();
+
+        return $this->get(self::PROP_ACKNOWLEDGED);
+    }
+
 }
