@@ -5,16 +5,16 @@
  * Date: 17/06/14
  * Time: 19:02
  */
-namespace Elastification\Client\Tests\Unit\Request\V1x;
+namespace Elastification\Client\Tests\Unit\Request\V2x;
 
 use Elastification\Client\Request\RequestMethods;
-use Elastification\Client\Request\V1x\SearchRequest;
+use Elastification\Client\Request\V2x\SearchRequest;
 
 class SearchRequestTest extends \PHPUnit_Framework_TestCase
 {
     const INDEX = 'test-index';
     const TYPE = 'test-type';
-    const RESPONSE_CLASS = 'Elastification\Client\Response\V1x\SearchResponse';
+    const RESPONSE_CLASS = 'Elastification\Client\Response\V2x\SearchResponse';
 
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
@@ -58,7 +58,7 @@ class SearchRequestTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertInstanceOf(
-            'Elastification\Client\Request\V1x\SearchRequest',
+            'Elastification\Client\Request\V2x\SearchRequest',
             $this->request
         );
     }
