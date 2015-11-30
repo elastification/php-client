@@ -14,57 +14,16 @@
 ToDo
 ====
 
-Global:
-- [x] Symfony2 Bundle
-- [ ] Vagrant boxes for different elasticsearch versions
 - [ ] Helper for Version response compare. (Symfony/Console)
-- [ ] Export/Import/Copy indices Elasticsearch tool (php) based on php-client and console application with simple config json/yml
-
-Dawen:
-
-- [x] logger by constructor or event listener or decorator. (decorator seems to look good)
-- [x] start implementing v1x requests
-- [x] create base server info request
-- [x] Missing Unit tests for new requests (IndexStatusResponse)
-- [x] Get status (global and index based, multi index)
-- [x] Get stats (global and index based, multi index)
-- [x] Get settings. (global and index based, multi index)
-- [x] Types Exists with HEAD method
-- [x] index segments
-- [x] index clear cache
-- [x] index template
-- [x] warmers (create, delete, get)
-- [x] CountRequest / only term is possible here
-- [x] index optimize
-- [x] index flush
-- [x] AliasesRequest
-- [x] Get Aliases (global and index based, multi index)
-- [x] Move GetMappingRequest/Response into index
-- [x] CreateMappingRequest
-- [x] DeleteMappingRequest
-- [x] RefreshIndexRequest
-- [x] CreateIndexRequest
-- [x] DeleteIndexRequest
-- [x] IndexExistsRequest
-- [x] use setup and teardown for integration tests sandbox v090x. Delete Index at the end.
-- [x] Unit Test for client
 - [ ] singular _alias Put/Post/delete/head (v1)
-- [ ] open/close index (only for version 1x)
 - [ ] GetFieldMappingRequest (seems to be only in v1)
 - [ ] index recovery (v1)
 - [ ] analyze (v1) ???
-- [ ] bulk requests
 - [ ] index repository for refresh and other stuff
-- [x] document repository (create, update, exists, get) leave everything blank and index and type must be give in function
-- [x] search repository leave everything blank and index and type must be give in function
 - [ ] Think about an array of clients or a decision manager for get the right client (maybe voter pattern?)
-
-xenji:
-- [x] Add thrift transport
-- [x] Add tests for the transports
-- [x] API Documentation, available at [http://elastification.github.io/php-client/](http://elastification.github.io/php-client/)
-- [ ] Written documentation with examples
-
+- [ ] Write documentation
+- [ ] Create Github Pages
+- [ ] Check all requests and write down missng here
 
 ---
 
