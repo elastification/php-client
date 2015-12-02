@@ -16,14 +16,13 @@ ToDo
 
 - [ ] Helper for Version response compare. (Symfony/Console)
 - [ ] singular _alias Put/Post/delete/head (v1)
-- [ ] GetFieldMappingRequest (seems to be only in v1)
+- [ ] GetFieldMappingRequest (seems to be only in v1 and v2)
 - [ ] index recovery (v1)
 - [ ] analyze (v1) ???
-- [ ] index repository for refresh and other stuff
 - [ ] Think about an array of clients or a decision manager for get the right client (maybe voter pattern?)
 - [ ] Write documentation
 - [ ] Create Github Pages
-- [ ] Check all requests and write down missng here
+- [ ] Check all requests and write down missing here
 
 ---
 
@@ -34,6 +33,36 @@ Changes from Version 1x to 2x
 - DeleteMapping is removed
 - Index/IndexStats is removed (replaced by index stats)
 
+
+---
+
+## Testing
+
+The tests are devided into unit tests and integration tests.
+
+Running the unit tests is simple (composer install is reqired):
+
+```shell
+    bin/phpunit tests/Unit
+```
+
+
+If you like coder coverage it will be placed in build folder:
+
+```shell
+    bin/phpunit --coverage-html=build tests/Unit
+```
+
+There are also integration test. The subfolders holding version tests. There is a vagrant repository where you can 
+bring all wanted/needed machine alive. [Link is missing] 
+
+The phpunit-integration.xml has defined constants for each testable version.
+
+Run integration tests for v2x versions looks like this:
+
+```shell
+    bin/phpunit --coverage-html=build -c phpunit-integration.xml tests/Integration/Request/V2x
+```
 
 ---
 
