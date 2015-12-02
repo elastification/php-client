@@ -30,7 +30,8 @@ class RepositoryClassMap implements RepositoryClassMapInterface
      */
     private $allowedVersions = array(
         ClientVersionMapInterface::VERSION_V090X => ClientVersionMapInterface::VERSION_V090X,
-        ClientVersionMapInterface::VERSION_V1X => ClientVersionMapInterface::VERSION_V1X
+        ClientVersionMapInterface::VERSION_V1X => ClientVersionMapInterface::VERSION_V1X,
+        ClientVersionMapInterface::VERSION_V2X => ClientVersionMapInterface::VERSION_V2X
     );
 
     /**
