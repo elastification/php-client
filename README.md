@@ -32,6 +32,8 @@ Changes from Version 1x to 2x
 - NodeInfo does not have status in reponse
 - DeleteByQuery is removed
 - DeleteMapping is removed
+- Index/IndexStats is removed (replaced by index stats)
+
 
 ---
 
