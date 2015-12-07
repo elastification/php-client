@@ -33,7 +33,8 @@ Changes from Version 1x to 2x
 - DeleteByQuery is removed
 - DeleteMapping is removed
 - Index/IndexStats is removed (replaced by index stats)
-
+- Bulk/BulkInsertRequest existing documents having new a subobject under item['error'] response
+- Bulk/BulkUpdateRequest existing documents having new a subobject under item['error'] response
 
 ---
 
