@@ -17,8 +17,9 @@ ToDo
 - [ ] Helper for Version response compare. (Symfony/Console)
 - [ ] singular _alias Put/Post/delete/head (v1)
 - [ ] GetFieldMappingRequest (seems to be only in v1 and v2)
-- [ ] index recovery (v1)
-- [ ] analyze (v1) ???
+- [ ] cat api (v1, v2, check if v90)
+- [ ] index recovery (v1, v2, check if v90)
+- [ ] analyze (v1, v2, check if v90)
 - [ ] Think about an array of clients or a decision manager for get the right client (maybe voter pattern?)
 - [ ] Write documentation
 - [ ] Create Github Pages
