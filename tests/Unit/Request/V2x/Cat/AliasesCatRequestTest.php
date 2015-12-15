@@ -5,16 +5,16 @@
  * Date: 17/06/14
  * Time: 19:02
  */
-namespace Elastification\Client\Tests\Unit\Request\V1x\Cat;
+namespace Elastification\Client\Tests\Unit\Request\V2x\Cat;
 
 use Elastification\Client\Request\RequestMethods;
 use Elastification\Client\Request\Shared\Cat\AbstractAliasesCatRequest;
-use Elastification\Client\Request\V1x\Cat\AliasesCatRequest;
-use Elastification\Client\Request\V1x\CountRequest;
+use Elastification\Client\Request\V2x\Cat\AliasesCatRequest;
+use Elastification\Client\Request\V2x\CountRequest;
 
 class AliasesCatRequestTest extends \PHPUnit_Framework_TestCase
 {
-    const RESPONSE_CLASS = 'Elastification\Client\Response\V1x\Cat\AliasesCatResponse';
+    const RESPONSE_CLASS = 'Elastification\Client\Response\V2x\Cat\AliasesCatResponse';
 
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
@@ -58,7 +58,7 @@ class AliasesCatRequestTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertInstanceOf(
-            'Elastification\Client\Request\V1x\Cat\AliasesCatRequest',
+            'Elastification\Client\Request\V2x\Cat\AliasesCatRequest',
             $this->request
         );
     }

@@ -6,9 +6,9 @@
  * Time: 22:39
  */
 
-namespace Elastification\Client\Tests\Unit\Response\V1x\Cat;
+namespace Elastification\Client\Tests\Unit\Response\V2x\Cat;
 
-use Elastification\Client\Response\V1x\Cat\AliasesCatResponse;
+use Elastification\Client\Response\V2x\Cat\AliasesCatResponse;
 
 class AliasesCatResponseTest extends \PHPUnit_Framework_TestCase
 {
@@ -39,7 +39,7 @@ class AliasesCatResponseTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Elastification\Client\Response\ResponseInterface', $response);
         $this->assertInstanceOf('Elastification\Client\Response\Response', $response);
         $this->assertInstanceOf('Elastification\Client\Response\Shared\Cat\AbstractAliasesCatResponse', $response);
-        $this->assertInstanceOf('Elastification\Client\Response\V1x\Cat\AliasesCatResponse', $response);
+        $this->assertInstanceOf('Elastification\Client\Response\V2x\Cat\AliasesCatResponse', $response);
     }
 
     public function testGetSerializer()
