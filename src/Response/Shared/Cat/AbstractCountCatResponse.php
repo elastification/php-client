@@ -20,21 +20,16 @@ namespace Elastification\Client\Response\Shared\Cat;
 use Elastification\Client\Response\Response;
 
 /**
- * Class AbstractAllocationCatResponse
+ * Class AbstractCountCatResponse
  *
  * @package Elastification\Client\Response\Shared\Cat
  * @author  Daniel Wendlandt
  */
-abstract class AbstractAllocationCatResponse extends Response
+abstract class AbstractCountCatResponse extends Response
 {
-    const PROP_SHARDS = 'shards';
-    const PROP_DISK_USED = 'disk.used';
-    const PROP_DISK_AVAIL = 'disk.avail';
-    const PROP_DISK_TOTAL = 'disk.total';
-    const PROP_DISK_PERCENT = 'disk.percent';
-    const PROP_HOST = 'host';
-    const PROP_IP = 'id';
-    const PROP_NODE = 'node';
+    const PROP_EPOCH = 'epoch';
+    const PROP_TIMESTAMP = 'timestamp';
+    const PROP_COUNT = 'count';
 
     /**
      * @inheritdoc
@@ -69,20 +64,6 @@ abstract class AbstractAllocationCatResponse extends Response
                     return mb_strlen($value) !== 0;
                 });
 
-                $cntProps = count($properties);
-                $cntFields = count($fields);
-
-                if ($cntProps != $cntFields) {
-                    $diff = $cntFields - $cntProps + 1;
-                    $node = [];
-
-                    for($i = 1; $i <= $diff; $i++) {
-                        $node[] = array_pop($fields);
-                    }
-
-                    $fields[] = implode(' ', array_reverse($node));
-                }
-
                 $data[] = array_combine($properties, $fields);
             }
         }
@@ -98,14 +79,9 @@ abstract class AbstractAllocationCatResponse extends Response
     protected function getProperties()
     {
         return array(
-            self::PROP_SHARDS,
-            self::PROP_DISK_USED,
-            self::PROP_DISK_AVAIL,
-            self::PROP_DISK_TOTAL,
-            self::PROP_DISK_PERCENT,
-            self::PROP_HOST,
-            self::PROP_IP,
-            self::PROP_NODE
+            self::PROP_EPOCH,
+            self::PROP_TIMESTAMP,
+            self::PROP_COUNT
         );
     }
 }

@@ -20,10 +20,9 @@ namespace Elastification\Client\Response\V1x\Cat;
 use Elastification\Client\Response\Shared\Cat\AbstractAllocationCatResponse;
 
 /**
- * Class CreateUpdateDocumentResponse
+ * Class AllocationCatResponse
  *
  * @package Elastification\Client\Response\V1x\Cat
- * @author  Daniel Wendlandt
  */
 class AllocationCatResponse extends AbstractAllocationCatResponse
 {

@@ -20,10 +20,9 @@ namespace Elastification\Client\Response\V1x\Cat;
 use Elastification\Client\Response\Shared\Cat\AbstractAliasesCatResponse;
 
 /**
- * Class CreateUpdateDocumentResponse
+ * Class AliasesCatResponse
  *
  * @package Elastification\Client\Response\V1x\Cat
- * @author  Daniel Wendlandt
  */
 class AliasesCatResponse extends AbstractAliasesCatResponse
 {
