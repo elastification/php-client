@@ -95,10 +95,10 @@ class AliasesCatResponseTest extends \PHPUnit_Framework_TestCase
         }
     }
 
-    private function getData($asObject = false)
+    private function getData()
     {
         $catRawData = 'my-alias1 my-index1 my-filter1 my-routing-index1 my-routing-search1' . PHP_EOL;
-        $catRawData .= 'my-alias2 my-index2 my-filter2 my-routing-index2 my-routing-search2';
+        $catRawData .= 'my-alias2 my-index2 my-filter2 my-routing-index2 my-routing-search2' . PHP_EOL;
 
         return $catRawData;
     }

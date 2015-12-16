@@ -25,13 +25,16 @@ use Elastification\Client\Response\Response;
  * @package Elastification\Client\Response\Shared\Cat
  * @author  Daniel Wendlandt
  */
-abstract class AbstractAliasesCatResponse extends Response
+abstract class AbstractAllocationCatResponse extends Response
 {
-    const PROP_ALIAS = 'alias';
-    const PROP_INDEX = 'index';
-    const PROP_FILTER = 'filter';
-    const PROP_ROUTING_INDEX = 'routing.index';
-    const PROP_ROUTING_SEARCH = 'routing.search';
+    const PROP_SHARDS = 'shards';
+    const PROP_DISK_USED = 'disk.used';
+    const PROP_DISK_AVAIL = 'disk.avail';
+    const PROP_DISK_TOTAL = 'disk.total';
+    const PROP_DISK_PERCENT = 'disk.percent';
+    const PROP_HOST = 'host';
+    const PROP_IP = 'id';
+    const PROP_NODE = 'node';
 
     /**
      * @inheritdoc
@@ -66,6 +69,20 @@ abstract class AbstractAliasesCatResponse extends Response
                     return mb_strlen($value) !== 0;
                 });
 
+                $cntProps = count($properties);
+                $cntFields = count($fields);
+
+                if ($cntProps != $cntFields) {
+                    $diff = $cntFields - $cntProps + 1;
+                    $node = [];
+
+                    for($i = 1; $i <= $diff; $i++) {
+                        $node[] = array_pop($fields);
+                    }
+
+                    $fields[] = implode(' ', array_reverse($node));
+                }
+
                 $data[] = array_combine($properties, $fields);
             }
         }
@@ -81,11 +98,14 @@ abstract class AbstractAliasesCatResponse extends Response
     protected function getProperties()
     {
         return array(
-            self::PROP_ALIAS,
-            self::PROP_INDEX,
-            self::PROP_FILTER,
-            self::PROP_ROUTING_INDEX,
-            self::PROP_ROUTING_SEARCH
+            self::PROP_SHARDS,
+            self::PROP_DISK_USED,
+            self::PROP_DISK_AVAIL,
+            self::PROP_DISK_TOTAL,
+            self::PROP_DISK_PERCENT,
+            self::PROP_HOST,
+            self::PROP_IP,
+            self::PROP_NODE
         );
     }
 }
