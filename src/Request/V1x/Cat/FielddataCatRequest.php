@@ -17,16 +17,16 @@
  */
 namespace Elastification\Client\Request\V1x\Cat;
 
-use Elastification\Client\Request\Shared\Cat\AbstractAllocationCatRequest;
+use Elastification\Client\Request\Shared\Cat\AbstractFielddataCatRequest;
 use Elastification\Client\Response\Response;
 use Elastification\Client\Serializer\SerializerInterface;
 
 /**
- * Class AllocationCatRequest
+ * Class FielddataCatRequest
  *
  * @package Elastification\Client\Request\V1x\Cat
  */
-class AllocationCatRequest extends AbstractAllocationCatRequest
+class FielddataCatRequest extends AbstractFielddataCatRequest
 {
     /**
      * @param string                                                $rawData

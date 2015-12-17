@@ -22,10 +22,9 @@ use Elastification\Client\Response\Response;
 use Elastification\Client\Serializer\SerializerInterface;
 
 /**
- * Class AliasesCatRequest
+ * Class CountCatRequest
  *
  * @package Elastification\Client\Request\V1x\Cat
- * @author  Daniel Wendlandt
  */
 class CountCatRequest extends AbstractCountCatRequest
 {

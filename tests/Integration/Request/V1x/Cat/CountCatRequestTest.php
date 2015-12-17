@@ -8,7 +8,7 @@ use Elastification\Client\Response\Shared\Cat\AbstractCountCatResponse;
 use Elastification\Client\Response\V1x\Cat\CountCatResponse;
 use Elastification\Client\Tests\Integration\Repository\V1x\AbstractElastic;
 
-class AliasesCatRequestTest extends AbstractElastic
+class CountCatRequestTest extends AbstractElastic
 {
     const TYPE = 'request-cat-count';
 
