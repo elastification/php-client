@@ -19,7 +19,6 @@ namespace Elastification\Client\Request\V1x\Cat;
 
 use Elastification\Client\Request\Shared\Cat\AbstractAllocationCatRequest;
 use Elastification\Client\Response\Response;
-use Elastification\Client\Response\V1x\Cat\AllocationCatResponse;
 use Elastification\Client\Serializer\SerializerInterface;
 
 /**
@@ -43,7 +42,7 @@ class AllocationCatRequest extends AbstractAllocationCatRequest
         SerializerInterface $serializer,
         array $serializerParams = array()
     ) {
-        return new AllocationCatResponse($rawData, $serializer, $serializerParams);
+        return new Response($rawData, $serializer, $serializerParams);
     }
 
     /**
@@ -54,6 +53,6 @@ class AllocationCatRequest extends AbstractAllocationCatRequest
      */
     public function getSupportedClass()
     {
-        return 'Elastification\Client\Response\V1x\Cat\AllocationCatResponse';
+        return 'Elastification\Client\Response\Response';
     }
 }

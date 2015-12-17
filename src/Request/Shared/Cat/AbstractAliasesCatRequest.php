@@ -19,6 +19,7 @@ namespace Elastification\Client\Request\Shared\Cat;
 
 use Elastification\Client\Request\RequestMethods;
 use Elastification\Client\Request\Shared\AbstractBaseRequest;
+use Elastification\Client\Serializer\SerializerInterface;
 
 /**
  * Class AbstractCountRequest
@@ -31,6 +32,13 @@ abstract class AbstractAliasesCatRequest extends AbstractBaseRequest
     const REQUEST_ACTION = '_cat';
     const CAT_TYPE = 'aliases';
 
+
+    public function __construct($index, $type, SerializerInterface $serializer, array $serializerParams = array())
+    {
+        parent::__construct($index, $type, $serializer, $serializerParams);
+
+        $this->setParameter('format', 'json');
+    }
 
     /**
      * @inheritdoc

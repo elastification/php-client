@@ -14,7 +14,7 @@ use Elastification\Client\Request\V1x\CountRequest;
 
 class AllocationCatRequestTest extends \PHPUnit_Framework_TestCase
 {
-    const RESPONSE_CLASS = 'Elastification\Client\Response\V1x\Cat\AllocationCatResponse';
+    const RESPONSE_CLASS = 'Elastification\Client\Response\Response';
 
     /**
      * @var \PHPUnit_Framework_MockObject_MockObject
@@ -117,5 +117,13 @@ class AllocationCatRequestTest extends \PHPUnit_Framework_TestCase
         $response = $this->request->createResponse($rawData, $this->serializer);
 
         $this->assertInstanceOf(self::RESPONSE_CLASS, $response);
+    }
+
+    public function testGetParameters()
+    {
+        $parameters = $this->request->getParameters();
+
+        $this->assertArrayHasKey('format', $parameters);
+        $this->assertSame('json', $parameters['format']);
     }
 }

@@ -19,6 +19,7 @@ namespace Elastification\Client\Request\V1x\Cat;
 
 use Elastification\Client\Request\Shared\Cat\AbstractAliasesCatRequest;
 use Elastification\Client\Response\Response;
+use Elastification\Client\Response\ResponseInterface;
 use Elastification\Client\Response\V1x\Cat\AliasesCatResponse;
 use Elastification\Client\Serializer\SerializerInterface;
 
@@ -30,6 +31,7 @@ use Elastification\Client\Serializer\SerializerInterface;
  */
 class AliasesCatRequest extends AbstractAliasesCatRequest
 {
+
     /**
      * @param string                                                $rawData
      * @param \Elastification\Client\Serializer\SerializerInterface $serializer
@@ -43,7 +45,7 @@ class AliasesCatRequest extends AbstractAliasesCatRequest
         SerializerInterface $serializer,
         array $serializerParams = array()
     ) {
-        return new AliasesCatResponse($rawData, $serializer, $serializerParams);
+        return new Response($rawData, $serializer, $serializerParams);
     }
 
     /**
@@ -54,6 +56,6 @@ class AliasesCatRequest extends AbstractAliasesCatRequest
      */
     public function getSupportedClass()
     {
-        return 'Elastification\Client\Response\V1x\Cat\AliasesCatResponse';
+        return 'Elastification\Client\Response\Response';
     }
 }

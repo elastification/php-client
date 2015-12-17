@@ -19,7 +19,6 @@ namespace Elastification\Client\Request\V1x\Cat;
 
 use Elastification\Client\Request\Shared\Cat\AbstractCountCatRequest;
 use Elastification\Client\Response\Response;
-use Elastification\Client\Response\V1x\Cat\CountCatResponse;
 use Elastification\Client\Serializer\SerializerInterface;
 
 /**
@@ -43,7 +42,7 @@ class CountCatRequest extends AbstractCountCatRequest
         SerializerInterface $serializer,
         array $serializerParams = array()
     ) {
-        return new CountCatResponse($rawData, $serializer, $serializerParams);
+        return new Response($rawData, $serializer, $serializerParams);
     }
 
     /**
@@ -54,6 +53,6 @@ class CountCatRequest extends AbstractCountCatRequest
      */
     public function getSupportedClass()
     {
-        return 'Elastification\Client\Response\V1x\Cat\CountCatResponse';
+        return 'Elastification\Client\Response\Response';
     }
 }
