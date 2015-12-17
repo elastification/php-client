@@ -10,7 +10,6 @@ namespace Elastification\Client\Tests\Unit\Request\V1x\Cat;
 use Elastification\Client\Request\RequestMethods;
 use Elastification\Client\Request\Shared\Cat\AbstractAliasesCatRequest;
 use Elastification\Client\Request\V1x\Cat\AliasesCatRequest;
-use Elastification\Client\Request\V1x\CountRequest;
 
 class AliasesCatRequestTest extends \PHPUnit_Framework_TestCase
 {
@@ -22,7 +21,7 @@ class AliasesCatRequestTest extends \PHPUnit_Framework_TestCase
     private $serializer;
 
     /**
-     * @var CountRequest
+     * @var AliasesCatRequest
      */
     private $request;
 

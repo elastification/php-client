@@ -4,7 +4,6 @@ namespace Elastification\Client\Tests\Unit\Request\V1x\Cat;
 
 use Elastification\Client\Request\RequestMethods;
 use Elastification\Client\Request\V1x\Cat\CountCatRequest;
-use Elastification\Client\Request\V1x\CountRequest;
 
 class CountCatRequestTest extends \PHPUnit_Framework_TestCase
 {
@@ -16,7 +15,7 @@ class CountCatRequestTest extends \PHPUnit_Framework_TestCase
     private $serializer;
 
     /**
-     * @var CountRequest
+     * @var CountCatRequest
      */
     private $request;
 

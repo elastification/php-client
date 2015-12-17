@@ -1,17 +1,12 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: dwendlandt
- * Date: 17/06/14
- * Time: 19:02
- */
+
 namespace Elastification\Client\Tests\Unit\Request\V1x\Cat;
 
 use Elastification\Client\Request\RequestMethods;
-use Elastification\Client\Request\Shared\Cat\AbstractAllocationCatRequest;
-use Elastification\Client\Request\V1x\Cat\AllocationCatRequest;
+use Elastification\Client\Request\Shared\Cat\AbstractFielddataCatRequest;
+use Elastification\Client\Request\V1x\Cat\FielddataCatRequest;
 
-class AllocationCatRequestTest extends \PHPUnit_Framework_TestCase
+class FielddataCatRequestTest extends \PHPUnit_Framework_TestCase
 {
     const RESPONSE_CLASS = 'Elastification\Client\Response\Response';
 
@@ -21,7 +16,7 @@ class AllocationCatRequestTest extends \PHPUnit_Framework_TestCase
     private $serializer;
 
     /**
-     * @var AllocationCatRequest
+     * @var FielddataCatRequest
      */
     private $request;
 
@@ -33,7 +28,7 @@ class AllocationCatRequestTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->request = new AllocationCatRequest(null, null, $this->serializer);
+        $this->request = new FielddataCatRequest(null, null, $this->serializer);
     }
 
     protected function tearDown()
@@ -52,19 +47,19 @@ class AllocationCatRequestTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertInstanceOf(
-            'Elastification\Client\Request\Shared\Cat\AbstractAllocationCatRequest',
+            'Elastification\Client\Request\Shared\Cat\AbstractFielddataCatRequest',
             $this->request
         );
 
         $this->assertInstanceOf(
-            'Elastification\Client\Request\V1x\Cat\AllocationCatRequest',
+            'Elastification\Client\Request\V1x\Cat\FielddataCatRequest',
             $this->request
         );
     }
 
     public function testGetIndex()
     {
-        $this->assertSame(AbstractAllocationCatRequest::REQUEST_ACTION, $this->request->getIndex());
+        $this->assertSame(AbstractFielddataCatRequest::REQUEST_ACTION, $this->request->getIndex());
     }
 
     public function testGetType()
@@ -79,7 +74,7 @@ class AllocationCatRequestTest extends \PHPUnit_Framework_TestCase
 
     public function testGetAction()
     {
-        $this->assertSame(AbstractAllocationCatRequest::CAT_TYPE, $this->request->getAction());
+        $this->assertSame(AbstractFielddataCatRequest::CAT_TYPE, $this->request->getAction());
     }
 //
     public function testGetSerializer()
