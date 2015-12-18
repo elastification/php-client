@@ -22,7 +22,7 @@ use Elastification\Client\Response\Response;
 use Elastification\Client\Serializer\SerializerInterface;
 
 /**
- * Class INDICESCatRequest
+ * Class MasterCatRequest
  * @package Elastification\Client\Request\V1x\Cat
  */
 class MasterCatRequest extends AbstractMasterCatRequest

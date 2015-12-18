@@ -17,15 +17,15 @@
  */
 namespace Elastification\Client\Request\V1x\Cat;
 
-use Elastification\Client\Request\Shared\Cat\AbstractIndicesCatRequest;
+use Elastification\Client\Request\Shared\Cat\AbstractNodesCatRequest;
 use Elastification\Client\Response\Response;
 use Elastification\Client\Serializer\SerializerInterface;
 
 /**
- * Class IndicesCatRequest
+ * Class NodesCatRequest
  * @package Elastification\Client\Request\V1x\Cat
  */
-class IndicesCatRequest extends AbstractIndicesCatRequest
+class NodesCatRequest extends AbstractNodesCatRequest
 {
     /**
      * @param string                                                $rawData
