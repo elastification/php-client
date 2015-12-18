@@ -8,8 +8,6 @@ use Elastification\Client\Tests\Integration\Repository\V1x\AbstractElastic;
 
 class FielddataCatRequestTest extends AbstractElastic
 {
-    const TYPE = 'request-cat-fielddata';
-
     public function testFielddataCat()
     {
         $countCatRequest = new FielddataCatRequest(null, null, $this->getSerializer());
