@@ -3,10 +3,10 @@
 namespace Elastification\Client\Tests\Unit\Request\V1x\Cat;
 
 use Elastification\Client\Request\RequestMethods;
-use Elastification\Client\Request\Shared\Cat\AbstractHealthCatRequest;
-use Elastification\Client\Request\V1x\Cat\HealthCatRequest;
+use Elastification\Client\Request\Shared\Cat\AbstractIndicesCatRequest;
+use Elastification\Client\Request\V1x\Cat\IndicesCatRequest;
 
-class HealthCatRequestTest extends \PHPUnit_Framework_TestCase
+class IndicesCatRequestTest extends \PHPUnit_Framework_TestCase
 {
     const RESPONSE_CLASS = 'Elastification\Client\Response\Response';
 
@@ -16,7 +16,7 @@ class HealthCatRequestTest extends \PHPUnit_Framework_TestCase
     private $serializer;
 
     /**
-     * @var HealthCatRequest
+     * @var IndicesCatRequest
      */
     private $request;
 
@@ -28,7 +28,7 @@ class HealthCatRequestTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->request = new HealthCatRequest(null, null, $this->serializer);
+        $this->request = new IndicesCatRequest(null, null, $this->serializer);
     }
 
     protected function tearDown()
@@ -47,19 +47,19 @@ class HealthCatRequestTest extends \PHPUnit_Framework_TestCase
         );
 
         $this->assertInstanceOf(
-            'Elastification\Client\Request\Shared\Cat\AbstractHealthCatRequest',
+            'Elastification\Client\Request\Shared\Cat\AbstractIndicesCatRequest',
             $this->request
         );
 
         $this->assertInstanceOf(
-            'Elastification\Client\Request\V1x\Cat\HealthCatRequest',
+            'Elastification\Client\Request\V1x\Cat\IndicesCatRequest',
             $this->request
         );
     }
 
     public function testGetIndex()
     {
-        $this->assertSame(AbstractHealthCatRequest::REQUEST_ACTION, $this->request->getIndex());
+        $this->assertSame(AbstractIndicesCatRequest::REQUEST_ACTION, $this->request->getIndex());
     }
 
     public function testGetType()
@@ -74,7 +74,7 @@ class HealthCatRequestTest extends \PHPUnit_Framework_TestCase
 
     public function testGetAction()
     {
-        $this->assertSame(AbstractHealthCatRequest::CAT_TYPE, $this->request->getAction());
+        $this->assertSame(AbstractIndicesCatRequest::CAT_TYPE, $this->request->getAction());
     }
 //
     public function testGetSerializer()
