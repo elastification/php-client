@@ -6,7 +6,7 @@ use Elastification\Client\Request\V1x\Cat\ShardsCatRequest;
 use Elastification\Client\Response\Response;
 use Elastification\Client\Tests\Integration\Repository\V1x\AbstractElastic;
 
-class ThreadPoolCatRequestTest extends AbstractElastic
+class ShardsCatRequestTest extends AbstractElastic
 {
     const TYPE = 'request-cat-shards';
 
