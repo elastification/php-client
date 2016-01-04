@@ -20,7 +20,7 @@ class RecoveryCatRequestTest extends AbstractElastic
 
         if (!empty($data)) {
             $index = $data[0];
-            $this->assertEquals(13, $index);
+            $this->assertCount(13, $index);
 
 
             $this->assertArrayHasKey('index', $index);
