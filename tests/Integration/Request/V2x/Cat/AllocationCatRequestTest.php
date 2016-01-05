@@ -1,9 +1,9 @@
 <?php
-namespace Elastification\Client\Tests\Integration\Request\V1x\Cat;
+namespace Elastification\Client\Tests\Integration\Request\V2x\Cat;
 
 
-use Elastification\Client\Request\V1x\Cat\AllocationCatRequest;
-use Elastification\Client\Tests\Integration\Repository\V1x\AbstractElastic;
+use Elastification\Client\Request\V2x\Cat\AllocationCatRequest;
+use Elastification\Client\Tests\Integration\Repository\V2x\AbstractElastic;
 
 class AllocationCatRequestTest extends AbstractElastic
 {
