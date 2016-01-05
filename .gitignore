@@ -3,7 +3,7 @@
 /vendor/
 /build/
 artifacts/
-/bin/
+/bin
 !/bin/.gitkeep
 /docs
 /cache
