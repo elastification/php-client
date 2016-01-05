@@ -19,8 +19,6 @@ namespace Elastification\Client\Request\V1x\Cat;
 
 use Elastification\Client\Request\Shared\Cat\AbstractAliasesCatRequest;
 use Elastification\Client\Response\Response;
-use Elastification\Client\Response\ResponseInterface;
-use Elastification\Client\Response\V1x\Cat\AliasesCatResponse;
 use Elastification\Client\Serializer\SerializerInterface;
 
 /**
