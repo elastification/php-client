@@ -9,6 +9,7 @@ use Elastification\Client\Request\V090x\GetDocumentRequest;
 use Elastification\Client\Request\V090x\Index\CreateIndexRequest;
 use Elastification\Client\Request\V090x\Index\DeleteIndexRequest;
 use Elastification\Client\Request\V090x\Index\IndexExistsRequest;
+use Elastification\Client\Request\V090x\Index\IndexFlushRequest;
 use Elastification\Client\Request\V090x\Index\RefreshIndexRequest;
 use Elastification\Client\Response\V090x\CreateUpdateDocumentResponse;
 use Elastification\Client\Response\V090x\DocumentResponse;
@@ -164,6 +165,15 @@ abstract class AbstractElastic extends \PHPUnit_Framework_TestCase
 
         $refreshIndexRequest = new RefreshIndexRequest($index, null, $this->serializer);
         $this->client->send($refreshIndexRequest);
+    }
+
+    /**
+     * Flushes all indices
+     */
+    protected function flushIndices()
+    {
+        $flushIndexRequest = new IndexFlushRequest(null, null, $this->serializer);
+        $this->client->send($flushIndexRequest);
     }
 
     /**
