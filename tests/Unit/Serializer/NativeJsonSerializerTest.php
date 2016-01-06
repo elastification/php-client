@@ -1,7 +1,6 @@
 <?php
 namespace Elastification\Client\Tests\Unit\Serializer;
 
-use Elastification\Client\Serializer\Exception\DeserializationFailureException;
 use Elastification\Client\Serializer\NativeJsonSerializer;
 
 /**
