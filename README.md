@@ -17,9 +17,10 @@ ToDo
 - [ ] Helper for Version response compare. (Symfony/Console)
 - [ ] singular _alias Put/Post/delete/head (v1)
 - [ ] GetFieldMappingRequest (seems to be only in v1 and v2)
-- [ ] cat api (v1, v2, check if v90)
-- [ ] index recovery (v1, v2, check if v90)
+- [x] cat api (v1, v2, check if v90)
 - [ ] analyze (v1, v2, check if v90)
+- [ ] snapshot (v1, v2, check if v90)
+- [ ] index recovery (v1, v2, check if v90)
 - [ ] Think about an array of clients or a decision manager for get the right client (maybe voter pattern?)
 - [ ] Write documentation
 - [ ] Create Github Pages
@@ -29,7 +30,7 @@ ToDo
 
 Changes from Version 1x to 2x
 
-- NodeInfo does not have status in reponse
+- NodeInfo does not have status in response
 - DeleteByQuery is removed
 - DeleteMapping is removed
 - Index/IndexStats is removed (replaced by index stats)
