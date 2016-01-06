@@ -23,7 +23,7 @@ use Elastification\Client\Response\Response;
 use Elastification\Client\Serializer\SerializerInterface;
 
 /**
- * Class NodesCatRequest
+ * Class NodeAttrsCatRequest
  * @package Elastification\Client\Request\V2x\Cat
  */
 class NodeAttrsCatRequest extends AbstractBaseRequest
