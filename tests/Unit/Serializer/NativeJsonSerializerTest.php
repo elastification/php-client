@@ -1,6 +1,7 @@
 <?php
 namespace Elastification\Client\Tests\Unit\Serializer;
 
+use Elastification\Client\Serializer\Exception\DeserializationFailureException;
 use Elastification\Client\Serializer\NativeJsonSerializer;
 
 /**
@@ -110,7 +111,15 @@ class NativeJsonSerializerTest extends \PHPUnit_Framework_TestCase
         $subject = new NativeJsonSerializer();
         $expected = '';
 
-        $result = $subject->deserialize($expected);
-        $this->assertEquals(array(), $result->getGatewayValue());
+        if(preg_match('/^(7).*/', phpversion()) > 0) {
+            $this->setExpectedException(
+                'Elastification\Client\Serializer\Exception\DeserializationFailureException',
+                'Syntax error');
+            $subject->deserialize($expected);
+        } else {
+            $result = $subject->deserialize($expected);
+            $this->assertEquals(array(), $result->getGatewayValue());
+        }
+
     }
 }
