@@ -39,12 +39,12 @@ abstract class AbstractRepository
     /**
      * @var string
      */
-    private $versionFolder;
+    protected $versionFolder;
 
     /**
      * @var RepositoryClassMap
      */
-    private $repositoryClassMap;
+    protected $repositoryClassMap;
 
     /**
      * @var RequestRepositoryFactoryInterface
@@ -67,7 +67,7 @@ abstract class AbstractRepository
     ) {
         $this->client = $client;
         $this->serializer = $serializer;
-        $this->versionFolder = $versionFolder;
+        $this->versionFolder = (string)$versionFolder;
 
         if (null === $repositoryClassMap) {
             $this->repositoryClassMap = new RepositoryClassMap($versionFolder);
@@ -109,7 +109,7 @@ abstract class AbstractRepository
      * @return string
      * @author Daniel Wendlandt
      */
-    private function getClass($class)
+    protected function getClass($class)
     {
         return $this->repositoryClassMap->getClassName($class);
     }

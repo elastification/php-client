@@ -53,7 +53,22 @@ class RepositoryClassMap implements RepositoryClassMapInterface
         'GetMappingRequest' => self::INDEX_GET_MAPPING,
         'CreateMappingRequest' => self::INDEX_CREATE_MAPPING,
         'GetAliasesRequest' => self::INDEX_GET_ALIASES,
-        'UpdateAliasesRequest' => self::INDEX_UPDATE_ALIASES
+        'UpdateAliasesRequest' => self::INDEX_UPDATE_ALIASES,
+        //catconst
+        'AliasesCatRequest' => self::CAT_ALIASES,
+        'AllocationCatRequest' => self::CAT_ALLOCATION,
+        'CountCatRequest' => self::CAT_COUNT,
+        'FielddataCatRequest' => self::CAT_FIELDDATA,
+        'HealthCatRequest' => self::CAT_HEALTH,
+        'IndicesCatRequest' => self::CAT_INDICES,
+        'MasterCatRequest' => self::CAT_MASTER,
+        'NodesCatRequest' => self::CAT_NODES,
+        'PendingTasksCatRequest' => self::CAT_PENDING_TASKS,
+        'PluginsCatRequest' => self::CAT_PLUGINS,
+        'RecoveryCatRequest' => self::CAT_RECOVERY,
+        'SegmentsCatRequest' => self::CAT_SEGMENTS,
+        'ShardsCatRequest' => self::CAT_SHARDS,
+        'ThreadPoolCatRequest' => self::CAT_THREAD_POOL
     );
 
     /**

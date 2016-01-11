@@ -41,6 +41,21 @@ interface RepositoryClassMapInterface
     const INDEX_CREATE_MAPPING = 'Elastification\Client\Request\%s\Index\CreateMappingRequest';
     const INDEX_GET_ALIASES = 'Elastification\Client\Request\%s\Index\GetAliasesRequest';
     const INDEX_UPDATE_ALIASES = 'Elastification\Client\Request\%s\Index\UpdateAliasesRequest';
+    //cat
+    const CAT_ALIASES = 'Elastification\Client\Request\%s\Cat\AliasesCatRequest';
+    const CAT_ALLOCATION = 'Elastification\Client\Request\%s\Cat\AllocationCatRequest';
+    const CAT_COUNT = 'Elastification\Client\Request\%s\Cat\CountCatRequest';
+    const CAT_FIELDDATA = 'Elastification\Client\Request\%s\Cat\FielddataCatRequest';
+    const CAT_HEALTH = 'Elastification\Client\Request\%s\Cat\HealthCatRequest';
+    const CAT_INDICES = 'Elastification\Client\Request\%s\Cat\IndicesCatRequest';
+    const CAT_MASTER = 'Elastification\Client\Request\%s\Cat\MasterCatRequest';
+    const CAT_NODES = 'Elastification\Client\Request\%s\Cat\NodesCatRequest';
+    const CAT_PENDING_TASKS = 'Elastification\Client\Request\%s\Cat\PendingTasksCatRequest';
+    const CAT_PLUGINS = 'Elastification\Client\Request\%s\Cat\PluginsCatRequest';
+    const CAT_RECOVERY = 'Elastification\Client\Request\%s\Cat\RecoveryCatRequest';
+    const CAT_SEGMENTS = 'Elastification\Client\Request\%s\Cat\SegmentsCatRequest';
+    const CAT_SHARDS = 'Elastification\Client\Request\%s\Cat\ShardsCatRequest';
+    const CAT_THREAD_POOL = 'Elastification\Client\Request\%s\Cat\ThreadPoolCatRequest';
 
     /**
      * gets the complete namespaces class for a version
