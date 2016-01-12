@@ -71,4 +71,11 @@ interface CatRepositoryInterface
      */
     public function health();
 
+    /**
+     * Gets indices from cat api
+     *
+     * @return \Elastification\Client\Response\ResponseInterface
+     */
+    public function indices();
+
 }

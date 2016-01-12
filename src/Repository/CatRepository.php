@@ -86,6 +86,18 @@ class CatRepository extends AbstractRepository implements CatRepositoryInterface
     }
 
     /**
+     * Gets indices from cat api
+     *
+     * @return \Elastification\Client\Response\ResponseInterface
+     */
+    public function indices()
+    {
+        $request = $this->createRequestInstance(self::CAT_INDICES, null, null);
+
+        return $this->client->send($request);
+    }
+
+    /**
      * gets the right class string of a version
      *
      * @param string $class
