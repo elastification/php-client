@@ -50,4 +50,25 @@ interface CatRepositoryInterface
      */
     public function allocation();
 
+    /**
+     * Gets count from cat api
+     *
+     * @return \Elastification\Client\Response\ResponseInterface
+     */
+    public function count();
+
+    /**
+     * Gets fielddata from cat api
+     *
+     * @return \Elastification\Client\Response\ResponseInterface
+     */
+    public function fielddata();
+
+    /**
+     * Gets health from cat api
+     *
+     * @return \Elastification\Client\Response\ResponseInterface
+     */
+    public function health();
+
 }

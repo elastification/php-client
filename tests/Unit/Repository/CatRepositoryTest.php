@@ -148,4 +148,136 @@ class CatRepositoryTest extends \PHPUnit_Framework_TestCase
         $this->indexRepository->aliases();
     }
 
+    public function testAllocation()
+    {
+        $return = 'itsMe';
+        $type = null;
+        $className = 'myClassName';
+
+        $request = $this->getMockBuilder('Elastification\Client\Request\RequestInterface')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->requestRepositoryFactory->expects($this->once())
+            ->method('create')
+            ->with(
+                $this->equalTo($className),
+                $this->equalTo(null),
+                $this->equalTo(null),
+                $this->equalTo($this->serializer))
+            ->willReturn($request);
+
+        $this->repositoryClassMap->expects($this->once())
+            ->method('getClassName')
+            ->with(CatRepositoryInterface::CAT_ALLOCATION)
+            ->willReturn($className);
+
+        $this->client->expects($this->once())
+            ->method('send')
+            ->willReturn($return);
+
+        $result = $this->indexRepository->allocation();
+
+        $this->assertSame($return, $result);
+    }
+
+    public function testCount()
+    {
+        $return = 'itsMe';
+        $type = null;
+        $className = 'myClassName';
+
+        $request = $this->getMockBuilder('Elastification\Client\Request\RequestInterface')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->requestRepositoryFactory->expects($this->once())
+            ->method('create')
+            ->with(
+                $this->equalTo($className),
+                $this->equalTo(null),
+                $this->equalTo(null),
+                $this->equalTo($this->serializer))
+            ->willReturn($request);
+
+        $this->repositoryClassMap->expects($this->once())
+            ->method('getClassName')
+            ->with(CatRepositoryInterface::CAT_COUNT)
+            ->willReturn($className);
+
+        $this->client->expects($this->once())
+            ->method('send')
+            ->willReturn($return);
+
+        $result = $this->indexRepository->count();
+
+        $this->assertSame($return, $result);
+    }
+
+    public function testFielddata()
+    {
+        $return = 'itsMe';
+        $type = null;
+        $className = 'myClassName';
+
+        $request = $this->getMockBuilder('Elastification\Client\Request\RequestInterface')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->requestRepositoryFactory->expects($this->once())
+            ->method('create')
+            ->with(
+                $this->equalTo($className),
+                $this->equalTo(null),
+                $this->equalTo(null),
+                $this->equalTo($this->serializer))
+            ->willReturn($request);
+
+        $this->repositoryClassMap->expects($this->once())
+            ->method('getClassName')
+            ->with(CatRepositoryInterface::CAT_FIELDDATA)
+            ->willReturn($className);
+
+        $this->client->expects($this->once())
+            ->method('send')
+            ->willReturn($return);
+
+        $result = $this->indexRepository->fielddata();
+
+        $this->assertSame($return, $result);
+    }
+
+    public function testHealth()
+    {
+        $return = 'itsMe';
+        $type = null;
+        $className = 'myClassName';
+
+        $request = $this->getMockBuilder('Elastification\Client\Request\RequestInterface')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->requestRepositoryFactory->expects($this->once())
+            ->method('create')
+            ->with(
+                $this->equalTo($className),
+                $this->equalTo(null),
+                $this->equalTo(null),
+                $this->equalTo($this->serializer))
+            ->willReturn($request);
+
+        $this->repositoryClassMap->expects($this->once())
+            ->method('getClassName')
+            ->with(CatRepositoryInterface::CAT_HEALTH)
+            ->willReturn($className);
+
+        $this->client->expects($this->once())
+            ->method('send')
+            ->willReturn($return);
+
+        $result = $this->indexRepository->health();
+
+        $this->assertSame($return, $result);
+    }
+
 }

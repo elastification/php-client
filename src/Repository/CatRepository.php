@@ -50,6 +50,42 @@ class CatRepository extends AbstractRepository implements CatRepositoryInterface
     }
 
     /**
+     * Gets count from cat api
+     *
+     * @return \Elastification\Client\Response\ResponseInterface
+     */
+    public function count()
+    {
+        $request = $this->createRequestInstance(self::CAT_COUNT, null, null);
+
+        return $this->client->send($request);
+    }
+
+    /**
+     * Gets fielddata from cat api
+     *
+     * @return \Elastification\Client\Response\ResponseInterface
+     */
+    public function fielddata()
+    {
+        $request = $this->createRequestInstance(self::CAT_FIELDDATA, null, null);
+
+        return $this->client->send($request);
+    }
+
+    /**
+     * Gets health from cat api
+     *
+     * @return \Elastification\Client\Response\ResponseInterface
+     */
+    public function health()
+    {
+        $request = $this->createRequestInstance(self::CAT_HEALTH, null, null);
+
+        return $this->client->send($request);
+    }
+
+    /**
      * gets the right class string of a version
      *
      * @param string $class

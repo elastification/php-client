@@ -122,6 +122,36 @@ class IndexRepositoryTest extends AbstractElastic
         $this->assertEquals(0, $data[0]['shards']);
     }
 
+    public function testCount()
+    {
+        $this->createSampleData();
+
+        $result = $this->catRepository->count();
+        $data = $result->getData()->getGatewayValue();
+
+        $this->assertCount(1, $data);
+        $this->assertEquals(4, $data[0]['count']);
+    }
+
+    public function testFieldata()
+    {
+        $result = $this->catRepository->fielddata();
+        $data = $result->getData()->getGatewayValue();
+
+        $this->assertCount(1, $data);
+        $this->assertEquals('0b', $data[0]['total']);
+    }
+
+    public function testHealth()
+    {
+        $result = $this->catRepository->health();
+        $data = $result->getData()->getGatewayValue();
+
+        $this->assertCount(1, $data);
+        $this->assertEquals('green', $data[0]['status']);
+        $this->assertEquals(0, $data[0]['shards']);
+    }
+
     private function createSampleData()
     {
         foreach($this->data as $city) {
