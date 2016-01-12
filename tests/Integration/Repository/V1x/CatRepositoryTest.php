@@ -154,12 +154,39 @@ class IndexRepositoryTest extends AbstractElastic
 
     public function testIndices()
     {
+        $this->createSampleData();
+
         $result = $this->catRepository->indices();
         $data = $result->getData()->getGatewayValue();
-var_dump($indices);
-//        $this->assertCount(1, $data);
-//        $this->assertEquals('green', $data[0]['status']);
-//        $this->assertEquals(0, $data[0]['shards']);
+
+        $this->assertCount(1, $data);
+        $this->assertEquals(4, $data[0]['docs.count']);
+    }
+
+    public function testMaster()
+    {
+        $result = $this->catRepository->master();
+        $data = $result->getData()->getGatewayValue();
+
+        $this->assertCount(1, $data);
+        $this->assertGreaterThanOrEqual(3, strlen($data[0]['node']));
+    }
+
+    public function testNodes()
+    {
+        $result = $this->catRepository->nodes();
+        $data = $result->getData()->getGatewayValue();
+
+        $this->assertCount(1, $data);
+        $this->assertEquals('*', $data[0]['master']);
+    }
+
+    public function testPendingTasks()
+    {
+        $result = $this->catRepository->pendingTasks();
+        $data = $result->getData()->getGatewayValue();
+
+        $this->assertEmpty($data);
     }
 
     private function createSampleData()

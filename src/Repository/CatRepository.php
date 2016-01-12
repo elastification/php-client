@@ -98,6 +98,42 @@ class CatRepository extends AbstractRepository implements CatRepositoryInterface
     }
 
     /**
+     * Gets master from cat api
+     *
+     * @return \Elastification\Client\Response\ResponseInterface
+     */
+    public function master()
+    {
+        $request = $this->createRequestInstance(self::CAT_MASTER, null, null);
+
+        return $this->client->send($request);
+    }
+
+    /**
+     * Gets nodes from cat api
+     *
+     * @return \Elastification\Client\Response\ResponseInterface
+     */
+    public function nodes()
+    {
+        $request = $this->createRequestInstance(self::CAT_NODES, null, null);
+
+        return $this->client->send($request);
+    }
+
+    /**
+     * Gets pending tasks from cat api
+     *
+     * @return \Elastification\Client\Response\ResponseInterface
+     */
+    public function pendingTasks()
+    {
+        $request = $this->createRequestInstance(self::CAT_PENDING_TASKS, null, null);
+
+        return $this->client->send($request);
+    }
+
+    /**
      * gets the right class string of a version
      *
      * @param string $class

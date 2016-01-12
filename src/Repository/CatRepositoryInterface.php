@@ -78,4 +78,25 @@ interface CatRepositoryInterface
      */
     public function indices();
 
+    /**
+     * Gets master from cat api
+     *
+     * @return \Elastification\Client\Response\ResponseInterface
+     */
+    public function master();
+
+    /**
+     * Gets nodes from cat api
+     *
+     * @return \Elastification\Client\Response\ResponseInterface
+     */
+    public function nodes();
+
+    /**
+     * Gets pending tasks from cat api
+     *
+     * @return \Elastification\Client\Response\ResponseInterface
+     */
+    public function pendingTasks();
+
 }
