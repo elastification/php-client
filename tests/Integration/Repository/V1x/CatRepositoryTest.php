@@ -113,6 +113,15 @@ class IndexRepositoryTest extends AbstractElastic
         $this->indexRepository->updateAliases($removeAliases);
     }
 
+    public function testAllocation()
+    {
+        $result = $this->catRepository->allocation();
+        $data = $result->getData()->getGatewayValue();
+
+        $this->assertCount(1, $data);
+        $this->assertEquals(0, $data[0]['shards']);
+    }
+
     private function createSampleData()
     {
         foreach($this->data as $city) {

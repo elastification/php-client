@@ -42,4 +42,12 @@ interface CatRepositoryInterface
      * @author Daniel Wendlandt
      */
     public function aliases();
+
+    /**
+     * Gets allocation from cat api
+     *
+     * @return \Elastification\Client\Response\ResponseInterface
+     */
+    public function allocation();
+
 }
