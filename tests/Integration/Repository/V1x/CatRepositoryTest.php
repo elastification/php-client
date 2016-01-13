@@ -189,6 +189,55 @@ class IndexRepositoryTest extends AbstractElastic
         $this->assertEmpty($data);
     }
 
+    public function testPlugins()
+    {
+        $result = $this->catRepository->plugins();
+        $data = $result->getData()->getGatewayValue();
+
+        $this->assertEmpty($data);
+    }
+
+    public function testRecovery()
+    {
+        $this->createSampleData();
+
+        $result = $this->catRepository->recovery();
+        $data = $result->getData()->getGatewayValue();
+
+        $this->assertGreaterThanOrEqual(1, $data);
+        $this->assertSame(ES_INDEX, $data[0]['index']);
+    }
+
+    public function testSegments()
+    {
+        $this->createSampleData();
+
+        $result = $this->catRepository->segments();
+        $data = $result->getData()->getGatewayValue();
+
+        $this->assertGreaterThanOrEqual(1, $data);
+        $this->assertSame(ES_INDEX, $data[0]['index']);
+    }
+
+    public function testShards()
+    {
+        $this->createSampleData();
+
+        $result = $this->catRepository->shards();
+        $data = $result->getData()->getGatewayValue();
+
+        $this->assertGreaterThanOrEqual(1, $data);
+        $this->assertSame(ES_INDEX, $data[0]['index']);
+    }
+
+    public function testThreadPool()
+    {
+        $result = $this->catRepository->threadPool();
+        $data = $result->getData()->getGatewayValue();
+
+        $this->assertGreaterThanOrEqual(1, $data);
+    }
+
     private function createSampleData()
     {
         foreach($this->data as $city) {

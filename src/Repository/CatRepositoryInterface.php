@@ -99,4 +99,39 @@ interface CatRepositoryInterface
      */
     public function pendingTasks();
 
+    /**
+     * Gets plugins from cat api
+     *
+     * @return \Elastification\Client\Response\ResponseInterface
+     */
+    public function plugins();
+
+    /**
+     * Gets recovery from cat api
+     *
+     * @return \Elastification\Client\Response\ResponseInterface
+     */
+    public function recovery();
+
+    /**
+     * Gets segments from cat api
+     *
+     * @return \Elastification\Client\Response\ResponseInterface
+     */
+    public function segments();
+
+    /**
+     * Gets shards from cat api
+     *
+     * @return \Elastification\Client\Response\ResponseInterface
+     */
+    public function shards();
+
+    /**
+     * Gets thread pool from cat api
+     *
+     * @return \Elastification\Client\Response\ResponseInterface
+     */
+    public function threadPool();
+
 }

@@ -134,6 +134,66 @@ class CatRepository extends AbstractRepository implements CatRepositoryInterface
     }
 
     /**
+     * Gets plugins from cat api
+     *
+     * @return \Elastification\Client\Response\ResponseInterface
+     */
+    public function plugins()
+    {
+        $request = $this->createRequestInstance(self::CAT_PLUGINS, null, null);
+
+        return $this->client->send($request);
+    }
+
+    /**
+     * Gets recovery from cat api
+     *
+     * @return \Elastification\Client\Response\ResponseInterface
+     */
+    public function recovery()
+    {
+        $request = $this->createRequestInstance(self::CAT_RECOVERY, null, null);
+
+        return $this->client->send($request);
+    }
+
+    /**
+     * Gets segments from cat api
+     *
+     * @return \Elastification\Client\Response\ResponseInterface
+     */
+    public function segments()
+    {
+        $request = $this->createRequestInstance(self::CAT_SEGMENTS, null, null);
+
+        return $this->client->send($request);
+    }
+
+    /**
+     * Gets shards from cat api
+     *
+     * @return \Elastification\Client\Response\ResponseInterface
+     */
+    public function shards()
+    {
+        $request = $this->createRequestInstance(self::CAT_SHARDS, null, null);
+
+        return $this->client->send($request);
+    }
+
+    /**
+     * Gets thread pool from cat api
+     *
+     * @return \Elastification\Client\Response\ResponseInterface
+     */
+    public function threadPool()
+    {
+        $request = $this->createRequestInstance(self::CAT_THREAD_POOL, null, null);
+
+        return $this->client->send($request);
+    }
+
+    /**
      * gets the right class string of a version
      *
      * @param string $class

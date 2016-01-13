@@ -411,4 +411,169 @@ class CatRepositoryTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame($return, $result);
     }
+
+    public function testPlugins()
+    {
+        $return = 'itsMe';
+        $type = null;
+        $className = 'myClassName';
+
+        $request = $this->getMockBuilder('Elastification\Client\Request\RequestInterface')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->requestRepositoryFactory->expects($this->once())
+            ->method('create')
+            ->with(
+                $this->equalTo($className),
+                $this->equalTo(null),
+                $this->equalTo(null),
+                $this->equalTo($this->serializer))
+            ->willReturn($request);
+
+        $this->repositoryClassMap->expects($this->once())
+            ->method('getClassName')
+            ->with(CatRepositoryInterface::CAT_PLUGINS)
+            ->willReturn($className);
+
+        $this->client->expects($this->once())
+            ->method('send')
+            ->willReturn($return);
+
+        $result = $this->indexRepository->plugins();
+
+        $this->assertSame($return, $result);
+    }
+
+    public function testRecovery()
+    {
+        $return = 'itsMe';
+        $type = null;
+        $className = 'myClassName';
+
+        $request = $this->getMockBuilder('Elastification\Client\Request\RequestInterface')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->requestRepositoryFactory->expects($this->once())
+            ->method('create')
+            ->with(
+                $this->equalTo($className),
+                $this->equalTo(null),
+                $this->equalTo(null),
+                $this->equalTo($this->serializer))
+            ->willReturn($request);
+
+        $this->repositoryClassMap->expects($this->once())
+            ->method('getClassName')
+            ->with(CatRepositoryInterface::CAT_RECOVERY)
+            ->willReturn($className);
+
+        $this->client->expects($this->once())
+            ->method('send')
+            ->willReturn($return);
+
+        $result = $this->indexRepository->recovery();
+
+        $this->assertSame($return, $result);
+    }
+
+    public function testSegments()
+    {
+        $return = 'itsMe';
+        $type = null;
+        $className = 'myClassName';
+
+        $request = $this->getMockBuilder('Elastification\Client\Request\RequestInterface')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->requestRepositoryFactory->expects($this->once())
+            ->method('create')
+            ->with(
+                $this->equalTo($className),
+                $this->equalTo(null),
+                $this->equalTo(null),
+                $this->equalTo($this->serializer))
+            ->willReturn($request);
+
+        $this->repositoryClassMap->expects($this->once())
+            ->method('getClassName')
+            ->with(CatRepositoryInterface::CAT_SEGMENTS)
+            ->willReturn($className);
+
+        $this->client->expects($this->once())
+            ->method('send')
+            ->willReturn($return);
+
+        $result = $this->indexRepository->segments();
+
+        $this->assertSame($return, $result);
+    }
+
+    public function testShards()
+    {
+        $return = 'itsMe';
+        $type = null;
+        $className = 'myClassName';
+
+        $request = $this->getMockBuilder('Elastification\Client\Request\RequestInterface')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->requestRepositoryFactory->expects($this->once())
+            ->method('create')
+            ->with(
+                $this->equalTo($className),
+                $this->equalTo(null),
+                $this->equalTo(null),
+                $this->equalTo($this->serializer))
+            ->willReturn($request);
+
+        $this->repositoryClassMap->expects($this->once())
+            ->method('getClassName')
+            ->with(CatRepositoryInterface::CAT_SHARDS)
+            ->willReturn($className);
+
+        $this->client->expects($this->once())
+            ->method('send')
+            ->willReturn($return);
+
+        $result = $this->indexRepository->shards();
+
+        $this->assertSame($return, $result);
+    }
+
+    public function testThreadPool()
+    {
+        $return = 'itsMe';
+        $type = null;
+        $className = 'myClassName';
+
+        $request = $this->getMockBuilder('Elastification\Client\Request\RequestInterface')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->requestRepositoryFactory->expects($this->once())
+            ->method('create')
+            ->with(
+                $this->equalTo($className),
+                $this->equalTo(null),
+                $this->equalTo(null),
+                $this->equalTo($this->serializer))
+            ->willReturn($request);
+
+        $this->repositoryClassMap->expects($this->once())
+            ->method('getClassName')
+            ->with(CatRepositoryInterface::CAT_THREAD_POOL)
+            ->willReturn($className);
+
+        $this->client->expects($this->once())
+            ->method('send')
+            ->willReturn($return);
+
+        $result = $this->indexRepository->threadPool();
+
+        $this->assertSame($return, $result);
+    }
 }
