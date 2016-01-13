@@ -15,10 +15,10 @@ ToDo
 ====
 
 - [ ] Helper for Version response compare. (Symfony/Console)
-- [ ] singular _alias Put/Post/delete/head (v1)
+- [ ] singular _alias Put/Post/delete/head (v1,v2?)
 - [ ] GetFieldMappingRequest (seems to be only in v1 and v2)
 - [x] cat api (v1, v2, check if v90)
-- [ ] repository for cat (implement version check 1 and 2 only)
+- [x] repository for cat (implement version check 1 and 2 only)
 - [ ] analyze (v1, v2, check if v90)
 - [ ] snapshot (v1, v2, check if v90)
 - [ ] index recovery (v1, v2, check if v90)
