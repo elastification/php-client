@@ -3,6 +3,7 @@ namespace Elastification\Client\Tests\Fixtures\Unit\Transport\Guzzle;
 
 use Elastification\Client\Transport\HttpGuzzle\GuzzleTransportRequest;
 use Elastification\Client\Transport\HttpGuzzle\GuzzleTransportResponse;
+use GuzzleHttp\Psr7\Request;
 
 class GuzzleRequestResponseTest extends \PHPUnit_Framework_TestCase
 {
@@ -55,8 +56,8 @@ class GuzzleRequestResponseTest extends \PHPUnit_Framework_TestCase
             ->getMock();
 
         $uri->expects($this->once())->method('withQuery')->with($this->equalTo(\GuzzleHttp\Psr7\build_query($fixtureQuery)))->willReturn($uri);
-        $orgRequest->expects($this->once())->method('getMethod');
         $orgRequest->expects($this->once())->method('getUri')->willReturn($uri);
+        $orgRequest->expects($this->once())->method('withUri')->with($uri);
 
         $guzzleRequest = new GuzzleTransportRequest($orgRequest);
 
@@ -76,6 +77,16 @@ class GuzzleRequestResponseTest extends \PHPUnit_Framework_TestCase
         $guzzleResponse = new GuzzleTransportResponse($orgResponse);
 
         $this->assertEquals($testResponseBody, $guzzleResponse->getBody());
+    }
+
+    public function testRequestBodyIsNotEmptyAfterQueryIsChanged()
+    {
+        $orgRequest = new Request('POST', '', [], 'body_data');
+
+        $transportRequest = new GuzzleTransportRequest($orgRequest);
+        $transportRequest->setQueryParams(['a' => 'b']);
+
+        $this->assertEquals('body_data', (string)$transportRequest->getWrappedRequest()->getBody());
     }
 }
 
