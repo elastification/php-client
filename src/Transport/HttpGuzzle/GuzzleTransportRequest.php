@@ -81,6 +81,6 @@ class GuzzleTransportRequest implements TransportRequestInterface
     public function setQueryParams(array $params)
     {
         $uri = $this->guzzleRequest->getUri()->withQuery(\GuzzleHttp\Psr7\build_query($params));
-        $this->guzzleRequest = new Request($this->guzzleRequest->getMethod(), $uri);
+        $this->guzzleRequest = $this->guzzleRequest->withUri($uri);
     }
 }
