@@ -49,13 +49,18 @@ class IndexRepository extends AbstractRepository implements IndexRepositoryInter
      * Creates an index.
      *
      * @param string $index
+     * @param array $body
      *
      * @return \Elastification\Client\Response\ResponseInterface
-     * @author Daniel Wendlandt
+     * @author Daniel Wendlandt, Aurimas Niekis
      */
-    public function create($index)
+    public function create($index, $body = null)
     {
         $request = $this->createRequestInstance(self::INDEX_CREATE, $index, null);
+
+        if (null !== $body) {
+            $request->setBody($body);
+        }
 
         return $this->client->send($request);
     }
