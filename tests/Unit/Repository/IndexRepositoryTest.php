@@ -192,6 +192,46 @@ class IndexRepositoryTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($return, $result);
     }
 
+    public function testCreateWithBody()
+    {
+        $index = 'myIndex';
+        $return = 'itsMe';
+        $type = null;
+        $className = 'myClassName';
+
+        $request = $this->getMockBuilder('Elastification\Client\Request\RequestInterface')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->requestRepositoryFactory->expects($this->once())
+            ->method('create')
+            ->with(
+                $this->equalTo($className),
+                $this->equalTo($index),
+                $this->equalTo($type),
+                $this->equalTo($this->serializer))
+            ->willReturn($request);
+
+        $this->repositoryClassMap->expects($this->once())
+            ->method('getClassName')
+            ->with(IndexRepositoryInterface::INDEX_CREATE)
+            ->willReturn($className);
+
+        $body = ['foo' => 'bar'];
+
+        $request->expects($this->once())
+            ->method('setBody')
+            ->with($body);
+
+        $this->client->expects($this->once())
+            ->method('send')
+            ->willReturn($return);
+
+        $result = $this->indexRepository->create($index, $body);
+
+        $this->assertSame($return, $result);
+    }
+
     public function testDelete()
     {
         $index = 'myIndex';

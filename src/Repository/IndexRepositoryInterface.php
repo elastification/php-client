@@ -45,11 +45,12 @@ interface IndexRepositoryInterface
      * Creates an index.
      *
      * @param string $index
+     * @param array $body
      *
      * @return \Elastification\Client\Response\ResponseInterface
-     * @author Daniel Wendlandt
+     * @author Daniel Wendlandt, Aurimas Niekis
      */
-    public function create($index);
+    public function create($index, $body = null);
 
     /**
      * deletes an index.
